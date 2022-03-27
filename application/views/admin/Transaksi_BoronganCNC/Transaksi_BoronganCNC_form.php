@@ -136,7 +136,7 @@
 							<label class="label">Nama </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text">
+						<select value="" class="js-example-responsive-rn_dev form-control DEVISI" name="DEVISI" id="DEVISI" onchange="rn_dev(this.id)" onfocusout="hitung()"></select>
 						</div>
 					</div>
 				</div>
@@ -513,8 +513,7 @@
 			this.value ^= 1;
 			console.log(this.value)
 		});
-		select_no_bon();
-		select_kd_bhn();
+		select_rn_dev();
 	}
 
 	function hapus() {
@@ -528,14 +527,13 @@
 
 <script>
 	$(document).ready(function() {
-		select_no_bon();
-		select_kd_bhn();
+		select_rn_dev();
 	});
 
-	function select_no_bon() {
-		$('.js-example-responsive-no_bon').select2({
+	function select_rn_dev() {
+		$('.js-example-responsive-rn_dev').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_Pemesanan/getDataAjax_bond') ?>",
+				url: "<?= base_url('admin/Transaksi_BoronganCNC/getDataAjax_rndev') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -556,103 +554,34 @@
 				},
 				cache: true
 			},
-			placeholder: 'Pilih No Bon',
+			placeholder: 'Pilih Devisi',
 			minimumInputLength: 0,
-			templateResult: format_no_bon,
-			templateSelection: formatSelection_no_bon
+			templateResult: format_rn_dev,
+			templateSelection: formatSelection_rn_dev
 		});
 	}
 
-	function format_no_bon(repo_no_bon) {
-		if (repo_no_bon.loading) {
-			return repo_no_bon.text;
+	function format_rn_dev(repo_rn_dev) {
+		if (repo_rn_dev.loading) {
+			return repo_rn_dev.text;
 		}
 		var $container = $(
 			"<div class='select2-result-repository clearfix text_input'>" +
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_no_bon.NO_BON);
+		$container.find(".select2-result-repository__title").text(repo_rn_dev.DEVISI);
 		return $container;
 	}
 
-	var na_bhn = '';
-	var jenis = '';
-	var ket = '';
-	var satuan = '';
-	var qty = '';
-	var sisabon = '';
+	// var nm_dev = '';
 
-	function formatSelection_no_bon(repo_no_bon) {
-		na_bhn = repo_no_bon.NA_BHN;
-		jenis = repo_no_bon.SERI;
-		ket = repo_no_bon.KET;
-		satuan = repo_no_bon.SATUAN;
-		qty = repo_no_bon.QTY;
-		sisabon = repo_no_bon.SISABON;
-		return repo_no_bon.text;
+	function formatSelection_rn_dev(repo_rn_dev) {
+		// nm_dev = repo_rn_dev.NM_DEV;
+		return repo_rn_dev.text;
 	}
 
-	function no_bon(x) {
+	function rn_dev(x) {
 		var q = x.substring(6, 10);
-		$('#NA_BHN' + q).val(na_bhn);
-		$('#SERI' + q).val(jenis);
-		$('#KET' + q).val(ket);
-		$('#SATUAN' + q).val(satuan);
-		$('#QTY' + q).val(qty);
-		$('#SISABON' + q).val(sisabon);
-	}
-
-	function select_kd_bhn() {
-		$('.js-example-responsive-kd_bhn').select2({
-			ajax: {
-				url: "<?= base_url('admin/Transaksi_Pemesanan/getDataAjax_bhn') ?>",
-				dataType: "json",
-				type: "post",
-				delay: 10,
-				data: function(params) {
-					return {
-						search: params.term,
-						page: params.page
-					}
-				},
-				processResults: function(data, params) {
-					params.page = params.page || 1;
-					return {
-						results: data.items,
-						pagination: {
-							more: data.total_count
-						}
-					};
-				},
-				cache: true
-			},
-			placeholder: 'Pilih Barang',
-			minimumInputLength: 0,
-			templateResult: format_kd_bhn,
-			templateSelection: formatSelection_kd_bhn
-		});
-	}
-
-	function format_kd_bhn(repo_kd_bhn) {
-		if (repo_kd_bhn.loading) {
-			return repo_kd_bhn.text;
-		}
-		var $container = $(
-			"<div class='select2-result-repository clearfix text_input'>" +
-			"<div class='select2-result-repository__title text_input'></div>" +
-			"</div>"
-		);
-		$container.find(".select2-result-repository__title").text(repo_kd_bhn.KD_BHN);
-		return $container;
-	}
-
-
-	function formatSelection_kd_bhn(repo_kd_bhn) {
-		return repo_kd_bhn.text;
-	}
-
-	function kd_bhn(xx) {
-		var qq = xx.substring(6, 10);
 	}
 </script>

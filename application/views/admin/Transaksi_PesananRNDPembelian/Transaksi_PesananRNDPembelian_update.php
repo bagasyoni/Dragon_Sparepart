@@ -150,7 +150,7 @@ foreach ($cnc as $rowh) {
 							<label class="label">Devisi </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" value="<?php echo $rowh->DEVISI ?>">
+							<input class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" value="<?php echo $rowh->DEVISI ?>" readonly>
 						</div>
 						<div class="col-md-1">
 							<label class="label">No PO </label>
