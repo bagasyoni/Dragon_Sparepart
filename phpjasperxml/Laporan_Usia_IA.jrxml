@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan_Usia_IA" pageWidth="612" pageHeight="792" columnWidth="61" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="16af8546-b394-4307-b54b-f5f251bed068">
+	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="0" width="200" height="50" uuid="a9d75093-ee79-490f-a0a3-eee7ea0c3b37"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[LAPORAN USIA BARANG]]></text>
+			</staticText>
+			<line>
+				<reportElement x="210" y="30" width="139" height="1" uuid="3d77fc98-039e-445c-ba30-34bd533b77e5"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="81" height="31" uuid="6c486231-6f0a-44e9-a665-7ca118470418"/>
+				<text><![CDATA[Per Tanggal :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="-1" width="80" height="34" uuid="5357365e-1f5c-420f-b6f6-75596fa66e0e"/>
+				<text><![CDATA[Hal :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="569" height="1" uuid="6f683124-6f23-4a66-927e-71b602a2386b"/>
+			</line>
+			<line>
+				<reportElement x="1" y="31" width="569" height="1" uuid="772a53c5-244c-448b-8969-db002651bafd"/>
+			</line>
+			<staticText>
+				<reportElement x="-1" y="0" width="41" height="30" uuid="fcef537f-644a-41cf-9ae8-cb3c111b92ff"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="41" height="30" uuid="b8cd7ce7-f678-4822-9bf3-c2e6000470ae"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[RAK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="1" width="67" height="30" uuid="20de96fe-cc98-4325-916f-6350e6a1f9eb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[BARANG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="1" width="58" height="30" uuid="d9b571bd-8ca3-4195-a627-60914682db91"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[SATUAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="329" y="1" width="65" height="30" uuid="5530e6db-12d7-423c-a31e-fd3702cf9015"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[JML]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="0" width="65" height="30" uuid="e4bbbe1c-96df-4614-99f8-ef8f9857deac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[HARI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="1" width="79" height="30" uuid="cdc0a28d-c276-4761-aed1-b99db3427778"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[KETERANGAN]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="68" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="-1" y="1" width="121" height="29" uuid="bd755ef5-ab87-45bf-aee8-bf89f3e37ab1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Jumlah Dipindahkan :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="30" width="569" height="1" uuid="81b412b1-73e8-4e09-99fa-8efe679967af"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="1" width="570" height="1" uuid="ffc77af2-be67-482a-91e1-527d1c2d5bde"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="47" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
