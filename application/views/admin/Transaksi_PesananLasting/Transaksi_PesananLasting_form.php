@@ -156,7 +156,7 @@
 							<label class="label">Article </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NA_BRG" id="NA_BRG" name="NA_BRG" type="text">
+							<input class="form-control text_input NA_BRG" id="NA_BRG" name="NA_BRG" type="text" required>
 						</div>
 					</div>
 				</div>
@@ -191,11 +191,11 @@
 						<tbody>
 							<tr>
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input"></td>
-								<td><input name="TIPE[]" id="TIPE0" type="text" class="form-control TIPE text_input"></td>
+								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" required></td>
+								<td><input name="TIPE[]" id="TIPE0" type="text" class="form-control TIPE text_input" required></td>
 								<td><input name="SERI[]" id="SERI0" type="text" class="form-control SERI text_input"></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
-								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary"></td>
+								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
 								<td>
 									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -265,6 +265,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -369,11 +370,11 @@
 		
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input'>";
+		td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' required>";
 		td3.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input'>";
 		td4.innerHTML = "<input name='SERI[]' id=SERI" + idrow + " type='text' class='form-control SERI text_input'>";
 		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
-		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td7.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
 		td8.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";

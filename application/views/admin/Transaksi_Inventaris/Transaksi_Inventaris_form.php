@@ -115,10 +115,10 @@
 						<tbody>
 							<tr>
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC" onkeypress="return tabE(this,event)" readonly></td>
-								<td><input name="KD_BRG[]" id="KD_BRG0" type="text" class="form-control KD_BRG"> </td>
-								<td><input name="NA_BRG[]" id="NA_BRG0" type="text" class="form-control NA_BRG"></td>
+								<td><input name="KD_BRG[]" id="KD_BRG0" type="text" class="form-control KD_BRG" required> </td>
+								<td><input name="NA_BRG[]" id="NA_BRG0" type="text" class="form-control NA_BRG" required></td>
 								<td><input name="TIPE[]" id="TIPE0" type="text" class="form-control TIPE"></td>
-								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary"></td>
+								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN"></td>
 								<td><input name="DEVISI[]" id="DEVISI0" type="text" class="form-control KD_PEG"></td>
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1"></td>
@@ -210,6 +210,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -291,15 +292,15 @@
 		var td11 = x.insertCell(10);
 		var td12 = x.insertCell(11);
 		
-		var kd_brg0 = "<div class='input-group'><select class='js-example-responsive-kd_brg form-control KD_BRG0' name='KD_BRG[]' id=KD_BRG0" + idrow + " onchange='kd_brg(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_brg0 = "<div class='input-group'><select class='js-example-responsive-kd_brg form-control KD_BRG0' name='KD_BRG[]' id=KD_BRG0" + idrow + " onchange='kd_brg(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_brg = kd_brg0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = "<input name='KD_BRG[]' id=KD_BRG0" + idrow + " type='text' class='form-control KD_BRG'>";
-		td3.innerHTML = "<input name='NA_BRG[]' id=NA_BRG0" + idrow + " type='text' class='form-control NA_BRG'>";
+		td2.innerHTML = "<input name='KD_BRG[]' id=KD_BRG0" + idrow + " type='text' class='form-control KD_BRG' required>";
+		td3.innerHTML = "<input name='NA_BRG[]' id=NA_BRG0" + idrow + " type='text' class='form-control NA_BRG' required>";
 		td4.innerHTML = "<input name='TIPE[]' id=TIPE0" + idrow + " type='text' class='form-control TIPE'>";
-		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN'>";
 		td7.innerHTML = "<input name='DEVISI[]' id=DEVISI0" + idrow + " type='text' class='form-control DEVISI'>";
 		td8.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1'>";

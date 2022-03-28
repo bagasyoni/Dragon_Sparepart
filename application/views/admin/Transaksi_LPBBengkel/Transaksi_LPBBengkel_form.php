@@ -64,7 +64,7 @@
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value=''>
+							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value='' required>
 						</div>
 					</div>
 				</div>
@@ -115,11 +115,11 @@
 							<tr>
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
 								<td>
-									<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()"></select></div>
+									<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()" required></select></div>
 								</td>
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" readonly></td>
 								<td><input name="RAK[]" id="RAK0" type="text" class="form-control RAK text_input" readonly></td>
-								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary"></td>
+								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input" readonly></td>
 								<td>
 									<button style="visibility: hidden;" type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -237,6 +237,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -373,7 +374,7 @@
 		var td6 = x.insertCell(5);
 		var td7 = x.insertCell(6);
 		
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_bhn = kd_bhn0;
 
@@ -381,7 +382,7 @@
 		td2.innerHTML = kd_bhn;
 		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN' readonly>";
 		td4.innerHTML = "<input name='RAK[]' id=RAK" + idrow + " type='text' class='form-control RAK' readonly>";
-		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN' readonly>";
 		td7.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + " class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";

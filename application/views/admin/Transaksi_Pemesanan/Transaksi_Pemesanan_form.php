@@ -147,9 +147,6 @@
 								<a class="btn default" onfocusout="hitung()" id="0" data-target="#mymodal_nobukti_beli_bon" data-toggle="modal" href="#lupnobukti_blbeli" ><i class="fa fa-search"></i></a>
 							</span>
 						</div> -->
-						<div class="col-md-4">
-							<label class="label"><strong style="color: red;">*</strong> Untuk PP Dengan No Bon, PP Dengan Master Bahan Dimenu PP Stok </label>
-						</div>
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -221,20 +218,20 @@
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
 								<td>
 									<div class='input-group'>
-										<select value="" class="js-example-responsive-no_bon form-control NO_BON" name="NO_BON[]" id="NO_BON0" onchange="no_bon(this.id)" onfocusout="hitung()"></select>
+										<select value="" class="js-example-responsive-no_bon form-control NO_BON" name="NO_BON[]" id="NO_BON0" onchange="no_bon(this.id)" onfocusout="hitung()" required></select>
 									</div>
 								</td>
 								<td>
 									<div class='input-group'>
-										<select value="" class="js-example-responsive-kd_bhn form-control KD_BHN" name="KD_BHN[]" id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()"></select>
+										<select value="" class="js-example-responsive-kd_bhn form-control KD_BHN" name="KD_BHN[]" id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()" required></select>
 									</div>
 								</td>
-								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input"></td>
-								<td><input name="JENIS[]" id="JENIS0" type="text" class="form-control JENIS text_input"></td>
-								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary"></td>
+								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" required></td>
+								<td><input name="JENIS[]" id="JENIS0" type="text" class="form-control JENIS text_input" required></td>
+								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="BILANGAN[]" id="BILANGAN0" type="text" class="form-control BILANGAN text_input" readonly></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
-								<td><input name="DEVISI[]" id="DEVISI0" type="text" class="form-control DEVISI text_input"></td>
+								<td><input name="DEVISI[]" id="DEVISI0" type="text" class="form-control DEVISI text_input" required></td>
 								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
 								<td>
 									<input name="TGL_DIMINTA[]" id="TGL_DIMINTA0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																		} else echo date('d-m-Y'); ?>" onclick="select()">
@@ -363,6 +360,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -486,8 +484,8 @@
 		var td13 = x.insertCell(12);
 		var td14 = x.insertCell(13);
 
-		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()'></select></div>";
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()' required></select></div>";
+		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 		
 		var no_bon = no_bon0;
 		var kd_bhn = kd_bhn0;
@@ -495,12 +493,12 @@
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
 		td2.innerHTML = no_bon;
 		td3.innerHTML = kd_bhn;
-		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input'>";
-		td5.innerHTML = "<input name='JENIS[]' id=JENIS" + idrow + " type='text' class='form-control JENIS text_input'>";
-		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' required>";
+		td5.innerHTML = "<input name='JENIS[]' id=JENIS" + idrow + " type='text' class='form-control JENIS text_input' required>";
+		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td7.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
 		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
-		td9.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input'>";
+		td9.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input' required>";
 		td10.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
 		td11.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {} else echo date('d-m-Y'); ?>'>";
 		td12.innerHTML = "<input name='SISABON[]' onclick='select()' onkeyup='hitung()' value='0' id=SISABON" + idrow + " type='text' class='form-control SISABON rightJustified text-primary' readonly>";

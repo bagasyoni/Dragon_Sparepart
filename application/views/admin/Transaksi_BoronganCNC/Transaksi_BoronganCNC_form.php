@@ -136,7 +136,7 @@
 							<label class="label">Nama </label>
 						</div>
 						<div class="col-md-2">
-						<select value="" class="js-example-responsive-rn_dev form-control DEVISI" name="DEVISI" id="DEVISI" onchange="rn_dev(this.id)" onfocusout="hitung()"></select>
+						<select value="" class="js-example-responsive-rn_dev form-control DEVISI" name="DEVISI" id="DEVISI" onchange="rn_dev(this.id)" onfocusout="hitung()" required></select>
 						</div>
 					</div>
 				</div>
@@ -164,7 +164,7 @@
 							<label class="label">DR </label>
 						</div>
 						<div class="col-md-1">
-							<input class="form-control text_input DR" id="DR" name="DR" type="text">
+							<input class="form-control text_input DR" id="DR" name="DR" type="text" required>
 						</div>
 					</div>
 				</div>
@@ -174,7 +174,7 @@
 							<label class="label">Article </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NA_BRG" id="NA_BRG" name="NA_BRG" type="text">
+							<input class="form-control text_input NA_BRG" id="NA_BRG" name="NA_BRG" type="text" required>
 						</div>
 						<div class="col-md-1">
 							<label class="label">Keterangan </label>
@@ -206,11 +206,11 @@
 						<tbody>
 							<tr>
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input"></td>
-								<td><input name="SERI[]" id="JENIS0" type="text" class="form-control SERI text_input"></td>
-								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary"></td>
+								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" required></td>
+								<td><input name="SERI[]" id="JENIS0" type="text" class="form-control SERI text_input" required></td>
+								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
-								<td><input name="HARGA[]" onclick="select()" onkeyup="hitung()" value="0" id="HARGA0" type="text" class="form-control HARGA rightJustified text-primary"></td>
+								<td><input name="HARGA[]" onclick="select()" onkeyup="hitung()" value="0" id="HARGA0" type="text" class="form-control HARGA rightJustified text-primary" required></td>
 								<td><input name="TOTAL[]" onclick="select()" value="0" id="TOTAL0" class="form-control TOTAL rightJustified text-primary" readonly></td>
 								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
 								<td>
@@ -330,6 +330,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -472,18 +473,18 @@
 		var td8 = x.insertCell(7);
 		var td9 = x.insertCell(8);
 
-		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()'></select></div>";
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()' required></select></div>";
+		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 		
 		var no_bon = no_bon0;
 		var kd_bhn = kd_bhn0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input'>";
+		td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' required>";
 		td3.innerHTML = "<input name='SERI[]' id=SERI" + idrow + " type='text' class='form-control SERI text_input'>";
-		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
-		td6.innerHTML = "<input name='HARGA[]' onclick='select()' onkeyup='hitung()' value='0' id=HARGA" + idrow + " type='text' class='form-control HARGA rightJustified text-primary'>";
+		td6.innerHTML = "<input name='HARGA[]' onclick='select()' onkeyup='hitung()' value='0' id=HARGA" + idrow + " type='text' class='form-control HARGA rightJustified text-primary' required>";
 		td7.innerHTML = "<input name='TOTAL[]' onclick='select()' onkeyup='hitung()' value='0' id=TOTAL" + idrow + " class='form-control TOTAL rightJustified text-primary' readonly>";
 		td8.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
 		td9.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +

@@ -212,7 +212,7 @@
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
 								<td>
 									<div class='input-group'>
-										<select value="" class="js-example-responsive-no_bon form-control NO_BON" name="NO_BON[]" id="NO_BON0" onchange="no_bon(this.id)" onfocusout="hitung()"></select>
+										<select value="" class="js-example-responsive-no_bon form-control NO_BON" name="NO_BON[]" id="NO_BON0" onchange="no_bon(this.id)" onfocusout="hitung()" required></select>
 									</div>
 								</td>
 								<td><input name="RAK[]" id="RAK0" type="text" class="form-control RAK text_input" readonly></td>
@@ -336,6 +336,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {

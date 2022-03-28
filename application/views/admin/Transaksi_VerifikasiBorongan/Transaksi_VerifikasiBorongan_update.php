@@ -150,7 +150,7 @@ foreach ($cnc as $rowh) {
 							<label class="label">Nama </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" value="<?php echo $rowh->DEVISI ?>" readonly>
+							<input class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" value="<?php echo $rowh->DEVISI ?>" required readonly>
 						</div>
 					</div>
 				</div>
@@ -295,6 +295,7 @@ foreach ($cnc as $rowh) {
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {

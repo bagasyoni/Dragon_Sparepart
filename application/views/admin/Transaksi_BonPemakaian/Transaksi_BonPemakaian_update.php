@@ -171,7 +171,7 @@ foreach ($bonpemakaian as $rowh) {
 								<th width="100px">Satuan</th>
 								<th width="200px">Keterangan 1</th>
 								<th width="200px">Keterangan 2</th>
-								<!-- <th width="150px">Grup</th> -->
+								<th width="150px">Grup</th>
 								<th width="50px"></th>
 							</tr>
 						</thead>
@@ -196,12 +196,12 @@ foreach ($bonpemakaian as $rowh) {
 									<td><input name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
 									<td>
 										<div class="input-group">
-											<select class="js-example-responsive-sp_mesin form-control KET2 text_input" name="KET2[]" id="KET20<?php echo $no; ?>" onchange="kd_gol(this.id)" required>
+											<select class="js-example-responsive-sp_mesin form-control KET2 text_input" name="KET2[]" id="KET2<?php echo $no; ?>" onchange="kd_gol(this.id)" required>
 												<option value="<?php echo $row->KET2; ?>" selected id="KET2<?php echo $no; ?>"><?php echo $row->KET2; ?></option>
 											</select>
 										</div>
 									</td>
-									<!-- <td><input name="GRUP[]" id="GRUP<?php echo $no; ?>" value="<?= $row->GRUP ?>" type="text" class="form-control GRUP text_input"></td> -->
+									<td><input name="GRUP[]" id="GRUP<?php echo $no; ?>" value="<?= $row->GRUP ?>" type="text" class="form-control GRUP text_input" readonly></td>
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
 										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -222,7 +222,7 @@ foreach ($bonpemakaian as $rowh) {
 							<td></td>
 							<td></td>
 							<td></td>
-							<!-- <td></td> -->
+							<td></td>
 						</tfoot>
 					</table>
 				</div>
@@ -366,7 +366,7 @@ foreach ($bonpemakaian as $rowh) {
 		var td7 = x.insertCell(6);
 		var td8 = x.insertCell(7);
 		var td9 = x.insertCell(8);
-		// var td10 = x.insertCell(9);
+		var td10 = x.insertCell(9);
 
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0 text_input' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
 
@@ -384,8 +384,8 @@ foreach ($bonpemakaian as $rowh) {
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
 		td7.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
 		td8.innerHTML = kd_gol;
-		// td9.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input'>";
-		td9.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
+		td9.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input'>";
+		td10.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -476,13 +476,11 @@ foreach ($bonpemakaian as $rowh) {
 	}
 
 	function kd_gol(x) {
-		var q = x.substring(6, 12);
+		var q = x.substring(4, 12);
 		$('#NA_GOL' + q).val(na_gol);
 		$('#GRUP' + q).val(grup);
 		
 		console.log(q);
-		console.log(na_gol);
-		console.log(grup);
 	}
 
 	function select_kd_bhn() {

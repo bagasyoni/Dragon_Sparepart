@@ -122,7 +122,7 @@
 						?>
 							<tr>
 								<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-								<td><input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly></td>
+								<td><input name="RAK[]" id="RAK<?php echo $no; ?>" value="<?= $row->RAK ?>" type="text" class="form-control RAK text_input" readonly></td>
 								<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
 								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 								<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"></td>
@@ -285,17 +285,17 @@
 		var td7 = x.insertCell(6);
 		var td8 = x.insertCell(7);
 
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0 text_input' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control RAK text_input' name='RAK[]' id=RAK" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
 
 		var kd_bhn = kd_bhn0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
 		td2.innerHTML = kd_bhn;
-		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
+		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
 		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
-		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input'>";
-		td6.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
-		td7.innerHTML = "<input name='KET2[]' id=KET20" + idrow + " type='text' class='form-control KET2 text_input'>";
+		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
+		td6.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
+		td7.innerHTML = "<input name='KET2[]' id=KET2" + idrow + " type='text' class='form-control KET2 text_input'>";
 		td8.innerHTML = "<input type='hidden' name='NO_ID[]' value='0' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
@@ -370,18 +370,18 @@
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_kd_bhn.kd_bhn);
+		$container.find(".select2-result-repository__title").text(repo_kd_bhn.KD_BHN);
 		return $container;
 	}
 	var na_bhn = '';
 
 	function formatSelection_kd_bhn(repo_kd_bhn) {
-		na_bhn = repo_kd_bhn.na_bhn;
+		na_bhn = repo_kd_bhn.NA_BHN;
 		return repo_kd_bhn.text;
 	}
 
 	function kd_bhn(x) {
-		var q = x.substring(6, 12);
+		var q = x.substring(3, 12);
 		$('#NA_BHN' + q).val(na_bhn);
 		console.log(q);
 	}

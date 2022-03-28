@@ -279,7 +279,7 @@ class Transaksi_Retur_Bon extends CI_Controller {
         foreach($REC as $a) {
             $datad = array(
                 'id' => $ID[0]->no_id,
-                'NO_BUKTI' => $NO_BUKTI[$i],
+                'NO_BUKTI' => $NO_BUKTI,
                 'TGL' => date("Y-m-d", strtotime($this->input->post('TGL',TRUE))),
                 'FLAG' => 'PK',
                 'FLAG2' => 'SP',
@@ -505,64 +505,6 @@ class Transaksi_Retur_Bon extends CI_Controller {
         $select['total_count'] =  $results->NUM_ROWS();
         $select['items'] = $selectajax;
         $this->output->set_content_type('application/json')->set_output(json_encode($select));
-    }
-
-    function JASPER($id) {
-        $CI = &get_instance();
-        $CI->load->database();
-        $servername = $CI->db->hostname;
-        $username = $CI->db->username;
-        $password = $CI->db->password;
-        $database = $CI->db->database;
-        $conn = mysqli_connect($servername, $username, $password, $database);
-        error_reporting(E_ALL);
-        ob_start();
-        include_once('phpjasperxml/class/tcpdf/tcpdf.php');
-        include_once("phpjasperxml/class/PHPJasperXML.inc.php");
-        include_once("phpjasperxml/setting.php");
-        $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Retur_Bon.jrxml");
-        $no_id = $id;
-        $query = "SELECT pakai.no_id as ID,
-                pakai.no_sp AS MODEL,
-                pakai.perke AS PERKE,
-                pakai.tgl_sp AS TGL_SP,
-                pakai.nodo AS NODO,
-                pakai.tgldo AS TGLDO,
-                pakai.tlusin AS TLUSIN,
-                pakai.tpair AS TPAIR,
-
-                pakaid.no_id AS NO_ID,
-                pakaid.rec AS REC,
-                CONCAT(pakaid.article,' - ',pakaid.warna) AS ARTICLE,
-                pakaid.size AS SIZE,
-                pakaid.golong AS GOLONG,
-                pakaid.sisa AS SISA,
-                pakaid.lusin AS LUSIN,
-                pakaid.pair AS PAIR,
-                CONCAT(pakaid.kodecus,' - ',pakaid.nama) AS KODECUS,
-                pakaid.kota AS KOTA
-            FROM pakai,pakaid 
-            WHERE pakai.no_id=$id 
-            AND pakai.no_id=pakaid.id 
-            ORDER BY pakaid.rec";
-        $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
-        $PHPJasperXML->arraysqltable = array();
-        $result1 = mysqli_query($conn, $query);
-        while ($row1 = mysqli_fetch_assoc($result1)) {
-            array_push($PHPJasperXML->arraysqltable, array(
-                "KDMTS" => $row1["KDMTS"],
-                "MODEL" => $row1["MODEL"],
-                "TGL_SP" => $row1["TGL_SP"],
-                "KODECUS" => $row1["KODECUS"],
-                "ARTICLE" => $row1["ARTICLE"],
-                "LUSIN" => $row1["LUSIN"],
-                "PAIR" => $row1["PAIR"],
-                "REC" => $row1["REC"],
-            ));
-        }
-        ob_end_clean();
-        $PHPJasperXML->outpage("I");
     }
 
 }

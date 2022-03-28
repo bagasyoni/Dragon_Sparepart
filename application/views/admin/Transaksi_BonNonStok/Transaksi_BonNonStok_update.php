@@ -209,7 +209,7 @@ foreach ($bon_nonstok as $rowh) {
 									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
 									<td>
 										<div class='input-group'>
-											<select <?php if ($rowh->VAL == !0) echo 'readonly'; ?> value="" class="js-example-responsive-kd_bhn form-control RAK" name="RAK[]" id="RAK0" onchange="kd_bhn(this.id)" onfocusout="hitung()"></select>
+											<select <?php if ($rowh->VAL == !0) echo 'readonly'; ?> value="" class="js-example-responsive-kd_bhn form-control RAK" name="RAK[]" id="RAK0" onchange="kd_bhn(this.id)" onfocusout="hitung()" required></select>
 										</div>
 									</td>
 									<td><input name="QTYPP[]" onkeyup="hitung()" id="QTYPP<?php echo $no; ?>" value="<?php echo number_format($row->QTYPP, 2, '.', ','); ?>" type="text" class="form-control QTYPP rightJustified text-primary" readonly></td>
@@ -336,6 +336,7 @@ foreach ($bon_nonstok as $rowh) {
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {

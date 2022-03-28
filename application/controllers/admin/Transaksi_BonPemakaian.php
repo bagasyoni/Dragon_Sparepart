@@ -249,7 +249,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         foreach ($REC as $a) {
             $datad = array(
                 'ID' => $ID[0]->no_id,
-                'NO_BUKTI' => $NO_BUKTI[$i],
+                'NO_BUKTI' => $NO_BUKTI,
                 'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
                 'REC' => $REC[$i],
                 'KD_BHN' => $KD_BHN[$i],

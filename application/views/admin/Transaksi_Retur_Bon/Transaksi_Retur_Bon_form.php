@@ -115,7 +115,7 @@
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC" onkeypress="return tabE(this,event)" readonly></td>
 								<td>
 									<div class='input-group'>
-										<select value="" class="js-example-responsive-kd_bhn form-control RAK" name="RAK[]" id="RAK0" onchange="kd_bhn(this.id)" onfocusout="hitung()"></select>
+										<select value="" class="js-example-responsive-kd_bhn form-control RAK" name="RAK[]" id="RAK0" onchange="kd_bhn(this.id)" onfocusout="hitung()" required></select>
 									</div>
 								</td>
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" readonly></td>
@@ -192,6 +192,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -283,15 +284,15 @@
 		var td7 = x.insertCell(6);
 		var td8 = x.insertCell(7);
 
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control RAK text_input' name='RAK[]' id=RAK" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control RAK text_input' name='RAK[]' id=RAK" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_bhn = kd_bhn0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
 		td2.innerHTML = kd_bhn;
 		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
-		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
-		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
+		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
+		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' required>";
 		td6.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
 		td7.innerHTML = "<input name='KET2[]' id=KET2" + idrow + " type='text' class='form-control KET2 text_input'>";
 		td8.innerHTML = "<input value='0' type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
@@ -380,7 +381,7 @@
 	}
 
 	function kd_bhn(x) {
-		var qq = x.substring(6, 10);
+		var qq = x.substring(3, 12);
 		$('#NA_BHN' + qq).val(na_bhn);
 		console.log(qq)
 }

@@ -86,13 +86,13 @@
 							<label class="label">Cetakan </label>
 						</div>
 						<div class="col-md-3">
-							<input class="form-control text_input CETAK" id="CETAK" name="CETAK" type="text" value=''>
+							<input class="form-control text_input CETAK" id="CETAK" name="CETAK" type="text" value='' required>
 						</div>
                         <div class="col-md-1">
 							<label class="label">Kode </label>
 						</div>
 						<div class="col-md-3">
-							<input class="form-control text_input KODE" id="KODE" name="KODE" type="text" value=''>
+							<input class="form-control text_input KODE" id="KODE" name="KODE" type="text" value='' required>
 						</div>
 					</div>
 				</div>
@@ -102,13 +102,13 @@
 							<label class="label">Nama </label>
 						</div>
 						<div class="col-md-3">
-							<input class="form-control text_input NAMA" id="NAMA" name="NAMA" type="text" value=''>
+							<input class="form-control text_input NAMA" id="NAMA" name="NAMA" type="text" value='' required>
 						</div>
 						<div class="col-md-1">
 							<label class="label">Nomor </label>
 						</div>
 						<div class="col-md-3">
-							<input class="form-control text_input NO_URUT" id="NO_URUT" name="NO_URUT" type="text" value=''>
+							<input class="form-control text_input NO_URUT" id="NO_URUT" name="NO_URUT" type="text" value='' required>
 						</div>
 					</div>
 				</div>
@@ -289,6 +289,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {

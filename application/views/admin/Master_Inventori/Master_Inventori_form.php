@@ -61,13 +61,13 @@
 						<label class="label">Kode</label>
 					</div>
 					<div class="col-md-3 ">
-						<input type="text" id="KODE" name="KODE" class="form-control text_input KODE">
+						<input type="text" id="KODE" name="KODE" class="form-control text_input KODE" required>
 					</div>
 					<div class="col-md-1">
 						<label class="label">Nama </label>
 					</div>
 					<div class="col-md-3 ">
-						<input type="text" id="NAMA" name="NAMA" class="form-control text_input NAMA">
+						<input type="text" id="NAMA" name="NAMA" class="form-control text_input NAMA" required>
 					</div>
 				</div>
 			</div>
@@ -77,19 +77,19 @@
 						<label class="label">Bagian</label>
 					</div>
 					<div class="col-md-3 ">
-						<input type="text" id="BAGIAN" name="BAGIAN" class="form-control text_input BAGIAN">
+						<input type="text" id="BAGIAN" name="BAGIAN" class="form-control text_input BAGIAN" required>
 					</div>
 					<div class="col-md-1">
 						<label class="label">J Barang</label>
 					</div>
 					<div class="col-md-3">
-						<input type="text" id="J_BARANG" name="J_BARANG" class="form-control text_input J_BARANG">
+						<input type="text" id="J_BARANG" name="J_BARANG" class="form-control text_input J_BARANG" required>
 					</div>
 					<div class="col-md-1">
 						<label class="label">Merk</label>
 					</div>
 					<div class="col-md-3">
-						<input type="text" id="MERK" name="MERK" class="form-control text_input MERK">
+						<input type="text" id="MERK" name="MERK" class="form-control text_input MERK" required>
 					</div>
 				</div>
 			</div>
@@ -155,7 +155,7 @@
 						<label class="label">Kode Barang</label>
 					</div>
 					<div class="col-md-3">
-						<input type="text" id="KD_BRG" name="KD_BRG" class="form-control text_input KD_BRG">
+						<input type="text" id="KD_BRG" name="KD_BRG" class="form-control text_input KD_BRG" required>
 					</div>
 				</div>
 			</div>
@@ -204,6 +204,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {

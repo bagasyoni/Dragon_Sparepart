@@ -180,7 +180,7 @@
 						<label class="label">Jenis</label>
 					</div>
 					<div class="col-md-4">
-						<input type="text" id="JENIS" name="JENIS" class="form-control text_input JENIS">
+						<input type="text" id="JENIS" name="JENIS" class="form-control text_input JENIS" required>
 					</div>
 				</div>
 			</div>
@@ -227,6 +227,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {

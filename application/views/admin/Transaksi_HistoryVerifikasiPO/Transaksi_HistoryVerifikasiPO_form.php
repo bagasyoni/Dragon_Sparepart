@@ -160,7 +160,7 @@
 							<label class="label">Kode Supplier </label>
 						</div>
 						<div class="col-md-2 input-group">
-							<input name="KODES" id="KODES" maxlength="50" type="text" class="form-control KODES text_input" onkeypress="return tabE(this,event)" readonly>
+							<input name="KODES" id="KODES" maxlength="50" type="text" class="form-control KODES text_input" onkeypress="return tabE(this,event)" readonly required>
 							<span class="input-group-btn">
 								<a class="btn default" onfocusout="hitung()" id="0" data-target="#mymodal_kodes" data-toggle="modal" href="#modalkodes" ><i class="fa fa-search"></i></a>
 							</span>
@@ -250,12 +250,12 @@
 							<tr>
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
 								<td>
-									<select class="js-example-responsive-kd_bhn form-control KD_BHN0 text_input" name="KD_BHN[]" id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()"></select>
+									<select class="js-example-responsive-kd_bhn form-control KD_BHN0 text_input" name="KD_BHN[]" id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()" required></select>
 								</td>
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" readonly></td>
 								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input" readonly></td>
-								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary"></td>
+								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td>
 									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
@@ -370,6 +370,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -471,11 +472,11 @@
 		var td6 = x.insertCell(5);
 		var td7 = x.insertCell(6);
 
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0 text_input' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0 text_input' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_bhn = kd_bhn0;
 
-		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET20" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET20" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_gol = kd_gol0;
 
@@ -484,7 +485,7 @@
 		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
 		td4.innerHTML = "<input name='KET[]' id=KET0" + idrow + " type='text' class='form-control KET text_input'>";
 		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
-		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td7.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;

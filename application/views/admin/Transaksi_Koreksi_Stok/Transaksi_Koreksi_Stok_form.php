@@ -184,12 +184,12 @@
 							<tr>
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC" onkeypress="return tabE(this,event)" readonly></td>
 								<td>
-									<select class="js-example-responsive-kd_bhn form-control KD_BHN0" name="KD_BHN[]" id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()"></select>
+									<select class="js-example-responsive-kd_bhn form-control KD_BHN0" name="KD_BHN[]" id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()" required></select>
 								</td>
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN" readonly></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN" readonly></td>
 								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" readonly></td>
-								<td><input name="QTY_AK[]" onkeyup="hitung()" value="0" id="QTY_AK0" type="text" class="form-control QTY_AK rightJustified text-primary"></td>
+								<td><input name="QTY_AK[]" onkeyup="hitung()" value="0" id="QTY_AK0" type="text" class="form-control QTY_AK rightJustified text-primary" required></td>
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1"></td>
 								<td>
 									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -260,6 +260,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -349,7 +350,7 @@
 		var td7 = x.insertCell(6);
 		var td8 = x.insertCell(7);
 
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_bhn = kd_bhn0;
 
@@ -358,7 +359,7 @@
 		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN' readonly>";
 		td4.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN' readonly>";
 		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' readonly>";
-		td6.innerHTML = "<input name='QTY_AK[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY_AK" + idrow + " type='text' class='form-control QTY_AK rightJustified text-primary'>";
+		td6.innerHTML = "<input name='QTY_AK[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY_AK" + idrow + " type='text' class='form-control QTY_AK rightJustified text-primary' required>";
 		td7.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1'>";
 		td8.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0' >" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";

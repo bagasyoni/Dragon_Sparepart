@@ -147,7 +147,7 @@
 							<label class="label">Bagian </label>
 						</div>
 						<div class="col-md-3">
-							<select class="js-example-responsive-na_bagian form-control text_input NA_BAGIAN" name="NA_BAGIAN" id="NA_BAGIAN" onchange="na_bagian(this.id)"></select>
+							<select class="js-example-responsive-na_bagian form-control text_input NA_BAGIAN" name="NA_BAGIAN" id="NA_BAGIAN" onchange="na_bagian(this.id)" required></select>
 						</div>
 						<div class="col-md-1">
 							<label class="label">Nama </label>
@@ -182,7 +182,7 @@
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
 								<td>
 									<div class='input-group'>
-										<select class="js-example-responsive-jenis form-control JENIS0 text_input" name="JENIS[]" id="JENIS0" onchange="jenis(this.id)" onfocusout="hitung()"></select>
+										<select class="js-example-responsive-jenis form-control JENIS0 text_input" name="JENIS[]" id="JENIS0" onchange="jenis(this.id)" onfocusout="hitung()" required></select>
 									</div>
 								</td>
 								<td><input name="MERK[]" id="MERK0" type="text" class="form-control MERK text_input"></td>
@@ -273,6 +273,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -366,7 +367,7 @@
 		var td9 = x.insertCell(8);
 		var td10 = x.insertCell(9);
 
-		var jenis0 = "<div class='input-group'><select class='js-example-responsive-jenis form-control JENIS0 text_input' name='JENIS[]' id=JENIS0" + idrow + " onchange='jenis(this.id)' onfocusout='hitung()'></select></div>";
+		var jenis0 = "<div class='input-group'><select class='js-example-responsive-jenis form-control JENIS0 text_input' name='JENIS[]' id=JENIS0" + idrow + " onchange='jenis(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var jenis = jenis0;
 

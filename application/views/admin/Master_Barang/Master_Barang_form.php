@@ -155,7 +155,7 @@
 						<label class="label">Nama Barang</label>
 					</div>
 					<div class="col-md-3 ">
-						<input type="text" id="NA_BHN" name="NA_BHN" class="form-control text_input NA_BHN">
+						<input type="text" id="NA_BHN" name="NA_BHN" class="form-control text_input NA_BHN" required>
 					</div>
 				</div>
 			</div>
@@ -165,7 +165,7 @@
 						<label class="label">Satuan</label>
 					</div>
 					<div class="col-md-3 ">
-						<input type="text" id="SATUAN" name="SATUAN" class="form-control text_input SATUAN">
+						<input type="text" id="SATUAN" name="SATUAN" class="form-control text_input SATUAN" required>
 					</div>
 					<div class="col-md-1">
 						<label class="label">Status</label>
@@ -184,7 +184,7 @@
 						<label class="label">Rak </label>
 					</div>
 					<div class="col-md-3 ">
-						<input type="text" id="RAK" name="RAK" class="form-control text_input RAK">
+						<input type="text" id="RAK" name="RAK" class="form-control text_input RAK" required>
 					</div>
 				</div>
 			</div>
@@ -231,6 +231,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {

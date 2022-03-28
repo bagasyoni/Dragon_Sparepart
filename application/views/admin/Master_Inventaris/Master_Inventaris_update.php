@@ -368,7 +368,7 @@ foreach ($inventaris as $rowh) {
 		var td10 = x.insertCell(9);
 		var td11 = x.insertCell(10);
 
-		var jenis0 = "<div class='input-group'><select class='js-example-responsive-jenis form-control JENIS0 text_input' name='JENIS[]' id=JENIS0" + idrow + " onchange='jenis(this.id)' onfocusout='hitung()'></select></div>";
+		var jenis0 = "<div class='input-group'><select class='js-example-responsive-jenis form-control JENIS0 text_input' name='JENIS[]' id=JENIS0" + idrow + " onchange='jenis(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var jenis = jenis0;
 

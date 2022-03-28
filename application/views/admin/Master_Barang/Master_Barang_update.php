@@ -214,11 +214,11 @@ foreach ($bahan as $rowh) {
 					<!-- if ($rowh->PKP == "1") echo 'checked '; ?> -->
 					<div class="col-md-2 ">
 						<input <?php
-								if ($rowh->DR != "I") echo 'hidden'; ?> type="text" id="RAK1" name="RAK1" class="form-control text_input RAK1" value="<?= $rowh->RAK1 ?>">
+								if ($rowh->DR != "I") echo 'hidden'; ?> type="text" id="RAK1" name="RAK1" class="form-control text_input RAK1" value="<?= $rowh->RAK1 ?>" required>
 						<input <?php
-								if ($rowh->DR != "II") echo 'hidden'; ?> type="text" id="RAK2" name="RAK2" class="form-control text_input RAK2" value="<?= $rowh->RAK2 ?>">
+								if ($rowh->DR != "II") echo 'hidden'; ?> type="text" id="RAK2" name="RAK2" class="form-control text_input RAK2" value="<?= $rowh->RAK2 ?>" required>
 						<input <?php
-								if ($rowh->DR != "III") echo 'hidden'; ?> type="text" id="RAK3" name="RAK3" class="form-control text_input RAK3" value="<?= $rowh->RAK3 ?>">
+								if ($rowh->DR != "III") echo 'hidden'; ?> type="text" id="RAK3" name="RAK3" class="form-control text_input RAK3" value="<?= $rowh->RAK3 ?>" required>
 					</div>
 				</div>
 			</div>
@@ -265,6 +265,7 @@ foreach ($bahan as $rowh) {
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {

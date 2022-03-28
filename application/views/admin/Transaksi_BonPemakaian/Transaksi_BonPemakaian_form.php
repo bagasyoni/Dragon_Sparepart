@@ -175,7 +175,7 @@
 							<tr>
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
 								<td>
-									<select class="js-example-responsive-kd_bhn form-control KD_BHN0 text_input" name="KD_BHN[]" id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()"></select>
+									<select class="js-example-responsive-kd_bhn form-control KD_BHN0 text_input" name="KD_BHN[]" id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()" required></select>
 								</td>
 								<td><input name="RAK[]" id="RAK0" type="text" class="form-control RAK text_input" readonly></td>
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" readonly></td>
@@ -183,7 +183,7 @@
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input" readonly></td>
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1 text_input"></td>
 								<td>
-									<select class="js-example-responsive-sp_mesin form-control KET20 text_input" name="KET2[]" id="KET20" onchange="kd_gol(this.id)" onfocusout="hitung()"></select>
+									<select class="js-example-responsive-sp_mesin form-control KET20 text_input" name="KET2[]" id="KET20" onchange="kd_gol(this.id)" onfocusout="hitung()" required></select>
 								</td>
 								<td><input name="GRUP[]" id="GRUP0" type="text" class="form-control GRUP text_input" readonly></td>
 								<td>
@@ -256,6 +256,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -349,11 +350,11 @@
 		var td9 = x.insertCell(8);
 		var td10 = x.insertCell(9);
 
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0 text_input' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0 text_input' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_bhn = kd_bhn0;
 
-		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET20" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET20" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_gol = kd_gol0;
 
@@ -361,7 +362,7 @@
 		td2.innerHTML = kd_bhn;
 		td3.innerHTML = "<input name='RAK[]' id=RAK0" + idrow + " type='text' class='form-control RAK text_input' readonly>";
 		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
-		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
 		td7.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
 		td8.innerHTML = kd_gol;
@@ -457,13 +458,13 @@
 	}
 
 	function kd_gol(x) {
-		var q = x.substring(6, 12);
+		var q = x.substring(4, 12);
 		$('#NA_GOL' + q).val(na_gol);
 		$('#GRUP' + q).val(grup);
 		
 		console.log(q);
-		console.log(na_gol);
-		console.log(grup);
+		// console.log(na_gol);
+		// console.log(grup);
 	}
 
 	function select_kd_bhn() {

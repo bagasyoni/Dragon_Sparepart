@@ -70,7 +70,7 @@
 							<label class="label">No Bukti Beli </label>
 						</div>
 						<div class="col-md-2 input-group">
-							<input name="NO_BUKTI_BL" id="NO_BUKTI_BL" type="text" class="form-control NO_BUKTI_BL text_input" onkeypress="return tabE(this,event)" readonly>
+							<input name="NO_BUKTI_BL" id="NO_BUKTI_BL" type="text" class="form-control NO_BUKTI_BL text_input" onkeypress="return tabE(this,event)" required readonly>
 							<span class="input-group-btn">
 								<a class="btn default" onfocusout="hitung()" id="0" data-target="#mymodal_nobukti_bl" data-toggle="modal" href="#lupnobukti_bl" ><i class="fa fa-search"></i></a>
 							</span>
@@ -248,6 +248,7 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -386,17 +387,17 @@
 		var td8 = x.insertCell(7);
 		var td9 = x.insertCell(8);
 		
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_bhn = kd_bhn0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly>";
 		td2.innerHTML = kd_bhn;
 		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN' readonly>";
-		td4.innerHTML = "<input name='RAK[]' id=RAK" + idrow + " type='text' class='form-control RAK'>";
-		td5.innerHTML = "<input name='QTY_BL[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY_BL" + idrow + " type='text' class='form-control QTY_BL rightJustified text-primary'>";
+		td4.innerHTML = "<input name='RAK[]' id=RAK" + idrow + " type='text' class='form-control RAK' required>";
+		td5.innerHTML = "<input name='QTY_BL[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY_BL" + idrow + " type='text' class='form-control QTY_BL rightJustified text-primary' required>";
 		td6.innerHTML = "<input name='SATUAN_BL[]' id=SATUAN_BL" + idrow + " type='text' class='form-control SATUAN_BL'>";
-		td7.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td7.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN'>";
 		td9.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + " class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
