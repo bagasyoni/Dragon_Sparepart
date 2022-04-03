@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost:3309',
+	'hostname' => '26.162.162.191:3309',
 	'username' => 'root',
 	'password' => 'admin',
 	'database' => 'db_intidragon',

@@ -1,3 +1,5 @@
+<script src="https://unpkg.com/@develoka/angka-terbilang-js/index.min.js"></script>
+
 <style>
 	#myInput {
 		background-image: url('<?php echo base_url() ?>assets/img/search-icon-blue.png');
@@ -104,10 +106,11 @@
 								<th width="125px">Uraian</th>
 								<th width="175px">Ket Barang</th>
 								<th width="100px">Qty</th>
+								<th width="100px">Bilangan</th>
 								<th width="100px">Satuan</th>
 								<th width="100px">Devisi</th>
 								<th width="120px">Keterangan</th>
-								<th width="100px">Tgl Diminta</th>
+								<th width="100px">Sisa</th>
 								<th width="50px"></th>
 							</tr>
 						</thead>
@@ -120,20 +123,11 @@
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN" readonly></td>
 								<td><input name="TIPE[]" id="TIPE0" type="text" class="form-control TIPE"></td>
 								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
+								<td><input name="BILANGAN[]" id="BILANGAN0" type="text" class="form-control BILANGAN text_input" readonly></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN"></td>
 								<td><input name="DEVISI[]" id="DEVISI0" type="text" class="form-control KD_PEG" required></td>
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1"></td>
-								<td>
-									<input 
-										name="TGL_DIMINTA[]" 
-										id="TGL_DIMINTA0" 
-										type="text" 
-										class="date form-control" 
-										data-date-format="dd-mm-yyyy" 
-										value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["TGL_DIMINTA"]; } else echo date('d-m-Y'); ?>" 
-										onclick="select()" 
-									>
-								</td>
+								<td><input name="SISA[]" onkeyup="hitung()" value="0" id="SISA0" type="text" class="form-control SISA rightJustified text-primary" required></td>
 								<td>
 									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
@@ -147,6 +141,7 @@
 							<td></td>
 							<td></td>
 							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -255,8 +250,18 @@
 	function hitung() {
 		var TOTAL_QTY = 0;
 		var total_row = idrow;
-		for (i=0;i<total_row;i++) {
+		for (i = 0; i < total_row; i++) {
+			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
 
+			if (qty > sisabon) {
+				alert("Qty tidak boleh lebih besar dari Sisa Bon");
+				$('#QTY' + i).val(0);
+				console.log('TIDAK OK !!!')
+			} else {
+				console.log('OK !!!')
+			}
+			$('#BILANGAN' + i).val(angkaTerbilang(qty));
+			// console.log(angkaTerbilang('Terbilang :'+qty));
 		};
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
@@ -284,6 +289,7 @@
 		var td8 = x.insertCell(7);
 		var td9 = x.insertCell(8);
 		var td10 = x.insertCell(9);
+		var td11 = x.insertCell(10);
 		
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
@@ -294,11 +300,12 @@
 		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN' readonly>";
 		td4.innerHTML = "<input name='TIPE[]' id=TIPE0" + idrow + " type='text' class='form-control TIPE'>";
 		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
-		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN'>";
-		td7.innerHTML = "<input name='DEVISI[]' id=DEVISI0" + idrow + " type='text' class='form-control DEVISI' required>";
-		td8.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1'>";
-		td9.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA0" + idrow + " type='text' class='date form-control TGL_DIMINTA' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) { echo $_POST["TGLSG"]; } else echo date('d-m-Y'); ?>'>";
-		td10.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
+		td6.innerHTML = "<input name='BILANGAN[]' id=BILANGAN0" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
+		td7.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN'>";
+		td8.innerHTML = "<input name='DEVISI[]' id=DEVISI0" + idrow + " type='text' class='form-control DEVISI' required>";
+		td9.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1'>";
+		td10.innerHTML = "<input name='SISA[]' onclick='select()' onkeyup='hitung()' value='0' id=SISA" + idrow + " type='text' class='form-control SISA rightJustified text-primary' required>";
+		td11.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {

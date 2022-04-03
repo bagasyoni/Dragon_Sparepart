@@ -258,7 +258,7 @@ class Transaksi_BonPemakaian extends CI_Controller
                 'QTY' => str_replace(',', '', $QTY[$i]),
                 'SATUAN' => $SATUAN[$i],
                 'KET1' => $KET1[$i],
-                'KET2' => $KET2[$i],
+                'KET2' => $KET2[$i] ?? "-",
                 'GRUP' => $GRUP[$i],
                 'FLAG' => 'PK',
                 'FLAG2' => 'SP',

@@ -272,10 +272,11 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
         $NA_BHN = $this->input->post('NA_BHN');
         $TIPE = $this->input->post('TIPE');
         $QTY = str_replace(',','',$this->input->post('QTY',TRUE));
+        $SISA = str_replace(',','',$this->input->post('SISA',TRUE));
+        $BILANGAN = $this->input->post('BILANGAN');
         $SATUAN = $this->input->post('SATUAN');
         $DEVISI = $this->input->post('DEVISI');
         $KET1 = $this->input->post('KET1');
-        $TGL_DIMINTA = $this->input->post('TGL_DIMINTA');
         $i = 0;
         foreach($REC as $a) {
             $datad = array(
@@ -287,10 +288,11 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
                 'TIPE' => $TIPE[$i],
                 'TGL' => date("Y-m-d", strtotime($this->input->post('TGL',TRUE))),
                 'QTY' => str_replace(',','',$QTY[$i]),
+                'SISA' => str_replace(',','',$SISA[$i]),
+                'BILANGAN' => $BILANGAN[$i],
                 'SATUAN' => $SATUAN[$i],
                 'DEVISI' => $DEVISI[$i],
                 'KET1' => $KET1[$i],
-                'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$i])),
                 'FLAG' => 'PP',
                 'FLAG2' => 'SP',
                 'TYP' => 'PROYEK',
@@ -326,10 +328,11 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
                 ppd.NA_BHN AS NA_BHN,
                 ppd.TIPE AS TIPE,
                 ppd.QTY AS QTY,
+                ppd.SISA AS SISA,
+                ppd.BILANGAN AS BILANGAN,
                 ppd.SATUAN AS SATUAN,
                 ppd.DEVISI AS DEVISI,
-                ppd.KET1 AS KET1,
-                ppd.TGL_DIMINTA AS TGL_DIMINTA
+                ppd.KET1 AS KET1
             FROM pp,ppd 
             WHERE pp.NO_ID=$id 
             AND pp.NO_ID=ppd.ID 
@@ -370,10 +373,11 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
                 ppd.NA_BHN AS NA_BHN,
                 ppd.TIPE AS TIPE,
                 ppd.QTY AS QTY,
+                ppd.SISA AS SISA,
+                ppd.BILANGAN AS BILANGAN,
                 ppd.SATUAN AS SATUAN,
                 ppd.DEVISI AS DEVISI,
-                ppd.KET1 AS KET1,
-                ppd.TGL_DIMINTA AS TGL_DIMINTA
+                ppd.KET1 AS KET1
             FROM pp,ppd 
             WHERE pp.NO_ID=$id 
             AND pp.NO_ID=ppd.ID 
@@ -385,10 +389,11 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
         $NA_BHN = $this->input->post('NA_BHN');
         $TIPE = $this->input->post('TIPE');
         $QTY = str_replace(',','',$this->input->post('QTY',TRUE));
+        $SISA = str_replace(',','',$this->input->post('SISA',TRUE));
+        $BILANGAN = $this->input->post('BILANGAN');
         $SATUAN = $this->input->post('SATUAN');
         $DEVISI = $this->input->post('DEVISI');
         $KET1 = $this->input->post('KET1');
-        $TGL_DIMINTA = $this->input->post('TGL_DIMINTA');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -407,10 +412,11 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
                     'NA_BHN' => $NA_BHN[$URUT],
                     'TIPE' => $TIPE[$URUT],
                     'QTY' => str_replace(',','',$QTY[$URUT]),
+                    'SISA' => str_replace(',','',$SISA[$URUT]),
+                    'BILANGAN' => $BILANGAN[$URUT],
                     'SATUAN' => $SATUAN[$URUT],
                     'DEVISI' => $DEVISI[$URUT],
                     'KET1' => $KET1[$URUT],
-                    'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$URUT])),
                     'PER' => $this->session->userdata['periode'],
                     'DR' => $this->session->userdata['dr'],
                     'SUB' => $this->session->userdata['sub'],
@@ -444,10 +450,11 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
                     'NA_BHN' => $NA_BHN[$i],
                     'TIPE' => $TIPE[$i],
                     'QTY' => str_replace(',','',$QTY[$i]),
+                    'SISA' => str_replace(',','',$SISA[$i]),
+                    'BILANGAN' => $BILANGAN[$i],
                     'SATUAN' => $SATUAN[$i],
                     'DEVISI' => $DEVISI[$i],
                     'KET1' => $KET1[$i],
-                    'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$i])),
                     'PER' => $this->session->userdata['periode'],
                     'DR' => $this->session->userdata['dr'],
                     'SUB' => $this->session->userdata['sub'],

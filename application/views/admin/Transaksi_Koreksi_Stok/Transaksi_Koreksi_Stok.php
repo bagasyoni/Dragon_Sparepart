@@ -42,7 +42,7 @@
                         <th width="75px">No</th>
                         <th width="275px">No Bukti</th>
                         <th width="200px">Tgl</th>
-                        <th width="250px">Notes</th>
+                        <th width="350px">Notes</th>
                         <th width="170px">Total QTY</th>
                     </tr>
                 </thead>

@@ -97,7 +97,6 @@ class Transaksi_Inventaris_Cetakan extends CI_Controller {
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_Inventaris_Cetakan/update/' . $sp_invenc->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_Inventaris_Cetakan/delete/' . $sp_invenc->NO_ID) . '"  onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
-                            <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
@@ -375,45 +374,4 @@ class Transaksi_Inventaris_Cetakan extends CI_Controller {
         $this->master_model->remove_checked('sp_invenc');
         redirect('admin/Transaksi_Inventaris_Cetakan/index_Transaksi_Inventaris_Cetakan');
     }
-
-    function JASPER() {
-        $CI = &get_instance();
-        $CI->load->database();
-        $servername = $CI->db->hostname;
-        $username = $CI->db->username;
-        $password = $CI->db->password;
-        $database = $CI->db->database;
-        $conn = mysqli_connect($servername, $username, $password, $database);
-        error_reporting(E_ALL);
-        ob_start();
-        include('phpjasperxml/class/tcpdf/tcpdf.php');
-        include('phpjasperxml/class/PHPJasperXML.inc.php');
-        include('phpjasperxml/setting.php');
-        $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/account.jrxml");
-        $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
-        $PHPJasperXML->arraysqltable = array();
-        $query = "SELECT account.no_id,
-                account.acno,
-                account.nama,
-                account.nama_kel,
-                account.nm_grup
-                FROM account 
-                ORDER BY account.acno ";
-        $result1 = mysqli_query($conn, $query);
-        $x = 1;
-        while ($row1 = mysqli_fetch_assoc($result1)) {
-            array_push($PHPJasperXML->arraysqltable, array(
-                "no_id" => $x,
-                "ACNO" => $row1["acno"],
-                "nama" => $row1["nama"],
-                "nama_kel" => $row1["nama_kel"],
-                "nm_grup" => $row1["nm_grup"]
-            ));
-            $x++;
-        }
-        ob_end_clean();
-        $PHPJasperXML->outpage("I");
-    }
-
 }

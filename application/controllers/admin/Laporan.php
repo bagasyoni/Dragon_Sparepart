@@ -816,6 +816,8 @@ class Laporan extends CI_Controller
 					"NO_BUKTI_KE" => $row1["NO_BUKTI_KE"],
 					"KE" => $row1["KE"],
 					"AK" => $row1["AK"],
+					"NO_BUKTI_RKE" => $row1["NO_BUKTI_RKE"],
+					"RKE" => $row1["RKE"],
 				));
 			}
 			ob_end_clean();

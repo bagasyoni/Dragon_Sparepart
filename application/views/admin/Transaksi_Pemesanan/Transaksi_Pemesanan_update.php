@@ -179,9 +179,6 @@ foreach ($pemesanan as $rowh) {
 						<div class="col-md-3">
 							<input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value="<?php echo $rowh->NOTES ?>">
 						</div>
-						<div class="col-md-4">
-							<label class="label"><strong style="color: red;">*</strong> Untuk PP Dengan No Bon, PP Dengan Master Bahan Dimenu PP Stok </label>
-						</div>
 					</div>
 				</div>
 				<hr>

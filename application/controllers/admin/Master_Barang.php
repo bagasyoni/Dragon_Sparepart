@@ -175,58 +175,6 @@ class Master_Barang extends CI_Controller
         $this->load->view('templates_admin/footer');
     }
 
-    // public function input_aksi()
-    // {
-    //     $inisialKD = strtoupper(substr($this->input->post('NA_BHN', TRUE), 0, 1));
-    //     $nomer = $this->db->query("SELECT concat('$inisialKD',lpad(coalesce(NOM,0)+1, 4, 0) ) as NOMER from (
-    //     SELECT KD_BHN, right(max(KD_BHN),4) as NOM from bhn where LEFT(KD_BHN,1)='$inisialKD'
-    //     ) as XX")->result();
-    //     $nom = array_column($nomer, 'NOMER');
-    //     $kdbhn = $nom[0];
-    //     $data = array(
-    //         // 'KD_BHN' => $this->input->post('KD_BHN', TRUE),
-    //         'KD_BHN' => $kdbhn,
-    //         'NA_BHN' => strtoupper($this->input->post('NA_BHN', TRUE)),
-    //         'SATUAN' => strtoupper($this->input->post('SATUAN', TRUE)),
-    //         // 'RAK' => $this->input->post('RAK', TRUE),
-    //         'AKTIF' => $this->input->post('AKTIF', TRUE),
-    //         // 'DR' => $this->session->userdata['dr'],
-    //         'SUB' => $this->session->userdata['sub'],
-    //         'USRNM' => $this->session->userdata['username'],
-    //         'FLAG' => 'SP',
-    //         'FLAG2' => 'SP',
-    //         'TG_SMP' => date('Y-m-d H:i:s'),
-    //     );
-    //     $this->master_model->input_data('bhn', $data);
-
-    //     $datadr = $this->transaksi_model->edit_data("SELECT * from dr")->result();
-    //     $jumdr = count($datadr);
-    //     $i = 1;
-    //     while ($i <= $jumdr) {
-    //         $datad = array(
-    //             'KD_BHN' => $kdbhn,
-    //             'NA_BHN' => strtoupper($this->input->post('NA_BHN', TRUE)),
-    //             'RAK' => ($this->getRomawi($i) == $this->session->userdata['dr']) ? strtoupper($this->input->post('RAK', TRUE)) : '',
-    //             'DR' => $this->getRomawi($i),
-    //             'SUB' => $this->session->userdata['sub'],
-    //             'FLAG' => 'SP',
-    //             'FLAG2' => 'SP',
-    //         );
-    //         $this->master_model->input_data('bhnd', $datad);
-    //         $i++;
-    //     }
-    //     $this->session->set_flashdata(
-    //         'pesan',
-    //         '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
-    //             Data succesfully Inserted.
-    //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    //                 <span aria-hidden="true">&times;</span>
-    //             </button> 
-    //         </div>'
-    //     );
-    //     redirect('admin/Master_Barang/index_Master_Barang');
-    // }
-
     public function update($id)
     {
         $q1 = "SELECT bhn.NO_ID as ID,
@@ -317,47 +265,6 @@ class Master_Barang extends CI_Controller
     {
         $this->master_model->remove_checked('bhn');
         redirect('admin/Master_Barang/index_Master_Barang');
-    }
-
-    function JASPER()
-    {
-        $CI = &get_instance();
-        $CI->load->database();
-        $servername = $CI->db->hostname;
-        $username = $CI->db->username;
-        $password = $CI->db->password;
-        $database = $CI->db->database;
-        $conn = mysqli_connect($servername, $username, $password, $database);
-        error_reporting(E_ALL);
-        ob_start();
-        include('phpjasperxml/class/tcpdf/tcpdf.php');
-        include('phpjasperxml/class/PHPJasperXML.inc.php');
-        include('phpjasperxml/setting.php');
-        $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/account.jrxml");
-        $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
-        $PHPJasperXML->arraysqltable = array();
-        $query = "SELECT account.no_id,
-                account.acno,
-                account.nama,
-                account.nama_kel,
-                account.nm_grup
-                FROM account 
-                ORDER BY account.acno ";
-        $result1 = mysqli_query($conn, $query);
-        $x = 1;
-        while ($row1 = mysqli_fetch_assoc($result1)) {
-            array_push($PHPJasperXML->arraysqltable, array(
-                "no_id" => $x,
-                "ACNO" => $row1["acno"],
-                "nama" => $row1["nama"],
-                "nama_kel" => $row1["nama_kel"],
-                "nm_grup" => $row1["nm_grup"]
-            ));
-            $x++;
-        }
-        ob_end_clean();
-        $PHPJasperXML->outpage("I");
     }
 
     function getRomawi($bln)

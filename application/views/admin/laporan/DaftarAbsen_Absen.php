@@ -29,7 +29,7 @@
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
         <form id="frmrbiaya" method="post" action="<?php echo base_url('admin/laporan/index_DaftarAbsen_Absen') ?>">
-        <div class="col-md-12">
+            <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-md-1">
                         <label class="label-title">Bagian </label>

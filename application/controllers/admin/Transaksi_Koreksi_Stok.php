@@ -111,7 +111,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
             $row[] = $stocka->NO_BUKTI;
             $row[] = $stocka->TGL;
             $row[] = $stocka->NOTES;
-            $row[] = $stocka->TOTAL_QTY;
+            $row[] = $stocka->TOTAL_QTY_AK;
             $data[] = $row;
         }
         $output = array(
@@ -284,6 +284,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
                 'QTY_AK' => str_replace(',','',$QTY_AK[$i]),
                 'SATUAN' => $SATUAN[$i],
                 'KET1' => $KET1[$i],
+                'DR' => $this->session->userdata['dr'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
                 'DR' => $this->session->userdata['dr'],
@@ -292,7 +293,9 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
             $this->transaksi_model->input_datad('stockad',$datad);
             $i++;
         }
-   
+        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM stocka WHERE NO_BUKTI='$bukti'")->result();
+        $no_bukti = $xx[0]->BUKTIX;
+        $this->db->query("CALL spp_stockains('" . $no_bukti . "')");
         $this->session->set_flashdata('pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
                 Data succesfully Inserted.
@@ -331,6 +334,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
     }
 
     public function update_aksi() {
+        $bukti = $this->input->post('NO_BUKTI');
         $datah = array(
             'FLAG' => 'SP',
             'FLAG2' => 'LN',
@@ -349,6 +353,9 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
         $where = array(
             'NO_ID' => $this->input->post('ID', TRUE)
         );
+        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM stocka WHERE NO_BUKTI='$bukti'")->result();
+        $no_bukti = $xx[0]->BUKTIX;
+        $this->db->query("CALL spp_stockadel('" . $no_bukti . "')");
         $this->transaksi_model->update_data($where, $datah, 'stocka');
         $id = $this->input->post('ID', TRUE);
         $q1="SELECT stocka.NO_ID as ID,
@@ -442,6 +449,9 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
             }
             $i++;
         }
+        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM stocka WHERE NO_BUKTI='$bukti'")->result();
+        $no_bukti = $xx[0]->BUKTIX;
+        $this->db->query("CALL spp_stockains('" . $no_bukti . "')");
         $this->session->set_flashdata('pesan', 
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
                 Data Berhasil Di Update.
@@ -453,6 +463,8 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
     }
 
     public function delete($id) {
+        $data = $this->db->query("SELECT NO_BUKTI FROM stocka WHERE NO_ID='$id'")->result();
+        $this->db->query("CALL spp_stockadel('" . $data[0]->NO_BUKTI . "')");
         $where = array('NO_ID' => $id);
         $this->transaksi_model->hapus_data($where, 'stocka');
         $where = array('ID' => $id);
@@ -473,6 +485,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
     }
 
     public function getDataAjax_Bahan() {
+        $per = substr($this->session->userdata['periode'], 0, 2);
         $search = $this->input->post('search');
         $page = ((int)$this->input->post('page'));
         if ($page == 0) {
@@ -481,7 +494,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
             $xa = ($page - 1) * 10;
         }
         $perPage = 10;
-        $results = $this->db->query("SELECT bhn.no_id, bhn.KD_BHN AS kd_bhn, bhn.NA_BHN AS na_bhn, bhn.SATUAN AS satuan, bhnd.AW01 AS qty 
+        $results = $this->db->query("SELECT bhn.no_id, bhn.KD_BHN AS kd_bhn, bhn.NA_BHN AS na_bhn, bhn.SATUAN AS satuan, bhnd.AW$per AS qty 
             FROM bhn, bhnd
             WHERE bhn.kd_bhn=bhnd.kd_bhn AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%')
             GROUP BY bhnd.kd_bhn
@@ -501,63 +514,4 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
         $select['items'] = $selectajax;
         $this->output->set_content_type('application/json')->set_output(json_encode($select));
     }
-
-    function JASPER($id) {
-        $CI = &get_instance();
-        $CI->load->database();
-        $servername = $CI->db->hostname;
-        $username = $CI->db->username;
-        $password = $CI->db->password;
-        $database = $CI->db->database;
-        $conn = mysqli_connect($servername, $username, $password, $database);
-        error_reporting(E_ALL);
-        ob_start();
-        include_once('phpjasperxml/class/tcpdf/tcpdf.php');
-        include_once("phpjasperxml/class/PHPJasperXML.inc.php");
-        include_once("phpjasperxml/setting.php");
-        $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Bon_Pemakaian.jrxml");
-        $no_id = $id;
-        $query = "SELECT sp_pakai.no_id as ID,
-                sp_pakai.no_sp AS MODEL,
-                sp_pakai.perke AS PERKE,
-                sp_pakai.tgl_sp AS TGL_SP,
-                sp_pakai.nodo AS NODO,
-                sp_pakai.tgldo AS TGLDO,
-                sp_pakai.tlusin AS TLUSIN,
-                sp_pakai.tpair AS TPAIR,
-
-                sp_pakaid.no_id AS NO_ID,
-                sp_pakaid.rec AS REC,
-                CONCAT(sp_pakaid.article,' - ',sp_pakaid.warna) AS ARTICLE,
-                sp_pakaid.size AS SIZE,
-                sp_pakaid.golong AS GOLONG,
-                sp_pakaid.sisa AS SISA,
-                sp_pakaid.lusin AS LUSIN,
-                sp_pakaid.pair AS PAIR,
-                CONCAT(sp_pakaid.kodecus,' - ',sp_pakaid.nama) AS KODECUS,
-                sp_pakaid.kota AS KOTA
-            FROM sp_pakai,sp_pakaid 
-            WHERE sp_pakai.no_id=$id 
-            AND sp_pakai.no_id=sp_pakaid.id 
-            ORDER BY sp_pakaid.rec";
-        $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
-        $PHPJasperXML->arraysqltable = array();
-        $result1 = mysqli_query($conn, $query);
-        while ($row1 = mysqli_fetch_assoc($result1)) {
-            array_push($PHPJasperXML->arraysqltable, array(
-                "KDMTS" => $row1["KDMTS"],
-                "MODEL" => $row1["MODEL"],
-                "TGL_SP" => $row1["TGL_SP"],
-                "KODECUS" => $row1["KODECUS"],
-                "ARTICLE" => $row1["ARTICLE"],
-                "LUSIN" => $row1["LUSIN"],
-                "PAIR" => $row1["PAIR"],
-                "REC" => $row1["REC"],
-            ));
-        }
-        ob_end_clean();
-        $PHPJasperXML->outpage("I");
-    }
-
 }
