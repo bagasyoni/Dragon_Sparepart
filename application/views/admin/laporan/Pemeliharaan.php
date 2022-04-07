@@ -19,6 +19,21 @@
             <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-md-1">
+                        <label class="label-title"> Mesin </label>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="js-example-responsive form-control GRUP_1" name="GRUP_1" id="GRUP_1" style="width: 100%;">
+                            <?php
+                            if (isset($_POST["tampilkan"]) &&  $_POST["GRUP_1"] == $GRUP_1) {
+                                echo '<option value="' . $GRUP_1 . '" selected >' . $GRUP_1 . '</option>';
+                            } ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-md-1">
                         <label class="label-title">Tanggal </label>
                     </div>
                     <div class="col-md-3 nopadding">
@@ -181,5 +196,57 @@
 </script>
 
 <script>
-    $(document).ready(function() {});
+    $(document).ready(function() {
+        select_grup_mesin_1();
+    });
+
+    function select_grup_mesin_1() {
+        $('#GRUP_1').select2({
+            ajax: {
+                url: "<?= base_url('admin/laporan/getData_grup_mesin_1') ?>",
+                dataType: "json",
+                type: "post",
+                delay: 250,
+                data: function(params) {
+                    return {
+                        search: params.term,
+                        page: params.page
+                    }
+                },
+                processResults: function(data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        results: data.items,
+                        pagination: {
+                            more: data.total_count
+                        }
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Masukan Mesin ...',
+            minimumInputLength: 0,
+            templateResult: format,
+            templateSelection: formatSelection
+        });
+    }
+
+    function format(repo) {
+        if (repo.loading) {
+            return repo.text;
+        }
+
+        var $container = $(
+            "<div class='select2-result-repository clearfix'>" +
+            "<div class='select2-result-repository__title'></div>" +
+            "</div>"
+        );
+
+        $container.find(".select2-result-repository__title").text(repo.text);
+        return $container;
+    }
+
+    function formatSelection(repo) {
+        return repo.text;
+    }
 </script>

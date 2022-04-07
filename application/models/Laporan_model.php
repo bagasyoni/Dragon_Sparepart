@@ -479,17 +479,20 @@ class Laporan_model extends CI_Model
 		$dr = $this->session->userdata['dr'];
 		$sub = $this->session->userdata['sub'];
 		$per = $this->session->userdata['periode'];
+		$grup_1 = $this->input->post('GRUP_1');
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
 		$q1 = "SELECT pakaid.NO_ID AS ID,
 				pakaid.RAK AS RAK,
+				'$per' AS PER,
 				pakaid.NA_BHN AS NA_BHN,
 				pakaid.KD_BHN AS KD_BHN,
 				pakaid.SATUAN AS SATUAN,
 				pakaid.KET2 AS KET2,
 				pakaid.NO_BUKTI AS NO_BUKTI,
 				pakaid.TGL AS TGL,
-				pakaid.QTY AS QTY
+				pakaid.QTY AS QTY,
+				pakaid.GRUP AS MESIN
 			FROM pakaid
 			WHERE pakaid.TGL >='$tgl_1'
 			AND pakaid.TGL <='$tgl_2'
@@ -497,7 +500,8 @@ class Laporan_model extends CI_Model
 			AND pakaid.SUB = '$sub'
 			AND pakaid.FLAG ='PK'
 			AND pakaid.FLAG2 ='SP'
-			AND pakaid.PER='$per'
+			AND pakaid.GRUP ='$grup_1'
+			-- AND pakaid.PER='$per'
 			ORDER BY pakaid.TGL";
 		return $this->db->query($q1);
 	}
@@ -505,6 +509,7 @@ class Laporan_model extends CI_Model
 	public function tampil_data_lpb()
 	{
 		$dr = $this->session->userdata['dr'];
+		$sub = $this->session->userdata['sub'];
 		$per = $this->session->userdata['periode'];
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
@@ -520,10 +525,11 @@ class Laporan_model extends CI_Model
 			WHERE beli.no_bukti=belid.no_bukti 
 			AND beli.TGL >='$tgl_1'
 			AND beli.TGL <='$tgl_2'
+			AND beli.SP = '$sub'
 			AND belid.DR='$dr'
 			AND belid.SP='SP'
 			AND belid.FLAG2='SP'
-			AND beli.PER ='$per'
+			-- AND beli.PER ='$per'
 			ORDER BY belid.TGL";
 		return $this->db->query($q1);
 	}
@@ -738,10 +744,11 @@ class Laporan_model extends CI_Model
 						SUM(bhnd.AK$bulan) AS TOTAL
 					FROM bhnd, bhn
 					WHERE bhnd.KD_BHN = bhn.KD_BHN
-					AND bhnd.YER = '$tahun'
+					-- AND bhnd.YER = '$tahun'
 					AND bhnd.FLAG = 'SP'
 					AND bhnd.SUB = 'SP'
-					GROUP BY bhn.KD_BHN";
+					GROUP BY bhn.KD_BHN
+					ORDER BY bhnd.AK$bulan";
 		return $this->db->query($q1);
 	}
 

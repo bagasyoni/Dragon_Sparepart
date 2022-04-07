@@ -33,7 +33,7 @@
                 <div class="form-group row">
                     <div class="col-md-1">
                         <label class="label-title">Bagian </label>
-                        </div>
+                    </div>
                     <div class="col-md-3">
                         <select class="js-example-responsive form-control KD_BAG_1" name="KD_BAG_1" id="KD_BAG_1" style="width: 100%;">
                             <?php

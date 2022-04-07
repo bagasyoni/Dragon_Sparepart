@@ -1170,20 +1170,20 @@ class Laporan extends CI_Controller
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
 			$per = $this->session->userdata['periode'];
+			$grup_1 = $this->input->post('GRUP_1');
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 			$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
 			$query = "SELECT pakaid.NO_ID AS ID,
 					pakaid.RAK AS RAK,
 					'$per' AS PER,
 					pakaid.NA_BHN AS NA_BHN,
-					pakaid.REC AS REC,
 					pakaid.KD_BHN AS KD_BHN,
 					pakaid.SATUAN AS SATUAN,
 					pakaid.KET2 AS KET2,
 					pakaid.NO_BUKTI AS NO_BUKTI,
 					pakaid.TGL AS TGL,
 					pakaid.QTY AS QTY,
-					'-' AS MESIN
+					pakaid.GRUP AS MESIN
 				FROM pakaid
 				WHERE pakaid.TGL >='$tgl_1'
 				AND pakaid.TGL <='$tgl_2'
@@ -1191,7 +1191,8 @@ class Laporan extends CI_Controller
 				AND pakaid.SUB ='$sub'
 				AND pakaid.FLAG ='PK'
 				AND pakaid.FLAG2 ='SP'
-				AND pakaid.PER ='$per'
+				AND pakaid.GRUP ='$grup_1'
+				-- AND pakaid.PER ='$per'
 				ORDER BY pakaid.TGL";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -1212,6 +1213,7 @@ class Laporan extends CI_Controller
 			$data = array(
 				'TGL_1' => set_value('TGL_1'),
 				'TGL_2' => set_value('TGL_2'),
+				'GRUP_1' => set_value('GRUP_1'),
 			);
 			$data['pemeliharaan'] = $this->laporan_model->tampil_data_pemeliharaan()->result();
 			$this->load->view('templates_admin/header');
@@ -1258,10 +1260,12 @@ class Laporan extends CI_Controller
 					WHERE beli.no_bukti=belid.no_bukti 
 					AND beli.TGL >='$tgl_1'
 					AND beli.TGL <='$tgl_2'
+					AND beli.SP = '$sub'
 					AND belid.DR='$dr'
 					AND belid.SP='SP'
 					AND belid.FLAG2='SP'
-					AND beli.PER ='$per'
+					-- AND beli.PER ='$per'
+					GROUP BY belid.na_bhn
 					ORDER BY belid.TGL";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -3440,6 +3444,64 @@ class Laporan extends CI_Controller
 	}
 
 	//////		AJAX GLOBAL		/////
+	public function getData_grup_mesin_1()
+	{
+		$dr = $this->session->userdata['dr'];
+		$search = $this->input->post('search');
+		$page = ((int)$this->input->post('page'));
+		if ($page == 0) {
+			$xa = 0;
+		} else {
+			$xa = ($page - 1) * 10;
+		}
+		$perPage = 10;
+		$results = $this->db->query("SELECT NO_ID, KD_GOL AS KD_GOL_1, NA_GOL AS NA_GOL_1, GRUP AS GRUP_1
+			FROM sp_mesin
+			WHERE (KD_GOL LIKE '%$search%' OR NA_GOL LIKE '%$search%' OR GRUP LIKE '%$search%')
+			AND DR='$dr'
+			GROUP BY GRUP
+			ORDER BY KD_GOL LIMIT $xa,$perPage");
+		$selectajax = array();
+		foreach ($results->RESULT_ARRAY() as $row) {
+			$selectajax[] = array(
+				'id' => $row['GRUP_1'],
+				'text' => $row['KD_GOL_1'] . " - " . $row['NA_GOL_1'] . " - " . $row['GRUP_1']
+			);
+		}
+		$select['total_count'] =  $results->NUM_ROWS();
+		$select['items'] = $selectajax;
+		$this->output->set_content_type('application/json')->set_output(json_encode($select));
+	}
+
+	public function getData_grup_mesin_2()
+	{
+		$dr = $this->session->userdata['dr'];
+		$search = $this->input->post('search');
+		$page = ((int)$this->input->post('page'));
+		if ($page == 0) {
+			$xa = 0;
+		} else {
+			$xa = ($page - 1) * 10;
+		}
+		$perPage = 10;
+		$results = $this->db->query("SELECT NO_ID, KD_GOL AS KD_GOL_2, NA_GOL AS NA_GOL_2, GRUP AS GRUP_2
+			FROM sp_mesin
+			WHERE (KD_GOL LIKE '%$search%' OR NA_GOL LIKE '%$search%' OR GRUP LIKE '%$search%')
+			AND DR='$dr'
+			GROUP BY GRUP
+			ORDER BY KD_GOL LIMIT $xa,$perPage");
+		$selectajax = array();
+		foreach ($results->RESULT_ARRAY() as $row) {
+			$selectajax[] = array(
+				'id' => $row['GRUP_2'],
+				'text' => $row['KD_GOL_2'] . " - " . $row['NA_GOL_2'] . " - " . $row['GRUP_2']
+			);
+		}
+		$select['total_count'] =  $results->NUM_ROWS();
+		$select['items'] = $selectajax;
+		$this->output->set_content_type('application/json')->set_output(json_encode($select));
+	}
+
 	public function getData_master_barang_1()
 	{
 		$dr = $this->session->userdata['dr'];
