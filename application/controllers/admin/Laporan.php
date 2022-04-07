@@ -3452,11 +3452,11 @@ class Laporan extends CI_Controller
 			$xa = ($page - 1) * 10;
 		}
 		$perPage = 10;
-		$results = $this->db->query("SELECT no_id as NO_ID, KD_BHN as KD_BHN_1, NA_BHN as NM_BHN_1, DR as DR_1
+		$results = $this->db->query("SELECT NO_ID as NO_ID, KD_BHN as KD_BHN_1, NA_BHN as NM_BHN_1, DR as DR_1
 			FROM bhn
-			WHERE KD_BHN LIKE '%$search%' OR NA_BHN LIKE '%$search%' OR DR LIKE '%$search%'
+			WHERE (KD_BHN LIKE '%$search%' OR NA_BHN LIKE '%$search%' OR DR LIKE '%$search%')
 			AND bhn.FLAG='SP'
-			AND bhn.SUB='$sub'
+			AND bhn.SUB='sp'
 			AND bhn.DR='$dr'
 			ORDER BY KD_BHN LIMIT $xa,$perPage");
 		$selectajax = array();
@@ -3485,7 +3485,7 @@ class Laporan extends CI_Controller
 		$perPage = 10;
 		$results = $this->db->query("SELECT no_id as NO_ID, KD_BHN as KD_BHN_2, NA_BHN as NM_BHN_2, DR as DR_2
 			FROM bhn
-			WHERE KD_BHN LIKE '%$search%' OR NA_BHN LIKE '%$search%' OR DR LIKE '%$search%'
+			WHERE (KD_BHN LIKE '%$search%' OR NA_BHN LIKE '%$search%' OR DR LIKE '%$search%')
 			AND bhn.FLAG='SP'
 			AND bhn.SUB='$sub'
 			AND bhn.DR='$dr'
