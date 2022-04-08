@@ -204,6 +204,7 @@ foreach ($cnc as $rowh) {
 							<label class="label">DR </label>
 						</div>
 						<div class="col-md-1">
+						<select <?php if ($rowh->VAL == 1) echo 'readonly'; ?> value="" class="js-example-responsive-rn_dev form-control DEVISI" name="DEVISI" id="DEVISI" onchange="rn_dev(this.id)" onfocusout="hitung()" required></select>
 							<input <?php if ($rowh->VAL == 1) echo 'readonly'; ?> class="form-control text_input DR" id="DR" name="DR" type="text" value="<?php echo $rowh->DR ?>">
 						</div>
 					</div>
@@ -499,8 +500,8 @@ foreach ($cnc as $rowh) {
 			this.value ^= 1;
 			console.log(this.value)
 		});
-		select_no_bon();
-		select_kd_bhn();
+		select_rn_dev();
+		select_dragon();
 	}
 
 	function hapus() {
@@ -514,14 +515,14 @@ foreach ($cnc as $rowh) {
 
 <script>
 	$(document).ready(function() {
-		select_no_bon();
-		select_kd_bhn();
+		select_rn_dev();
+		select_dragon();
 	});
 
-	function select_no_bon() {
-		$('.js-example-responsive-no_bon').select2({
+	function select_rn_dev() {
+		$('.js-example-responsive-rn_dev').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_Pemesanan/getDataAjax_bond') ?>",
+				url: "<?= base_url('admin/Transaksi_BoronganCNC/getDataAjax_rndev') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -542,54 +543,42 @@ foreach ($cnc as $rowh) {
 				},
 				cache: true
 			},
-			placeholder: 'Pilih No Bon',
+			placeholder: 'Pilih Devisi',
 			minimumInputLength: 0,
-			templateResult: format_no_bon,
-			templateSelection: formatSelection_no_bon
+			templateResult: format_rn_dev,
+			templateSelection: formatSelection_rn_dev
 		});
 	}
 
-	function format_no_bon(repo_no_bon) {
-		if (repo_no_bon.loading) {
-			return repo_no_bon.text;
+	function format_rn_dev(repo_rn_dev) {
+		if (repo_rn_dev.loading) {
+			return repo_rn_dev.text;
 		}
 		var $container = $(
 			"<div class='select2-result-repository clearfix text_input'>" +
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_no_bon.NO_BON);
+		$container.find(".select2-result-repository__title").text(repo_rn_dev.DEVISI);
 		return $container;
 	}
 
-	var kd_bhn = '';
-	var na_bhn = '';
-	var satuan = '';
-	var qty = '';
-	var sisabon = '';
+	var nama = '';
 
-	function formatSelection_no_bon(repo_no_bon) {
-		kd_bhn = repo_no_bon.KD_BHN;
-		na_bhn = repo_no_bon.NA_BHN;
-		satuan = repo_no_bon.SATUAN;
-		qty = repo_no_bon.QTY;
-		sisabon = repo_no_bon.SISABON;
-		return repo_no_bon.text;
+	function formatSelection_rn_dev(repo_rn_dev) {
+		nama = repo_rn_dev.NOTES;
+		return repo_rn_dev.text;
 	}
 
-	function no_bon(x) {
+	function rn_dev(x) {
 		var q = x.substring(6, 10);
-		$('#KD_BHN' + q).val(kd_bhn);
-		$('#NA_BHN' + q).val(na_bhn);
-		$('#SATUAN' + q).val(satuan);
-		$('#QTY' + q).val(qty);
-		$('#SISABON' + q).val(sisabon);
+		$('#NOTES' + q).val(nama);
 	}
 
-	function select_kd_bhn() {
-		$('.js-example-responsive-kd_bhn').select2({
+	function select_dragon() {
+		$('.js-example-responsive-dragon').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_Pemesanan/getDataAjax_bhn') ?>",
+				url: "<?= base_url('admin/Transaksi_BoronganCNC/getDataAjax_dragon') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -610,38 +599,34 @@ foreach ($cnc as $rowh) {
 				},
 				cache: true
 			},
-			placeholder: 'Pilih Barang',
+			placeholder: 'Pilih Dragon',
 			minimumInputLength: 0,
-			templateResult: format_kd_bhn,
-			templateSelection: formatSelection_kd_bhn
+			templateResult: format_dragon,
+			templateSelection: formatSelection_dragon
 		});
 	}
 
-	function format_kd_bhn(repo_kd_bhn) {
-		if (repo_kd_bhn.loading) {
-			return repo_kd_bhn.text;
+	function format_dragon(repo_dragon) {
+		if (repo_dragon.loading) {
+			return repo_dragon.text;
 		}
 		var $container = $(
 			"<div class='select2-result-repository clearfix text_input'>" +
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_kd_bhn.KD_BHN);
+		$container.find(".select2-result-repository__title").text(repo_dragon.AREA);
 		return $container;
 	}
 
-	var na_bhn = '';
-	var satuan = '';
+	// var nm_dev = '';
 
-	function formatSelection_kd_bhn(repo_kd_bhn) {
-		na_bhn = repo_kd_bhn.NA_BHN;
-		satuan = repo_kd_bhn.SATUAN;
-		return repo_kd_bhn.text;
+	function formatSelection_dragon(repo_dragon) {
+		// nm_dev = repo_rn_dev.NM_DEV;
+		return repo_dragon.text;
 	}
 
-	function kd_bhn(xx) {
-		var qq = xx.substring(6, 10);
-		$('#NA_BHN' + qq).val(na_bhn);
-		$('#SATUAN' + qq).val(satuan);
+	function dragon(x) {
+		var q = x.substring(6, 10);
 	}
 </script>

@@ -92,12 +92,12 @@
                         <th width="75px"><input type="checkbox" id="selectall" /></th>
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
+                        <th width="250px">Barang</th>
                         <th width="225px">No Bukti</th>
-                        <th width="275px">Tanggal</th>
+                        <th width="100px">Tanggal</th>
                         <th width="100px">Tanggal Diminta</th>
-                        <th width="100px">Barang</th>
                         <th width="225px">Keterangan</th>
-                        <th width="200px">OK</th>
+                        <th width="100px">OK</th>
                     </tr>
                 </thead>
                 <tbody>

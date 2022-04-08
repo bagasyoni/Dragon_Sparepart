@@ -20,10 +20,10 @@
             <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-md-1">
-                        <label class="label-title">Kode Barang </label>
+                        <label class="label-title">Kode Rak </label>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" id="KD_BHN_1" name="KD_BHN_1" class="form-control KD_BHN_1" placeholder="Kode barang ...">
+                        <input type="text" id="RAK_1" name="RAK_1" class="form-control RAK_1" placeholder="Kode Rak ...">
                     </div>
                     <div class="col-md-1">
                         <label class="label-title">Tanggal </label>

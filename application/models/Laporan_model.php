@@ -130,19 +130,10 @@ class Laporan_model extends CI_Model
 		$per = $this->session->userdata['periode'];
 		$bulan = substr($this->input->post('TGL_1'), 3, 2);
 		$tahun = substr($this->input->post('TGL_1'), -4);
-		$kd_bhn_1 = $this->input->post('KD_BHN_1');
+		$rak_1 = $this->input->post('RAK_1');
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-		$q1 = "CALL sp_kartustok('$kd_bhn_1', '$dr', '$sub', '$tgl_1')";
+		$q1 = "CALL spp_kartustok('$rak_1', '$dr', '$sub', '$tgl_1')";
 		return $this->db->query($q1);
-		// "KD_BHN" => $row1["KD_BHN"],
-					// "NA_BHN" => $row1["NA_BHN"],
-					// "TGL" => $row1["TGL"],
-					// "NO_BUKTI" => $row1["NO_BUKTI"],
-					// "AW" => $row1["AW"],
-					// "MA" => $row1["MA"],
-					// "KE" => $row1["KE"],
-					// "LN" => $row1["LN"],
-					// "AK" => $row1["AK"],
 	}
 
 	public function tampil_data_kartustok_atk()
@@ -154,7 +145,7 @@ class Laporan_model extends CI_Model
 		$tahun = substr($this->input->post('TGL_1'), -4);
 		$kd_bhn_1 = $this->input->post('KD_BHN_1');
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-		$q1 = "CALL sp_kartustok('$kd_bhn_1', '$dr', '$sub', '$tgl_1')";
+		$q1 = "CALL spp_kartustok('$kd_bhn_1', '$dr', '$sub', '$tgl_1')";
 		return $this->db->query($q1);
 	}
 

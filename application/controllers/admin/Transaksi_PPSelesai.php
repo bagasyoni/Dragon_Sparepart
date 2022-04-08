@@ -123,10 +123,10 @@ class Transaksi_PPSelesai extends CI_Controller
                         </div>
                     </div>';
             $row[] = $no . ".";
+            $row[] = $pp->NA_BRG;
             $row[] = $pp->NO_BUKTI;
             $row[] = $pp->TGL;
             $row[] = $pp->TGL_DIMINTA;
-            $row[] = $pp->NA_BRG;
             $row[] = $pp->NOTES;
             $row[] = $pp->OK;
             $data[] = $row;
