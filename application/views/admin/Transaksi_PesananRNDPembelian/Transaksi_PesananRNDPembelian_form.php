@@ -464,6 +464,7 @@
 			console.log(this.value)
 		});
 		select_rn_dev();
+		select_dragon();
 	}
 
 	function hapus() {
@@ -478,12 +479,13 @@
 <script>
 	$(document).ready(function() {
 		select_rn_dev();
+		select_dragon();
 	});
 
 	function select_rn_dev() {
 		$('.js-example-responsive-rn_dev').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_PesananRNDPembelian/getDataAjax_rndev') ?>",
+				url: "<?= base_url('admin/Transaksi_BoronganCNC/getDataAjax_rndev') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -524,14 +526,70 @@
 		return $container;
 	}
 
-	// var nm_dev = '';
+	var nama = '';
 
 	function formatSelection_rn_dev(repo_rn_dev) {
-		// nm_dev = repo_rn_dev.NM_DEV;
+		nama = repo_rn_dev.NOTES;
 		return repo_rn_dev.text;
 	}
 
 	function rn_dev(x) {
+		var q = x.substring(6, 10);
+		$('#NOTES' + q).val(nama);
+	}
+
+	function select_dragon() {
+		$('.js-example-responsive-dragon').select2({
+			ajax: {
+				url: "<?= base_url('admin/Transaksi_BoronganCNC/getDataAjax_dragon') ?>",
+				dataType: "json",
+				type: "post",
+				delay: 10,
+				data: function(params) {
+					return {
+						search: params.term,
+						page: params.page
+					}
+				},
+				processResults: function(data, params) {
+					params.page = params.page || 1;
+					return {
+						results: data.items,
+						pagination: {
+							more: data.total_count
+						}
+					};
+				},
+				cache: true
+			},
+			placeholder: 'Pilih Dragon',
+			minimumInputLength: 0,
+			templateResult: format_dragon,
+			templateSelection: formatSelection_dragon
+		});
+	}
+
+	function format_dragon(repo_dragon) {
+		if (repo_dragon.loading) {
+			return repo_dragon.text;
+		}
+		var $container = $(
+			"<div class='select2-result-repository clearfix text_input'>" +
+			"<div class='select2-result-repository__title text_input'></div>" +
+			"</div>"
+		);
+		$container.find(".select2-result-repository__title").text(repo_dragon.AREA);
+		return $container;
+	}
+
+	// var nm_dev = '';
+
+	function formatSelection_dragon(repo_dragon) {
+		// nm_dev = repo_rn_dev.NM_DEV;
+		return repo_dragon.text;
+	}
+
+	function dragon(x) {
 		var q = x.substring(6, 10);
 	}
 </script>

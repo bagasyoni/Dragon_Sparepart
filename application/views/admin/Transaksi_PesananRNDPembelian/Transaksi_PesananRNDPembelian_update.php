@@ -264,6 +264,13 @@ foreach ($cnc as $rowh) {
 		</div>
 		<br><br>
 		<!--tab-->
+		<div class="col-md-12">
+			<div class="form-group row">
+				<div class="col-md-1">
+					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
+				</div>
+			</div>
+		</div>
 		<br>
 		<div class="col-md-12">
 			<div class="col-xs-9">
@@ -407,70 +414,54 @@ foreach ($cnc as $rowh) {
 
 	function tambah() {
 
-		var x = document.getElementById('datatable').insertRow(idrow + 1);
-		var td1 = x.insertCell(0);
-		var td2 = x.insertCell(1);
-		var td3 = x.insertCell(2);
-		var td4 = x.insertCell(3);
-		var td5 = x.insertCell(4);
-		var td6 = x.insertCell(5);
-		var td7 = x.insertCell(6);
-		var td8 = x.insertCell(7);
-		var td9 = x.insertCell(8);
-		var td10 = x.insertCell(9);
-		var td11 = x.insertCell(10);
-		var td12 = x.insertCell(11);
-		var td13 = x.insertCell(12);
-		var td14 = x.insertCell(13);
+var x = document.getElementById('datatable').insertRow(idrow + 1);
+var td1 = x.insertCell(0);
+var td2 = x.insertCell(1);
+var td3 = x.insertCell(2);
+var td4 = x.insertCell(3);
+var td5 = x.insertCell(4);
+var td6 = x.insertCell(5);
+var td7 = x.insertCell(6);
 
-		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()'></select></div>";
-		// var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()' required></select></div>";
+var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
-		var no_bon = no_bon0;
-		// var kd_bhn = kd_bhn0;
+var no_bon = no_bon0;
+var kd_bhn = kd_bhn0;
 
-		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = no_bon;
-		// td3.innerHTML = kd_bhn;
-		td3.innerHTML = "<input name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' readonly>";
-		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
-		td5.innerHTML = "<input name='JENIS[]' id=JENIS" + idrow + " type='text' class='form-control JENIS text_input'>";
-		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
-		td7.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
-		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
-		td9.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input'>";
-		td10.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
-		td11.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
-																																																			echo $_POST["TGL_DIMINTA"];
-																																																		} else echo date('d-m-Y'); ?>'>";
-		td12.innerHTML = "<input name='SISABON[]' onclick='select()' onkeyup='hitung()' value='0' id=SISABON" + idrow + " type='text' class='form-control SISABON rightJustified text-primary' readonly>";
-		td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='1' unchecked>";
-		td14.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
-			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
-		jumlahdata = 100;
-		for (i = 0; i <= jumlahdata; i++) {
-			$("#QTY" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
-			$("#SISABON" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
-		}
-		idrow++;
-		nomor();
-		$(".ronly").on('keydown paste', function(e) {
-			e.preventDefault();
-			e.currentTarget.blur();
-		});
-		$('input[type="checkbox"]').on('change', function() {
-			this.value ^= 1;
-			console.log(this.value)
-		});
-		select_no_bon();
-		select_kd_bhn();
-	}
+td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
+td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' required>";
+td3.innerHTML = "<input name='SERI[]' id=SERI" + idrow + " type='text' class='form-control SERI text_input' required>";
+td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
+td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' required>";
+td6.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
+td7.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+	" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
+jumlahdata = 100;
+for (i = 0; i <= jumlahdata; i++) {
+	$("#QTY" + i.toString()).autoNumeric('init', {
+		aSign: '<?php echo ''; ?>',
+		vMin: '-999999999.99'
+	});
+	$("#SISABON" + i.toString()).autoNumeric('init', {
+		aSign: '<?php echo ''; ?>',
+		vMin: '-999999999.99'
+	});
+}
+idrow++;
+nomor();
+$(".ronly").on('keydown paste', function(e) {
+	e.preventDefault();
+	e.currentTarget.blur();
+});
+$('input[type="checkbox"]').on('change', function() {
+	this.value ^= 1;
+	console.log(this.value)
+});
+select_rn_dev();
+select_dragon();
+}
+
 
 	function hapus() {
 		if (idrow > 1) {
