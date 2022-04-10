@@ -122,7 +122,7 @@
 								<td><input name="QTY[]" onchange="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary" readonly></td>
 								<td>
 									<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
-									<button style="visibility: hidden;" type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
 									</button>
 								</td>

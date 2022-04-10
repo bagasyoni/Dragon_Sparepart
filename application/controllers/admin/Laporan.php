@@ -1730,7 +1730,7 @@ class Laporan extends CI_Controller
 			include('phpjasperxml/class/PHPJasperXML.inc.php');
 			include('phpjasperxml/setting.php');
 			$PHPJasperXML = new \PHPJasperXML();
-			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Sparepart.jrxml");
+			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Sparepart_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$tgl_1 = $this->input->post('TGL_1');
 			if ($tgl_1 == '') {
@@ -1750,8 +1750,9 @@ class Laporan extends CI_Controller
 					SUM(bhnd.AK$bulan) AS TOTAL
 				FROM bhnd, bhn
 				WHERE bhnd.KD_BHN = bhn.KD_BHN
-				AND bhnd.YER = '$tahun'
+				-- AND bhnd.YER = '$tahun'
 				AND bhnd.FLAG = 'SP'
+				AND bhnd.SUB = 'SP'
 				GROUP BY bhn.KD_BHN";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -1761,7 +1762,10 @@ class Laporan extends CI_Controller
 					"NA_BRG" => $row1["NA_BHN"],
 					"SATUAN" => $row1["SATUAN"],
 					"PER" => $row1["PER"],
-					"AK" => $row1["AK"],
+					"DR1" => $row1["DR1"],
+					"DR2" => $row1["DR2"],
+					"DR3" => $row1["DR3"],
+					"TOTAL" => $row1["TOTAL"],
 				));
 			}
 			ob_end_clean();
@@ -1794,7 +1798,7 @@ class Laporan extends CI_Controller
 			include('phpjasperxml/class/PHPJasperXML.inc.php');
 			include('phpjasperxml/setting.php');
 			$PHPJasperXML = new \PHPJasperXML();
-			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Sparepart.jrxml");
+			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Inventaris_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$tgl_1 = $this->input->post('TGL_1');
 			if ($tgl_1 == '') {
@@ -1814,8 +1818,9 @@ class Laporan extends CI_Controller
 					SUM(bhnd.AK$bulan) AS TOTAL
 				FROM bhnd, bhn
 				WHERE bhnd.KD_BHN = bhn.KD_BHN
-				AND bhnd.YER = '$tahun'
-				AND bhnd.FLAG = 'INV'
+				-- AND bhnd.YER = '$tahun'
+				AND bhnd.FLAG = 'SP'
+				AND bhnd.SUB = 'INV'
 				GROUP BY bhn.KD_BHN";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -1825,7 +1830,10 @@ class Laporan extends CI_Controller
 					"NA_BRG" => $row1["NA_BHN"],
 					"SATUAN" => $row1["SATUAN"],
 					"PER" => $row1["PER"],
-					"AK" => $row1["AK"],
+					"DR1" => $row1["DR1"],
+					"DR2" => $row1["DR2"],
+					"DR3" => $row1["DR3"],
+					"TOTAL" => $row1["TOTAL"],
 				));
 			}
 			ob_end_clean();
@@ -1858,7 +1866,7 @@ class Laporan extends CI_Controller
 			include('phpjasperxml/class/PHPJasperXML.inc.php');
 			include('phpjasperxml/setting.php');
 			$PHPJasperXML = new \PHPJasperXML();
-			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Sparepart.jrxml");
+			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_ATK_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$tgl_1 = $this->input->post('TGL_1');
 			if ($tgl_1 == '') {
@@ -1878,8 +1886,9 @@ class Laporan extends CI_Controller
 					SUM(bhnd.AK$bulan) AS TOTAL
 				FROM bhnd, bhn
 				WHERE bhnd.KD_BHN = bhn.KD_BHN
-				AND bhnd.YER = '$tahun'
-				AND bhnd.FLAG = 'ATK'
+				-- AND bhnd.YER = '$tahun'
+				AND bhnd.FLAG = 'SP'
+				AND bhnd.SUB = 'ATK'
 				GROUP BY bhn.KD_BHN";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -1889,7 +1898,10 @@ class Laporan extends CI_Controller
 					"NA_BRG" => $row1["NA_BHN"],
 					"SATUAN" => $row1["SATUAN"],
 					"PER" => $row1["PER"],
-					"AK" => $row1["AK"],
+					"DR1" => $row1["DR1"],
+					"DR2" => $row1["DR2"],
+					"DR3" => $row1["DR3"],
+					"TOTAL" => $row1["TOTAL"],
 				));
 			}
 			ob_end_clean();
@@ -1922,7 +1934,7 @@ class Laporan extends CI_Controller
 			include('phpjasperxml/class/PHPJasperXML.inc.php');
 			include('phpjasperxml/setting.php');
 			$PHPJasperXML = new \PHPJasperXML();
-			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Sparepart.jrxml");
+			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Umum_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$tgl_1 = $this->input->post('TGL_1');
 			if ($tgl_1 == '') {

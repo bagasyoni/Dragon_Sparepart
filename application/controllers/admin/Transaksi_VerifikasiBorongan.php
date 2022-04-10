@@ -207,7 +207,6 @@ class Transaksi_VerifikasiBorongan extends CI_Controller
             'TYP' => 'BOR_CNC',
             'VAL' => '1',
             'SUB' => $this->session->userdata['sub'],
-            'DR' => $this->session->userdata['dr'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -250,6 +249,7 @@ class Transaksi_VerifikasiBorongan extends CI_Controller
         $HARGA = str_replace(',', '', $this->input->post('HARGA', TRUE));
         $TOTAL = str_replace(',', '', $this->input->post('TOTAL', TRUE));
         $KET = $this->input->post('KET');
+        $DR = $this->input->post('DR');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -268,12 +268,12 @@ class Transaksi_VerifikasiBorongan extends CI_Controller
                     'HARGA' => str_replace(',', '', $HARGA[$URUT]),
                     'TOTAL' => str_replace(',', '', $TOTAL[$URUT]),
                     'KET' => $KET[$URUT],
+                    'DR' => $DR[$URUT],
                     'FLAG' => 'PP',
                     'FLAG2' => 'SP',
                     'LOGISTIK' => '0',
                     'TYP' => 'BOR_CNC',
                     'SUB' => $this->session->userdata['sub'],
-                    'DR' => $this->session->userdata['dr'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
@@ -305,12 +305,12 @@ class Transaksi_VerifikasiBorongan extends CI_Controller
                     'HARGA' => str_replace(',', '', $HARGA[$i]),
                     'TOTAL' => str_replace(',', '', $TOTAL[$i]),
                     'KET' => $KET[$i],
+                    'DR' => $DR[$i],
                     'FLAG' => 'PP',
                     'FLAG2' => 'SP',
                     'LOGISTIK' => '0',
                     'TYP' => 'BOR_CNC',
                     'SUB' => $this->session->userdata['sub'],
-                    'DR' => $this->session->userdata['dr'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")

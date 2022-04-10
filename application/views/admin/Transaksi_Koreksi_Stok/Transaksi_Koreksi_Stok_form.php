@@ -192,9 +192,9 @@
 								<td><input name="QTY_AK[]" onkeyup="hitung()" value="0" id="QTY_AK0" type="text" class="form-control QTY_AK rightJustified text-primary" required></td>
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1"></td>
 								<td>
-									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+									<!-- <button type="hidden" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
-									</button>
+									</button> -->
 								</td>
 							</tr>
 						</tbody>

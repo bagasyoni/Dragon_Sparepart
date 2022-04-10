@@ -202,9 +202,9 @@
 									<input name="TGL_DIMINTA[]" id="TGL_DIMINTA0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																		} else echo date('d-m-Y'); ?>" onclick="select()">
 								</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
-									</button>
+									</button> -->
 								</td>
 							</tr>
 						</tbody>

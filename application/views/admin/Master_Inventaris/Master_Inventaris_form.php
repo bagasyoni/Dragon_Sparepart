@@ -205,9 +205,9 @@
 																																								} else echo date('d-m-Y'); ?>" onclick="select()">
 								</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
-									</button>
+									</button> -->
 								</td>
 							</tr>
 						</tbody>

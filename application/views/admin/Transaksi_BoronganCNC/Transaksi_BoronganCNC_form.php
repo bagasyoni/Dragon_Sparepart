@@ -214,9 +214,9 @@
 								<td><input name="TOTAL[]" onclick="select()" value="0" id="TOTAL0" class="form-control TOTAL rightJustified text-primary" readonly></td>
 								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
 								<td>
-									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+									<!-- <button type="hidden" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
-									</button>
+									</button> -->
 								</td>
 							</tr>
 						</tbody>

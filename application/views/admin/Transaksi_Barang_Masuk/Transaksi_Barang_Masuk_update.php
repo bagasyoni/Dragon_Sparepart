@@ -218,7 +218,7 @@ foreach ($barang_masuk as $rowh) {
 									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"></td>
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
-										<button style="visibility: hidden;" type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 											<i class="fa fa-fw fa-trash-alt"></i>
 										</button>
 									</td>

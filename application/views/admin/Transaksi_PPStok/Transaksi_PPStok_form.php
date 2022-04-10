@@ -232,9 +232,9 @@
 									<input name="URGENT[]" id="URGENT0" type="checkbox" value="0" class="checkbox_container">
 								</td>
 								<td>
-									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
-									</button>
+									</button> -->
 								</td>
 							</tr>
 						</tbody>

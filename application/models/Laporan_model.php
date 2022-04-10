@@ -716,7 +716,6 @@ class Laporan_model extends CI_Model
 
 	public function tampil_data_stok_sparepart()
 	{
-		$sub = $this->session->userdata['sub'];
 		$tgl_1 = $this->input->post('TGL_1');
 		if ($tgl_1 == '') {
 			$bulan = Date('m');
@@ -739,15 +738,13 @@ class Laporan_model extends CI_Model
 					AND bhnd.FLAG = 'SP'
 					AND bhnd.SUB = 'SP'
 					GROUP BY bhn.KD_BHN
-					ORDER BY bhnd.AK$bulan";
+					ORDER BY bhn.NA_BHN";
 		return $this->db->query($q1);
 	}
 
 	public function tampil_data_stok_inventaris()
 	{
 		$tgl_1 = $this->input->post('TGL_1');
-		$sub = $this->session->userdata['sub'];
-		$per = $this->session->userdata['periode'];
 		if ($tgl_1 == '') {
 			$bulan = Date('m');
 		} else {
@@ -755,7 +752,6 @@ class Laporan_model extends CI_Model
 		}
 		$tahun = substr($this->input->post('PER'), -4);
 		$tahun_1 = $this->input->post('PER');
-		$per = $bulan ."/". $tahun;
 		$q1 = "SELECT bhnd.KD_BHN,
 						bhnd.NA_BHN,
 						bhn.SATUAN,
@@ -766,7 +762,7 @@ class Laporan_model extends CI_Model
 						SUM(bhnd.AK$bulan) AS TOTAL
 					FROM bhnd, bhn
 					WHERE bhnd.KD_BHN = bhn.KD_BHN
-					AND bhnd.YER = '$tahun'
+					-- AND bhnd.YER = '$tahun'
 					AND bhnd.FLAG = 'SP'
 					AND bhnd.SUB = 'INV'
 					GROUP BY bhn.KD_BHN";
@@ -776,8 +772,6 @@ class Laporan_model extends CI_Model
 	public function tampil_data_stok_atk()
 	{
 		$tgl_1 = $this->input->post('TGL_1');
-		$sub = $this->session->userdata['sub'];
-		$per = $this->session->userdata['periode'];
 		if ($tgl_1 == '') {
 			$bulan = Date('m');
 		} else {
@@ -796,7 +790,7 @@ class Laporan_model extends CI_Model
 						SUM(bhnd.AK$bulan) AS TOTAL
 					FROM bhnd, bhn
 					WHERE bhnd.KD_BHN = bhn.KD_BHN
-					AND bhnd.YER = '$tahun'
+					-- AND bhnd.YER = '$tahun'
 					AND bhnd.FLAG = 'SP'
 					AND bhnd.SUB = 'ATK'
 					GROUP BY bhn.KD_BHN";
@@ -826,9 +820,9 @@ class Laporan_model extends CI_Model
 						SUM(bhnd.AK$bulan) AS TOTAL
 					FROM bhnd, bhn
 					WHERE bhnd.KD_BHN = bhn.KD_BHN
-					AND bhnd.YER = '$tahun'
+					-- AND bhnd.YER = '$tahun'
 					AND bhnd.FLAG = 'SP'
-					-- AND bhnd.SUB = 'UM'
+					AND bhnd.SUB = 'UM'
 					GROUP BY bhn.KD_BHN";
 		return $this->db->query($q1);
 	}

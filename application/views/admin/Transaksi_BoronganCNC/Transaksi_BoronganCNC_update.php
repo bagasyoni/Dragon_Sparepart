@@ -150,7 +150,9 @@ foreach ($cnc as $rowh) {
 							<label class="label">Nama </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($rowh->VAL == 1) echo 'readonly'; ?> class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" value="<?php echo $rowh->DEVISI ?>">
+							<select <?php if ($rowh->VAL == 1) echo 'readonly'; ?> class="js-example-responsive-rn_dev form-control DEVISI text_input" name="DEVISI" id="DEVISI" onchange="rn_dev(this.id)" required>
+								<option value="<?php echo $rowh->DEVISI; ?>" selected id="DEVISI"><?php echo $rowh->DEVISI; ?></option>
+							</select>
 						</div>
 						<div class="col-md-2">
 						</div>
@@ -204,8 +206,9 @@ foreach ($cnc as $rowh) {
 							<label class="label">DR </label>
 						</div>
 						<div class="col-md-1">
-						<select <?php if ($rowh->VAL == 1) echo 'readonly'; ?> value="" class="js-example-responsive-rn_dev form-control DEVISI" name="DEVISI" id="DEVISI" onchange="rn_dev(this.id)" onfocusout="hitung()" required></select>
-							<input <?php if ($rowh->VAL == 1) echo 'readonly'; ?> class="form-control text_input DR" id="DR" name="DR" type="text" value="<?php echo $rowh->DR ?>">
+						<select <?php if ($rowh->VAL == 1) echo 'readonly'; ?> class="js-example-responsive-dragon form-control DR text_input" name="DR" id="DR" onchange="dragon(this.id)" required>
+								<option value="<?php echo $rowh->DR; ?>" selected id="DR"><?php echo $rowh->DR; ?></option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -615,18 +618,15 @@ foreach ($cnc as $rowh) {
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_dragon.AREA);
+		$container.find(".select2-result-repository__title").text(repo_dragon.DR);
 		return $container;
 	}
 
-	// var nm_dev = '';
-
 	function formatSelection_dragon(repo_dragon) {
-		// nm_dev = repo_rn_dev.NM_DEV;
 		return repo_dragon.text;
 	}
 
 	function dragon(x) {
-		var q = x.substring(6, 10);
+		var q = x.substring(2, 10);
 	}
 </script>

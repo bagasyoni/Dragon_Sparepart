@@ -120,9 +120,9 @@
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1"></td>
 								<td><input name="KET2[]" id="KET20" type="text" class="form-control KET2"></td>
 								<td>
-									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
-									</button>
+									</button> -->
 								</td>
 							</tr>
 						</tbody>

@@ -366,7 +366,6 @@ foreach ($inventaris as $rowh) {
 		var td8 = x.insertCell(7);
 		var td9 = x.insertCell(8);
 		var td10 = x.insertCell(9);
-		var td11 = x.insertCell(10);
 
 		var jenis0 = "<div class='input-group'><select class='js-example-responsive-jenis form-control JENIS0 text_input' name='JENIS[]' id=JENIS0" + idrow + " onchange='jenis(this.id)' onfocusout='hitung()' required></select></div>";
 
@@ -374,21 +373,20 @@ foreach ($inventaris as $rowh) {
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
 		td2.innerHTML = jenis;
-		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
-		td4.innerHTML = "<input name='MERK[]' id=MERK0" + idrow + " type='text' class='form-control MERK text_input'>";
-		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
-		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input'>";
-		td7.innerHTML = "<input name='KET[]' id=KET0" + idrow + " type='text' class='form-control KET text_input'>";
-		td8.innerHTML = "<input name='TGL_MA[]' ocnlick='select()' id=TGL_MA" + idrow + " type='text' class='date form-control TGL_MA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
+		td3.innerHTML = "<input name='MERK[]' id=MERK0" + idrow + " type='text' class='form-control MERK text_input'>";
+		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input'>";
+		td6.innerHTML = "<input name='KET[]' id=KET0" + idrow + " type='text' class='form-control KET text_input'>";
+		td7.innerHTML = "<input name='TGL_MA[]' ocnlick='select()' id=TGL_MA" + idrow + " type='text' class='date form-control TGL_MA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
 																																															echo $_POST["TGL_MA"];
 																																														} else echo date('d-m-Y'); ?>'>";
-		td9.innerHTML = "<input name='TGL_KE[]' ocnlick='select()' id=TGL_KE" + idrow + " type='text' class='date form-control TGL_KE text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
+		td8.innerHTML = "<input name='TGL_KE[]' ocnlick='select()' id=TGL_KE" + idrow + " type='text' class='date form-control TGL_KE text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
 																																															echo $_POST["TGL_KE"];
 																																														} else echo date('d-m-Y'); ?>'>";
-		td10.innerHTML = "<input name='TGL_MU[]' ocnlick='select()' id=TGL_MU" + idrow + " type='text' class='date form-control TGL_MU text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
+		td9.innerHTML = "<input name='TGL_MU[]' ocnlick='select()' id=TGL_MU" + idrow + " type='text' class='date form-control TGL_MU text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
 																																															echo $_POST["TGL_MU"];
 																																														} else echo date('d-m-Y'); ?>'>";
-		td11.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
+		td10.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {

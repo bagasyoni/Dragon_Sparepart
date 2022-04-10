@@ -200,7 +200,7 @@
 								<td><input name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1" readonly></td>
 								<td>
 								<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
-									<button style="display: none;" type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
 									</button>
 								</td>
