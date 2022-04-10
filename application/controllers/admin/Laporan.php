@@ -481,7 +481,7 @@ class Laporan extends CI_Controller
 			include('phpjasperxml/class/PHPJasperXML.inc.php');
 			include('phpjasperxml/setting.php');
 			$PHPJasperXML = new \PHPJasperXML();
-			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_InventarisCetakan.jrxml");
+			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Inventaris_Cetakan_SP2.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$cetak_1 = $this->input->post('CETAK_1');
@@ -496,7 +496,53 @@ class Laporan extends CI_Controller
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
-					"JENIS_1" => $row1["JENIS_1"],
+					"CETAK" => $row1["CETAK"],
+					"NAMA" => $row1["NAMA"],
+					"KODE" => $row1["KODE"],
+					"N1" => $row1["N1"],
+					"J1" => $row1["J1"],
+					"N2" => $row1["N2"],
+					"J2" => $row1["J2"],
+					"N3" => $row1["N3"],
+					"J3" => $row1["J3"],
+					"N4" => $row1["N4"],
+					"J4" => $row1["J4"],
+					"N5" => $row1["N5"],
+					"J5" => $row1["J5"],
+					"N6" => $row1["N6"],
+					"J6" => $row1["J6"],
+					"N7" => $row1["N7"],
+					"J7" => $row1["J7"],
+					"N8" => $row1["N8"],
+					"J8" => $row1["J8"],
+					"N9" => $row1["N9"],
+					"J9" => $row1["J9"],
+					"N10" => $row1["N10"],
+					"J10" => $row1["J10"],
+					"N11" => $row1["N11"],
+					"J11" => $row1["J11"],
+					"N12" => $row1["N12"],
+					"J12" => $row1["J12"],
+					"N13" => $row1["N13"],
+					"J13" => $row1["J13"],
+					"N14" => $row1["N14"],
+					"J14" => $row1["J14"],
+					"N15" => $row1["N15"],
+					"J15" => $row1["J15"],
+					"N16" => $row1["N16"],
+					"J16" => $row1["J16"],
+					"N17" => $row1["N17"],
+					"J17" => $row1["J17"],
+					"N18" => $row1["N18"],
+					"J18" => $row1["J18"],
+					"N19" => $row1["N19"],
+					"J19" => $row1["J19"],
+					"N20" => $row1["N20"],
+					"J20" => $row1["J20"],
+					"KET1" => $row1["KET1"],
+					"KET2" => $row1["KET2"],
+					"KET3" => $row1["KET3"],
+					"JUMLAH" => $row1["JUMLAH"],
 				));
 			}
 			ob_end_clean();
