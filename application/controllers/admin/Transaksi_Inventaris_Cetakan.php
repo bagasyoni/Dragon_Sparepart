@@ -447,6 +447,7 @@ class Transaksi_Inventaris_Cetakan extends CI_Controller {
                 "KET2" => $row1["KET2"],
                 "KET3" => $row1["KET3"],
                 "JUMLAH" => $row1["JUMLAH"],
+                "DR" => $row1["DR"],
             ));
         }
         ob_end_clean();

@@ -1,3 +1,5 @@
+<script src="https://unpkg.com/@develoka/angka-terbilang-js/index.min.js"></script>
+
 <?php
 	foreach ($transaksi_pemesanan_proyek as $rowh) {};
 ?>
@@ -108,10 +110,11 @@
 								<th width="125px">Uraian</th>
 								<th width="175px">Ket Barang</th>
 								<th width="100px">Qty</th>
+								<th width="100px">Bilangan</th>
 								<th width="100px">Satuan</th>
 								<th width="100px">Devisi</th>
 								<th width="120px">Keterangan</th>
-								<th width="100px">Tgl Diminta</th>
+								<th width="100px">Sisa</th>
 								<th width="50px"></th>
 							</tr>
 						</thead>
@@ -132,20 +135,13 @@
 								<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN" readonly></td>
 								<td><input name="TIPE[]" id="TIPE<?php echo $no; ?>" value="<?= $row->TIPE ?>" type="text" class="form-control TIPE"></td>
 								<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
+								<td>
+									<input name="BILANGAN[]" id="BILANGAN0" value="<?= $row->BILANGAN ?>" type="text" class="form-control BILANGAN text_input" onkeyup="var start=this.selectionStart; var end=this.selectionEnd; this.value=this.value.toUpperCase(); this.setSelectionRange(start, end);" readonly>
+								</td>
 								<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN"></td>
 								<td><input name="DEVISI[]" id="DEVISI<?php echo $no; ?>" value="<?= $row->DEVISI ?>" type="text" class="form-control DEVISI"></td>
 								<td><input name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1"></td>
-								<td>
-									<input 
-										name="TGL_DIMINTA[]" 
-										id="TGL_DIMINTA<?php echo $no; ?>"
-										type="text" 
-										class="date form-control" 
-										data-date-format="dd-mm-yyyy" 
-										value="<?php echo date('d-m-Y', strtotime($row->TGL_DIMINTA, TRUE)); ?>"
-										onclick="select()" 
-									>
-								</td>
+								<td><input name="SISA[]" onkeyup="hitung()" value="<?php echo number_format($row->SISA, 2, '.', ','); ?>" id="SISA0" type="text" class="form-control SISA rightJustified text-primary" required></td>
 								<td>
 									<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
 									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -270,8 +266,20 @@
 	function hitung() {
 		var TOTAL_QTY = 0;
 		var total_row = idrow;
-		for (i=0;i<total_row;i++) {
+		for (i = 0; i < total_row; i++) {
+			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
+			var sisa = parseFloat($('#SISA' + i).val().replace(/,/g, ''));
 
+			// if (qty > sisa) {
+			// 	alert("Qty tidak boleh lebih besar dari Sisa");
+			// 	$('#QTY' + i).val(0);
+			// 	console.log('TIDAK OK !!!')
+			// } else {
+			// 	console.log('OK !!!')
+			// }
+			
+		$('#BILANGAN' + i).val(angkaTerbilang(qty));
+		// console.log(angkaTerbilang('Terbilang :'+qty));
 		};
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
@@ -299,6 +307,7 @@
 		var td8 = x.insertCell(7);
 		var td9 = x.insertCell(8);
 		var td10 = x.insertCell(9);
+		var td11 = x.insertCell(10);
 		
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
 
@@ -309,11 +318,12 @@
 		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN' readonly>";
 		td4.innerHTML = "<input name='TIPE[]' id=TIPE0" + idrow + " type='text' class='form-control TIPE'>";
 		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
-		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN'>";
-		td7.innerHTML = "<input name='DEVISI[]' id=DEVISI0" + idrow + " type='text' class='form-control DEVISI'>";
-		td8.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1'>";
-		td9.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA0" + idrow + " type='text' class='date form-control TGL_DIMINTA' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) { echo $_POST["TGLSG"]; } else echo date('d-m-Y'); ?>'>";
-		td10.innerHTML = "<input type='hidden' name='NO_ID[]' value='0' id=NO_ID" + idrow + "  class='form-control' value='o'>" +
+		td6.innerHTML = "<input name='BILANGAN[]' id=BILANGAN0" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
+		td7.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN'>";
+		td8.innerHTML = "<input name='DEVISI[]' id=DEVISI0" + idrow + " type='text' class='form-control DEVISI'>";
+		td9.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1'>";
+		td10.innerHTML = "<input name='SISA[]' onclick='select()' onkeyup='hitung()' value='0' id=SISA" + idrow + " type='text' class='form-control SISA rightJustified text-primary' required>";
+		td11.innerHTML = "<input type='hidden' name='NO_ID[]' value='0' id=NO_ID" + idrow + "  class='form-control' value='o'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {

@@ -585,34 +585,6 @@ class Transaksi_PesananRNDPembelian extends CI_Controller
         $this->output->set_content_type('application/json')->set_output(json_encode($select));
     }
 
-    public function getDataAjax_rndev()
-    {
-        $search = $this->input->post('search');
-        $page = ((int)$this->input->post('page'));
-        if ($page == 0) {
-            $xa = 0;
-        } else {
-            $xa = ($page - 1) * 10;
-        }
-        $perPage = 10;
-        $results = $this->db->query("SELECT KD_DEV, NM_DEV AS DEVISI, NAMA
-            FROM rn_dev
-            WHERE FLAG='CNC' AND (KD_DEV LIKE '%$search%' OR NM_DEV LIKE '%$search%' OR NAMA LIKE '%$search%')
-            ORDER BY AREA LIMIT $xa,$perPage");
-        $selectajax = array();
-        foreach ($results->RESULT_ARRAY() as $row) {
-            $selectajax[] = array(
-                'id' => $row['DEVISI'],
-                'text' => $row['DEVISI'],
-                'DEVISI' => $row['DEVISI'] . " - " . $row['KD_DEV'] . " - " . $row['NAMA'],
-                'NOTES' => $row['NAMA'],
-            );
-        }
-        $select['total_count'] =  $results->NUM_ROWS();
-        $select['items'] = $selectajax;
-        $this->output->set_content_type('application/json')->set_output(json_encode($select));
-    }
-
     public function getDataAjax_dragon()
     {
         $search = $this->input->post('search');

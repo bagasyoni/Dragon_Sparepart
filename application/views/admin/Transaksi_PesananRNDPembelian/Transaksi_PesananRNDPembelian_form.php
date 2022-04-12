@@ -136,7 +136,7 @@
 							<label class="label">Devisi </label>
 						</div>
 						<div class="col-md-2">
-						<select value="" class="js-example-responsive-rn_dev form-control DEVISI" name="DEVISI" id="DEVISI" onchange="rn_dev(this.id)" onfocusout="hitung()" required></select>
+							<select value="" class="js-example-responsive-rn_dev form-control DEVISI" name="DEVISI" id="DEVISI" onchange="rn_dev(this.id)" onfocusout="hitung()" required></select>
 						</div>
 						<div class="col-md-1">
 							<label class="label">No PO </label>

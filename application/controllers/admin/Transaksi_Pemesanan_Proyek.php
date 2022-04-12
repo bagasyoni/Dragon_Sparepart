@@ -537,7 +537,7 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
         include_once("phpjasperxml/class/PHPJasperXML.inc.php");
         include_once("phpjasperxml/setting.php");
         $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Pemesanan_SP.jrxml");
+        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Pemesanan_Proyek.jrxml");
         $no_id = $id;
         $query = "SELECT pp.NO_ID as ID,
             pp.NO_BUKTI AS NO_BUKTI,
@@ -555,10 +555,11 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
             ppd.NA_BHN AS NA_BHN,
             ppd.TIPE AS TIPE,
             ppd.QTY AS QTY,
+            ppd.SISA AS SISA,
+            ppd.BILANGAN AS BILANGAN,
             ppd.SATUAN AS SATUAN,
             ppd.DEVISI AS DEVISI,
-            ppd.KET1 AS KET1,
-            ppd.TGL_DIMINTA AS TGL_DIMINTA
+            ppd.KET1 AS KET1
         FROM pp,ppd 
         WHERE pp.NO_ID=$id 
         AND pp.NO_ID=ppd.ID 
@@ -582,7 +583,7 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
                 "NO_BON" => $row1["NO_BON"],
                 "KD_BHN" => $row1["KD_BHN"],
                 "NA_BHN" => $row1["NA_BHN"],
-                "JENIS" => $row1["JENIS"],
+                "TIPE" => $row1["TIPE"],
                 "BILANGAN" => $row1["BILANGAN"],
                 "QTY" => $row1["QTY"],
                 "SATUAN" => $row1["SATUAN"],

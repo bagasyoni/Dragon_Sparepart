@@ -557,7 +557,8 @@ class Master_Inventaris extends CI_Controller
                 inventarisd.MERK AS MERK,
                 LEFT(inventarisd.SATUAN, 1) AS SATUAN,
                 inventarisd.QTY AS QTY,
-                inventarisd.SATUAN AS SATUAN
+                inventarisd.SATUAN AS SATUAN,
+                inventarisd.KET AS KET
             FROM inventaris,inventarisd 
             WHERE inventaris.NO_ID=$id 
             AND inventaris.NO_ID = inventarisd.ID 
@@ -575,7 +576,8 @@ class Master_Inventaris extends CI_Controller
                 "JENIS" => $row1["JENIS"],
                 "MERK" => $row1["MERK"],
                 "QTY" => $row1["QTY"],
-                "SATUAN" => $row1["SATUAN"]
+                "SATUAN" => $row1["SATUAN"],
+                "KET" => $row1["KET"]
             ));
         }
         ob_end_clean();

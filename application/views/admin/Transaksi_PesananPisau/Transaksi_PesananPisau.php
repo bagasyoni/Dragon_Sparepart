@@ -95,8 +95,8 @@
                         <th width="225px">No Bukti</th>
                         <th width="100px">Tanggal</th>
                         <th width="225px">Article</th>
-                        <th width="225px">Order</th>
-                        <th width="225px">Devisi</th>
+                        <th width="225px">Pesan</th>
+                        <th width="225px">Gambar</th>
                     </tr>
                 </thead>
                 <tbody>

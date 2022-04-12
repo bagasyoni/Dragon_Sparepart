@@ -27,16 +27,6 @@
 	<field name="DEVISI" class="java.lang.String"/>
 	<field name="TGL" class="java.lang.String"/>
 	<field name="KET" class="java.lang.String"/>
-	<variable name="SUB_LBL" class="java.lang.Double" resetType="Group" resetGroup="GroupT" calculation="Sum">
-		<variableExpression><![CDATA[$F{LBL}]]></variableExpression>
-	</variable>
-	<variable name="SUB_TASTEK" class="java.lang.Double" resetType="Group" resetGroup="GroupT" calculation="Sum">
-		<variableExpression><![CDATA[$F{TASTEK}]]></variableExpression>
-	</variable>
-	<group name="GroupGolong"/>
-	<group name="GroupBank">
-		<groupExpression><![CDATA[$F{BANK}]]></groupExpression>
-	</group>
 	<title>
 		<band height="82">
 			<textField>

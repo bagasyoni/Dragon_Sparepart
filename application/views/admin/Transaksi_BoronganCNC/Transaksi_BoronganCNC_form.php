@@ -629,18 +629,15 @@
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_dragon.AREA);
+		$container.find(".select2-result-repository__title").text(repo_dragon.DR);
 		return $container;
 	}
 
-	// var nm_dev = '';
-
 	function formatSelection_dragon(repo_dragon) {
-		// nm_dev = repo_rn_dev.NM_DEV;
 		return repo_dragon.text;
 	}
 
 	function dragon(x) {
-		var q = x.substring(6, 10);
+		var q = x.substring(2, 10);
 	}
 </script>

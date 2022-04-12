@@ -123,7 +123,9 @@
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN" readonly></td>
 								<td><input name="TIPE[]" id="TIPE0" type="text" class="form-control TIPE"></td>
 								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
-								<td><input name="BILANGAN[]" id="BILANGAN0" type="text" class="form-control BILANGAN text_input" readonly></td>
+								<td>
+									<input name="BILANGAN[]" id="BILANGAN0" type="text" class="form-control BILANGAN text_input" onkeyup="var start=this.selectionStart; var end=this.selectionEnd; this.value=this.value.toUpperCase(); this.setSelectionRange(start, end);" readonly>
+								</td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN"></td>
 								<td><input name="DEVISI[]" id="DEVISI0" type="text" class="form-control KD_PEG" required></td>
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1"></td>
@@ -252,16 +254,18 @@
 		var total_row = idrow;
 		for (i = 0; i < total_row; i++) {
 			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
+			var sisa = parseFloat($('#SISA' + i).val().replace(/,/g, ''));
 
-			if (qty > sisabon) {
-				alert("Qty tidak boleh lebih besar dari Sisa Bon");
-				$('#QTY' + i).val(0);
-				console.log('TIDAK OK !!!')
-			} else {
-				console.log('OK !!!')
-			}
-			$('#BILANGAN' + i).val(angkaTerbilang(qty));
-			// console.log(angkaTerbilang('Terbilang :'+qty));
+			// if (qty > sisa) {
+			// 	alert("Qty tidak boleh lebih besar dari Sisa");
+			// 	$('#QTY' + i).val(0);
+			// 	console.log('TIDAK OK !!!')
+			// } else {
+			// 	console.log('OK !!!')
+			// }
+			
+		$('#BILANGAN' + i).val(angkaTerbilang(qty));
+		// console.log(angkaTerbilang('Terbilang :'+qty));
 		};
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));

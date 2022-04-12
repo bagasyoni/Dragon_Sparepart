@@ -26,17 +26,15 @@ class Transaksi_PesananPisau extends CI_Controller
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'KD_BRG');
-    var $column_search = array('NO_BUKTI', 'TGL', 'KD_BRG');
+    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'KET');
+    var $column_search = array('NO_BUKTI', 'TGL', 'KET');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
             'TYP' => 'RND_PISAU',
@@ -85,10 +83,8 @@ class Transaksi_PesananPisau extends CI_Controller
     function count_all()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
             'TYP' => 'RND_PISAU',
@@ -121,9 +117,9 @@ class Transaksi_PesananPisau extends CI_Controller
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
             $row[] = $pp->TGL;
-            $row[] = $pp->NA_BRG;
+            $row[] = $pp->KET;
             $row[] = $pp->PESAN;
-            $row[] = $pp->DEVISI;
+            $row[] = $pp->GAMBAR;
             $data[] = $row;
         }
         $output = array(
@@ -138,10 +134,9 @@ class Transaksi_PesananPisau extends CI_Controller
     public function index_Transaksi_PesananPisau()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
+        $this->session->set_userdata('judul', 'Transaksi Pesanan Pisau');
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
             'TYP' => 'RND_PISAU',
@@ -157,7 +152,8 @@ class Transaksi_PesananPisau extends CI_Controller
     {
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$dr' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $sub = $this->session->userdata['sub'];
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         $value11 = substr($nom[0], 3, 7);
         $value22 = STRVAL($value11) . 1;
@@ -200,7 +196,7 @@ class Transaksi_PesananPisau extends CI_Controller
             $romawi = 'XII';
         }
         // PP / NOMER / DR / BULAN / TAHUN / CNC
-        $bukti = 'PP' . '/' . $urut . '/' . $dr . '/' . $romawi . '/' . $tahun . '/' . "RND";
+        $bukti = 'PP' . '/' . $urut . '/' . $dr . '/' . "PS" . '/' . $romawi . '/' . $tahun;
         $this->session->set_userdata('bukti', $bukti);
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
@@ -212,7 +208,8 @@ class Transaksi_PesananPisau extends CI_Controller
     {
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND DR='$dr' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $sub = $this->session->userdata['sub'];
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         $value11 = substr($nom[0], 3, 7);
         $value22 = STRVAL($value11) + 1;
@@ -255,18 +252,22 @@ class Transaksi_PesananPisau extends CI_Controller
             $romawi = 'XII';
         }
         // PP / NOMER / DR / BULAN / TAHUN / RND
-        $bukti = 'PP' . '/' . $urut . '/' . $dr . '/' . $romawi . '/' . $tahun . '/' . "RND";
+        $bukti = 'PP' . '/' . $urut . '/' . $dr . '/' . "PS" . '/' . $romawi . '/' . $tahun;
         $datah = array(
             'NO_BUKTI' => $bukti,
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-            'NA_BRG' => $this->input->post('NA_BRG', TRUE),
+            'DR' => $this->input->post('DR', TRUE),
+            'KET' => $this->input->post('KET', TRUE),
             'PESAN' => $this->input->post('PESAN', TRUE),
-            'DEVISI' => $this->input->post('DEVISI', TRUE),
+            'JO' => $this->input->post('JO', TRUE),
+            'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
+            'TS' => $this->input->post('TS', TRUE),
+            'GAMBAR' => $this->input->post('GAMBAR', TRUE),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
             'TYP' => 'RND_PISAU',
-            'DR' => $this->session->userdata['dr'],
+            'SUB' => $this->session->userdata['sub'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -278,8 +279,10 @@ class Transaksi_PesananPisau extends CI_Controller
         $SIZE = $this->input->post('SIZE');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SATUAN = $this->input->post('SATUAN');
-        $KET = $this->input->post('KET');
+        $KET1 = $this->input->post('KET1');
         $TGL_DIMINTA = $this->input->post('TGL_DIMINTA');
+        $GAMBAR1 = $this->input->post('GAMBAR1');
+        $DR = $this->input->post('DR');
         $i = 0;
         foreach ($REC as $a) {
             $datad = array(
@@ -290,12 +293,14 @@ class Transaksi_PesananPisau extends CI_Controller
                 'SIZE' => $SIZE[$i],
                 'QTY' => str_replace(',', '', $QTY[$i]),
                 'SATUAN' => $SATUAN[$i],
-                'KET' => $KET[$i],
+                'KET1' => $KET1[$i],
                 'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$i])),
+                'GAMBAR1' => $GAMBAR1[$i],
+                'DR' => $DR[$i],
                 'FLAG' => 'PP',
                 'FLAG2' => 'SP',
                 'TYP' => 'RND_PISAU',
-                'DR' => $this->session->userdata['dr'],
+                'SUB' => $this->session->userdata['sub'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
                 'TG_SMP' => date("Y-m-d h:i a")
@@ -320,21 +325,24 @@ class Transaksi_PesananPisau extends CI_Controller
         $q1 = "SELECT pp.NO_ID as ID,
                 pp.NO_BUKTI AS NO_BUKTI,
                 pp.TGL AS TGL,
-                pp.NA_BRG AS NA_BRG,
+                pp.DR AS DR,
+                pp.KET AS KET,
                 pp.PESAN AS PESAN,
-                pp.DEVISI AS DEVISI,
+                pp.JO AS JO,
+                pp.TGL_DIMINTA AS TGL_DIMINTA,
+                pp.TS AS TS,
+                pp.GAMBAR AS GAMBAR,
                 pp.TOTAL_QTY AS TOTAL_QTY,
-                pp.TYP AS TYP,
-
+                
                 ppd.NO_ID AS NO_ID,
                 ppd.REC AS REC,
                 ppd.NA_BHN AS NA_BHN,
                 ppd.SIZE AS SIZE,
                 ppd.QTY AS QTY,
                 ppd.SATUAN AS SATUAN,
-                ppd.KET AS KET,
                 ppd.TGL_DIMINTA AS TGL_DIMINTA,
-                ppd.TYP AS TYP
+                ppd.KET1 AS KET1,
+                ppd.GAMBAR1 AS GAMBAR1
             FROM pp,ppd 
             WHERE pp.NO_ID=$id 
             AND pp.NO_ID=ppd.ID 
@@ -351,14 +359,18 @@ class Transaksi_PesananPisau extends CI_Controller
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-            'NA_BRG' => $this->input->post('NA_BRG', TRUE),
+            'DR' => $this->input->post('DR', TRUE),
+            'KET' => $this->input->post('KET', TRUE),
             'PESAN' => $this->input->post('PESAN', TRUE),
-            'DEVISI' => $this->input->post('DEVISI', TRUE),
+            'JO' => $this->input->post('JO', TRUE),
+            'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
+            'TS' => $this->input->post('TS', TRUE),
+            'GAMBAR' => $this->input->post('GAMBAR', TRUE),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
             'TYP' => 'RND_PISAU',
-            'DR' => $this->session->userdata['dr'],
+            'SUB' => $this->session->userdata['sub'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -371,21 +383,24 @@ class Transaksi_PesananPisau extends CI_Controller
         $q1 = "SELECT pp.NO_ID as ID,
                 pp.NO_BUKTI AS NO_BUKTI,
                 pp.TGL AS TGL,
-                pp.NA_BRG AS NA_BRG,
+                pp.DR AS DR,
+                pp.KET AS KET,
                 pp.PESAN AS PESAN,
-                pp.DEVISI AS DEVISI,
+                pp.JO AS JO,
+                pp.TGL_DIMINTA AS TGL_DIMINTA,
+                pp.TS AS TS,
+                pp.GAMBAR AS GAMBAR,
                 pp.TOTAL_QTY AS TOTAL_QTY,
-                pp.TYP AS TYP,
-
+                
                 ppd.NO_ID AS NO_ID,
                 ppd.REC AS REC,
                 ppd.NA_BHN AS NA_BHN,
                 ppd.SIZE AS SIZE,
                 ppd.QTY AS QTY,
                 ppd.SATUAN AS SATUAN,
-                ppd.KET AS KET,
                 ppd.TGL_DIMINTA AS TGL_DIMINTA,
-                ppd.TYP AS TYP
+                ppd.KET1 AS KET1,
+                ppd.GAMBAR1 AS GAMBAR1
             FROM pp,ppd 
             WHERE pp.NO_ID=$id 
             AND pp.NO_ID=ppd.ID 
@@ -397,8 +412,10 @@ class Transaksi_PesananPisau extends CI_Controller
         $SIZE = $this->input->post('SIZE');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SATUAN = $this->input->post('SATUAN');
-        $KET = $this->input->post('KET');
+        $KET1 = $this->input->post('KET1');
         $TGL_DIMINTA = $this->input->post('TGL_DIMINTA');
+        $GAMBAR1 = $this->input->post('GAMBAR1');
+        $DR = $this->input->post('DR');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -414,12 +431,14 @@ class Transaksi_PesananPisau extends CI_Controller
                     'SIZE' => $SIZE[$URUT],
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
                     'SATUAN' => $SATUAN[$URUT],
-                    'KET' => $KET[$URUT],
+                    'KET1' => $KET1[$URUT],
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$URUT])),
+                    'GAMBAR1' => $GAMBAR1[$URUT],
+                    'DR' => $DR[$URUT],
                     'FLAG' => 'PP',
                     'FLAG2' => 'SP',
                     'TYP' => 'RND_PISAU',
-                    'DR' => $this->session->userdata['dr'],
+                    'SUB' => $this->session->userdata['sub'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
@@ -441,19 +460,21 @@ class Transaksi_PesananPisau extends CI_Controller
             if ($NO_ID[$i] == "0") {
                 $datad = array(
                     'ID' => $this->input->post('ID', TRUE),
-                    'REC' => $REC[$i],
                     'NO_BUKTI' => $this->input->post('NO_BUKTI'),
                     'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
+                    'REC' => $REC[$i],
                     'NA_BHN' => $NA_BHN[$i],
                     'SIZE' => $SIZE[$i],
                     'QTY' => str_replace(',', '', $QTY[$i]),
                     'SATUAN' => $SATUAN[$i],
-                    'KET' => $KET[$i],
+                    'KET1' => $KET1[$i],
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$i])),
+                    'GAMBAR1' => $GAMBAR1[$i],
+                    'DR' => $DR[$i],
                     'FLAG' => 'PP',
                     'FLAG2' => 'SP',
                     'TYP' => 'RND_PISAU',
-                    'DR' => $this->session->userdata['dr'],
+                    'SUB' => $this->session->userdata['sub'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
@@ -528,6 +549,74 @@ class Transaksi_PesananPisau extends CI_Controller
         $select['total_count'] =  $results->NUM_ROWS();
         $select['items'] = $selectajax;
         $this->output->set_content_type('application/json')->set_output(json_encode($select));
+    }
+
+    public function getDataAjax_dragon()
+    {
+        $dr = $this->session->userdata['dr'];
+        $search = $this->input->post('search');
+        $page = ((int)$this->input->post('page'));
+        if ($page == 0) {
+            $xa = 0;
+        } else {
+            $xa = ($page - 1) * 10;
+        }
+        $perPage = 10;
+        $results = $this->db->query("SELECT KODE, NAMA, AREA
+            FROM rn_dragon
+            WHERE (KODE LIKE '%$search%' OR NAMA LIKE '%$search%')
+            AND AREA='$dr'
+            ORDER BY AREA 
+            LIMIT $xa,$perPage");
+        $selectajax = array();
+        foreach ($results->RESULT_ARRAY() as $row) {
+            $selectajax[] = array(
+                'id' => $row['NAMA'],
+                'text' => $row['NAMA'],
+                'DR' => $row['NAMA'],
+            );
+        }
+        $select['total_count'] =  $results->NUM_ROWS();
+        $select['items'] = $selectajax;
+        $this->output->set_content_type('application/json')->set_output(json_encode($select));
+    }
+
+    public function upload_image()
+    {
+	$this->load->model('profile_model');
+	$data['current_user'] = $this->auth_model->current_user();
+
+	if ($this->input->method() === 'post') {
+		// the user id contain dot, so we must remove it
+		$file_name = str_replace('.','',$data['current_user']->id);
+		$config['upload_path']          = FCPATH.'/upload/image/';
+		$config['allowed_types']        = 'gif|jpg|jpeg|png';
+		$config['file_name']            = $file_name;
+		$config['overwrite']            = true;
+		$config['max_size']             = 1024; // 1MB
+		$config['max_width']            = 1080;
+		$config['max_height']           = 1080;
+
+		$this->load->library('upload', $config);
+
+		if (!$this->upload->do_upload('image')) {
+			$data['error'] = $this->upload->display_errors();
+		} else {
+			$uploaded_data = $this->upload->data();
+
+			$new_data = [
+				'id' => $data['current_user']->id,
+				'image' => $uploaded_data['file_name'],
+			];
+	
+			if ($this->profile_model->update($new_data)) {
+				$this->session->set_flashdata('message', 'Image updated!');
+				redirect(site_url('admin/Transaksi_PesananPisau/index_Transaksi_PesananPisau'));
+			}
+		}
+	}
+
+	$this->load->view('admin/Transaksi_PesananPisau/index_Transaksi_PesananPisau', $data);
     }
 
     function JASPER($id)
