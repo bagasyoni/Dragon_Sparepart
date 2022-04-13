@@ -443,7 +443,7 @@
 			this.value ^= 1;
 			console.log(this.value)
 		});
-		select_dragon();
+		select_dr();
 	}
 
 	function hapus() {
@@ -457,13 +457,13 @@
 
 <script>
 	$(document).ready(function() {
-		select_dragon();
+		select_dr();
 	});
 
-	function select_dragon() {
+	function select_dr() {
 		$('.js-example-responsive-dragon').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_PesananPisau/getDataAjax_dragon') ?>",
+				url: "<?= base_url('admin/Transaksi_PesananPisau/getDataAjax_dr') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,

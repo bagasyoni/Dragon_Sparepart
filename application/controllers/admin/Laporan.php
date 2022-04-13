@@ -87,7 +87,7 @@ class Laporan extends CI_Controller
 				FROM bhn
 				WHERE bhn.DR='$dr'
 				AND bhn.FLAG='SP'
-				AND bhn.KD_BHN BETWEEN '$kd_bhn_1' AND '$kd_bhn_2'
+				-- AND bhn.KD_BHN BETWEEN '$kd_bhn_1' AND '$kd_bhn_2'
 				ORDER BY bhn.KD_BHN";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -1081,7 +1081,7 @@ class Laporan extends CI_Controller
 					AND bhnd.YER = '$tahun'
 					AND bhn.DR = '$dr'
 					AND bhn.FLAG = 'SP'
-					AND bhn.FLAG2 = '$sub'
+					AND bhn.SUB = '$sub'
 					GROUP BY bhn.KD_BHN
 				) AS KD_BHN
 				ORDER BY KD_BHN";
@@ -1229,7 +1229,7 @@ class Laporan extends CI_Controller
 					pakaid.NO_BUKTI AS NO_BUKTI,
 					pakaid.TGL AS TGL,
 					pakaid.QTY AS QTY,
-					pakaid.GRUP AS MESIN
+					pakaid.NA_GOL AS NA_GOL
 				FROM pakaid
 				WHERE pakaid.TGL >='$tgl_1'
 				AND pakaid.TGL <='$tgl_2'
@@ -1250,7 +1250,7 @@ class Laporan extends CI_Controller
 					"NO_BUKTI" => $row1["NO_BUKTI"],
 					"TGL" => $row1["TGL"],
 					"QTY" => $row1["QTY"],
-					"MESIN" => $row1["MESIN"],
+					"NA_GOL" => $row1["NA_GOL"],
 				));
 			}
 			ob_end_clean();

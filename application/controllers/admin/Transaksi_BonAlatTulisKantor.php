@@ -124,6 +124,8 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
             $row[] = $pakai->NO_BUKTI;
             $row[] = $pakai->TGL;
             $row[] = $pakai->NOTES;
+            $row[] = $pakai->SUB;
+            $row[] = $pakai->DR;
             $data[] = $row;
         }
         $output = array(
@@ -157,54 +159,6 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
 
     public function input()
     {
-        $per = $this->session->userdata['periode'];
-        $sub = $this->session->userdata['sub'];
-        $dr = $this->session->userdata['dr'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pakai WHERE PER='$per' AND SUB='$sub' AND FLAG='PK' AND FLAG2='SP'")->result();
-        $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 3, 7);
-        $value22 = STRVAL($value11) . 1;
-        $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
-        $tahun = substr($this->session->userdata['periode'], -4);
-        if (substr($this->session->userdata['periode'], 0, 2) == 1) {
-            $romawi = 'I';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 2) {
-            $romawi = 'II';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 3) {
-            $romawi = 'III';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 4) {
-            $romawi = 'IV';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 5) {
-            $romawi = 'V';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 6) {
-            $romawi = 'VI';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 7) {
-            $romawi = 'VII';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 8) {
-            $romawi = 'VIII';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 9) {
-            $romawi = 'IX';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 10) {
-            $romawi = 'X';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 11) {
-            $romawi = 'XI';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 12) {
-            $romawi = 'XII';
-        }
-        // PP / NOMER / DR / BULAN / TAHUN / SP
-        $bukti = 'PK' . '/' . $urut . '/' . 'DR' . $dr . '/' . $romawi . '/' . $tahun . '/' . $sub;
-        $this->session->set_userdata('bukti', $bukti);
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_BonAlatTulisKantor/Transaksi_BonAlatTulisKantor_form');
@@ -259,7 +213,8 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
             $romawi = 'XII';
         }
         // PP / NOMER / DR / BULAN / TAHUN / SP
-        $bukti = 'PK' . '/' . $urut . '/' . 'DR' . $dr . '/' . $romawi . '/' . $tahun . '/' . $sub;
+        // $bukti = 'PK' . '/' . $urut . '/' . 'DR' . $dr . '/' . $romawi . '/' . $tahun . '/' . $sub;
+        $bukti = $this->input->post('NO_BUKTI', TRUE);
         $datah = array(
             'NO_BUKTI' => $bukti,
             'NOTES' => $this->input->post('NOTES', TRUE),
@@ -274,25 +229,34 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
             'TG_SMP' => date("Y-m-d h:i a")
         );
         $this->transaksi_model->input_datah('pakai', $datah);
-        $ID = $this->db->query("SELECT MAX(NO_ID) AS NO_ID FROM pakai WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
+        $ID = $this->db->query("SELECT NO_ID AS no_id FROM pakai WHERE NO_BUKTI = '$bukti' AND SUB = '$sub' GROUP BY NO_BUKTI")->result();
+        $NO_BUKTI = $this->input->post('NO_BUKTI');
         $REC = $this->input->post('REC');
+        $KD_BHN = $this->input->post('KD_BHN');
         $RAK = $this->input->post('RAK');
         $NA_BHN = $this->input->post('NA_BHN');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SATUAN = $this->input->post('SATUAN');
         $KET1 = $this->input->post('KET1');
+        $KET2 = $this->input->post('KET2');
+        $GRUP = $this->input->post('GRUP');
+        $NA_GOL = $this->input->post('NA_GOL');
         $i = 0;
         foreach ($REC as $a) {
             $datad = array(
-                'ID' => $ID[0]->NO_ID,
-                'NO_BUKTI' => $bukti,
+                'ID' => $ID[0]->no_id,
+                'NO_BUKTI' => $NO_BUKTI,
                 'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
                 'REC' => $REC[$i],
+                'KD_BHN' => $KD_BHN[$i],
                 'RAK' => $RAK[$i],
                 'NA_BHN' => $NA_BHN[$i],
                 'QTY' => str_replace(',', '', $QTY[$i]),
                 'SATUAN' => $SATUAN[$i],
                 'KET1' => $KET1[$i],
+                'KET2' => $KET2[$i] ?? "-",
+                'GRUP' => $GRUP[$i],
+                'NA_GOL' => $NA_GOL[$i],
                 'FLAG' => 'PK',
                 'FLAG2' => 'SP',
                 'SUB' => $this->session->userdata['sub'],
@@ -306,7 +270,7 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
         }
         $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM pakai WHERE NO_BUKTI='$bukti'")->result();
         $no_bukti = $xx[0]->BUKTIX;
-        // $this->db->query("CALL pp_ins('" . $no_bukti . "')");
+        $this->db->query("CALL spp_pakaiins('" . $no_bukti . "')");
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
@@ -322,22 +286,26 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
     public function update($id)
     {
         $q1 = "SELECT pakai.NO_ID as ID,
-                pakai.NO_BUKTI AS NO_BUKTI,
-                pakai.NOTES AS NOTES,
-                pakai.TGL AS TGL,
-                pakai.TOTAL_QTY AS TOTAL_QTY,
+            pakai.NO_BUKTI AS NO_BUKTI,
+            pakai.NOTES AS NOTES,
+            pakai.TGL AS TGL,
+            pakai.TOTAL_QTY AS TOTAL_QTY,
 
-                pakaid.NO_ID AS NO_ID,
-                pakaid.REC AS REC,
-                pakaid.RAK AS RAK,
-                pakaid.NA_BHN AS NA_BHN,
-                pakaid.QTY AS QTY,
-                pakaid.SATUAN AS SATUAN,
-                pakaid.KET1 AS KET1
-            FROM pakai,pakaid 
-            WHERE pakai.NO_ID=$id 
-            AND pakai.NO_ID=pakaid.ID 
-            ORDER BY pakaid.REC";
+            pakaid.NO_ID AS NO_ID,
+            pakaid.REC AS REC,
+            pakaid.KD_BHN AS KD_BHN,
+            pakaid.RAK AS RAK,
+            pakaid.NA_BHN AS NA_BHN,
+            pakaid.QTY AS QTY,
+            pakaid.SATUAN AS SATUAN,
+            pakaid.KET1 AS KET1,
+            pakaid.KET2 AS KET2,
+            pakaid.GRUP AS GRUP,
+            pakaid.NA_GOL AS NA_GOL
+        FROM pakai,pakaid 
+        WHERE pakai.NO_ID=$id 
+        AND pakai.NO_ID=pakaid.ID 
+        ORDER BY pakaid.REC";
         $data['bon_atk'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
@@ -366,7 +334,7 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
         );
         $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM pakai WHERE NO_BUKTI='$bukti'")->result();
         $no_bukti = $xx[0]->BUKTIX;
-        // $this->db->query("CALL pp_del('" . $no_bukti . "')");
+        $this->db->query("CALL spp_pakaidel('" . $no_bukti . "')");
         $this->transaksi_model->update_data($where, $datah, 'pakai');
         $id = $this->input->post('ID', TRUE);
         $q1 = "SELECT pakai.NO_ID as ID,
@@ -377,11 +345,15 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
 
                 pakaid.NO_ID AS NO_ID,
                 pakaid.REC AS REC,
+                pakaid.KD_BHN AS KD_BHN,
                 pakaid.RAK AS RAK,
                 pakaid.NA_BHN AS NA_BHN,
                 pakaid.QTY AS QTY,
                 pakaid.SATUAN AS SATUAN,
-                pakaid.KET1 AS KET1
+                pakaid.KET1 AS KET1,
+                pakaid.KET2 AS KET2,
+                pakaid.GRUP AS GRUP,
+                pakaid.NA_GOL AS NA_GOL
             FROM pakai,pakaid 
             WHERE pakai.NO_ID=$id 
             AND pakai.NO_ID=pakaid.ID 
@@ -389,11 +361,15 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
         $data = $this->transaksi_model->edit_data($q1)->result();
         $NO_ID = $this->input->post('NO_ID');
         $REC = $this->input->post('REC');
+        $KD_BHN = $this->input->post('KD_BHN');
         $RAK = $this->input->post('RAK');
         $NA_BHN = $this->input->post('NA_BHN');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SATUAN = $this->input->post('SATUAN');
         $KET1 = $this->input->post('KET1');
+        $KET2 = $this->input->post('KET2');
+        $GRUP = $this->input->post('GRUP');
+        $NA_GOL = $this->input->post('NA_GOL');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -405,11 +381,15 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
                     'NO_BUKTI' => $this->input->post('NO_BUKTI'),
                     'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
                     'REC' => $REC[$URUT],
+                    'KD_BHN' => $KD_BHN[$URUT],
                     'RAK' => $RAK[$URUT],
                     'NA_BHN' => $NA_BHN[$URUT],
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
                     'SATUAN' => $SATUAN[$URUT],
                     'KET1' => $KET1[$URUT],
+                    'KET2' => $KET2[$URUT],
+                    'GRUP' => $GRUP[$URUT],
+                    'NA_GOL' => $NA_GOL[$URUT],
                     'FLAG' => 'PK',
                     'FLAG2' => 'SP',
                     'SUB' => $this->session->userdata['sub'],
@@ -438,11 +418,15 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
                     'NO_BUKTI' => $this->input->post('NO_BUKTI'),
                     'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
                     'REC' => $REC[$i],
+                    'KD_BHN' => $KD_BHN[$i],
                     'RAK' => $RAK[$i],
                     'NA_BHN' => $NA_BHN[$i],
                     'QTY' => str_replace(',', '', $QTY[$i]),
                     'SATUAN' => $SATUAN[$i],
                     'KET1' => $KET1[$i],
+                    'KET2' => $KET2[$i],
+                    'GRUP' => $GRUP[$i],
+                    'NA_GOL' => $NA_GOL[$i],
                     'FLAG' => 'PK',
                     'FLAG2' => 'SP',
                     'SUB' => $this->session->userdata['sub'],
@@ -457,7 +441,7 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
         }
         $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM pakai WHERE NO_BUKTI='$bukti'")->result();
         $no_bukti = $xx[0]->BUKTIX;
-        // $this->db->query("CALL pp_ins('" . $no_bukti . "')");
+        $this->db->query("CALL spp_pakaiins('" . $no_bukti . "')");
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
@@ -473,7 +457,7 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
     public function delete($id)
     {
         $data = $this->db->query("SELECT NO_BUKTI FROM pakai WHERE NO_ID='$id'")->result();
-        // $this->db->query("CALL pp_del('" . $data[0]->NO_BUKTI . "')");
+        $this->db->query("CALL spp_pakaidel('" . $data[0]->NO_BUKTI . "')");
         $where = array('NO_ID' => $id);
         $this->transaksi_model->hapus_data($where, 'pakai');
         $where = array('ID' => $id);
@@ -527,49 +511,6 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
         redirect('admin/Transaksi_BonAlatTulisKantor/index_Transaksi_BonAlatTulisKantor');
     }
 
-    public function getDataAjax_bond()
-    {
-        $dr = $this->session->userdata['dr'];
-        $sp = $this->session->userdata['sub'];
-        $search = $this->input->post('search');
-        $page = ((int)$this->input->post('page'));
-        if ($page == 0) {
-            $xa = 0;
-        } else {
-            $xa = ($page - 1) * 10;
-        }
-        $perPage = 10;
-        $results = $this->db->query("SELECT bond.NO_ID, 
-                bond.NO_BUKTI AS NO_BON, 
-                bond.KD_BHN, 
-                bond.NA_BHN,
-                bond.TYPE AS JENIS,
-                bond.KET,
-                (bond.QTY-bond.KIRIM) AS QTY,
-                (bond.QTY-bond.KIRIM) AS SISABON,
-                bond.SATUAN 
-            FROM bon, bond
-            WHERE bon.NO_BUKTI=bond.NO_BUKTI AND bon.SUB='$sp' AND bon.DR='$dr' AND bon.OK=1 AND bond.QTY - bond.KIRIM <> 0 AND (bond.NO_BUKTI LIKE '%$search%' OR bond.NA_BHN LIKE '%$search%')
-            ORDER BY bond.NO_BUKTI LIMIT $xa,$perPage");
-        $selectajax = array();
-        foreach ($results->RESULT_ARRAY() as $row) {
-            $selectajax[] = array(
-                'id' => $row['NO_BON'],
-                'text' => $row['NO_BON'],
-                'NO_BON' => $row['NO_BON'] . " - " . $row['KD_BHN'] . " - " . $row['NA_BHN'] . " - " . $row['SATUAN'] . " - " . $row['QTY'],
-                'KD_BHN' => $row['KD_BHN'],
-                'NA_BHN' => $row['NA_BHN'],
-                'JENIS' => $row['JENIS'],
-                'KET' => $row['KET'],
-                'SATUAN' => $row['SATUAN'],
-                'QTY' => $row['QTY'],
-            );
-        }
-        $select['total_count'] =  $results->NUM_ROWS();
-        $select['items'] = $selectajax;
-        $this->output->set_content_type('application/json')->set_output(json_encode($select));
-    }
-
     public function getDataAjax_bhn()
     {
         $dr = $this->session->userdata['dr'];
@@ -582,9 +523,9 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
             $xa = ($page - 1) * 10;
         }
         $perPage = 10;
-        $results = $this->db->query("SELECT bhn.NO_ID, bhn.KD_BHN, bhn.NA_BHN, bhn.SATUAN
+        $results = $this->db->query("SELECT bhn.NO_ID, bhn.KD_BHN, bhn.NA_BHN, bhn.SATUAN, bhnd.RAK
             FROM bhn, bhnd
-            WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND bhnd.DR = '$dr' AND bhnd.SUB='$sub' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%')
+            WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND bhnd.DR = '$dr' AND bhnd.SUB='$sub' AND bhnd.RAK <> '' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%' OR bhnd.RAK LIKE '%$search%')
             GROUP BY bhn.KD_BHN
             ORDER BY bhn.KD_BHN LIMIT $xa,$perPage");
         $selectajax = array();
@@ -592,9 +533,41 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
             $selectajax[] = array(
                 'id' => $row['KD_BHN'],
                 'text' => $row['KD_BHN'],
-                'KD_BHN' => $row['KD_BHN'] . " - " . $row['NA_BHN'] . " - " . $row['SATUAN'],
+                'KD_BHN' => $row['KD_BHN'] . " - " . $row['RAK'] . " - " . $row['NA_BHN'] . " - " . $row['SATUAN'],
+                'RAK' => $row['RAK'],
                 'NA_BHN' => $row['NA_BHN'],
                 'SATUAN' => $row['SATUAN'],
+            );
+        }
+        $select['total_count'] =  $results->NUM_ROWS();
+        $select['items'] = $selectajax;
+        $this->output->set_content_type('application/json')->set_output(json_encode($select));
+    }
+
+    public function getDataAjax_sp_mesin()
+    {
+        $dr = $this->session->userdata['dr'];
+        $sub = $this->session->userdata['sub'];
+        $search = $this->input->post('search');
+        $page = ((int)$this->input->post('page'));
+        if ($page == 0) {
+            $xa = 0;
+        } else {
+            $xa = ($page - 1) * 10;
+        }
+        $perPage = 10;
+        $results = $this->db->query("SELECT sp_mesin.NO_ID, sp_mesin.KD_GOL, sp_mesin.NA_GOL, sp_mesin.GRUP, sp_mesin.DR, sp_mesin.SUB
+            FROM sp_mesin
+            WHERE sp_mesin.KD_GOL LIKE '%$search%' OR sp_mesin.NA_GOL LIKE '%$search%' OR sp_mesin.GRUP LIKE '%$search%'
+            ORDER BY sp_mesin.NO_ID LIMIT $xa,$perPage");
+        $selectajax = array();
+        foreach ($results->RESULT_ARRAY() as $row) {
+            $selectajax[] = array(
+                'id' => $row['KD_GOL'],
+                'text' => $row['KD_GOL'],
+                'KD_GOL' => $row['KD_GOL'] . " - " . $row['NA_GOL'] . " - " . $row['GRUP'],
+                'NA_GOL' => $row['NA_GOL'],
+                'GRUP' => $row['GRUP'],
             );
         }
         $select['total_count'] =  $results->NUM_ROWS();

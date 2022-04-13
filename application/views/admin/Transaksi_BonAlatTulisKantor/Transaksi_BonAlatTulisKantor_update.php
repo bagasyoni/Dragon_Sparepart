@@ -158,20 +158,19 @@ foreach ($bon_atk as $rowh) {
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-1">
-							<label class="label">Tanggal </label>
-						</div>
-						<div class="col-md-2">
-							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()">
-						</div>
-						<div class="col-md-1">
-							<label class="label">Keterangan </label>
+							<label class="label">Notes </label>
 						</div>
 						<div class="col-md-3">
-							<input class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value="<?php echo $rowh->NOTES ?>">
+							<input class="form-control text_input NOTES text_input" id="NOTES" name="NOTES" type="text" value="<?php echo $rowh->NOTES ?>">
+						</div>
+						<div class="col-md-1">
+							<label class="label">Tgl </label>
+						</div>
+						<div class="col-md-3">
+							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()">
 						</div>
 					</div>
 				</div>
-				<hr>
 			</div>
 		</div>
 		<div class="row">
@@ -181,12 +180,15 @@ foreach ($bon_atk as $rowh) {
 						<thead>
 							<tr>
 								<th width="50px">No</th>
-								<!-- <th width="150px">Bon</th> -->
-								<th width="100px">Kode</th>
-								<th width="125px">Uraian</th>
-								<th width="100px">Qty</th>
+								<th width="75px">Kode</th>
+								<th width="75px">Rak</th>
+								<th width="250px">Uraian</th>
+								<th width="75px">Qty</th>
 								<th width="100px">Satuan</th>
-								<th width="225px">Keterangan</th>
+								<th width="150px">Keterangan 1</th>
+								<th width="125px">Keterangan 2</th>
+								<th width="175px">Grup</th>
+								<th width="125px">Nama Gol</th>
 								<th width="50px"></th>
 							</tr>
 						</thead>
@@ -197,22 +199,27 @@ foreach ($bon_atk as $rowh) {
 							?>
 								<tr>
 									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-									<!-- <td>
-									<div class='input-group'>
-										<select class="js-example-responsive-no_bon form-control NO_BON" name="NO_BON[]" id="NO_BON<?php echo $no; ?>" value="<?= $row->NO_BON ?>" onchange="no_bon(this.id)" onfocusout="hitung()"></select>
-									</div>
-									</td>
 									<td>
-									<div class='input-group'>
-										<select class="js-example-responsive-kd_bhn form-control KD_BHN text_input" name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" onchange="kd_bhn(this.id)" onfocusout="hitung()"></select>
-									</div>
-									</td> -->
-									<!-- <td><input name="NO_BON[]" id="NO_BON<?php echo $no; ?>" value="<?= $row->NO_BON ?>" type="text" class="form-control NO_BON text_input" readonly></td> -->
+										<div class="input-group">
+											<select class="js-example-responsive-kd_bhn form-control KD_BHN text_input" name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" onchange="kd_bhn(this.id)" required>
+												<option value="<?php echo $row->KD_BHN; ?>" selected id="KD_BHN<?php echo $no; ?>"><?php echo $row->KD_BHN; ?></option>
+											</select>
+										</div>
+									</td>
 									<td><input name="RAK[]" id="RAK<?php echo $no; ?>" value="<?= $row->RAK ?>" type="text" class="form-control RAK text_input" readonly></td>
 									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
-									<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
+									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
 									<td><input name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
+									<td>
+										<div class="input-group">
+											<select class="js-example-responsive-sp_mesin form-control KET2 text_input" name="KET2[]" id="KET2<?php echo $no; ?>" onchange="kd_gol(this.id)" required>
+												<option value="<?php echo $row->KET2; ?>" selected id="KET2<?php echo $no; ?>"><?php echo $row->KET2; ?></option>
+											</select>
+										</div>
+									</td>
+									<td><input name="GRUP[]" id="GRUP<?php echo $no; ?>" value="<?= $row->GRUP ?>" type="text" class="form-control GRUP text_input" readonly></td>
+									<td><input name="NA_GOL[]" id="NA_GOL<?php echo $no; ?>" value="<?= $row->NA_GOL ?>" type="text" class="form-control NA_GOL text_input" readonly></td>
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
 										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -227,7 +234,11 @@ foreach ($bon_atk as $rowh) {
 							<td></td>
 							<td></td>
 							<td></td>
+							<td></td>
 							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
+							<td></td>
+							<td></td>
+							<td></td>
 							<td></td>
 							<td></td>
 						</tfoot>
@@ -237,13 +248,13 @@ foreach ($bon_atk as $rowh) {
 		</div>
 		<br><br>
 		<!--tab-->
-		<!-- <div class="col-md-12">
+		<div class="col-md-12">
 			<div class="form-group row">
 				<div class="col-md-1">
 					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
 				</div>
 			</div>
-		</div> -->
+		</div>
 		<br>
 		<div class="col-md-12">
 			<div class="col-xs-9">
@@ -350,18 +361,7 @@ foreach ($bon_atk as $rowh) {
 		var TOTAL_QTY = 0;
 		var total_row = idrow;
 		for (i = 0; i < total_row; i++) {
-			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
-			var sisabon = parseFloat($('#SISABON' + i).val().replace(/,/g, ''));
 
-			if (qty > sisabon) {
-				alert("Qty tidak boleh lebih besar dari Sisa Bon");
-				$('#QTY' + i).val(0);
-				console.log('TIDAK OK !!!')
-			} else {
-				console.log('OK !!!')
-			}
-			$('#BILANGAN' + i).val(angkaTerbilang(qty));
-			// console.log(angkaTerbilang('Terbilang :'+qty));
 		};
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
@@ -387,29 +387,33 @@ foreach ($bon_atk as $rowh) {
 		var td6 = x.insertCell(5);
 		var td7 = x.insertCell(6);
 		var td8 = x.insertCell(7);
+		var td9 = x.insertCell(8);
+		var td10 = x.insertCell(9);
+		var td11 = x.insertCell(10);
 
-		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()'></select></div>";
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0 text_input' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
 
-		var no_bon = no_bon0;
 		var kd_bhn = kd_bhn0;
 
+		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET20" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()'></select></div>";
+
+		var kd_gol = kd_gol0;
+
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = no_bon;
-		td3.innerHTML = "<input name='RAK[]' id=RAK" + idrow + " type='text' class='form-control RAK text_input' readonly>";
-		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input'>";
+		td2.innerHTML = kd_bhn;
+		td3.innerHTML = "<input name='RAK[]' id=RAK0" + idrow + " type='text' class='form-control RAK text_input' readonly>";
+		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
 		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
-		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
-		td7.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
-		td8.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
+		td7.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
+		td8.innerHTML = kd_gol;
+		td9.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input'>";
+		td10.innerHTML = "<input name='NA_GOL[]' id=NA_GOL0" + idrow + " type='text' class='form-control NA_GOL text_input'>";
+		td11.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#QTY" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
-			$("#SISABON" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
@@ -424,9 +428,9 @@ foreach ($bon_atk as $rowh) {
 			this.value ^= 1;
 			console.log(this.value)
 		});
-		select_no_bon();
 		select_kd_bhn();
-	}
+		select_sp_mesin();
+		}
 
 	function hapus() {
 		if (idrow > 1) {
@@ -439,14 +443,14 @@ foreach ($bon_atk as $rowh) {
 
 <script>
 	$(document).ready(function() {
-		select_no_bon();
 		select_kd_bhn();
+		select_sp_mesin();
 	});
 
-	function select_no_bon() {
-		$('.js-example-responsive-no_bon').select2({
+	function select_sp_mesin() {
+		$('.js-example-responsive-sp_mesin').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_Pemesanan/getDataAjax_bond') ?>",
+				url: "<?= base_url('admin/Transaksi_BonAlatTulisKantor/getDataAjax_sp_mesin') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -467,57 +471,46 @@ foreach ($bon_atk as $rowh) {
 				},
 				cache: true
 			},
-			placeholder: 'Pilih No Bon',
+			placeholder: 'Pilih Keterangan',
 			minimumInputLength: 0,
-			templateResult: format_no_bon,
-			templateSelection: formatSelection_no_bon
+			templateResult: format_kd_gol,
+			templateSelection: formatSelection_kd_gol
 		});
 	}
 
-	function format_no_bon(repo_no_bon) {
-		if (repo_no_bon.loading) {
-			return repo_no_bon.text;
+	function format_kd_gol(repo_kd_gol) {
+		if (repo_kd_gol.loading) {
+			return repo_kd_gol.text;
 		}
 		var $container = $(
 			"<div class='select2-result-repository clearfix text_input'>" +
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_no_bon.NO_BON);
+		$container.find(".select2-result-repository__title").text(repo_kd_gol.KD_GOL);
 		return $container;
 	}
+	var na_gol = '';
+	var grup = '';
 
-	var jenis = '';
-	var na_bhn = '';
-	var ket = '';
-	var satuan = '';
-	var qty = '';
-	var sisabon = '';
-
-	function formatSelection_no_bon(repo_no_bon) {
-		jenis = repo_no_bon.JENIS;
-		na_bhn = repo_no_bon.NA_BHN;
-		ket = repo_no_bon.KET;
-		satuan = repo_no_bon.SATUAN;
-		qty = repo_no_bon.QTY;
-		sisabon = repo_no_bon.SISABON;
-		return repo_no_bon.text;
+	function formatSelection_kd_gol(repo_kd_gol) {
+		na_gol = repo_kd_gol.NA_GOL;
+		grup = repo_kd_gol.GRUP;
+		return repo_kd_gol.text;
 	}
 
-	function no_bon(x) {
-		var q = x.substring(6, 10);
-		$('#JENIS' + q).val(jenis);
-		$('#NA_BHN' + q).val(na_bhn);
-		$('#KET' + q).val(ket);
-		$('#SATUAN' + q).val(satuan);
-		$('#QTY' + q).val(qty);
-		$('#SISABON' + q).val(sisabon);
+	function kd_gol(x) {
+		var q = x.substring(4, 12);
+		$('#NA_GOL' + q).val(na_gol);
+		$('#GRUP' + q).val(grup);
+		
+		console.log(q);
 	}
 
 	function select_kd_bhn() {
 		$('.js-example-responsive-kd_bhn').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_Pemesanan/getDataAjax_bhn') ?>",
+				url: "<?= base_url('admin/Transaksi_BonAlatTulisKantor/getDataAjax_bhn') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -557,19 +550,22 @@ foreach ($bon_atk as $rowh) {
 		$container.find(".select2-result-repository__title").text(repo_kd_bhn.KD_BHN);
 		return $container;
 	}
-
-	// var na_bhn = '';
+	var rak = '';
+	var na_bhn = '';
 	var satuan = '';
 
 	function formatSelection_kd_bhn(repo_kd_bhn) {
-		// na_bhn = repo_kd_bhn.NA_BHN;
+		rak = repo_kd_bhn.RAK;
+		na_bhn = repo_kd_bhn.NA_BHN;
 		satuan = repo_kd_bhn.SATUAN;
 		return repo_kd_bhn.text;
 	}
 
-	function kd_bhn(xx) {
-		var qq = xx.substring(6, 10);
-		// $('#NA_BHN' + qq).val(na_bhn);
-		$('#SATUAN' + qq).val(satuan);
+	function kd_bhn(x) {
+		var q = x.substring(6, 12);
+		$('#RAK' + q).val(rak);
+		$('#NA_BHN' + q).val(na_bhn);
+		$('#SATUAN' + q).val(satuan);
+		console.log(q);
 	}
 </script>

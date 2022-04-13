@@ -551,7 +551,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $this->output->set_content_type('application/json')->set_output(json_encode($select));
     }
 
-    public function getDataAjax_dragon()
+    public function getDataAjax_dr()
     {
         $dr = $this->session->userdata['dr'];
         $search = $this->input->post('search');
@@ -562,18 +562,18 @@ class Transaksi_PesananPisau extends CI_Controller
             $xa = ($page - 1) * 10;
         }
         $perPage = 10;
-        $results = $this->db->query("SELECT KODE, NAMA, AREA
-            FROM rn_dragon
-            WHERE (KODE LIKE '%$search%' OR NAMA LIKE '%$search%')
-            AND AREA='$dr'
-            ORDER BY AREA 
+        $results = $this->db->query("SELECT KD_DEV, NM_DEV, FLAG, NAMA, AREA
+            FROM rn_dev
+            WHERE (KD_DEV LIKE '%$search%' OR NM_DEV LIKE '%$search%')
+            AND KD_DEV='$dr'
+            ORDER BY KD_DEV 
             LIMIT $xa,$perPage");
         $selectajax = array();
         foreach ($results->RESULT_ARRAY() as $row) {
             $selectajax[] = array(
-                'id' => $row['NAMA'],
-                'text' => $row['NAMA'],
-                'DR' => $row['NAMA'],
+                'id' => $row['NM_DEV'],
+                'text' => $row['NM_DEV'],
+                'DR' => $row['NM_DEV'],
             );
         }
         $select['total_count'] =  $results->NUM_ROWS();

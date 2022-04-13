@@ -165,9 +165,10 @@
 								<th width="250px">Uraian</th>
 								<th width="75px">Qty</th>
 								<th width="100px">Satuan</th>
-								<th width="200px">Keterangan 1</th>
-								<th width="200px">Keterangan 2</th>
-								<th width="150px">Grup</th>
+								<th width="150px">Keterangan 1</th>
+								<th width="125px">Keterangan 2</th>
+								<th width="175px">Grup</th>
+								<th width="125px">Nama Gol</th>
 								<th width="50px"></th>
 							</tr>
 						</thead>
@@ -186,6 +187,7 @@
 									<select class="js-example-responsive-sp_mesin form-control KET20 text_input" name="KET2[]" id="KET20" onchange="kd_gol(this.id)" onfocusout="hitung()"></select>
 								</td>
 								<td><input name="GRUP[]" id="GRUP0" type="text" class="form-control GRUP text_input" readonly></td>
+								<td><input name="NA_GOL[]" id="NA_GOL0" type="text" class="form-control NA_GOL text_input" readonly></td>
 								<td>
 									<!-- <button type="hidden" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
@@ -203,7 +205,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<!-- <td></td> -->
+							<td></td>
 						</tfoot>
 					</table>
 				</div>
@@ -349,6 +351,7 @@
 		var td8 = x.insertCell(7);
 		var td9 = x.insertCell(8);
 		var td10 = x.insertCell(9);
+		var td11 = x.insertCell(10);
 
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0 text_input' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
@@ -367,7 +370,8 @@
 		td7.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
 		td8.innerHTML = kd_gol;
 		td9.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
-		td10.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
+		td10.innerHTML = "<input name='NA_GOL[]' id=NA_GOL0" + idrow + " type='text' class='form-control NA_GOL text_input' readonly>";
+		td11.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {

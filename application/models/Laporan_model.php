@@ -18,7 +18,7 @@ class Laporan_model extends CI_Model
 			FROM bhn
 			WHERE bhn.DR='$dr'
 			AND bhn.FLAG='SP'
-			AND bhn.KD_BHN BETWEEN '$kd_bhn_1' AND '$kd_bhn_2'
+			-- AND bhn.KD_BHN BETWEEN '$kd_bhn_1' AND '$kd_bhn_2'
 			ORDER BY bhn.KD_BHN";
 		return $this->db->query($q1);
 	}
@@ -421,7 +421,7 @@ class Laporan_model extends CI_Model
 					AND bhnd.YER = '$tahun'
 					AND bhn.DR = '$dr'
 					AND bhn.FLAG = 'SP'
-					AND bhn.FLAG2 = '$sub'
+					AND bhn.SUB = '$sub'
 					GROUP BY bhn.KD_BHN
 				) AS KD_BHN
 				ORDER BY KD_BHN";
@@ -483,7 +483,7 @@ class Laporan_model extends CI_Model
 				pakaid.NO_BUKTI AS NO_BUKTI,
 				pakaid.TGL AS TGL,
 				pakaid.QTY AS QTY,
-				pakaid.GRUP AS MESIN
+				pakaid.NA_GOL AS NA_GOL
 			FROM pakaid
 			WHERE pakaid.TGL >='$tgl_1'
 			AND pakaid.TGL <='$tgl_2'

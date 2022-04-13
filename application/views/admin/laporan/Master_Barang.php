@@ -15,7 +15,7 @@
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
         <form id="masterbarang" method="post" action="<?php echo base_url('admin/laporan/index_MasterBarang') ?>">
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-md-1">
                         <label class="label-title">Barang </label>
@@ -40,7 +40,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-6">
                 <div class="form-group row">
                     <div class="col-sm-2 nopadding">

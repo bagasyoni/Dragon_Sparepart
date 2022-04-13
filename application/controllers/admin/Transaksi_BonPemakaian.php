@@ -234,7 +234,7 @@ class Transaksi_BonPemakaian extends CI_Controller
             'TG_SMP' => date("Y-m-d h:i a")
         );
         $this->transaksi_model->input_datah('pakai', $datah);
-        $ID = $this->db->query("SELECT NO_ID AS no_id FROM pakai WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
+        $ID = $this->db->query("SELECT NO_ID AS no_id FROM pakai WHERE NO_BUKTI = '$bukti' AND SUB = '$sub' GROUP BY NO_BUKTI")->result();
         $NO_BUKTI = $this->input->post('NO_BUKTI');
         $REC = $this->input->post('REC');
         $KD_BHN = $this->input->post('KD_BHN');
@@ -245,6 +245,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         $KET1 = $this->input->post('KET1');
         $KET2 = $this->input->post('KET2');
         $GRUP = $this->input->post('GRUP');
+        $NA_GOL = $this->input->post('NA_GOL');
         $i = 0;
         foreach ($REC as $a) {
             $datad = array(
@@ -260,6 +261,7 @@ class Transaksi_BonPemakaian extends CI_Controller
                 'KET1' => $KET1[$i],
                 'KET2' => $KET2[$i] ?? "-",
                 'GRUP' => $GRUP[$i],
+                'NA_GOL' => $NA_GOL[$i],
                 'FLAG' => 'PK',
                 'FLAG2' => 'SP',
                 'ATK' => '0',
@@ -304,7 +306,8 @@ class Transaksi_BonPemakaian extends CI_Controller
                 pakaid.SATUAN AS SATUAN,
                 pakaid.KET1 AS KET1,
                 pakaid.KET2 AS KET2,
-                pakaid.GRUP AS GRUP
+                pakaid.GRUP AS GRUP,
+                pakaid.NA_GOL AS NA_GOL
             FROM pakai,pakaid 
             WHERE pakai.NO_ID=$id 
             AND pakai.NO_ID=pakaid.ID 
@@ -356,7 +359,8 @@ class Transaksi_BonPemakaian extends CI_Controller
                 pakaid.SATUAN AS SATUAN,
                 pakaid.KET1 AS KET1,
                 pakaid.KET2 AS KET2,
-                pakaid.GRUP AS GRUP
+                pakaid.GRUP AS GRUP,
+                pakaid.NA_GOL AS NA_GOL
             FROM pakai,pakaid 
             WHERE pakai.NO_ID=$id 
             AND pakai.NO_ID=pakaid.ID 
@@ -372,6 +376,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         $KET1 = $this->input->post('KET1');
         $KET2 = $this->input->post('KET2');
         $GRUP = $this->input->post('GRUP');
+        $NA_GOL = $this->input->post('NA_GOL');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -391,6 +396,7 @@ class Transaksi_BonPemakaian extends CI_Controller
                     'KET1' => $KET1[$URUT],
                     'KET2' => $KET2[$URUT],
                     'GRUP' => $GRUP[$URUT],
+                    'NA_GOL' => $NA_GOL[$URUT],
                     'FLAG' => 'PK',
                     'FLAG2' => 'SP',
                     'ATK' => '0',
@@ -428,6 +434,7 @@ class Transaksi_BonPemakaian extends CI_Controller
                     'KET1' => $KET1[$i],
                     'KET2' => $KET2[$i],
                     'GRUP' => $GRUP[$i],
+                    'NA_GOL' => $NA_GOL[$i],
                     'FLAG' => 'PK',
                     'FLAG2' => 'SP',
                     'ATK' => '0',
@@ -535,7 +542,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         foreach ($results->RESULT_ARRAY() as $row) {
             $selectajax[] = array(
                 'id' => $row['KD_GOL'],
-                'text' => $row['NA_GOL'],
+                'text' => $row['KD_GOL'],
                 'KD_GOL' => $row['KD_GOL'] . " - " . $row['NA_GOL'] . " - " . $row['GRUP'],
                 'NA_GOL' => $row['NA_GOL'],
                 'GRUP' => $row['GRUP'],
