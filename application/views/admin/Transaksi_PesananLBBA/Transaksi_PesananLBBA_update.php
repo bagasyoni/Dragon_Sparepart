@@ -1,5 +1,3 @@
-<script src="https://unpkg.com/@develoka/angka-terbilang-js/index.min.js"></script>
-
 <style>
 	#myInput {
 		background-image: url('<?php echo base_url() ?>assets/img/search-icon-blue.png');
@@ -116,7 +114,16 @@
 		width: 100%;
 	}
 
-	.text_input {
+	hr {
+		border: 0;
+		clear: both;
+		display: block;
+		width: 100%;
+		background-color: black;
+		height: 1px;
+	}
+
+	*/ .text_input {
 		font-size: small;
 		color: black;
 	}
@@ -125,46 +132,28 @@
 <div class="container-fluid">
 	<br>
 	<div class="alert alert-success alert-container" role="alert">
-		<i class="fas fa-university"></i> Input <?php echo $this->session->userdata['judul']; ?>
+		<i class="fas fa-university"></i> Update Pesanan LBBA
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananRNDInternal/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananLBBA/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
 		<div class="form-body">
 			<div class="row">
-				<!-- <div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-1">
-							<label class="label">Devisi </label>
-						</div>
-						<div class="col-md-2">
-							<select value="" class="js-example-responsive-rn_dev form-control DEVISI" name="DEVISI" id="DEVISI" onchange="rn_dev(this.id)" onfocusout="hitung()" required></select>
-						</div>
-					</div>
-				</div> -->
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-1">
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" placeholder='<?php echo $this->session->userdata['bukti']; ?>' readonly>
-						</div>
-						<div class="col-md-1">
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-1">
-							<label class="label">Tanggal </label>
+							<input type="hidden" id="NO_ID" name="NO_ID" class="form-control" value="<?= $NO_ID ?>">
+							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?= $NO_BUKTI ?>" readonly>
 						</div>
 						<div class="col-md-2">
-							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($TGL, TRUE)); ?>" onclick="select()">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Tanggal Diminta </label>
+							<label class="label">DR </label>
 						</div>
-						<div class="col-md-2">
-							<input type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL_DIMINTA"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+						<div class="col-md-1">
+							<input class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" value="<?= $DEVISI ?>">
 						</div>
 					</div>
 				</div>
@@ -174,72 +163,67 @@
 							<label class="label">Article </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input KET" id="KET" name="KET" type="text" required>
+							<input class="form-control text_input KET" id="KET" name="KET" type="text" value="<?= $KET ?>" required>
+						</div>
+						<div class="col-md-2">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Keterangan </label>
+							<label class="label">Pesan </label>
 						</div>
-						<div class="col-md-3">
-							<input class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value=''>
+						<div class="col-md-2">
+							<input class="form-control text_input PESAN" id="PESAN" name="PESAN" value="<?= $PESAN ?>" type="text">
+						</div>
+						<div class="col-md-2">
+							<input class="form-control text_input JO" id="JO" name="JO" value="<?= $JO ?>" type="text">
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="table-responsive scrollable">
-					<table id="datatable" class="table table-hoverx table-stripedx table-borderedx table-condensed table-scrollable">
-						<thead>
-							<tr>
-								<th width="10px">No</th>
-								<th width="150px">Komponen</th>
-								<th width="150px">Serian</th>
-								<th width="75px">Qty</th>
-								<th width="100px">Satuan</th>
-								<th width="150px">Keterangan</th>
-								<th width="50px"></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" required></td>
-								<td><input name="SERI[]" id="JENIS0" type="text" class="form-control SERI text_input" required></td>
-								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
-								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input" required></td>
-								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1 text_input"></td>
-								<td>
-									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
-										<i class="fa fa-fw fa-trash-alt"></i>
-									</button> -->
-								</td>
-							</tr>
-						</tbody>
-						<tfoot>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tfoot>
-					</table>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-1">
+							<label class="label">Tanggal Diminta </label>
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+						</div>
+						<div class="col-md-2">
+						</div>
+						<div class="col-md-1">
+							<label class="label">Flag </label>
+						</div>
+						<div class="col-md-2">
+							<input class="form-control text_input FLAG3" id="FLAG3" name="FLAG3" type="text" value="<?= $FLAG3 ?>">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="label">Gambar Cetakan Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-2">
+						<input type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+					</div>
 				</div>
 			</div>
 		</div>
 		<br><br>
 		<!--tab-->
-		<div class="col-md-12">
-			<div class="form-group row">
-				<div class="col-md-1">
-					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
-				</div>
-			</div>
-		</div>
 		<br>
-		<div class="row">
+		<div class="col-md-12">
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
@@ -268,54 +252,6 @@
 	});
 </script>
 
-<!-- myModal No Bukti BL Beli Bon-->
-<div id="mymodal_nobukti_beli_bon" class="modal fade" role="dialog">
-	<div class="modal-dialog modal-xl">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" style="font-weight: bold; color: black;">Data Beli</h4>
-			</div>
-			<div class="modal-body">
-				<table class='table table-bordered' id='modal_bl'>
-					<thead>	
-						<th>No Bukti Beli Bon</th>
-						<th>Periode</th>
-						<th>Val</th>
-						<th>DR</th>
-					</thead>
-					<tbody>
-					<?php
-						$dr= $this->session->userdata['dr'];
-						$sub= $this->session->userdata['sub'];
-						$dr= $this->session->userdata['dr'];
-						$sql = "SELECT NO_BUKTI AS NO_BUKTI_BELI_BON, 
-								PER AS PER, 
-								TTD1 AS TTD1, 
-								DR AS DR
-							FROM bon
-							WHERE SUB = '$sub' 
-							AND DR='$dr'
-							ORDER BY PER, NO_BUKTI";
-						$a = $this->db->query($sql)->result();
-						foreach($a as $b ) { 
-					?>
-						<tr>
-							<td class='NBBVAL'><a href="#" class="select_nobukti_beli_bon"><?php echo $b->NO_BUKTI_BELI_BON;?></a></td>
-							<td class='PEBVAL text_input'><?php echo $b->PER;?></td>
-							<td class='VABVAL text_input'><?php echo $b->TTD1;?></td>
-							<td class='DRBVAL text_input'><?php echo $b->DR;?></td>
-						</tr>
-					<?php } ?>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
 <script>
 	(function() {
 		'use strict';
@@ -324,7 +260,6 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
-						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -338,7 +273,7 @@
 		}, false);
 	})();
 	var target;
-	var idrow = 1;
+	var idrow = <?php echo $no ?>;
 
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -369,6 +304,7 @@
 					nomor();
 				}
 			} else {
+				// txt = "Batal Hapus";
 			}
 		});
 		$('input[type="checkbox"]').on('change', function() {
@@ -390,6 +326,7 @@
 
 	function hitung() {
 		var TOTAL_QTY = 0;
+		var TOTAL = 0;
 		var total_row = idrow;
 		for (i = 0; i < total_row; i++) {
 			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
@@ -401,10 +338,13 @@
 		});
 
 		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
+		if (isNaN(TOTAL)) TOTAL = 0;
 
 		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
+		$('#TOTAL').val(numberWithCommas(TOTAL));
 
 		$('#TOTAL_QTY').autoNumeric('update');
+		$('#TOTAL').autoNumeric('update');
 	}
 
 	function tambah() {
@@ -415,22 +355,27 @@
 		var td3 = x.insertCell(2);
 		var td4 = x.insertCell(3);
 		var td5 = x.insertCell(4);
-		var td6 = x.insertCell(5);
-		var td7 = x.insertCell(6);
 
-		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()' required></select></div>";
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
+		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()'></select></div>";
 		
 		var no_bon = no_bon0;
-		var kd_bhn = kd_bhn0;
-
+		
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' required>";
-		td3.innerHTML = "<input name='SERI[]' id=SERI" + idrow + " type='text' class='form-control SERI text_input' required>";
-		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
-		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' required>";
-		td6.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
-		td7.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+		td2.innerHTML = no_bon;
+		td3.innerHTML = "<input name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' readonly>";
+		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
+		td5.innerHTML = "<input name='JENIS[]' id=JENIS" + idrow + " type='text' class='form-control JENIS text_input'>";
+		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td7.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
+		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
+		td9.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input'>";
+		td10.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
+		td11.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
+																																																			echo $_POST["TGL_DIMINTA"];
+																																																		} else echo date('d-m-Y'); ?>'>";
+		td12.innerHTML = "<input name='SISABON[]' onclick='select()' onkeyup='hitung()' value='0' id=SISABON" + idrow + " type='text' class='form-control SISABON rightJustified text-primary' readonly>";
+		td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='1' unchecked>";
+		td14.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -453,8 +398,8 @@
 			this.value ^= 1;
 			console.log(this.value)
 		});
-		select_rn_dev();
-		select_dragon();
+		select_no_bon();
+		select_kd_bhn();
 	}
 
 	function hapus() {
@@ -468,14 +413,14 @@
 
 <script>
 	$(document).ready(function() {
-		select_rn_dev();
-		select_dragon();
+		select_no_bon();
+		select_kd_bhn();
 	});
 
-	function select_rn_dev() {
-		$('.js-example-responsive-rn_dev').select2({
+	function select_no_bon() {
+		$('.js-example-responsive-no_bon').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_BoronganCNC/getDataAjax_rndev') ?>",
+				url: "<?= base_url('admin/Transaksi_Pemesanan/getDataAjax_bond') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -496,42 +441,54 @@
 				},
 				cache: true
 			},
-			placeholder: 'Pilih Devisi',
+			placeholder: 'Pilih No Bon',
 			minimumInputLength: 0,
-			templateResult: format_rn_dev,
-			templateSelection: formatSelection_rn_dev
+			templateResult: format_no_bon,
+			templateSelection: formatSelection_no_bon
 		});
 	}
 
-	function format_rn_dev(repo_rn_dev) {
-		if (repo_rn_dev.loading) {
-			return repo_rn_dev.text;
+	function format_no_bon(repo_no_bon) {
+		if (repo_no_bon.loading) {
+			return repo_no_bon.text;
 		}
 		var $container = $(
 			"<div class='select2-result-repository clearfix text_input'>" +
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_rn_dev.DEVISI);
+		$container.find(".select2-result-repository__title").text(repo_no_bon.NO_BON);
 		return $container;
 	}
 
-	var nama = '';
+	var kd_bhn = '';
+	var na_bhn = '';
+	var satuan = '';
+	var qty = '';
+	var sisabon = '';
 
-	function formatSelection_rn_dev(repo_rn_dev) {
-		nama = repo_rn_dev.NOTES;
-		return repo_rn_dev.text;
+	function formatSelection_no_bon(repo_no_bon) {
+		kd_bhn = repo_no_bon.KD_BHN;
+		na_bhn = repo_no_bon.NA_BHN;
+		satuan = repo_no_bon.SATUAN;
+		qty = repo_no_bon.QTY;
+		sisabon = repo_no_bon.SISABON;
+		return repo_no_bon.text;
 	}
 
-	function rn_dev(x) {
+	function no_bon(x) {
 		var q = x.substring(6, 10);
-		$('#NOTES' + q).val(nama);
+		$('#KD_BHN' + q).val(kd_bhn);
+		$('#NA_BHN' + q).val(na_bhn);
+		$('#SATUAN' + q).val(satuan);
+		$('#QTY' + q).val(qty);
+		$('#SISABON' + q).val(sisabon);
 	}
 
-	function select_dragon() {
-		$('.js-example-responsive-dragon').select2({
+	function select_kd_bhn() {
+		$('.js-example-responsive-kd_bhn').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_BoronganCNC/getDataAjax_dragon') ?>",
+				url: "<?= base_url('admin/Transaksi_Pemesanan/getDataAjax_bhn') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -552,34 +509,38 @@
 				},
 				cache: true
 			},
-			placeholder: 'Pilih Dragon',
+			placeholder: 'Pilih Barang',
 			minimumInputLength: 0,
-			templateResult: format_dragon,
-			templateSelection: formatSelection_dragon
+			templateResult: format_kd_bhn,
+			templateSelection: formatSelection_kd_bhn
 		});
 	}
 
-	function format_dragon(repo_dragon) {
-		if (repo_dragon.loading) {
-			return repo_dragon.text;
+	function format_kd_bhn(repo_kd_bhn) {
+		if (repo_kd_bhn.loading) {
+			return repo_kd_bhn.text;
 		}
 		var $container = $(
 			"<div class='select2-result-repository clearfix text_input'>" +
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_dragon.AREA);
+		$container.find(".select2-result-repository__title").text(repo_kd_bhn.KD_BHN);
 		return $container;
 	}
 
-	// var nm_dev = '';
+	var na_bhn = '';
+	var satuan = '';
 
-	function formatSelection_dragon(repo_dragon) {
-		// nm_dev = repo_rn_dev.NM_DEV;
-		return repo_dragon.text;
+	function formatSelection_kd_bhn(repo_kd_bhn) {
+		na_bhn = repo_kd_bhn.NA_BHN;
+		satuan = repo_kd_bhn.SATUAN;
+		return repo_kd_bhn.text;
 	}
 
-	function dragon(x) {
-		var q = x.substring(6, 10);
+	function kd_bhn(xx) {
+		var qq = xx.substring(6, 10);
+		$('#NA_BHN' + qq).val(na_bhn);
+		$('#SATUAN' + qq).val(satuan);
 	}
 </script>

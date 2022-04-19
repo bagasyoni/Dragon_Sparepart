@@ -79,11 +79,11 @@
         <div class="alert alert-success alert-container" role="alert">
             <i class="fas fa-university"></i>
             <label>
-                Transaksi Monitor PO
+                Transaksi Pesanan LBBA
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
-        <form method="post" action="<?php echo base_url('admin/Transaksi_MonitorPO/delete_multiple') ?>">
+        <form method="post" action="<?php echo base_url('admin/Transaksi_PesananLBBA/delete_multiple') ?>">
             <div class="btn-group" role="group" aria-label="Basic example">
             </div>
             <table id="example" class="table table-bordered table-striped table-hover table-responsive bodycontainer scrollable" style="width:100%;">
@@ -92,11 +92,16 @@
                         <th width="75px"><input type="checkbox" id="selectall" /></th>
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
-                        <th width="275px">No Bukti</th>
-                        <th width="75px">Dragon</th>
-                        <th width="170px">Tanggal</th>
-                        <th width="170px">Jatuh Tempo</th>
-                        <th width="300px">Notes</th>
+                        <th width="325px">No Bukti</th>
+                        <th width="275px">Tanggal</th>
+                        <th width="275px">Tanggal Diminta</th>
+                        <th width="100px">Devisi</th>
+                        <th width="225px">Ket</th>
+                        <th width="200px">Pesan</th>
+                        <th width="200px">Tujuan</th>
+                        <th width="200px">Flag</th>
+                        <th width="200px">Gambar</th>
+                        <th width="200px">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -119,7 +124,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "<?php echo site_url('admin/Transaksi_MonitorPO/get_ajax_po') ?>",
+                "url": "<?php echo site_url('admin/Transaksi_PesananLBBA/get_ajax_pp') ?>",
                 "type": "POST"
             },
             "columnDefs": [{
@@ -129,10 +134,10 @@
         });
         $('.buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel').addClass('btn btn-primary mb-3');
         // menambahkan button  di test_btn
-        // $("div.test_btn").html('  <a class="btn  btn-md btn-success" href="input"> <i class="fas fa-plus fa-sm md-3" ></i></a> ' +
-        //     ' <button  type="submit" class="btn btn-md btn-danger" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"> <i class="fas fa-trash fa-sm md-3"></i></button> ' +
-        //     '  <a class="btn type="hidden" btn-md btn-primary"  href="<?php echo site_url('admin/account/print') ?>"></a> '
-        // );
+        $("div.test_btn").html('  <a class="btn  btn-md btn-success" href="input"> <i class="fas fa-plus fa-sm md-3" ></i></a> ' +
+            ' <button  type="submit" class="btn btn-md btn-danger" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"> <i class="fas fa-trash fa-sm md-3"></i></button> ' +
+            '  <a class="btn type="hidden" btn-md btn-primary"  href="<?php echo site_url('admin/account/print') ?>"></a> '
+        );
         $('#example').show();
 
     });

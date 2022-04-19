@@ -132,7 +132,7 @@
 							<input class="form-control text_input NO_BUKTI text_input" id="NO_BUKTI" name="NO_BUKTI" type="text" value='' required readonly>
 						</div>
 						<div class="col-md-1">
-							<input class="form-control text_input DR text_input" id="DR" name="DR" type="text" value='' placeholder="Dragon" required>
+							<select value="" class="js-example-responsive-dragon form-control DR" name="DR" id="DR" onchange="dragon(this.id)" onfocusout="hitung()" required></select>
 						</div>
 					</div>
 				</div>
@@ -237,12 +237,12 @@
 					<table id="datatable" class="table table-hoverx table-stripedx table-borderedx table-condensed table-scrollable">
 						<thead>
 							<tr>
-								<th width="50px">No</th>
+								<th width="20px">No</th>
 								<th width="75px">Kode</th>
 								<th width="250px">Uraian</th>
 								<th width="200px">Keterangan</th>
 								<th width="100px">Satuan</th>
-								<th width="75px">Qty</th>
+								<th width="85px">Qty</th>
 								<th width="50px"></th>
 							</tr>
 						</thead>
@@ -278,13 +278,13 @@
 		</div>
 		<br><br>
 		<!--tab-->
-		<div class="col-md-12">
+		<!-- <div class="col-md-12">
 			<div class="form-group row">
 				<div class="col-md-1">
 					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="col-md-12">
 			<div class="form-group row">
 				<div class="col-md-1">
@@ -312,7 +312,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#modal_bagian').DataTable({
+		$('#modal_kodes').DataTable({
 			dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
 				"<'row'<'col-md-6'f><'col-md-6'l>>" + // peletakan entries, search, dan test_btn
 				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
@@ -506,6 +506,7 @@
 			console.log(this.value)
 		});
 		select_kd_bhn();
+		select_dragon();
 	}
 
 	function hapus() {
@@ -520,6 +521,7 @@
 <script>
 	$(document).ready(function() {
 		select_kd_bhn();
+		select_dragon();
 	});
 
 	function select_kd_bhn() {
@@ -582,5 +584,57 @@
 		$('#NA_BHN' + q).val(na_bhn);
 		$('#SATUAN' + q).val(satuan);
 		console.log(q);
+	}
+
+	function select_dragon() {
+		$('.js-example-responsive-dragon').select2({
+			ajax: {
+				url: "<?= base_url('admin/Transaksi_MonitorPO/getDataAjax_dragon') ?>",
+				dataType: "json",
+				type: "post",
+				delay: 10,
+				data: function(params) {
+					return {
+						search: params.term,
+						page: params.page
+					}
+				},
+				processResults: function(data, params) {
+					params.page = params.page || 1;
+					return {
+						results: data.items,
+						pagination: {
+							more: data.total_count
+						}
+					};
+				},
+				cache: true
+			},
+			placeholder: 'Pilih Dragon',
+			minimumInputLength: 0,
+			templateResult: format_dragon,
+			templateSelection: formatSelection_dragon
+		});
+	}
+
+	function format_dragon(repo_dragon) {
+		if (repo_dragon.loading) {
+			return repo_dragon.text;
+		}
+		var $container = $(
+			"<div class='select2-result-repository clearfix text_input'>" +
+			"<div class='select2-result-repository__title text_input'></div>" +
+			"</div>"
+		);
+		$container.find(".select2-result-repository__title").text(repo_dragon.DR);
+		return $container;
+	}
+
+	function formatSelection_dragon(repo_dragon) {
+		return repo_dragon.text;
+	}
+
+	function dragon(x) {
+		var q = x.substring(2, 10);
 	}
 </script>

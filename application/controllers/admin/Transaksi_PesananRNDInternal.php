@@ -126,9 +126,8 @@ class Transaksi_PesananRNDInternal extends CI_Controller
                     </div>';
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
-            $row[] = $pp->DEVISI;
             $row[] = $pp->TGL;
-            $row[] = $pp->NA_BRG;
+            $row[] = $pp->KET;
             $row[] = $pp->TGL_DIMINTA;
             $row[] = $pp->NOTES;
             $data[] = $row;
@@ -270,10 +269,10 @@ class Transaksi_PesananRNDInternal extends CI_Controller
         // PP / NOMER / DR / BULAN / TAHUN / SP
         $bukti = 'PP' . '/' . $urut . '/' . $dr . '/' . $romawi . '/' . $tahun . '/' . $sub;
         $datah = array(
-            'DEVISI' => $this->input->post('DEVISI', TRUE),
+            // 'DEVISI' => $this->input->post('DEVISI', TRUE),
             'NO_BUKTI' => $bukti,
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-            'NA_BRG' => $this->input->post('NA_BRG', TRUE),
+            'KET' => $this->input->post('KET', TRUE),
             'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
             'NOTES' => $this->input->post('NOTES', TRUE),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
@@ -294,7 +293,7 @@ class Transaksi_PesananRNDInternal extends CI_Controller
         $SERI = $this->input->post('SERI');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SATUAN = $this->input->post('SATUAN');
-        $KET = $this->input->post('KET');
+        $KET1 = $this->input->post('KET1');
         $i = 0;
         foreach ($REC as $a) {
             $datad = array(
@@ -305,7 +304,7 @@ class Transaksi_PesananRNDInternal extends CI_Controller
                 'SERI' => $SERI[$i],
                 'QTY' => str_replace(',', '', $QTY[$i]),
                 'SATUAN' => $SATUAN[$i],
-                'KET' => $KET[$i],
+                'KET1' => $KET1[$i],
                 'FLAG' => 'PP',
                 'FLAG2' => 'SP',
                 'LOGISTIK' => '0',
@@ -334,11 +333,11 @@ class Transaksi_PesananRNDInternal extends CI_Controller
     public function update($id)
     {
         $q1 = "SELECT pp.NO_ID as ID,
-                pp.DEVISI AS DEVISI,
+                -- pp.DEVISI AS DEVISI,
                 pp.NO_BUKTI AS NO_BUKTI,
                 pp.TGL AS TGL,
                 pp.NOTES AS NOTES,
-                pp.NA_BRG AS NA_BRG,
+                pp.KET AS KET,
                 pp.TGL_DIMINTA AS TGL_DIMINTA,
                 pp.TOTAL_QTY AS TOTAL_QTY,
 
@@ -348,7 +347,7 @@ class Transaksi_PesananRNDInternal extends CI_Controller
                 ppd.SERI AS SERI,
                 ppd.QTY AS QTY,
                 ppd.SATUAN AS SATUAN,
-                ppd.KET AS KET
+                ppd.KET1 AS KET1
             FROM pp,ppd 
             WHERE pp.NO_ID=$id 
             AND pp.NO_ID=ppd.ID 
@@ -363,10 +362,10 @@ class Transaksi_PesananRNDInternal extends CI_Controller
     public function update_aksi()
     {
         $datah = array(
-            'DEVISI' => $this->input->post('DEVISI', TRUE),
+            // 'DEVISI' => $this->input->post('DEVISI', TRUE),
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-            'NA_BRG' => $this->input->post('NA_BRG', TRUE),
+            'KET' => $this->input->post('KET', TRUE),
             'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
             'NOTES' => $this->input->post('NOTES', TRUE),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
@@ -386,11 +385,11 @@ class Transaksi_PesananRNDInternal extends CI_Controller
         $this->transaksi_model->update_data($where, $datah, 'pp');
         $id = $this->input->post('ID', TRUE);
         $q1 = "SELECT pp.NO_ID as ID,
-                pp.DEVISI AS DEVISI,
+                -- pp.DEVISI AS DEVISI,s
                 pp.NO_BUKTI AS NO_BUKTI,
                 pp.TGL AS TGL,
                 pp.NOTES AS NOTES,
-                pp.NA_BRG AS NA_BRG,
+                pp.KET AS KET,
                 pp.TGL_DIMINTA AS TGL_DIMINTA,
                 pp.TOTAL_QTY AS TOTAL_QTY,
 
@@ -400,7 +399,7 @@ class Transaksi_PesananRNDInternal extends CI_Controller
                 ppd.SERI AS SERI,
                 ppd.QTY AS QTY,
                 ppd.SATUAN AS SATUAN,
-                ppd.KET AS KET
+                ppd.KET1 AS KET1
             FROM pp,ppd 
             WHERE pp.NO_ID=$id 
             AND pp.NO_ID=ppd.ID 
@@ -412,7 +411,7 @@ class Transaksi_PesananRNDInternal extends CI_Controller
         $SERI = $this->input->post('SERI');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SATUAN = $this->input->post('SATUAN');
-        $KET = $this->input->post('KET');
+        $KET1 = $this->input->post('KET1');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -428,7 +427,7 @@ class Transaksi_PesananRNDInternal extends CI_Controller
                     'SERI' => $SERI[$URUT],
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
                     'SATUAN' => $SATUAN[$URUT],
-                    'KET' => $KET[$URUT],
+                    'KET1' => $KET1[$URUT],
                     'FLAG' => 'PP',
                     'FLAG2' => 'SP',
                     'LOGISTIK' => '0',
@@ -463,7 +462,7 @@ class Transaksi_PesananRNDInternal extends CI_Controller
                     'SERI' => $SERI[$i],
                     'QTY' => str_replace(',', '', $QTY[$i]),
                     'SATUAN' => $SATUAN[$i],
-                    'KET' => $KET[$i],
+                    'KET1' => $KET1[$i],
                     'FLAG' => 'PP',
                     'FLAG2' => 'SP',
                     'LOGISTIK' => '0',
@@ -685,7 +684,7 @@ class Transaksi_PesananRNDInternal extends CI_Controller
                 pp.NO_BUKTI AS NO_BUKTI,
                 pp.TGL AS TGL,
                 pp.NOTES AS NOTES,
-                pp.NA_BRG AS NA_BRG,
+                pp.KET AS KET,
                 pp.TGL_DIMINTA AS TGL_DIMINTA,
                 pp.TOTAL_QTY AS TOTAL_QTY,
 

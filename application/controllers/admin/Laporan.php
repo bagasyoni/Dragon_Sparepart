@@ -755,7 +755,7 @@ class Laporan extends CI_Controller
 		}
 		$tahun = substr($this->input->post('TGL_1'), -4);
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-		$query = "SELECT TGL, RAK, NA_BHN, SATUAN, AW, NO_BUKTI_MA, MA, NO_BUKTI_KE, KE, NO_BUKTI_RKE, RKE, AK
+		$query = "SELECT TGL, RAK, NA_BHN, SATUAN, AW, NO_BUKTI_MA, MA, NO_BUKTI_KE, KE, NO_BUKTI_RKE, RKE,(MA-KE) T_AK,(MA+RKE) T_RAK,(AW+MA) T_MA,(AW-KE) T_KE, (MA+RKE) T_RKE
 		FROM (
 			SELECT '$tgl_1' AS TGL,
 				bhnd.RAK AS RAK,
@@ -798,9 +798,10 @@ class Laporan extends CI_Controller
 			WHERE bhnd.kd_bhn = belid.kd_bhn
 			-- AND belid.PER = '$per'
 			AND belid.DR = '$dr'
+			AND bhnd.DR = '$dr'
 			AND belid.SP = '$sub'
 			AND belid.TGL = '$tgl_1'
-			GROUP BY belid.NA_BHN
+			-- GROUP BY belid.NO_BUKTI
 			UNION ALL
 			SELECT pakaid.TGL AS TGL, 
 				pakaid.RAK AS RAK,
@@ -818,11 +819,12 @@ class Laporan extends CI_Controller
 			WHERE bhnd.kd_bhn = pakaid.KD_BHN
 			-- AND pakaid.PER = '$per'
 			AND pakaid.DR = '$dr'
+			AND bhnd.DR = '$dr'
 			AND pakaid.SUB = '$sub'
 			AND pakaid.TGL = '$tgl_1'
 			AND pakaid.FLAG = 'PK'
 			AND pakaid.FLAG2 = 'SP'
-			GROUP BY pakaid.NA_BHN
+			-- GROUP BY pakaid.NO_BUKTI
 			UNION ALL
 			SELECT pakaid.TGL AS TGL, 
 				pakaid.RAK AS RAK,
@@ -840,11 +842,12 @@ class Laporan extends CI_Controller
 			WHERE bhnd.kd_bhn = pakaid.KD_BHN
 			-- AND pakaid.PER = '$per'
 			AND pakaid.DR = '$dr'
+			AND bhnd.DR = '$dr'
 			AND pakaid.SUB = '$sub'
 			AND pakaid.TGL = '$tgl_1'
 			AND pakaid.FLAG = 'KP'
 			AND pakaid.FLAG2 = 'SP'
-			GROUP BY pakaid.NA_BHN
+			-- GROUP BY pakaid.NO_BUKTI
 		) AS AAA
 		ORDER BY NA_BHN";
 			$result1 = mysqli_query($conn, $query);
@@ -864,6 +867,11 @@ class Laporan extends CI_Controller
 					"AK" => $row1["AK"],
 					"NO_BUKTI_RKE" => $row1["NO_BUKTI_RKE"],
 					"RKE" => $row1["RKE"],
+					"T_MA" => $row1["T_MA"],
+					"T_KE" => $row1["T_KE"],
+					"T_RKE" => $row1["T_RKE"],
+					"T_AK" => $row1["T_AK"],
+					"T_RAK" => $row1["T_RAK"],
 				));
 			}
 			ob_end_clean();

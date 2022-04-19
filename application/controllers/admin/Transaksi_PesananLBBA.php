@@ -1,6 +1,6 @@
 <?php
 
-class Transaksi_PesananCetakanImport extends CI_Controller
+class Transaksi_PesananLBBA extends CI_Controller
 {
 
     function __construct()
@@ -20,14 +20,14 @@ class Transaksi_PesananCetakanImport extends CI_Controller
         }
         if ($this->session->userdata['menu_sparepart'] != 'pp') {
             $this->session->set_userdata('menu_sparepart', 'pp');
-            $this->session->set_userdata('kode_menu', 'T0031');
+            $this->session->set_userdata('kode_menu', 'T0034');
             $this->session->set_userdata('keyword_pp', '');
             $this->session->set_userdata('order_pp', 'NO_ID');
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'KET', 'NOTES', 'TIPE');
-    var $column_search = array('NO_BUKTI', 'TGL', 'KET', 'NOTES', 'TIPE');
+    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'DEVISI', 'KET', 'PESAN');
+    var $column_search = array('NO_BUKTI', 'TGL', 'DEVISI', 'KET', 'PESAN');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query()
@@ -39,8 +39,7 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             'DR' => $dr,
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
-            'FLAG3' => 'IMPORT',
-            'TYP' => 'RND_CETAK',
+            'TYP' => 'RND_LBBA',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -92,8 +91,7 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             'DR' => $dr,
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
-            'FLAG3' => 'IMPORT',
-            'TYP' => 'RND_CETAK',
+            'TYP' => 'RND_LBBA',
         );
         $this->db->from('pp');
         $this->db->where($where);
@@ -115,8 +113,8 @@ class Transaksi_PesananCetakanImport extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananCetakanImport/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananCetakanImport/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananLBBA/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananLBBA/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
@@ -124,15 +122,13 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             $row[] = $pp->NO_BUKTI;
             $row[] = $pp->TGL;
             $row[] = $pp->TGL_DIMINTA;
+            $row[] = $pp->DEVISI;
             $row[] = $pp->KET;
-            $row[] = $pp->SIZE;
-            $row[] = $pp->JUMLAH;
-            $row[] = $pp->NOTES;
-            $row[] = $pp->TIPE_CETAK;
-            $row[] = $pp->M_LASTING;
-            $row[] = $pp->PROSES;
-            $row[] = $pp->FLAG;
+            $row[] = $pp->PESAN;
+            $row[] = $pp->JO;
+            $row[] = $pp->FLAG3;
             $row[] = $pp->GAMBAR1;
+            $row[] = $pp->VAL;
             $data[] = $row;
         }
         $output = array(
@@ -144,7 +140,7 @@ class Transaksi_PesananCetakanImport extends CI_Controller
         echo json_encode($output);
     }
 
-    public function index_Transaksi_PesananCetakanImport()
+    public function index_Transaksi_PesananLBBA()
     {
         $per = $this->session->userdata['periode'];
         $dr= $this->session->userdata['dr'];
@@ -153,13 +149,12 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             'DR' => $dr,
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
-            'FLAG3' => 'IMPORT',
-            'TYP' => 'RND_CETAK',
+            'TYP' => 'RND_LBBA',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
-        $this->load->view('admin/Transaksi_PesananCetakanImport/Transaksi_PesananCetakanImport', $data);
+        $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
         $this->load->view('templates_admin/footer');
     }
 
@@ -211,11 +206,11 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             $romawi = 'XII';
         }
         // PP / NOMER / DR / BULAN / TAHUN / CNC
-        $bukti = 'PP' . '/' . $urut . '/' . "CI" . '/' . $dr . '/' . $romawi . '/' . $tahun;
+        $bukti = 'PP' . '/' . $urut . '/' . "LB" . '/' . $dr . '/' . $romawi . '/' . $tahun;
         $this->session->set_userdata('bukti', $bukti);
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
-        $this->load->view('admin/Transaksi_PesananCetakanImport/Transaksi_PesananCetakanImport_form');
+        $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form');
         $this->load->view('templates_admin/footer');
     }
 
@@ -267,59 +262,27 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             $romawi = 'XII';
         }
         // PP / NOMER / DR / BULAN / TAHUN / RND
-        $bukti = 'PP' . '/' . $urut . '/' . "CI" . '/' . $dr . '/' . $romawi . '/' . $tahun;
+        $bukti = 'PP' . '/' . $urut . '/' . "LB" . '/' . $dr . '/' . $romawi . '/' . $tahun;
         $datah = array(
             'NO_BUKTI' => $bukti,
-            'KET' => $this->input->post('KET', TRUE),
-            'JUMLAH' => str_replace(',', '', $this->input->post('JUMLAH', TRUE)),
-            'NOTES' => $this->input->post('NOTES', TRUE),
-            'M_LASTING' => $this->input->post('M_LASTING', TRUE),
-            'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-            'DR' => $this->input->post('DR', TRUE),
-            'SIZE' => $this->input->post('SIZE', TRUE),
-            'TIPE_CETAK' => $this->input->post('TIPE_CETAK', TRUE),
-            'PROSES' => $this->input->post('PROSES', TRUE),
+            'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
+            'DEVISI' => $this->input->post('DEVISI', TRUE),
+            'KET' => $this->input->post('KET', TRUE),
+            'PESAN' => $this->input->post('PESAN', TRUE),
+            'JO' => $this->input->post('JO', TRUE),
+            'FLAG3' => $this->input->post('FLAG3', TRUE),
             'GAMBAR1' => $this->input->post('GAMBAR1', TRUE),
-            'GAMBAR2' => $this->input->post('GAMBAR2', TRUE),
-            'GAMBAR3' => $this->input->post('GAMBAR3', TRUE),
+            'VAL' => '0',
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
-            'FLAG3' => 'IMPORT',
-            'TYP' => 'RND_CETAK',
+            'TYP' => 'RND_LBBA',
+            'DR' => $this->session->userdata['dr'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
         );
         $this->transaksi_model->input_datah('pp', $datah);
-        // $ID = $this->db->query("SELECT MAX(NO_ID) AS NO_ID FROM pp WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
-        // $REC = $this->input->post('REC');
-        // $SIZE = $this->input->post('SIZE');
-        // $SATUAN = $this->input->post('SATUAN');
-        // $GAMBAR1 = $this->input->post('GAMBAR1');
-        // $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
-        // $i = 0;
-        // foreach ($REC as $a) {
-        //     $datad = array(
-        //         'ID' => $ID[0]->NO_ID,
-        //         'NO_BUKTI' => $bukti,
-        //         'REC' => $REC[$i],
-        //         'SIZE' => $SIZE[$i],
-        //         'SATUAN' => $SATUAN[$i],
-        //         'GAMBAR1' => $GAMBAR1[$i],
-        //         'QTY' => str_replace(',', '', $QTY[$i]),
-        //         'FLAG' => 'PP',
-        //         'FLAG2' => 'SP',
-        //         'FLAG3' => 'IMPORT',
-        //         'TYP' => 'RND_CETAK',
-        //         'DR' => $this->input->post('DR', TRUE),
-        //         'PER' => $this->session->userdata['periode'],
-        //         'USRNM' => $this->session->userdata['username'],
-        //         'TG_SMP' => date("Y-m-d h:i a")
-        //     );
-        //     $this->transaksi_model->input_datad('ppd', $datad);
-        //     $i++;
-        // }
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
@@ -329,7 +292,7 @@ class Transaksi_PesananCetakanImport extends CI_Controller
                 </button> 
             </div>'
         );
-        redirect('admin/Transaksi_PesananCetakanImport/index_Transaksi_PesananCetakanImport');
+        redirect('admin/Transaksi_PesananLBBA/index_Transaksi_PesananLBBA');
     }
 
     public function update($NO_ID)
@@ -340,23 +303,18 @@ class Transaksi_PesananCetakanImport extends CI_Controller
         $data = [
             'NO_ID' => $r['NO_ID'],
             'NO_BUKTI' => $r['NO_BUKTI'],
-            'KET' => $r['KET'],
-            'JUMLAH' => $r['JUMLAH'],
-            'NOTES' => $r['NOTES'],
-            'M_LASTING' => $r['M_LASTING'],
-            'TGL_DIMINTA' => $r['TGL_DIMINTA'],
             'TGL' => $r['TGL'],
-            'DR' => $r['DR'],
-            'SIZE' => $r['SIZE'],
-            'TIPE_CETAK' => $r['TIPE_CETAK'],
-            'PROSES' => $r['PROSES'],
+            'TGL_DIMINTA' => $r['TGL_DIMINTA'],
+            'DEVISI' => $r['DEVISI'],
+            'KET' => $r['KET'],
+            'PESAN' => $r['PESAN'],
+            'JO' => $r['JO'],
+            'FLAG3' => $r['FLAG3'],
             'GAMBAR1' => $r['GAMBAR1'],
-            'GAMBAR2' => $r['GAMBAR2'],
-            'GAMBAR3' => $r['GAMBAR3'],
         ];
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
-        $this->load->view('admin/Transaksi_PesananCetakanImport/Transaksi_PesananCetakanImport_update', $data);
+        $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_update', $data);
         $this->load->view('templates_admin/footer');
     }
 
@@ -365,110 +323,19 @@ class Transaksi_PesananCetakanImport extends CI_Controller
         $NO_ID = $this->input->post('NO_ID');
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
-            'KET' => $this->input->post('KET', TRUE),
-            'JUMLAH' => str_replace(',', '', $this->input->post('JUMLAH', TRUE)),
-            'NOTES' => $this->input->post('NOTES', TRUE),
-            'M_LASTING' => $this->input->post('M_LASTING', TRUE),
-            'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-            'DR' => $this->input->post('DR', TRUE),
-            'SIZE' => $this->input->post('SIZE', TRUE),
-            'TIPE_CETAK' => $this->input->post('TIPE_CETAK', TRUE),
-            'PROSES' => $this->input->post('PROSES', TRUE),
+            'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
+            'DEVISI' => $this->input->post('DEVISI', TRUE),
+            'KET' => $this->input->post('KET', TRUE),
+            'PESAN' => $this->input->post('PESAN', TRUE),
+            'JO' => $this->input->post('JO', TRUE),
+            'FLAG3' => $this->input->post('FLAG3', TRUE),
             'GAMBAR1' => $this->input->post('GAMBAR1', TRUE),
-            'GAMBAR2' => $this->input->post('GAMBAR2', TRUE),
-            'GAMBAR3' => $this->input->post('GAMBAR3', TRUE),
         );
         $where = array(
             'NO_ID' => $NO_ID
         );
         $this->transaksi_model->update_data($where, $datah, 'pp');
-        // $id = $this->input->post('ID', TRUE);
-        // $q1 = "SELECT pp.NO_ID as ID,
-        //         pp.NO_BUKTI AS NO_BUKTI,
-        //         pp.TGL AS TGL,
-        //         pp.NA_BRG AS NA_BRG,
-        //         pp.PESAN AS PESAN,
-        //         pp.M_LASTING AS M_LASTING,
-        //         pp.JENIS AS JENIS,
-        //         pp.KET AS KET,
-        //         pp.TGL_DIMINTA AS TGL_DIMINTA,
-        //         pp.TOTAL_QTY AS TOTAL_QTY,
-        //         pp.TYP AS TYP,
-
-        //         ppd.NO_ID AS NO_ID,
-        //         ppd.REC AS REC,
-        //         ppd.SIZE AS SIZE,
-        //         ppd.QTY AS QTY,
-        //         ppd.SATUAN AS SATUAN,
-        //         ppd.TYP AS TYP
-        //     FROM pp,ppd 
-        //     WHERE pp.NO_ID=$id 
-        //     AND pp.NO_ID=ppd.ID 
-        //     ORDER BY ppd.REC";
-        // $data = $this->transaksi_model->edit_data($q1)->result();
-        // $NO_ID = $this->input->post('NO_ID');
-        // $REC = $this->input->post('REC');
-        // $SIZE = $this->input->post('SIZE');
-        // $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
-        // $SATUAN = $this->input->post('SATUAN');
-        // $jum = count($data);
-        // $ID = array_column($data, 'NO_ID');
-        // $jumy = count($NO_ID);
-        // $i = 0;
-        // while ($i < $jum) {
-        //     if (in_array($ID[$i], $NO_ID)) {
-        //         $URUT = array_search($ID[$i], $NO_ID);
-        //         $datad = array(
-        //             'NO_BUKTI' => $this->input->post('NO_BUKTI'),
-        //             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-        //             'REC' => $REC[$URUT],
-        //             'SIZE' => $SIZE[$URUT],
-        //             'QTY' => str_replace(',', '', $QTY[$URUT]),
-        //             'SATUAN' => $SATUAN[$URUT],
-        //             'FLAG' => 'PP',
-        //             'FLAG2' => 'SP',
-        //             'TYP' => 'RND_IMPORT',
-        //             'DR' => $this->session->userdata['dr'],
-        //             'PER' => $this->session->userdata['periode'],
-        //             'USRNM' => $this->session->userdata['username'],
-        //             'TG_SMP' => date("Y-m-d h:i a")
-        //         );
-        //         $where = array(
-        //             'NO_ID' => $NO_ID[$URUT]
-        //         );
-        //         $this->transaksi_model->update_data($where, $datad, 'ppd');
-        //     } else {
-        //         $where = array(
-        //             'NO_ID' => $ID[$i]
-        //         );
-        //         $this->transaksi_model->hapus_data($where, 'ppd');
-        //     }
-        //     $i++;
-        // }
-        // $i = 0;
-        // while ($i < $jumy) {
-        //     if ($NO_ID[$i] == "0") {
-        //         $datad = array(
-        //             'ID' => $this->input->post('ID', TRUE),
-        //             'REC' => $REC[$i],
-        //             'NO_BUKTI' => $this->input->post('NO_BUKTI'),
-        //             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-        //             'SIZE' => $SIZE[$i],
-        //             'QTY' => str_replace(',', '', $QTY[$i]),
-        //             'SATUAN' => $SATUAN[$i],
-        //             'FLAG' => 'PP',
-        //             'FLAG2' => 'SP',
-        //             'TYP' => 'RND_IMPORT',
-        //             'DR' => $this->session->userdata['dr'],
-        //             'PER' => $this->session->userdata['periode'],
-        //             'USRNM' => $this->session->userdata['username'],
-        //             'TG_SMP' => date("Y-m-d h:i a")
-        //         );
-        //         $this->transaksi_model->input_datad('ppd', $datad);
-        //     }
-        //     $i++;
-        // }
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
@@ -478,15 +345,13 @@ class Transaksi_PesananCetakanImport extends CI_Controller
                 </button> 
             </div>'
         );
-        redirect('admin/Transaksi_PesananCetakanImport/index_Transaksi_PesananCetakanImport');
+        redirect('admin/Transaksi_PesananLBBA/index_Transaksi_PesananLBBA');
     }
 
     public function delete($NO_ID)
     {
         $where = array('NO_ID' => $NO_ID);
         $this->transaksi_model->hapus_data($where, 'pp');
-        // $where = array('ID' => $id);
-        // $this->transaksi_model->hapus_data($where, 'ppd');
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
@@ -496,13 +361,13 @@ class Transaksi_PesananCetakanImport extends CI_Controller
                 </button> 
             </div>'
         );
-        redirect('admin/Transaksi_PesananCetakanImport/index_Transaksi_PesananCetakanImport');
+        redirect('admin/Transaksi_PesananLBBA/index_Transaksi_PesananLBBA');
     }
 
     function delete_multiple()
     {
         $this->transaksi_model->remove_checked('pp');
-        redirect('admin/Transaksi_PesananCetakanImport/index_Transaksi_PesananCetakanImport');
+        redirect('admin/Transaksi_PesananLBBA/index_Transaksi_PesananLBBA');
     }
 
     public function getDataAjax_bhn()

@@ -131,8 +131,9 @@ class Laporan_model extends CI_Model
 		$bulan = substr($this->input->post('TGL_1'), 3, 2);
 		$tahun = substr($this->input->post('TGL_1'), -4);
 		$rak_1 = $this->input->post('RAK_1');
-		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-		$q1 = "CALL spp_kartustok('$rak_1', '$dr', '$sub', '$tgl_1')";
+		$per_1 = $this->input->post('PER_1');
+		// $tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
+		$q1 = "CALL spp_kartustok('$rak_1', '$dr', '$sub', '$per_1')";
 		return $this->db->query($q1);
 	}
 
@@ -188,7 +189,7 @@ class Laporan_model extends CI_Model
 		}
 		$tahun = substr($this->input->post('TGL_1'), -4);
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-		$q1 = "SELECT TGL, RAK, NA_BHN, SATUAN, AW, NO_BUKTI_MA, MA, NO_BUKTI_KE, KE, NO_BUKTI_RKE, RKE, AK
+		$q1 = "SELECT TGL, RAK, NA_BHN, SATUAN, AW, NO_BUKTI_MA, MA, NO_BUKTI_KE, KE, NO_BUKTI_RKE, RKE, AK,(AW+MA) T_MA,(AW-KE) T_KE, (MA+RKE) T_RKE
 				FROM (
 					SELECT '$tgl_1' AS TGL,
 						bhnd.RAK AS RAK,
@@ -231,9 +232,10 @@ class Laporan_model extends CI_Model
 					WHERE bhnd.kd_bhn = belid.kd_bhn
 					-- AND belid.PER = '$per'
 					AND belid.DR = '$dr'
+					AND bhnd.DR = '$dr'
 					AND belid.SP = '$sub'
 					AND belid.TGL = '$tgl_1'
-					GROUP BY belid.NA_BHN
+					-- GROUP BY belid.NO_BUKTI
 					UNION ALL
 					SELECT pakaid.TGL AS TGL, 
 						pakaid.RAK AS RAK,
@@ -251,11 +253,12 @@ class Laporan_model extends CI_Model
 					WHERE bhnd.kd_bhn = pakaid.KD_BHN
 					-- AND pakaid.PER = '$per'
 					AND pakaid.DR = '$dr'
+					AND bhnd.DR = '$dr'
 					AND pakaid.SUB = '$sub'
 					AND pakaid.TGL = '$tgl_1'
 					AND pakaid.FLAG = 'PK'
 					AND pakaid.FLAG2 = 'SP'
-					GROUP BY pakaid.NA_BHN
+					-- GROUP BY pakaid.NO_BUKTI
 					UNION ALL
 					SELECT pakaid.TGL AS TGL, 
 						pakaid.RAK AS RAK,
@@ -273,11 +276,12 @@ class Laporan_model extends CI_Model
 					WHERE bhnd.kd_bhn = pakaid.KD_BHN
 					-- AND pakaid.PER = '$per'
 					AND pakaid.DR = '$dr'
+					AND bhnd.DR = '$dr'
 					AND pakaid.SUB = '$sub'
 					AND pakaid.TGL = '$tgl_1'
 					AND pakaid.FLAG = 'KP'
 					AND pakaid.FLAG2 = 'SP'
-					GROUP BY pakaid.NA_BHN
+					-- GROUP BY pakaid.NO_BUKTI
 				) AS AAA
 				ORDER BY NA_BHN";
 		return $this->db->query($q1);

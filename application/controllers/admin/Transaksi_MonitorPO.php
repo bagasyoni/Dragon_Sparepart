@@ -300,6 +300,7 @@ class Transaksi_MonitorPO extends CI_Controller
                 'QTY' => str_replace(',', '', $QTY[$i]),
                 'FLAG' => 'SP',
                 'FLAG2' => $sub,
+                'DR' => $this->input->post('DR', TRUE),
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
                 'TG_SMP' => date("Y-m-d h:i a")
@@ -309,7 +310,7 @@ class Transaksi_MonitorPO extends CI_Controller
         }
         $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM po WHERE NO_BUKTI='$bukti'")->result();
         $no_bukti = $xx[0]->BUKTIX;
-        $this->db->query("CALL pp_ins('" . $no_bukti . "')");
+        $this->db->query("CALL spp_poins('" . $no_bukti . "')");
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
@@ -347,6 +348,7 @@ class Transaksi_MonitorPO extends CI_Controller
                 pod.NA_BHN AS NA_BHN,
                 pod.KET AS KET,
                 pod.SATUAN AS SATUAN,
+                pod.DR AS DR,
                 pod.QTY AS QTY
             FROM po, pod 
             WHERE po.NO_ID = $id 
@@ -361,6 +363,7 @@ class Transaksi_MonitorPO extends CI_Controller
 
     public function update_aksi()
     {
+        $bukti = $this->input->post('NO_BUKTI');
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
             'DR' => $this->input->post('DR', TRUE),
@@ -381,6 +384,9 @@ class Transaksi_MonitorPO extends CI_Controller
         $where = array(
             'NO_ID' => $this->input->post('ID', TRUE)
         );
+        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM po WHERE NO_BUKTI='$bukti'")->result();
+        $no_bukti = $xx[0]->BUKTIX;
+        $this->db->query("CALL spp_podel('" . $no_bukti . "')");
         $this->transaksi_model->update_data($where, $datah, 'po');
         $id = $this->input->post('ID', TRUE);
         $q1 = "SELECT po.NO_ID as ID,
@@ -406,6 +412,7 @@ class Transaksi_MonitorPO extends CI_Controller
                 pod.NA_BHN AS NA_BHN,
                 pod.KET AS KET,
                 pod.SATUAN AS SATUAN,
+                pod.DR AS DR,
                 pod.QTY AS QTY
             FROM po, pod 
             WHERE po.NO_ID = $id 
@@ -435,6 +442,7 @@ class Transaksi_MonitorPO extends CI_Controller
                     'KET' => $KET[$URUT],
                     'SATUAN' => $SATUAN[$URUT],
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
+                    'DR' => $this->input->post('DR', TRUE),
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
                 );
@@ -463,6 +471,7 @@ class Transaksi_MonitorPO extends CI_Controller
                     'KET' => $KET[$i],
                     'SATUAN' => $SATUAN[$i],
                     'QTY' => str_replace(',', '', $QTY[$i]),
+                    'DR' => $this->input->post('DR', TRUE),
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
                 );
@@ -470,6 +479,9 @@ class Transaksi_MonitorPO extends CI_Controller
             }
             $i++;
         }
+        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM po WHERE NO_BUKTI='$bukti'")->result();
+        $no_bukti = $xx[0]->BUKTIX;
+        $this->db->query("CALL spp_poins('" . $no_bukti . "')");
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
@@ -480,6 +492,34 @@ class Transaksi_MonitorPO extends CI_Controller
             </div>'
         );
         redirect('admin/Transaksi_MonitorPO/index_Transaksi_MonitorPO');
+    }
+
+    public function getDataAjax_dragon()
+    {
+        $search = $this->input->post('search');
+        $page = ((int)$this->input->post('page'));
+        if ($page == 0) {
+            $xa = 0;
+        } else {
+            $xa = ($page - 1) * 10;
+        }
+        $perPage = 10;
+        $results = $this->db->query("SELECT KD_DEV, NM_DEV AS DEVISI, NAMA, AREA
+            FROM rn_dev
+            WHERE FLAG='CNC' AND (AREA LIKE '%$search%' OR NM_DEV LIKE '%$search%')
+            GROUP BY AREA
+            ORDER BY AREA LIMIT $xa,$perPage");
+        $selectajax = array();
+        foreach ($results->RESULT_ARRAY() as $row) {
+            $selectajax[] = array(
+                'id' => $row['AREA'],
+                'text' => $row['AREA'],
+                'DR' => $row['AREA'],
+            );
+        }
+        $select['total_count'] =  $results->NUM_ROWS();
+        $select['items'] = $selectajax;
+        $this->output->set_content_type('application/json')->set_output(json_encode($select));
     }
 
     public function delete($id) {

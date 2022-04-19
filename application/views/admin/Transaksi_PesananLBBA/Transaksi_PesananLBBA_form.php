@@ -123,9 +123,9 @@
 <div class="container-fluid">
 	<br>
 	<div class="alert alert-success alert-container" role="alert">
-		<i class="fas fa-university"></i> Input Pesanan Cetakan Import
+		<i class="fas fa-university"></i> Input Pesanan LBBA
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakanImport/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananLBBA/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -143,7 +143,7 @@
 							<label class="label">DR </label>
 						</div>
 						<div class="col-md-1">
-							<input class="form-control text_input DR" id="DR" name="DR" type="text">
+							<input class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text">
 						</div>
 					</div>
 				</div>
@@ -158,56 +158,13 @@
 						<div class="col-md-2">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Size </label>
+							<label class="label">Pesan </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input SIZE" id="SIZE" name="SIZE" type="text">
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-1">
-							<label class="label">Jumlah </label>
+							<input class="form-control text_input PESAN" id="PESAN" name="PESAN" type="text">
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input JUMLAH" id="JUMLAH" name="JUMLAH" type="text" required>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-1">
-							<label class="label">Keterangan </label>
-						</div>
-						<div class="col-md-2">
-							<input class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" required>
-						</div>
-						<div class="col-md-2">
-						</div>
-						<div class="col-md-1">
-							<label class="label">Tipe Cetakan </label>
-						</div>
-						<div class="col-md-2">
-							<input class="form-control text_input TIPE_CETAK" id="TIPE_CETAK" name="TIPE_CETAK" type="text">
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-1">
-							<label class="label">M Lasting </label>
-						</div>
-						<div class="col-md-2">
-							<input class="form-control text_input M_LASTING" id="M_LASTING" name="M_LASTING" type="text" required>
-						</div>
-						<div class="col-md-2">
-						</div>
-						<div class="col-md-1">
-							<label class="label">Pilih Proses </label>
-						</div>
-						<div class="col-md-2">
-							<input class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text">
+							<input class="form-control text_input JO" id="JO" name="JO" type="text">
 						</div>
 					</div>
 				</div>
@@ -218,6 +175,14 @@
 						</div>
 						<div class="col-md-2">
 							<input type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+						</div>
+						<div class="col-md-2">
+						</div>
+						<div class="col-md-1">
+							<label class="label">Flag </label>
+						</div>
+						<div class="col-md-2">
+							<input class="form-control text_input FLAG3" id="FLAG3" name="FLAG3" type="text">
 						</div>
 					</div>
 				</div>
@@ -241,38 +206,6 @@
 				</div>
 				<div class="col-md-12">
 					<div class="form-group row">
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-4">
-							<label class="label">Gambar Cetakan Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-2">
-						<input type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-4">
-							<label class="label">Gambar Cetakan Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-2">
-						<input type="file" name="GAMBAR3" id="GAMBAR3" accept="image/png, image/jpeg, image/jpg, image/bmp">
-						</div>
 					</div>
 				</div>
 			</div>

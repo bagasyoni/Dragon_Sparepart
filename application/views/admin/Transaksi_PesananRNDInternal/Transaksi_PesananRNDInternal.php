@@ -93,9 +93,8 @@
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
                         <th width="225px">No Bukti</th>
-                        <th width="275px">Devisi</th>
-                        <th width="75px">Tgl</th>
-                        <th width="225px">Article</th>
+                        <th width="100px">Tgl</th>
+                        <th width="325px">Article</th>
                         <th width="75px">Tgl Diminta</th>
                         <th width="175px">Keterangan</th>
                     </tr>

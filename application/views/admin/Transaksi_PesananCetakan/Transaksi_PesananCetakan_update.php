@@ -132,9 +132,9 @@
 <div class="container-fluid">
 	<br>
 	<div class="alert alert-success alert-container" role="alert">
-		<i class="fas fa-university"></i> Update Pesanan Cetakan Import
+		<i class="fas fa-university"></i> Update Pesanan Cetakan
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakanImport/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakan/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -168,20 +168,13 @@
 						<div class="col-md-2">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Size </label>
+							<label class="label">Tujuan </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input SIZE" id="SIZE" name="SIZE" type="text" value="<?= $SIZE ?>">
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-1">
-							<label class="label">Jumlah </label>
+							<input class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text" value="<?= $TUJUAN ?>">
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input JUMLAH" id="JUMLAH" name="JUMLAH" type="text" value="<?= $JUMLAH ?>" required>
+							<input class="form-control text_input TIPE" id="TIPE" name="TIPE" type="text" value="<?= $TIPE ?>">
 						</div>
 					</div>
 				</div>
@@ -214,10 +207,10 @@
 						<div class="col-md-2">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Pilih Proses </label>
+							<label class="label">Jenis </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text" value="<?= $PROSES ?>">
+							<input class="form-control text_input JENIS" id="JENIS" name="JENIS" type="text" value="<?= $JENIS ?>">
 						</div>
 					</div>
 				</div>
@@ -228,6 +221,17 @@
 						</div>
 						<div class="col-md-2">
 							<input type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+						</div>
+						<div class="col-md-2">
+						</div>
+						<div class="col-md-1">
+							<label class="label">Flag </label>
+						</div>
+						<div class="col-md-2">
+							<input class="form-control text_input FLAG3" id="FLAG3" name="FLAG3" type="text" value="<?= $FLAG3 ?>">
+						</div>
+						<div class="col-md-2">
+							<input class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text" value="<?= $PROSES ?>">
 						</div>
 					</div>
 				</div>
@@ -269,20 +273,6 @@
 				</div>
 				<div class="col-md-12">
 					<div class="form-group row">
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-4">
-							<label class="label">Gambar Cetakan Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-2">
-						<input type="file" name="GAMBAR3" id="GAMBAR3" accept="image/png, image/jpeg, image/jpg, image/bmp">
-						</div>
 					</div>
 				</div>
 			</div>
@@ -389,15 +379,6 @@
 			$(this).val(i++);
 		});
 		hitung();
-	}
-
-	function btVerifikasi() {
-		if (confirm("Yakin Posting?")) {
-			// document.getElementById("transaksipemesanan").submit();
-			window.location.replace("<?php echo base_url('admin/Transaksi_PesananRNDInternal/verifikasi_ttd1/' . $rowh->ID) ?>");
-		} else {
-			alert("Batal Posting!");
-		}
 	}
 
 	function hitung() {
