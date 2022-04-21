@@ -99,11 +99,11 @@
                         "KD_BHN" => array(
                             "label" => "Kode"
                         ),
-                        "SATUAN" => array(
-                            "label" => "Satuan"
+                        "NA_GOL" => array(
+                            "label" => "Golongan"
                         ),
-                        "KET2" => array(
-                            "label" => "Ket"
+                        "GRUP" => array(
+                            "label" => "Mesin"
                         ),
                         "NO_BUKTI" => array(
                             "label" => "No Bukti"
@@ -246,7 +246,15 @@
         return $container;
     }
 
+    var na_gol_1 = '';
+
     function formatSelection(repo) {
+        na_gol_1 = repo.na_gol_1;
         return repo.text;
+    }
+
+    function grup_1(x) {
+        var q = x.substring(8, 12);
+        $('#NA_GOL_1' + q).val(na_gol_1);
     }
 </script>

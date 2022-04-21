@@ -75,6 +75,7 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Master_Barang.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
+			$sub = $this->session->userdata['sub'];
 			$kd_bhn_1 = $this->input->post('KD_BHN_1');
 			$kd_bhn_2 = $this->input->post('KD_BHN_2');
 			$query = "SELECT bhn.KD_BHN AS KD_BHN,
@@ -87,6 +88,7 @@ class Laporan extends CI_Controller
 				FROM bhn
 				WHERE bhn.DR='$dr'
 				AND bhn.FLAG='SP'
+				AND bhn.SUB='$sub'
 				-- AND bhn.KD_BHN BETWEEN '$kd_bhn_1' AND '$kd_bhn_2'
 				ORDER BY bhn.KD_BHN";
 			$result1 = mysqli_query($conn, $query);
@@ -1062,37 +1064,30 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
-			$tgl_1 = $this->input->post('TGL_1');
 			$sub = $this->session->userdata['sub'];
 			$per = $this->session->userdata['periode'];
-			if ($tgl_1 == '') {
-				$bulan = Date('m');
-			} else {
-				$bulan = date("m", strtotime($tgl_1));
-			}
-			$tahun = substr($this->input->post('PER'), -4);
-			$tahun_1 = $this->input->post('PER');
-			$per = $bulan ."/". $tahun;
+			$bulan = substr($this->session->userdata['periode'], 0, -5);
+			$tahun = substr($this->session->userdata['periode'], -4);
 			$query = "SELECT KD_BHN, NA_BHN, SATUAN, PER, AW, MA, KE, LN, AK
-				FROM (
-					SELECT bhnd.KD_BHN AS KD_BHN,
-						bhnd.NA_BHN AS NA_BHN,
-						bhn.SATUAN AS SATUAN,
-						'$tahun_1' AS PER,
-						bhnd.AW$bulan AS AW,
-						bhnd.MA$bulan AS MA,
-						bhnd.KE$bulan AS KE,
-						bhnd.LN$bulan AS LN,
-						bhnd.AK$bulan AS AK
-					FROM bhnd, bhn
-					WHERE bhnd.KD_BHN = bhn.KD_BHN
-					AND bhnd.YER = '$tahun'
-					AND bhn.DR = '$dr'
-					AND bhn.FLAG = 'SP'
-					AND bhn.SUB = '$sub'
-					GROUP BY bhn.KD_BHN
-				) AS KD_BHN
-				ORDER BY KD_BHN";
+					FROM (
+						SELECT bhnd.KD_BHN AS KD_BHN,
+							bhnd.NA_BHN AS NA_BHN,
+							bhn.SATUAN AS SATUAN,
+							'$per' AS PER,
+							bhnd.AW$bulan AS AW,
+							bhnd.MA$bulan AS MA,
+							bhnd.KE$bulan AS KE,
+							bhnd.LN$bulan AS LN,
+							bhnd.AK$bulan AS AK
+						FROM bhnd, bhn
+						WHERE bhnd.KD_BHN = bhn.KD_BHN
+						AND bhnd.YER = '$tahun'
+						AND bhn.DR = '$dr'
+						AND bhn.FLAG = 'SP'
+						AND bhn.SUB = '$sub'
+						GROUP BY bhn.KD_BHN
+					) AS KD_BHN
+					ORDER BY KD_BHN";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -1259,6 +1254,7 @@ class Laporan extends CI_Controller
 					"TGL" => $row1["TGL"],
 					"QTY" => $row1["QTY"],
 					"NA_GOL" => $row1["NA_GOL"],
+					"RAK" => $row1["RAK"],
 				));
 			}
 			ob_end_clean();
@@ -2323,7 +2319,7 @@ class Laporan extends CI_Controller
 					pp.DEVISI,
 					pp.NA_BRG,
 					pp.KET,
-					PP.TOTAL_QTY,
+					pp.TOTAL_QTY,
 					'-' AS AREA,
 					'-' AS KABAG,
 					'-' AS HARI,
@@ -2409,7 +2405,7 @@ class Laporan extends CI_Controller
 					pp.DEVISI,
 					pp.NA_BRG,
 					pp.KET,
-					PP.TOTAL_QTY,
+					pp.TOTAL_QTY,
 					'-' AS AREA,
 					'-' AS KABAG,
 					'-' AS HARI,
@@ -2495,7 +2491,7 @@ class Laporan extends CI_Controller
 				pp.DEVISI,
 				pp.NA_BRG,
 				pp.KET,
-				PP.TOTAL_QTY,
+				pp.TOTAL_QTY,
 				'-' AS AREA,
 				'-' AS KABAG,
 				'-' AS HARI,
@@ -2581,7 +2577,7 @@ class Laporan extends CI_Controller
 					pp.DEVISI,
 					pp.NA_BRG,
 					pp.KET,
-					PP.TOTAL_QTY,
+					pp.TOTAL_QTY,
 					'-' AS AREA,
 					'-' AS KABAG,
 					'-' AS HARI,
@@ -2753,7 +2749,7 @@ class Laporan extends CI_Controller
 					pp.KD_DEV,
 					pp.NA_BRG,
 					pp.KET,
-					PP.TOTAL_QTY,
+					pp.TOTAL_QTY,
 					'-' AS AREA,
 					'-' AS KABAG,
 					'-' AS HARI,
@@ -2842,7 +2838,7 @@ class Laporan extends CI_Controller
 					pp.KD_DEV,
 					pp.NA_BRG,
 					pp.KET,
-					PP.TOTAL_QTY,
+					pp.TOTAL_QTY,
 					'-' AS AREA,
 					'-' AS KABAG,
 					'-' AS HARI,
@@ -2929,7 +2925,7 @@ class Laporan extends CI_Controller
 					pp.KD_DEV,
 					pp.NA_BRG,
 					pp.KET,
-					PP.TOTAL_QTY,
+					pp.TOTAL_QTY,
 					'-' AS AREA,
 					'-' AS KABAG,
 					'-' AS HARI,
@@ -3018,7 +3014,7 @@ class Laporan extends CI_Controller
 					pp.KD_DEV,
 					pp.NA_BRG,
 					pp.KET,
-					PP.TOTAL_QTY,
+					pp.TOTAL_QTY,
 					'-' AS AREA,
 					'-' AS KABAG,
 					'-' AS HARI,
@@ -3531,7 +3527,7 @@ class Laporan extends CI_Controller
 		foreach ($results->RESULT_ARRAY() as $row) {
 			$selectajax[] = array(
 				'id' => $row['GRUP_1'],
-				'text' => $row['KD_GOL_1'] . " - " . $row['NA_GOL_1'] . " - " . $row['GRUP_1']
+				'text' => $row['NA_GOL_1']
 			);
 		}
 		$select['total_count'] =  $results->NUM_ROWS();

@@ -36,12 +36,12 @@
                             <button type="button" class="dropdown-item" id="btnExportCsv">
                                 <i class="fas fa-file-csv"></i> Csv
                             </button>
-                            <button type="button" class="dropdown-item" id="btnExportPdf">
+                            <!-- <button type="button" class="dropdown-item" id="btnExportPdf">
                                 <i class="fa fa-file-pdf-o"></i> Pdf
                             </button>
                             <button class="dropdown-item" id="print" name="print" value="print">
                                 <i class="fa fa-print"></i> Print
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                 </div>

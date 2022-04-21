@@ -153,7 +153,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND DR='$dr' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         $value11 = substr($nom[0], 3, 7);
         $value22 = STRVAL($value11) . 1;
@@ -209,7 +209,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND DR='$dr' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         $value11 = substr($nom[0], 3, 7);
         $value22 = STRVAL($value11) + 1;
@@ -262,7 +262,7 @@ class Transaksi_PesananPisau extends CI_Controller
             'JO' => $this->input->post('JO', TRUE),
             'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
             'TS' => $this->input->post('TS', TRUE),
-            'GAMBAR' => $this->input->post('GAMBAR', TRUE),
+            // 'GAMBAR' => $this->input->post('GAMBAR', TRUE),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
@@ -272,6 +272,15 @@ class Transaksi_PesananPisau extends CI_Controller
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
         );
+
+        $config['upload_path']          = './gambar/';
+		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+		$config['max_size']             = 1000;
+		$config['max_width']            = 3024;
+		$config['max_height']           = 3680;
+
+        $this->load->library('upload', $config);
+        
         $this->transaksi_model->input_datah('pp', $datah);
         $ID = $this->db->query("SELECT MAX(NO_ID) AS NO_ID FROM pp WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
         $REC = $this->input->post('REC');
@@ -308,6 +317,15 @@ class Transaksi_PesananPisau extends CI_Controller
             $this->transaksi_model->input_datad('ppd', $datad);
             $i++;
         }
+
+        if ( ! $this->upload->do_upload('GAMBAR')){
+			$error = array('error' => $this->upload->display_errors());
+			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
+		}else{
+			$data = array('upload_data' => $this->upload->data());
+			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau', $data);
+		}
+
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
@@ -583,41 +601,22 @@ class Transaksi_PesananPisau extends CI_Controller
 
     public function upload_image()
     {
-	$this->load->model('profile_model');
-	$data['current_user'] = $this->auth_model->current_user();
+		$config['upload_path']          = './gambar/';
+		$config['allowed_types']        = 'gif|jpg|png';
+		$config['max_size']             = 100;
+		$config['max_width']            = 1024;
+		$config['max_height']           = 768;
 
-	if ($this->input->method() === 'post') {
-		// the user id contain dot, so we must remove it
-		$file_name = str_replace('.','',$data['current_user']->id);
-		$config['upload_path']          = FCPATH.'/upload/image/';
-		$config['allowed_types']        = 'gif|jpg|jpeg|png';
-		$config['file_name']            = $file_name;
-		$config['overwrite']            = true;
-		$config['max_size']             = 1024; // 1MB
-		$config['max_width']            = 1080;
-		$config['max_height']           = 1080;
-
-		$this->load->library('upload', $config);
-
-		if (!$this->upload->do_upload('image')) {
-			$data['error'] = $this->upload->display_errors();
-		} else {
-			$uploaded_data = $this->upload->data();
-
-			$new_data = [
-				'id' => $data['current_user']->id,
-				'image' => $uploaded_data['file_name'],
-			];
-	
-			if ($this->profile_model->update($new_data)) {
-				$this->session->set_flashdata('message', 'Image updated!');
-				redirect(site_url('admin/Transaksi_PesananPisau/index_Transaksi_PesananPisau'));
-			}
+        $this->load->library('GAMBAR', $config);
+ 
+		if ( ! $this->upload->do_upload('GAMBAR')){
+			$error = array('error' => $this->upload->display_errors());
+			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
+		}else{
+			$data = array('upload_data' => $this->upload->data());
+			$this->load->view('admin/Transaksi_PesananPisau/index_Transaksi_PesananPisau', $data);
 		}
 	}
-
-	$this->load->view('admin/Transaksi_PesananPisau/index_Transaksi_PesananPisau', $data);
-    }
 
     function JASPER($id)
     {

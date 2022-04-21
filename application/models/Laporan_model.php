@@ -6,6 +6,7 @@ class Laporan_model extends CI_Model
 	public function tampil_data_master_barang()
 	{
 		$dr = $this->session->userdata['dr'];
+		$sub = $this->session->userdata['sub'];
 		$kd_bhn_1 = $this->input->post('KD_BHN_1');
 		$kd_bhn_2 = $this->input->post('KD_BHN_2');
 		$q1 = "SELECT bhn.KD_BHN AS KD_BHN,
@@ -18,6 +19,7 @@ class Laporan_model extends CI_Model
 			FROM bhn
 			WHERE bhn.DR='$dr'
 			AND bhn.FLAG='SP'
+			AND bhn.SUB='$sub'
 			-- AND bhn.KD_BHN BETWEEN '$kd_bhn_1' AND '$kd_bhn_2'
 			ORDER BY bhn.KD_BHN";
 		return $this->db->query($q1);
@@ -398,23 +400,16 @@ class Laporan_model extends CI_Model
 	{
 		$dr = $this->session->userdata['dr'];
 		$sub = $this->session->userdata['sub'];
-		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$sub = $this->session->userdata['sub'];
 		$per = $this->session->userdata['periode'];
-		if ($tgl_1 == '') {
-			$bulan = Date('m');
-		} else {
-			$bulan = date("m", strtotime($tgl_1));
-		}
-		$tahun = substr($this->input->post('PER'), -4);
-		$tahun_1 = $this->input->post('PER');
-		$per = $bulan ."/". $tahun;
+		$bulan = substr($this->session->userdata['periode'], 0, -5);
+		$tahun = substr($this->session->userdata['periode'], -4);
 		$q1 = "SELECT KD_BHN, NA_BHN, SATUAN, PER, AW, MA, KE, LN, AK
 				FROM (
 					SELECT bhnd.KD_BHN AS KD_BHN,
 						bhnd.NA_BHN AS NA_BHN,
 						bhn.SATUAN AS SATUAN,
-						'$tahun_1' AS PER,
+						'$per' AS PER,
 						bhnd.AW$bulan AS AW,
 						bhnd.MA$bulan AS MA,
 						bhnd.KE$bulan AS KE,
@@ -487,7 +482,8 @@ class Laporan_model extends CI_Model
 				pakaid.NO_BUKTI AS NO_BUKTI,
 				pakaid.TGL AS TGL,
 				pakaid.QTY AS QTY,
-				pakaid.NA_GOL AS NA_GOL
+				pakaid.NA_GOL AS NA_GOL,
+				pakaid.GRUP AS GRUP
 			FROM pakaid
 			WHERE pakaid.TGL >='$tgl_1'
 			AND pakaid.TGL <='$tgl_2'
@@ -945,7 +941,7 @@ class Laporan_model extends CI_Model
 				pp.DEVISI,
 				pp.NA_BRG,
 				pp.KET,
-				PP.TOTAL_QTY,
+				pp.TOTAL_QTY,
 				'-' AS AREA,
 				'-' AS KABAG,
 				'-' AS HARI,
@@ -983,7 +979,7 @@ class Laporan_model extends CI_Model
 				pp.DEVISI,
 				pp.NA_BRG,
 				pp.KET,
-				PP.TOTAL_QTY,
+				pp.TOTAL_QTY,
 				'-' AS AREA,
 				'-' AS KABAG,
 				'-' AS HARI,
@@ -1021,7 +1017,7 @@ class Laporan_model extends CI_Model
 				pp.DEVISI,
 				pp.NA_BRG,
 				pp.KET,
-				PP.TOTAL_QTY,
+				pp.TOTAL_QTY,
 				'-' AS AREA,
 				'-' AS KABAG,
 				'-' AS HARI,
@@ -1059,7 +1055,7 @@ class Laporan_model extends CI_Model
 				pp.DEVISI,
 				pp.NA_BRG,
 				pp.KET,
-				PP.TOTAL_QTY,
+				pp.TOTAL_QTY,
 				'-' AS AREA,
 				'-' AS KABAG,
 				'-' AS HARI,
@@ -1133,7 +1129,7 @@ class Laporan_model extends CI_Model
 				pp.KD_DEV,
 				pp.NA_BRG,
 				pp.KET,
-				PP.TOTAL_QTY,
+				pp.TOTAL_QTY,
 				'-' AS AREA,
 				'-' AS KABAG,
 				'-' AS HARI,
@@ -1172,7 +1168,7 @@ class Laporan_model extends CI_Model
 				pp.KD_DEV,
 				pp.NA_BRG,
 				pp.KET,
-				PP.TOTAL_QTY,
+				pp.TOTAL_QTY,
 				'-' AS AREA,
 				'-' AS KABAG,
 				'-' AS HARI,
@@ -1211,7 +1207,7 @@ class Laporan_model extends CI_Model
 				pp.KD_DEV,
 				pp.NA_BRG,
 				pp.KET,
-				PP.TOTAL_QTY,
+				pp.TOTAL_QTY,
 				'-' AS AREA,
 				'-' AS KABAG,
 				'-' AS HARI,
@@ -1250,7 +1246,7 @@ class Laporan_model extends CI_Model
 				pp.KD_DEV,
 				pp.NA_BRG,
 				pp.KET,
-				PP.TOTAL_QTY,
+				pp.TOTAL_QTY,
 				'-' AS AREA,
 				'-' AS KABAG,
 				'-' AS HARI,
@@ -1289,7 +1285,7 @@ class Laporan_model extends CI_Model
 			pp.KD_DEV,
 			pp.NA_BRG,
 			pp.KET,
-			PP.TOTAL_QTY,
+			pp.TOTAL_QTY,
 			'-' AS AREA,
 			'-' AS KABAG,
 			'-' AS HARI,

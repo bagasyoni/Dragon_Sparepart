@@ -596,14 +596,14 @@ class Transaksi_BoronganCNC extends CI_Controller
         $perPage = 10;
         $results = $this->db->query("SELECT KD_DEV, NM_DEV AS DEVISI, NAMA
             FROM rn_dev
-            WHERE FLAG='CNC' AND (KD_DEV LIKE '%$search%' OR NM_DEV LIKE '%$search%' OR NAMA LIKE '%$search%')
+            WHERE FLAG='CBR' AND (KD_DEV LIKE '%$search%' OR NM_DEV LIKE '%$search%' OR NAMA LIKE '%$search%')
             ORDER BY AREA LIMIT $xa,$perPage");
         $selectajax = array();
         foreach ($results->RESULT_ARRAY() as $row) {
             $selectajax[] = array(
                 'id' => $row['DEVISI'],
                 'text' => $row['DEVISI'],
-                'DEVISI' => $row['DEVISI'] . " - " . $row['KD_DEV'] . " - " . $row['NAMA'],
+                'DEVISI' => $row['KD_DEV'] . " - " . $row['NAMA'],
                 'NOTES' => $row['NAMA'],
             );
         }

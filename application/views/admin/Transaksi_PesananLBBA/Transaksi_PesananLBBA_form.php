@@ -397,3 +397,60 @@
 		}
 	}
 </script>
+
+<script>
+	$(document).ready(function() {
+		select_dragon();
+	});
+	function select_dragon() {
+		$('.js-example-responsive-dragon').select2({
+			ajax: {
+				url: "<?= base_url('admin/Transaksi_PesananLBBA/getDataAjax_dragon') ?>",
+				dataType: "json",
+				type: "post",
+				delay: 10,
+				data: function(params) {
+					return {
+						search: params.term,
+						page: params.page
+					}
+				},
+				processResults: function(data, params) {
+					params.page = params.page || 1;
+					return {
+						results: data.items,
+						pagination: {
+							more: data.total_count
+						}
+					};
+				},
+				cache: true
+			},
+			placeholder: 'Pilih Dragon',
+			minimumInputLength: 0,
+			templateResult: format_dragon,
+			templateSelection: formatSelection_dragon
+		});
+	}
+
+	function format_dragon(repo_dragon) {
+		if (repo_dragon.loading) {
+			return repo_dragon.text;
+		}
+		var $container = $(
+			"<div class='select2-result-repository clearfix text_input'>" +
+			"<div class='select2-result-repository__title text_input'></div>" +
+			"</div>"
+		);
+		$container.find(".select2-result-repository__title").text(repo_dragon.DR);
+		return $container;
+	}
+
+	function formatSelection_dragon(repo_dragon) {
+		return repo_dragon.text;
+	}
+
+	function dragon(x) {
+		var q = x.substring(2, 10);
+	}
+</script>

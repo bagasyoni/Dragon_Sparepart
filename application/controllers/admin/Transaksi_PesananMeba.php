@@ -520,6 +520,34 @@ class Transaksi_PesananMeba extends CI_Controller
         $this->output->set_content_type('application/json')->set_output(json_encode($select));
     }
 
+    public function getDataAjax_dragon()
+    {
+        $search = $this->input->post('search');
+        $page = ((int)$this->input->post('page'));
+        if ($page == 0) {
+            $xa = 0;
+        } else {
+            $xa = ($page - 1) * 10;
+        }
+        $perPage = 10;
+        $results = $this->db->query("SELECT KD_DEV, NM_DEV AS DEVISI, NAMA, AREA
+            FROM rn_dev
+            WHERE FLAG='CNC' AND (AREA LIKE '%$search%' OR NM_DEV LIKE '%$search%')
+            GROUP BY AREA
+            ORDER BY AREA LIMIT $xa,$perPage");
+        $selectajax = array();
+        foreach ($results->RESULT_ARRAY() as $row) {
+            $selectajax[] = array(
+                'id' => $row['AREA'],
+                'text' => $row['AREA'],
+                'DR' => $row['AREA'],
+            );
+        }
+        $select['total_count'] =  $results->NUM_ROWS();
+        $select['items'] = $selectajax;
+        $this->output->set_content_type('application/json')->set_output(json_encode($select));
+    }
+
     function JASPER($id)
     {
         $CI = &get_instance();

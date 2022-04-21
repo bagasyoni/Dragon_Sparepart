@@ -138,7 +138,7 @@ foreach ($history_po as $rowh) {
 							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
 						</div>
 						<div class="col-md-1">
-							<input class="form-control text_input DR text_input" id="DR" name="DR" type="text" value="<?php echo $rowh->DR ?>" placeholder="Dragon" required>
+							<input class="form-control text_input DR text_input" id="DR" name="DR" type="text" value="<?php echo $rowh->DR ?>" placeholder="Dragon" required readonly>
 						</div>
 					</div>
 				</div>
@@ -148,13 +148,13 @@ foreach ($history_po as $rowh) {
 							<label class="label">Tanggal </label>
 						</div>
 						<div class="col-md-1">
-							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()">
+							<input type="text" class="form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" readonly>
 						</div>
 						<div class="col-md-1">
 							<label class="label">Jatuh Tempo </label>
 						</div>
 						<div class="col-md-1">
-							<input type="text" class="date form-control JTEMPO text_input" id="JTEMPO" name="JTEMPO" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->JTEMPO, TRUE)); ?>" onclick="select()">
+							<input type="text" class="form-control JTEMPO text_input" id="JTEMPO" name="JTEMPO" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->JTEMPO, TRUE)); ?>" readonly>
 						</div>
 						<div class="col-md-1">
 						</div>
@@ -163,9 +163,9 @@ foreach ($history_po as $rowh) {
 						</div>
 						<div class="col-md-1 input-group">
 							<input name="KODES" id="KODES" maxlength="50" type="text" class="form-control KODES text_input" onkeypress="return tabE(this,event)" value="<?php echo $rowh->KODES ?>" readonly>
-							<span class="input-group-btn">
+							<!-- <span class="input-group-btn">
 								<a class="btn default" onfocusout="hitung()" id="0" data-target="#mymodal_kodes" data-toggle="modal" href="#modalkodes" ><i class="fa fa-search"></i></a>
-							</span>
+							</span> -->
 						</div>
 					</div>
 				</div>
@@ -175,13 +175,13 @@ foreach ($history_po as $rowh) {
 							<label class="label">Mata Uang </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input KURS text_input" id="KURS" name="KURS" type="text" value="<?php echo $rowh->KURS ?>" required>
+							<input class="form-control text_input KURS text_input" id="KURS" name="KURS" type="text" value="<?php echo $rowh->KURS ?>" required readonly>
 						</div>
 						<div class="col-md-1">
-							<input class="form-control text_input RATE text_input" id="RATE" name="RATE" type="text" value="<?php echo $rowh->RATE ?>" placeholder="Kurs" required>
+							<input class="form-control text_input RATE text_input" id="RATE" name="RATE" type="text" value="<?php echo $rowh->RATE ?>" placeholder="Kurs" required readonly>
 						</div>
 						<div class="col-md-1">
-							<input class="form-control text_input PROD text_input" id="PROD" name="PROD" type="text" value="<?php echo $rowh->PROD ?>" placeholder="Prod" required>
+							<input class="form-control text_input PROD text_input" id="PROD" name="PROD" type="text" value="<?php echo $rowh->PROD ?>" placeholder="Prod" required readonly>
 						</div>
 						<div class="col-md-1">
 							<label class="label">Nama Supplier </label>
@@ -197,7 +197,7 @@ foreach ($history_po as $rowh) {
 							<label class="label">Notes Bayar </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NOTESBL text_input" id="NOTESBL" name="NOTESBL" type="text" value="<?php echo $rowh->NOTESBL ?>" required>
+							<input class="form-control text_input NOTESBL text_input" id="NOTESBL" name="NOTESBL" type="text" value="<?php echo $rowh->NOTESBL ?>" required readonly>
 						</div>
 						<div class="col-md-1">
 						</div>
@@ -207,7 +207,7 @@ foreach ($history_po as $rowh) {
 							<label class="label">A/N </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input AN text_input" id="AN" name="AN" type="text" value="<?php echo $rowh->AN ?>" required>
+							<input class="form-control text_input AN text_input" id="AN" name="AN" type="text" value="<?php echo $rowh->AN ?>" required readonly>
 						</div>
 					</div>
 				</div>
@@ -217,7 +217,7 @@ foreach ($history_po as $rowh) {
 							<label class="label">Notes Kirim </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NOTESKRM text_input" id="NOTESKRM" name="NOTESKRM" type="text" value="<?php echo $rowh->NOTESKRM ?>" required>
+							<input class="form-control text_input NOTESKRM text_input" id="NOTESKRM" name="NOTESKRM" type="text" value="<?php echo $rowh->NOTESKRM ?>" required readonly>
 						</div>
 					</div>
 				</div>
@@ -227,7 +227,7 @@ foreach ($history_po as $rowh) {
 							<label class="label">Keterangan </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NOTES text_input" id="NOTES" name="NOTES" type="text" value="<?php echo $rowh->NOTES ?>" required>
+							<input class="form-control text_input NOTES text_input" id="NOTES" name="NOTES" type="text" value="<?php echo $rowh->NOTES ?>" required readonly>
 						</div>
 					</div>
 				</div>
@@ -256,21 +256,22 @@ foreach ($history_po as $rowh) {
 								<tr>
 									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
 									<td>
-										<div class="input-group">
+										<!-- <div class="input-group">
 											<select class="js-example-responsive-kd_bhn form-control KD_BHN text_input" name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" onchange="kd_bhn(this.id)" required>
 												<option value="<?php echo $row->KD_BHN; ?>" selected id="KD_BHN<?php echo $no; ?>"><?php echo $row->KD_BHN; ?></option>
 											</select>
-										</div>
+										</div> -->
+										<input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly>
 									</td>
 									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
-									<td><input name="KET[]" id="KET<?php echo $no; ?>" value="<?= $row->KET ?>" type="text" class="form-control KET text_input"></td>
+									<td><input name="KET[]" id="KET<?php echo $no; ?>" value="<?= $row->KET ?>" type="text" class="form-control KET text_input" readonly></td>
 									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
-									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
+									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary" readonly></td>
 									<td>	
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
-										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+										<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 											<i class="fa fa-fw fa-trash-alt"></i>
-										</button>
+										</button> -->
 									</td>
 								</tr>
 								<?php $no++; ?>
@@ -291,20 +292,20 @@ foreach ($history_po as $rowh) {
 		</div>
 		<br><br>
 		<!--tab-->
-		<div class="col-md-12">
+		<!-- <div class="col-md-12">
 			<div class="form-group row">
 				<div class="col-md-1">
 					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="col-md-12">
 			<div class="form-group row">
 				<div class="col-md-1">
 					<label class="label">No PP </label>
 				</div>
 				<div class="col-md-3">							
-					<input class="form-control text_input NO_PP text_input" id="NO_PP" name="NO_PP" type="text" value="<?php echo $rowh->NO_PP ?>" required>
+					<input class="form-control text_input NO_PP text_input" id="NO_PP" name="NO_PP" type="text" value="<?php echo $rowh->NO_PP ?>" required readonly>
 				</div>
 			</div>
 		</div>
@@ -313,8 +314,8 @@ foreach ($history_po as $rowh) {
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
+						<!-- <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button> -->
+						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-primary">Kembali</a>
 					</div>
 					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 				</div>

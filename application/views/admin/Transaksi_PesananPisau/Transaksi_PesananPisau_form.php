@@ -125,7 +125,7 @@
 	<div class="alert alert-success alert-container" role="alert">
 		<i class="fas fa-university"></i> Input <?php echo $this->session->userdata['judul']; ?>
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananPisau/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananPisau/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" enctype="multipart/form-data" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">

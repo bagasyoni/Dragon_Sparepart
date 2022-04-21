@@ -413,14 +413,12 @@
 
 <script>
 	$(document).ready(function() {
-		select_no_bon();
-		select_kd_bhn();
+		select_dragon();
 	});
-
-	function select_no_bon() {
-		$('.js-example-responsive-no_bon').select2({
+	function select_dragon() {
+		$('.js-example-responsive-dragon').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_Pemesanan/getDataAjax_bond') ?>",
+				url: "<?= base_url('admin/Transaksi_PesananLBBA/getDataAjax_dragon') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -441,106 +439,31 @@
 				},
 				cache: true
 			},
-			placeholder: 'Pilih No Bon',
+			placeholder: 'Pilih Dragon',
 			minimumInputLength: 0,
-			templateResult: format_no_bon,
-			templateSelection: formatSelection_no_bon
+			templateResult: format_dragon,
+			templateSelection: formatSelection_dragon
 		});
 	}
 
-	function format_no_bon(repo_no_bon) {
-		if (repo_no_bon.loading) {
-			return repo_no_bon.text;
+	function format_dragon(repo_dragon) {
+		if (repo_dragon.loading) {
+			return repo_dragon.text;
 		}
 		var $container = $(
 			"<div class='select2-result-repository clearfix text_input'>" +
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_no_bon.NO_BON);
+		$container.find(".select2-result-repository__title").text(repo_dragon.DR);
 		return $container;
 	}
 
-	var kd_bhn = '';
-	var na_bhn = '';
-	var satuan = '';
-	var qty = '';
-	var sisabon = '';
-
-	function formatSelection_no_bon(repo_no_bon) {
-		kd_bhn = repo_no_bon.KD_BHN;
-		na_bhn = repo_no_bon.NA_BHN;
-		satuan = repo_no_bon.SATUAN;
-		qty = repo_no_bon.QTY;
-		sisabon = repo_no_bon.SISABON;
-		return repo_no_bon.text;
+	function formatSelection_dragon(repo_dragon) {
+		return repo_dragon.text;
 	}
 
-	function no_bon(x) {
-		var q = x.substring(6, 10);
-		$('#KD_BHN' + q).val(kd_bhn);
-		$('#NA_BHN' + q).val(na_bhn);
-		$('#SATUAN' + q).val(satuan);
-		$('#QTY' + q).val(qty);
-		$('#SISABON' + q).val(sisabon);
-	}
-
-	function select_kd_bhn() {
-		$('.js-example-responsive-kd_bhn').select2({
-			ajax: {
-				url: "<?= base_url('admin/Transaksi_Pemesanan/getDataAjax_bhn') ?>",
-				dataType: "json",
-				type: "post",
-				delay: 10,
-				data: function(params) {
-					return {
-						search: params.term,
-						page: params.page
-					}
-				},
-				processResults: function(data, params) {
-					params.page = params.page || 1;
-					return {
-						results: data.items,
-						pagination: {
-							more: data.total_count
-						}
-					};
-				},
-				cache: true
-			},
-			placeholder: 'Pilih Barang',
-			minimumInputLength: 0,
-			templateResult: format_kd_bhn,
-			templateSelection: formatSelection_kd_bhn
-		});
-	}
-
-	function format_kd_bhn(repo_kd_bhn) {
-		if (repo_kd_bhn.loading) {
-			return repo_kd_bhn.text;
-		}
-		var $container = $(
-			"<div class='select2-result-repository clearfix text_input'>" +
-			"<div class='select2-result-repository__title text_input'></div>" +
-			"</div>"
-		);
-		$container.find(".select2-result-repository__title").text(repo_kd_bhn.KD_BHN);
-		return $container;
-	}
-
-	var na_bhn = '';
-	var satuan = '';
-
-	function formatSelection_kd_bhn(repo_kd_bhn) {
-		na_bhn = repo_kd_bhn.NA_BHN;
-		satuan = repo_kd_bhn.SATUAN;
-		return repo_kd_bhn.text;
-	}
-
-	function kd_bhn(xx) {
-		var qq = xx.substring(6, 10);
-		$('#NA_BHN' + qq).val(na_bhn);
-		$('#SATUAN' + qq).val(satuan);
+	function dragon(x) {
+		var q = x.substring(2, 10);
 	}
 </script>

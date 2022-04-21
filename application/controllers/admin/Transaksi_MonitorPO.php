@@ -111,7 +111,7 @@ class Transaksi_MonitorPO extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_MonitorPO/update/' . $po->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_MonitorPO/update/' . $po->NO_ID) . '"> <i class="fa fa-edit"></i> Lihat</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_MonitorPO/delete/' . $po->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>

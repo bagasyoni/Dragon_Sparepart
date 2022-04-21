@@ -10,6 +10,7 @@
 	<parameter name="PER" class="java.lang.String"/>
 	<parameter name="MESIN" class="java.lang.String"/>
 	<parameter name="TGL" class="java.lang.String"/>
+	<parameter name="RAK" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -22,6 +23,44 @@
 	<field name="PER" class="java.lang.String"/>
 	<field name="NA_GOL" class="java.lang.String"/>
 	<field name="TGL" class="java.lang.String"/>
+	<field name="RAK" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{RAK}]]></groupExpression>
+		<groupHeader>
+			<band>
+				<textField>
+					<reportElement isPrintRepeatedValues="false" x="39" y="0" width="51" height="17" uuid="b487a399-021a-483c-9bf0-19df43052a71">
+						<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{RAK}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement isPrintRepeatedValues="false" x="90" y="0" width="190" height="17" uuid="1116d39c-22af-4b22-92e1-62965cd5f44e">
+						<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NA_BHN}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -257,36 +296,6 @@
 					<font fontName="Times New Roman" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NA_GOL}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="39" y="0" width="51" height="17" uuid="8e634d9d-5e28-4a72-a322-e29ce5a259de">
-					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{KD_BHN}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="90" y="0" width="190" height="17" uuid="93d7b172-b923-4b15-8241-7d1d4fa1126d">
-					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{NA_BHN}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="280" y="0" width="50" height="17" uuid="f1766ceb-6b83-4760-94f5-0831e8fcdeef">
