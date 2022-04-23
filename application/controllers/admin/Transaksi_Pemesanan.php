@@ -674,8 +674,7 @@ class Transaksi_Pemesanan extends CI_Controller
         $perPage = 10;
         $results = $this->db->query("SELECT bhn.NO_ID, bhn.KD_BHN, bhn.NA_BHN, bhn.SATUAN
             FROM bhn, bhnd
-            -- WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND bhnd.DR = '$dr' AND bhnd.SUB='$sub' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%')
-            WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%')
+            WHERE bhn.SUB='$sub' AND bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%')
             GROUP BY bhn.KD_BHN
             ORDER BY bhn.KD_BHN LIMIT $xa,$perPage");
         $selectajax = array();

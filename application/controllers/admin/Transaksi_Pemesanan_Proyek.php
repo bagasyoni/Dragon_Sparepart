@@ -496,6 +496,8 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
     }
 
     public function getDataAjax_Bahan() {
+        $sub = $this->session->userdata('sub');
+        $dr = $this->session->userdata('dr');
         $search = $this->input->post('search');
         $page = ((int)$this->input->post('page'));
         if ($page == 0) {
@@ -506,7 +508,7 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
         $perPage = 10;
         $results = $this->db->query("SELECT no_id, KD_BHN AS kd_bhn, NA_BHN AS na_bhn, SATUAN AS satuan
             FROM bhn
-            WHERE KD_BHN LIKE '%$search%' OR NA_BHN LIKE '%$search%'
+            WHERE FLAG='SP' AND SUB='$sub' AND DR='$dr' AND (KD_BHN LIKE '%$search%' OR NA_BHN LIKE '%$search%')
             ORDER BY KD_BHN LIMIT $xa,$perPage");
         $selectajax = array();
         foreach ($results->RESULT_ARRAY() as $row) {

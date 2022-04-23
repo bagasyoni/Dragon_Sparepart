@@ -1064,7 +1064,6 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
-			$sub = $this->session->userdata['sub'];
 			$per = $this->session->userdata['periode'];
 			$bulan = substr($this->session->userdata['periode'], 0, -5);
 			$tahun = substr($this->session->userdata['periode'], -4);
@@ -1137,23 +1136,15 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
-			$tgl_1 = $this->input->post('TGL_1');
-			$sub = $this->session->userdata['sub'];
 			$per = $this->session->userdata['periode'];
-			if ($tgl_1 == '') {
-				$bulan = Date('m');
-			} else {
-				$bulan = date("m", strtotime($tgl_1));
-			}
-			$tahun = substr($this->input->post('PER'), -4);
-			$tahun_1 = $this->input->post('PER');
-			$per = $bulan ."/". $tahun;
+			$bulan = substr($this->session->userdata['periode'], 0, -5);
+			$tahun = substr($this->session->userdata['periode'], -4);
 			$query = "SELECT KD_BHN, NA_BHN, SATUAN, PER, AW, MA, KE, LN, AK
 				FROM (
 					SELECT bhnd.KD_BHN AS KD_BHN,
 						bhnd.NA_BHN AS NA_BHN,
 						bhn.SATUAN AS SATUAN,
-						'$tahun_1' AS PER,
+						'$per' AS PER,
 						bhnd.AW$bulan AS AW,
 						bhnd.MA$bulan AS MA,
 						bhnd.KE$bulan AS KE,
@@ -1164,7 +1155,6 @@ class Laporan extends CI_Controller
 					AND bhnd.YER = '$tahun'
 					AND bhn.DR = '$dr'
 					AND bhn.FLAG = 'SP'
-					AND bhn.FLAG2 = 'SP'
 					AND bhn.SUB = '$sub'
 					GROUP BY bhn.KD_BHN
 				) AS KD_BHN
@@ -3578,10 +3568,7 @@ class Laporan extends CI_Controller
 		$perPage = 10;
 		$results = $this->db->query("SELECT NO_ID as NO_ID, KD_BHN as KD_BHN_1, NA_BHN as NM_BHN_1, DR as DR_1
 			FROM bhn
-			WHERE (KD_BHN LIKE '%$search%' OR NA_BHN LIKE '%$search%' OR DR LIKE '%$search%')
-			AND bhn.FLAG='SP'
-			AND bhn.SUB='sp'
-			AND bhn.DR='$dr'
+			WHERE FLAG='SP' AND SUB='$sub' AND (KD_BHN LIKE '%$search%' OR NA_BHN LIKE '%$search%' OR DR LIKE '%$search%')
 			ORDER BY KD_BHN LIMIT $xa,$perPage");
 		$selectajax = array();
 		foreach ($results->RESULT_ARRAY() as $row) {

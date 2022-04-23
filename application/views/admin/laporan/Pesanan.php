@@ -86,7 +86,7 @@
                         "TGL_DIMINTA" => array(
                             "label" => "Tanggal Diminta",
                         ),
-                        "NA_BRG" => array(
+                        "KD_BHN" => array(
                             "label" => "Article",
                         ),
                         "TGL_PO" => array(

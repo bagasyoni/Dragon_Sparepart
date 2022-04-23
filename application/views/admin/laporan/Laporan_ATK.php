@@ -17,7 +17,7 @@
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
         <form id="bulanan" method="post" action="<?php echo base_url('admin/laporan/index_AlatTulisKantor') ?>">
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-md-1 nopadding">
                         <label class="label-title">Periode </label>
@@ -26,7 +26,7 @@
                         <input type="text" value="<?= $PER ?>" class="form-control form-control-user PER" id="PER" placeholder="mm/yyyy" name="PER">
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-6">
                 <div class="form-group row">
                     <div class="col-sm-2 nopadding">

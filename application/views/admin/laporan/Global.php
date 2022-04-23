@@ -176,7 +176,7 @@
     function select_jenis_1() {
         $('#JENIS_1').select2({
             ajax: {
-                url: "<?= base_url('admin/laporan/getData_jenis_barang_1') ?>",
+                url: "<?= base_url('admin/laporan/getData_master_barang_1') ?>",
                 dataType: "json",
                 type: "post",
                 delay: 250,
