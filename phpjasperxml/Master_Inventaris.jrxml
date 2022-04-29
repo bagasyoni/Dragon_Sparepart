@@ -128,7 +128,7 @@
 		<band height="40">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
-				<reportElement x="50" y="10" width="110" height="30" uuid="61db95c1-66a4-4e50-8283-39883a8430dc">
+				<reportElement x="50" y="10" width="130" height="30" uuid="61db95c1-66a4-4e50-8283-39883a8430dc">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box padding="0">
@@ -161,7 +161,7 @@
 				<textFieldExpression><![CDATA["NO"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="10" width="220" height="30" uuid="6a943ebb-c5e1-482d-bb2f-f5d8ee422013">
+				<reportElement x="180" y="10" width="200" height="30" uuid="6a943ebb-c5e1-482d-bb2f-f5d8ee422013">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -363,10 +363,10 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="20">
+		<band height="21">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="50" y="0" width="110" height="20" forecolor="#000000" uuid="733bfa41-c78d-4542-a6e0-d738e0c93958">
+				<reportElement x="50" y="0" width="130" height="20" forecolor="#000000" uuid="733bfa41-c78d-4542-a6e0-d738e0c93958">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -383,7 +383,7 @@
 				<textFieldExpression><![CDATA[$F{JENIS}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="160" y="0" width="220" height="20" forecolor="#000000" uuid="d5257af4-5de2-4b62-a1bf-58f6c71df2f2">
+				<reportElement x="180" y="0" width="200" height="20" forecolor="#000000" uuid="d5257af4-5de2-4b62-a1bf-58f6c71df2f2">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -429,7 +429,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{REC}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
 				<reportElement x="409" y="0" width="46" height="20" forecolor="#000000" uuid="89a84542-de71-4569-9ca9-2d3749008641">
@@ -575,18 +575,19 @@
 				</textElement>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="20" y="20" width="555" height="1" uuid="17182048-0264-442e-932f-4ab02b8adacf"/>
+			</line>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="62">
-			<printWhenExpression><![CDATA[$V{REPORT_COUNT}]]></printWhenExpression>
-			<textField>
-				<reportElement x="243" y="32" width="100" height="30" uuid="36713b0f-03a4-4ce6-87d7-97dc3c050415"/>
-				<textFieldExpression><![CDATA["Page Footer"]]></textFieldExpression>
-			</textField>
+		<band height="76">
+			<rectangle>
+				<reportElement x="20" y="-1" width="555" height="61" uuid="c38df7cb-c405-44fe-bf31-2c3220edb573"/>
+			</rectangle>
 		</band>
 	</pageFooter>
-	<lastPageFooter>
-		<band height="81"/>
-	</lastPageFooter>
+	<summary>
+		<band height="71"/>
+	</summary>
 </jasperReport>

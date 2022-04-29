@@ -109,7 +109,7 @@ class Transaksi_PesananPisau extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananPisau/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananPisau/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Val</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananPisau/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
@@ -351,6 +351,7 @@ class Transaksi_PesananPisau extends CI_Controller
                 pp.TS AS TS,
                 pp.GAMBAR AS GAMBAR,
                 pp.TOTAL_QTY AS TOTAL_QTY,
+                pp.VAL AS VAL,
                 
                 ppd.NO_ID AS NO_ID,
                 ppd.REC AS REC,
@@ -388,6 +389,7 @@ class Transaksi_PesananPisau extends CI_Controller
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
             'TYP' => 'RND_PISAU',
+            'VAL' => '1',
             'SUB' => $this->session->userdata['sub'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],

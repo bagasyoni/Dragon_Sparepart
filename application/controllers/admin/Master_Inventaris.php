@@ -491,23 +491,7 @@ class Master_Inventaris extends CI_Controller
         $PHPJasperXML = new \PHPJasperXML();
         $PHPJasperXML->load_xml_file("phpjasperxml/Master_Inventaris.jrxml");
         $no_id = $id;
-        $query = "SELECT inventaris.NO_ID as ID,
-                inventaris.NO_BUKTI AS NO_BUKTI,
-                inventaris.NA_BAGIAN AS NA_BAGIAN,
-                inventaris.NAMA AS NAMA,
-                inventaris.TGL AS TGL,
-
-                inventarisd.NO_ID AS NO_ID,
-                inventarisd.REC AS REC,
-                inventarisd.JENIS AS JENIS,
-                inventarisd.MERK AS MERK,
-                LEFT(inventarisd.SATUAN, 1) AS SATUAN,
-                inventarisd.QTY AS QTY,
-                inventarisd.SATUAN AS SATUAN
-            FROM inventaris,inventarisd 
-            WHERE inventaris.NO_ID=$id 
-            AND inventaris.NO_ID = inventarisd.ID 
-            ORDER BY inventarisd.REC";
+        $query = "CALL spp_prntinv_1('$id')";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);
@@ -545,24 +529,7 @@ class Master_Inventaris extends CI_Controller
         $PHPJasperXML = new \PHPJasperXML();
         $PHPJasperXML->load_xml_file("phpjasperxml/Master_Inventaris2.jrxml");
         $no_id = $id;
-        $query = "SELECT inventaris.NO_ID as ID,
-                inventaris.NO_BUKTI AS NO_BUKTI,
-                inventaris.NA_BAGIAN AS NA_BAGIAN,
-                inventaris.NAMA AS NAMA,
-                inventaris.TGL AS TGL,
-
-                inventarisd.NO_ID AS NO_ID,
-                inventarisd.REC AS REC,
-                inventarisd.JENIS AS JENIS,
-                inventarisd.MERK AS MERK,
-                LEFT(inventarisd.SATUAN, 1) AS SATUAN,
-                inventarisd.QTY AS QTY,
-                inventarisd.SATUAN AS SATUAN,
-                inventarisd.KET AS KET
-            FROM inventaris,inventarisd 
-            WHERE inventaris.NO_ID=$id 
-            AND inventaris.NO_ID = inventarisd.ID 
-            ORDER BY inventarisd.REC";
+        $query = "CALL spp_prntinv_2('$id')";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);

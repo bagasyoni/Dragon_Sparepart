@@ -557,13 +557,14 @@ class Laporan_model extends CI_Model
 		$per = $this->session->userdata['periode'];
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$hari_1 = substr($this->input->post('TGL_1'), 0.2);
-		$bulan = substr($this->input->post('TGL_1'), 3, 2);
+		$bulan = substr(date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE))),5,2);
 		$tahun = substr($this->input->post('TGL_1'), 6, 4);
-		$q1 = "SELECT bhnd.RAK, 
+		$q1 = "SELECT bhnd.RAK,
+			'$tgl_1' AS TGL,
 			bhnd.KD_BHN, 
 			bhnd.NA_BHN, 
 			bhn.SATUAN,
-			bhnd.AK12 AS AK, 
+			bhnd.AK$bulan AS AK, 
 			IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
 			IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
 			DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
@@ -628,34 +629,78 @@ class Laporan_model extends CI_Model
 
 	public function tampil_data_usia()
 	{
-		// $periode = $tahun.$bulan;
 		$dr = $this->session->userdata['dr'];
 		$sub = $this->session->userdata['sub'];
 		$per = $this->session->userdata['periode'];
-		if (isset($_POST["TGL_1"])) {
-			$bulan = substr($this->input->post('TGL_1'), 3, 2);
-		} else {
-			$bulan = 'XX';
-		}
-		$tahun = substr($this->input->post('TGL_1'), -4);
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
+		$hari_1 = substr($this->input->post('TGL_1'), 0.2);
+		$bulan = substr(date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE))),5,2);
+		$tahun = substr($this->input->post('TGL_1'), 6, 4);
 		$masa = $this->input->post('MASA');
 		$q1 = "SELECT bhnd.RAK, 
-			bhnd.KD_BHN, 
+			bhnd.KD_BHN,
 			bhnd.NA_BHN, 
 			bhn.SATUAN,
-			bhnd.AK03 AS AK, 
-			DATEDIFF(bhn.TG_PK, bhn.TG_BL) AS HARI,
-			TIMESTAMPDIFF(MONTH,bhn.TG_BL, bhn.TG_PK) AS KET
+			bhnd.AK$bulan AS AK, 
+			IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+			IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+			DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
+			CASE 
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) < 30 
+				THEN '< 1 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 30 
+				THEN '> 2 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+				THEN '> 3 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+				THEN '> 3 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 180 
+				THEN '> 6 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 360 
+				THEN '> 12 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 540 
+				THEN '> 18 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 720 
+				THEN '> 24 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 1080 
+				THEN '> 36 Bulan'
+			END AS KET
 		FROM bhn, bhnd
 		WHERE bhn.KD_BHN = bhnd.KD_BHN
-		AND bhn.DR='$dr'
-		AND bhn.FLAG='SP'
-		AND bhn.FLAG2='$sub'
-		AND bhn.TG_BL < '$tgl_1'
-		AND bhn.TG_PK < '$tgl_1'
+		AND bhnd.DR='$dr'
+		AND bhnd.FLAG='SP'
+		-- AND bhn.SUB='$sub'
+		AND bhnd.TG_BL < '$tgl_1'
+		AND bhnd.TG_PK < '$tgl_1'
 		AND bhnd.YER = '$tahun'
-		AND TIMESTAMPDIFF(MONTH,bhn.TG_BL, bhn.TG_PK) = '$masa'
+		-- AND TIMESTAMPDIFF(MONTH,bhn.TG_BL, bhn.TG_PK) = '$masa'
 		GROUP BY bhnd.KD_BHN
 		ORDER BY bhnd.KD_BHN";
 		return $this->db->query($q1);
@@ -709,22 +754,68 @@ class Laporan_model extends CI_Model
 
 	public function tampil_data_stok_sparepart()
 	{
-		$tgl_1 = $this->input->post('TGL_1');
-		if ($tgl_1 == '') {
-			$bulan = Date('m');
-		} else {
-			$bulan = date("m", strtotime($tgl_1));
-		}
+		$tgl_1 = date("Y-m-d");
+		$bulan = substr(date("Y-m-d"),5,2);
 		$tahun = substr($this->input->post('PER'), -4);
 		$tahun_1 = $this->input->post('PER');
 		$q1 = "SELECT bhnd.KD_BHN,
 						bhnd.NA_BHN,
 						bhn.SATUAN,
 						'$tahun_1' AS PER,
-						SUM(if(bhnd.dr='I',bhnd.AK03,0)) AS DR1,
-						SUM(if(bhnd.dr='II',bhnd.AK03,0)) AS DR2,
-						SUM(if(bhnd.dr='III',bhnd.AK03,0)) AS DR3,
-						SUM(bhnd.AK$bulan) AS TOTAL
+						SUM(if(bhnd.DR='I',bhnd.AK$bulan,0)) AS DR1,
+						SUM(if(bhnd.DR='II',bhnd.AK$bulan,0)) AS DR2,
+						SUM(if(bhnd.DR='III',bhnd.AK$bulan,0)) AS DR3,
+						SUM(bhnd.AK$bulan) AS TOTAL,
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
+						CASE 
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) < 30 
+							THEN '< 1 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 30 
+							THEN '> 2 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+							THEN '> 3 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+							THEN '> 3 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 180 
+							THEN '> 6 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 360 
+							THEN '> 12 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 540 
+							THEN '> 18 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 720 
+							THEN '> 24 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 1080 
+							THEN '> 36 Bulan'
+						END AS KET
 					FROM bhnd, bhn
 					WHERE bhnd.KD_BHN = bhn.KD_BHN
 					-- AND bhnd.YER = '$tahun'
@@ -737,22 +828,68 @@ class Laporan_model extends CI_Model
 
 	public function tampil_data_stok_inventaris()
 	{
-		$tgl_1 = $this->input->post('TGL_1');
-		if ($tgl_1 == '') {
-			$bulan = Date('m');
-		} else {
-			$bulan = date("m", strtotime($tgl_1));
-		}
+		$tgl_1 = date("Y-m-d");
+		$bulan = substr(date("Y-m-d"),5,2);
 		$tahun = substr($this->input->post('PER'), -4);
 		$tahun_1 = $this->input->post('PER');
 		$q1 = "SELECT bhnd.KD_BHN,
 						bhnd.NA_BHN,
 						bhn.SATUAN,
 						'$tahun_1' AS PER,
-						SUM(if(bhnd.dr='I',bhnd.AK03,0)) AS DR1,
-						SUM(if(bhnd.dr='II',bhnd.AK03,0)) AS DR2,
-						SUM(if(bhnd.dr='III',bhnd.AK03,0)) AS DR3,
-						SUM(bhnd.AK$bulan) AS TOTAL
+						SUM(if(bhnd.DR='I',bhnd.AK$bulan,0)) AS DR1,
+						SUM(if(bhnd.DR='II',bhnd.AK$bulan,0)) AS DR2,
+						SUM(if(bhnd.DR='III',bhnd.AK$bulan,0)) AS DR3,
+						SUM(bhnd.AK$bulan) AS TOTAL,
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
+					CASE 
+						WHEN 
+							IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+							IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) < 30 
+						THEN '< 1 Bulan'
+						WHEN 
+							IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+							IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 30 
+						THEN '> 2 Bulan'
+						WHEN 
+							IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+							IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+						THEN '> 3 Bulan'
+						WHEN 
+							IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+							IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+						THEN '> 3 Bulan'
+						WHEN 
+							IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+							IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 180 
+						THEN '> 6 Bulan'
+						WHEN 
+							IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+							IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 360 
+						THEN '> 12 Bulan'
+						WHEN 
+							IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+							IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 540 
+						THEN '> 18 Bulan'
+						WHEN 
+							IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+							IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 720 
+						THEN '> 24 Bulan'
+						WHEN 
+							IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+							IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 1080 
+						THEN '> 36 Bulan'
+					END AS KET
 					FROM bhnd, bhn
 					WHERE bhnd.KD_BHN = bhn.KD_BHN
 					-- AND bhnd.YER = '$tahun'
@@ -764,23 +901,68 @@ class Laporan_model extends CI_Model
 
 	public function tampil_data_stok_atk()
 	{
-		$tgl_1 = $this->input->post('TGL_1');
-		if ($tgl_1 == '') {
-			$bulan = Date('m');
-		} else {
-			$bulan = date("m", strtotime($tgl_1));
-		}
+		$tgl_1 = date("Y-m-d");
+		$bulan = substr(date("Y-m-d"),5,2);
 		$tahun = substr($this->input->post('PER'), -4);
 		$tahun_1 = $this->input->post('PER');
-		$per = $bulan ."/". $tahun;
 		$q1 = "SELECT bhnd.KD_BHN,
 						bhnd.NA_BHN,
 						bhn.SATUAN,
 						'$tahun_1' AS PER,
-						SUM(if(bhnd.dr='I',bhnd.AK03,0)) AS DR1,
-						SUM(if(bhnd.dr='II',bhnd.AK03,0)) AS DR2,
-						SUM(if(bhnd.dr='III',bhnd.AK03,0)) AS DR3,
-						SUM(bhnd.AK$bulan) AS TOTAL
+						SUM(if(bhnd.DR='I',bhnd.AK$bulan,0)) AS DR1,
+						SUM(if(bhnd.DR='II',bhnd.AK$bulan,0)) AS DR2,
+						SUM(if(bhnd.DR='III',bhnd.AK$bulan,0)) AS DR3,
+						SUM(bhnd.AK$bulan) AS TOTAL,
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
+						CASE 
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) < 30 
+							THEN '< 1 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 30 
+							THEN '> 2 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+							THEN '> 3 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+							THEN '> 3 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 180 
+							THEN '> 6 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 360 
+							THEN '> 12 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 540 
+							THEN '> 18 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 720 
+							THEN '> 24 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 1080 
+							THEN '> 36 Bulan'
+						END AS KET
 					FROM bhnd, bhn
 					WHERE bhnd.KD_BHN = bhn.KD_BHN
 					-- AND bhnd.YER = '$tahun'
@@ -792,25 +974,68 @@ class Laporan_model extends CI_Model
 
 	public function tampil_data_stok_umum()
 	{
-		$tgl_1 = $this->input->post('TGL_1');
-		$sub = $this->session->userdata['sub'];
-		$per = $this->session->userdata['periode'];
-		if ($tgl_1 == '') {
-			$bulan = Date('m');
-		} else {
-			$bulan = date("m", strtotime($tgl_1));
-		}
+		$tgl_1 = date("Y-m-d");
+		$bulan = substr(date("Y-m-d"),5,2);
 		$tahun = substr($this->input->post('PER'), -4);
 		$tahun_1 = $this->input->post('PER');
-		$per = $bulan ."/". $tahun;
 		$q1 = "SELECT bhnd.KD_BHN,
 						bhnd.NA_BHN,
 						bhn.SATUAN,
 						'$tahun_1' AS PER,
-						SUM(if(bhnd.dr='I',bhnd.AK03,0)) AS DR1,
-						SUM(if(bhnd.dr='II',bhnd.AK03,0)) AS DR2,
-						SUM(if(bhnd.dr='III',bhnd.AK03,0)) AS DR3,
-						SUM(bhnd.AK$bulan) AS TOTAL
+						SUM(if(bhnd.DR='I',bhnd.AK$bulan,0)) AS DR1,
+						SUM(if(bhnd.DR='II',bhnd.AK$bulan,0)) AS DR2,
+						SUM(if(bhnd.DR='III',bhnd.AK$bulan,0)) AS DR3,
+						SUM(bhnd.AK$bulan) AS TOTAL,
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
+						CASE 
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) < 30 
+							THEN '< 1 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 30 
+							THEN '> 2 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+							THEN '> 3 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+							THEN '> 3 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 180 
+							THEN '> 6 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 360 
+							THEN '> 12 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 540 
+							THEN '> 18 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 720 
+							THEN '> 24 Bulan'
+							WHEN 
+								IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+								IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+								DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 1080 
+							THEN '> 36 Bulan'
+						END AS KET
 					FROM bhnd, bhn
 					WHERE bhnd.KD_BHN = bhn.KD_BHN
 					-- AND bhnd.YER = '$tahun'

@@ -23,7 +23,10 @@
                     <div class="col-md-2">
                         <input type="text" class="date form-control text_input" id="TGL_1" name="TGL_1" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["TGL_1"]; } else echo date('d-m-Y'); ?>">
                     </div>
-                    <div class="col-sm-1"></div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group row">
                     <div class="col-sm-1 nopadding">
 						<button class="btn btn-md btn-secondary" id="tampilkan" name="tampilkan"> Tampilkan </button>
 					</div>
@@ -138,6 +141,9 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $(".date").datepicker({
+            'dateFormat': 'dd-mm-yy'
+        })
         $("#btnExportCopy").on("click", function() {
             var table = $('#example').DataTable();
             table.button('.buttons-copy').trigger();

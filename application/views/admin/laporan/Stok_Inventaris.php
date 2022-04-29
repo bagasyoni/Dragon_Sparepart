@@ -97,6 +97,12 @@
                             "thousandSeparator" => ",",
                             "footer" => "sum",
                         ),
+                        "HARI" => array(
+                            "label" => "Hari"
+                        ),
+                        "KET" => array(
+                            "label" => "Keterangan"
+                        )
                     ),
                     "cssClass" => array(
                         "table" => "table table-hover table-bordered",

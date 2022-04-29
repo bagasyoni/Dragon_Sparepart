@@ -1503,32 +1503,77 @@ class Laporan extends CI_Controller
 			include('phpjasperxml/class/PHPJasperXML.inc.php');
 			include('phpjasperxml/setting.php');
 			$PHPJasperXML = new \PHPJasperXML();
-			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Usia_IA.jrxml");
+			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Usia.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
 			$per = $this->session->userdata['periode'];
-			if (isset($_POST["TGL_1"])) {
-				$bulan = substr($this->input->post('TGL_1'), 3, 2);
-			} else {
-				$bulan = 'XX';
-			}
-			$tahun = substr($this->input->post('TGL_1'), -4);
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-			$query = "SELECT bhn.RAK AS RAK,
-				'$tgl_1' AS TGL, 
-				bhnd.KD_BHN AS KD_BHN, 
-				bhnd.NA_BHN AS NA_BHN, 
-				bhn.SATUAN AS SATUAN,
+			$hari_1 = substr($this->input->post('TGL_1'), 0.2);
+			$bulan = substr(date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE))),5,2);
+			$tahun = substr($this->input->post('TGL_1'), 6, 4);
+			$query = "SELECT bhnd.RAK,
+				'$tgl_1' AS TGL,
+				bhnd.KD_BHN, 
+				bhnd.NA_BHN, 
+				bhn.SATUAN,
 				bhnd.AK$bulan AS AK, 
-				DATEDIFF(bhn.TG_PAKAI, bhn.TG_BL) AS HARI,
-				TIMESTAMPDIFF(MONTH,bhn.TG_PAKAI, bhn.TG_BL) AS KET
+				IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+				IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+				DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
+				CASE 
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) < 30 
+					THEN '< 1 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 30 
+					THEN '> 2 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+					THEN '> 3 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+					THEN '> 3 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 180 
+					THEN '> 6 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 360 
+					THEN '> 12 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 540 
+					THEN '> 18 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 720 
+					THEN '> 24 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 1080 
+					THEN '> 36 Bulan'
+				END AS KET
 			FROM bhn, bhnd
 			WHERE bhn.KD_BHN = bhnd.KD_BHN
-			AND bhn.DR='$dr'
-			AND bhn.SP='$sub'
-			AND bhn.TG_BL < '$tgl_1'
-			AND bhn.TG_PAKAI < '$tgl_1'
+			AND bhnd.DR='$dr'
+			AND bhnd.FLAG='SP'
+			AND bhnd.TG_BL < '$tgl_1'
+			AND bhnd.TG_PK < '$tgl_1'
 			AND bhnd.YER = '$tahun'
 			GROUP BY bhnd.KD_BHN
 			ORDER BY bhnd.KD_BHN";
@@ -1538,8 +1583,8 @@ class Laporan extends CI_Controller
 					"AK" => $row1["AK"],
 					"HARI" => $row1["HARI"],
 					"KET" => $row1["KET"],
-					"KD_BRG" => $row1["KD_BHN"],
-					"NA_BRG" => $row1["NA_BHN"],
+					"KD_BHN" => $row1["KD_BHN"],
+					"NA_BHN" => $row1["NA_BHN"],
 					"SATUAN" => $row1["SATUAN"],
 					"RAK" => $row1["RAK"],
 					"TGL" => $row1["TGL"],
@@ -1579,30 +1624,75 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
-			$per = $this->session->userdata['periode'];
-			if (isset($_POST["TGL_1"])) {
-				$bulan = substr($this->input->post('TGL_1'), 3, 2);
-			} else {
-				$bulan = 'XX';
-			}
+			$bulan = substr(date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE))),5,2);
 			$tahun = substr($this->input->post('TGL_1'), -4);
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 			$masa = $this->input->post('MASA');
-			$query = "SELECT bhn.RAK, 
-				bhnd.KD_BHN, 
+			$query = "SELECT bhnd.RAK, 
+				bhnd.KD_BHN,
 				bhnd.NA_BHN, 
 				bhn.SATUAN,
+				'$tgl_1' AS TGL,
 				bhnd.AK$bulan AS AK, 
-				DATEDIFF(bhn.TG_PAKAI, bhn.TG_BL) AS HARI,
-				TIMESTAMPDIFF(MONTH,bhn.TG_BL, bhn.TG_PAKAI) AS KET
+				IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+				IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+				DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
+				CASE 
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) < 30 
+					THEN '< 1 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 30 
+					THEN '> 2 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+					THEN '> 3 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+					THEN '> 3 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 180 
+					THEN '> 6 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 360 
+					THEN '> 12 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 540 
+					THEN '> 18 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 720 
+					THEN '> 24 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 1080 
+					THEN '> 36 Bulan'
+				END AS KET
 			FROM bhn, bhnd
 			WHERE bhn.KD_BHN = bhnd.KD_BHN
-			AND bhn.DR='$dr'
-			AND bhn.SP='$sub'
-			AND bhn.TG_BL < '$tgl_1'
-			AND bhn.TG_PAKAI < '$tgl_1'
+			AND bhnd.DR='$dr'
+			AND bhnd.FLAG='SP'
+			-- AND bhn.SUB='$sub'
+			AND bhnd.TG_BL < '$tgl_1'
+			AND bhnd.TG_PK < '$tgl_1'
 			AND bhnd.YER = '$tahun'
-			AND TIMESTAMPDIFF(MONTH,bhn.TG_BL, bhn.TG_PAKAI) = '$masa'
+			-- AND TIMESTAMPDIFF(MONTH,bhn.TG_BL, bhn.TG_PK) = '$masa'
 			GROUP BY bhnd.KD_BHN
 			ORDER BY bhnd.KD_BHN";
 			$result1 = mysqli_query($conn, $query);
@@ -1772,28 +1862,75 @@ class Laporan extends CI_Controller
 			$PHPJasperXML = new \PHPJasperXML();
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Sparepart_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
-			$tgl_1 = $this->input->post('TGL_1');
-			if ($tgl_1 == '') {
-				$bulan = Date('m');
-			} else {
-				$bulan = date("m", strtotime($tgl_1));
-			}
+			$tgl_1 = date("Y-m-d");
+			$bulan = substr(date("Y-m-d"),5,2);
 			$tahun = substr($this->input->post('PER'), -4);
 			$tahun_1 = $this->input->post('PER');
 			$query = "SELECT bhnd.KD_BHN,
-					bhnd.NA_BHN,
-					bhn.SATUAN,
-					'$tahun_1' AS PER,
-					SUM(if(bhnd.dr='I',bhnd.AK03,0)) AS DR1,
-					SUM(if(bhnd.dr='II',bhnd.AK03,0)) AS DR2,
-					SUM(if(bhnd.dr='III',bhnd.AK03,0)) AS DR3,
-					SUM(bhnd.AK$bulan) AS TOTAL
-				FROM bhnd, bhn
-				WHERE bhnd.KD_BHN = bhn.KD_BHN
-				-- AND bhnd.YER = '$tahun'
-				AND bhnd.FLAG = 'SP'
-				AND bhnd.SUB = 'SP'
-				GROUP BY bhn.KD_BHN";
+			bhnd.NA_BHN,
+			bhn.SATUAN,
+			'$tahun_1' AS PER,
+			SUM(if(bhnd.DR='I',bhnd.AK$bulan,0)) AS DR1,
+			SUM(if(bhnd.DR='II',bhnd.AK$bulan,0)) AS DR2,
+			SUM(if(bhnd.DR='III',bhnd.AK$bulan,0)) AS DR3,
+			SUM(bhnd.AK$bulan) AS TOTAL,
+			IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+			IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+			DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
+			CASE 
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) < 30 
+				THEN '< 1 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 30 
+				THEN '> 2 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+				THEN '> 3 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+				THEN '> 3 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 180 
+				THEN '> 6 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 360 
+				THEN '> 12 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 540 
+				THEN '> 18 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 720 
+				THEN '> 24 Bulan'
+				WHEN 
+					IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+					IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 1080 
+				THEN '> 36 Bulan'
+			END AS KET
+		FROM bhnd, bhn
+		WHERE bhnd.KD_BHN = bhn.KD_BHN
+		-- AND bhnd.YER = '$tahun'
+		AND bhnd.FLAG = 'SP'
+		AND bhnd.SUB = 'SP'
+		GROUP BY bhn.KD_BHN
+		ORDER BY bhn.NA_BHN";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -1806,6 +1943,8 @@ class Laporan extends CI_Controller
 					"DR2" => $row1["DR2"],
 					"DR3" => $row1["DR3"],
 					"TOTAL" => $row1["TOTAL"],
+					"HARI" => $row1["HARI"],
+					"KET" => $row1["KET"],
 				));
 			}
 			ob_end_clean();
@@ -1840,28 +1979,74 @@ class Laporan extends CI_Controller
 			$PHPJasperXML = new \PHPJasperXML();
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Inventaris_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
-			$tgl_1 = $this->input->post('TGL_1');
-			if ($tgl_1 == '') {
-				$bulan = Date('m');
-			} else {
-				$bulan = date("m", strtotime($tgl_1));
-			}
+			$tgl_1 = date("Y-m-d");
+			$bulan = substr(date("Y-m-d"),5,2);
 			$tahun = substr($this->input->post('PER'), -4);
 			$tahun_1 = $this->input->post('PER');
 			$query = "SELECT bhnd.KD_BHN,
-					bhnd.NA_BHN,
-					bhn.SATUAN,
-					'$tahun_1' AS PER,
-					SUM(if(bhnd.dr='I',bhnd.AK03,0)) AS DR1,
-					SUM(if(bhnd.dr='II',bhnd.AK03,0)) AS DR2,
-					SUM(if(bhnd.dr='III',bhnd.AK03,0)) AS DR3,
-					SUM(bhnd.AK$bulan) AS TOTAL
-				FROM bhnd, bhn
-				WHERE bhnd.KD_BHN = bhn.KD_BHN
-				-- AND bhnd.YER = '$tahun'
-				AND bhnd.FLAG = 'SP'
-				AND bhnd.SUB = 'INV'
-				GROUP BY bhn.KD_BHN";
+				bhnd.NA_BHN,
+				bhn.SATUAN,
+				'$tahun_1' AS PER,
+				SUM(if(bhnd.DR='I',bhnd.AK$bulan,0)) AS DR1,
+				SUM(if(bhnd.DR='II',bhnd.AK$bulan,0)) AS DR2,
+				SUM(if(bhnd.DR='III',bhnd.AK$bulan,0)) AS DR3,
+				SUM(bhnd.AK$bulan) AS TOTAL,
+				IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+				IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+				DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
+				CASE 
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) < 30 
+					THEN '< 1 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 30 
+					THEN '> 2 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+					THEN '> 3 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+					THEN '> 3 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 180 
+					THEN '> 6 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 360 
+					THEN '> 12 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 540 
+					THEN '> 18 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 720 
+					THEN '> 24 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 1080 
+					THEN '> 36 Bulan'
+				END AS KET
+			FROM bhnd, bhn
+			WHERE bhnd.KD_BHN = bhn.KD_BHN
+			-- AND bhnd.YER = '$tahun'
+			AND bhnd.FLAG = 'SP'
+			AND bhnd.SUB = 'INV'
+			GROUP BY bhn.KD_BHN";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -1874,6 +2059,8 @@ class Laporan extends CI_Controller
 					"DR2" => $row1["DR2"],
 					"DR3" => $row1["DR3"],
 					"TOTAL" => $row1["TOTAL"],
+					"HARI" => $row1["HARI"],
+					"KET" => $row1["KET"],
 				));
 			}
 			ob_end_clean();
@@ -1908,28 +2095,74 @@ class Laporan extends CI_Controller
 			$PHPJasperXML = new \PHPJasperXML();
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_ATK_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
-			$tgl_1 = $this->input->post('TGL_1');
-			if ($tgl_1 == '') {
-				$bulan = Date('m');
-			} else {
-				$bulan = date("m", strtotime($tgl_1));
-			}
+			$tgl_1 = date("Y-m-d");
+			$bulan = substr(date("Y-m-d"),5,2);
 			$tahun = substr($this->input->post('PER'), -4);
 			$tahun_1 = $this->input->post('PER');
 			$query = "SELECT bhnd.KD_BHN,
-					bhnd.NA_BHN,
-					bhn.SATUAN,
-					'$tahun_1' AS PER,
-					SUM(if(bhnd.dr='I',bhnd.AK03,0)) AS DR1,
-					SUM(if(bhnd.dr='II',bhnd.AK03,0)) AS DR2,
-					SUM(if(bhnd.dr='III',bhnd.AK03,0)) AS DR3,
-					SUM(bhnd.AK$bulan) AS TOTAL
-				FROM bhnd, bhn
-				WHERE bhnd.KD_BHN = bhn.KD_BHN
-				-- AND bhnd.YER = '$tahun'
-				AND bhnd.FLAG = 'SP'
-				AND bhnd.SUB = 'ATK'
-				GROUP BY bhn.KD_BHN";
+				bhnd.NA_BHN,
+				bhn.SATUAN,
+				'$tahun_1' AS PER,
+				SUM(if(bhnd.DR='I',bhnd.AK$bulan,0)) AS DR1,
+				SUM(if(bhnd.DR='II',bhnd.AK$bulan,0)) AS DR2,
+				SUM(if(bhnd.DR='III',bhnd.AK$bulan,0)) AS DR3,
+				SUM(bhnd.AK$bulan) AS TOTAL,
+				IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+				IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+				DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
+				CASE 
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) < 30 
+					THEN '< 1 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 30 
+					THEN '> 2 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+					THEN '> 3 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+					THEN '> 3 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 180 
+					THEN '> 6 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 360 
+					THEN '> 12 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 540 
+					THEN '> 18 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 720 
+					THEN '> 24 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 1080 
+					THEN '> 36 Bulan'
+				END AS KET
+			FROM bhnd, bhn
+			WHERE bhnd.KD_BHN = bhn.KD_BHN
+			-- AND bhnd.YER = '$tahun'
+			AND bhnd.FLAG = 'SP'
+			AND bhnd.SUB = 'ATK'
+			GROUP BY bhn.KD_BHN";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -1942,6 +2175,8 @@ class Laporan extends CI_Controller
 					"DR2" => $row1["DR2"],
 					"DR3" => $row1["DR3"],
 					"TOTAL" => $row1["TOTAL"],
+					"HARI" => $row1["HARI"],
+					"KET" => $row1["KET"],
 				));
 			}
 			ob_end_clean();
@@ -1976,27 +2211,74 @@ class Laporan extends CI_Controller
 			$PHPJasperXML = new \PHPJasperXML();
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Umum_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
-			$tgl_1 = $this->input->post('TGL_1');
-			if ($tgl_1 == '') {
-				$bulan = Date('m');
-			} else {
-				$bulan = date("m", strtotime($tgl_1));
-			}
+			$tgl_1 = date("Y-m-d");
+			$bulan = substr(date("Y-m-d"),5,2);
 			$tahun = substr($this->input->post('PER'), -4);
 			$tahun_1 = $this->input->post('PER');
 			$query = "SELECT bhnd.KD_BHN,
-					bhnd.NA_BHN,
-					bhn.SATUAN,
-					'$tahun_1' AS PER,
-					SUM(if(bhnd.dr='I',bhnd.AK03,0)) AS DR1,
-					SUM(if(bhnd.dr='II',bhnd.AK03,0)) AS DR2,
-					SUM(if(bhnd.dr='III',bhnd.AK03,0)) AS DR3,
-					SUM(bhnd.AK$bulan) AS TOTAL
-				FROM bhnd, bhn
-				WHERE bhnd.KD_BHN = bhn.KD_BHN
-				AND bhnd.YER = '$tahun'
-				AND bhnd.FLAG = 'UM'
-				GROUP BY bhn.KD_BHN";
+				bhnd.NA_BHN,
+				bhn.SATUAN,
+				'$tahun_1' AS PER,
+				SUM(if(bhnd.DR='I',bhnd.AK$bulan,0)) AS DR1,
+				SUM(if(bhnd.DR='II',bhnd.AK$bulan,0)) AS DR2,
+				SUM(if(bhnd.DR='III',bhnd.AK$bulan,0)) AS DR3,
+				SUM(bhnd.AK$bulan) AS TOTAL,
+				IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+				IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+				DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) as HARI,
+				CASE 
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) < 30 
+					THEN '< 1 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 30 
+					THEN '> 2 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+					THEN '> 3 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 90 
+					THEN '> 3 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 180 
+					THEN '> 6 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 360 
+					THEN '> 12 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 540 
+					THEN '> 18 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 720 
+					THEN '> 24 Bulan'
+					WHEN 
+						IF(bhnd.TG_BL>bhnd.TG_PK, DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL), 
+						IF(bhnd.TG_BL<bhnd.TG_PK,DATEDIFF(DATE('$tgl_1'),bhnd.TG_PK),
+						DATEDIFF(DATE('$tgl_1'),bhnd.TG_BL))) >= 1080 
+					THEN '> 36 Bulan'
+				END AS KET
+			FROM bhnd, bhn
+			WHERE bhnd.KD_BHN = bhn.KD_BHN
+			-- AND bhnd.YER = '$tahun'
+			AND bhnd.FLAG = 'SP'
+			AND bhnd.SUB = 'UM'
+			GROUP BY bhn.KD_BHN";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -2006,6 +2288,8 @@ class Laporan extends CI_Controller
 					"SATUAN" => $row1["SATUAN"],
 					"PER" => $row1["PER"],
 					"AK" => $row1["AK"],
+					"HARI" => $row1["HARI"],
+					"KET" => $row1["KET"],
 				));
 			}
 			ob_end_clean();

@@ -141,8 +141,11 @@
 						<div class="col-md-1">
 							<label class="label">No PO </label>
 						</div>
-						<div class="col-md-2">
-							<input class="form-control text_input NO_PO" id="NO_PO" name="NO_PO" type="text" required>
+						<div class="col-md-2 input-group">
+							<input name="NO_PO" id="NO_PO" maxlength="50" type="text" class="form-control NO_PO text_input" onkeypress="return tabE(this,event)" readonly>
+							<span class="input-group-btn">
+								<a class="btn default" onfocusout="hitung()" id="0" data-target="#modal_no_po" data-toggle="modal" href="#no_po" ><i class="fa fa-search"></i></a>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -265,7 +268,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#modal_beli').DataTable({
+		$('#no_po').DataTable({
 			dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
 				"<'row'<'col-md-6'f><'col-md-6'l>>" + // peletakan entries, search, dan test_btn
 				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
@@ -278,42 +281,48 @@
 	});
 </script>
 
-<!-- myModal No Bukti BL Beli Bon-->
-<div id="mymodal_nobukti_beli_bon" class="modal fade" role="dialog">
+<!-- Modal No PO-->
+<div id="modal_no_po" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" style="font-weight: bold; color: black;">Data Beli</h4>
 			</div>
 			<div class="modal-body">
-				<table class='table table-bordered' id='modal_bl'>
+				<table class='table table-bordered' id='no_po'>
 					<thead>	
-						<th>No Bukti Beli Bon</th>
-						<th>Periode</th>
-						<th>Val</th>
-						<th>DR</th>
+						<th>No Bukti</th>
+						<th>Kode Bagian</th>
+						<th>Nama Bagian</th>
+						<th>Tanggal</th>
+						<th>Area</th>
+						<th>Keterangan</th>
 					</thead>
 					<tbody>
 					<?php
 						$dr= $this->session->userdata['dr'];
 						$sub= $this->session->userdata['sub'];
 						$dr= $this->session->userdata['dr'];
-						$sql = "SELECT NO_BUKTI AS NO_BUKTI_BELI_BON, 
-								PER AS PER, 
-								TTD1 AS TTD1, 
-								DR AS DR
+						$sql = "SELECT NO_BUKTI AS NO_PO,
+								KD_BAG,
+								NM_BAG,
+								TGL AS TGL_PO,
+								DR,
+								KET AS NA_BRG
 							FROM bon
 							WHERE SUB = '$sub' 
-							AND DR='$dr'
+							AND KD_BAG LIKE '%RND%'
 							ORDER BY PER, NO_BUKTI";
 						$a = $this->db->query($sql)->result();
 						foreach($a as $b ) { 
 					?>
 						<tr>
-							<td class='NBBVAL'><a href="#" class="select_nobukti_beli_bon"><?php echo $b->NO_BUKTI_BELI_BON;?></a></td>
-							<td class='PEBVAL text_input'><?php echo $b->PER;?></td>
-							<td class='VABVAL text_input'><?php echo $b->TTD1;?></td>
+							<td class='NBBVAL'><a href="#" class="select_no_po"><?php echo $b->NO_PO;?></a></td>
+							<td class='KDBVAL text_input'><?php echo $b->KD_BAG;?></td>
+							<td class='NMBVAL text_input'><?php echo $b->NM_BAG;?></td>
+							<td class='TGBVAL text_input'><?php echo $b->TGL_PO;?></td>
 							<td class='DRBVAL text_input'><?php echo $b->DR;?></td>
+							<td class='KEBVAL text_input'><?php echo $b->NA_BRG;?></td>
 						</tr>
 					<?php } ?>
 					</tbody>
@@ -369,6 +378,10 @@
 				vMin: '-999999999.99'
 			});
 		}
+		//MyModal No SO
+		$('#modal_no_po').on('show.bs.modal', function(e) {
+			target = $(e.relatedTarget);
+		});
 		$('body').on('click', '.btn-delete', function() {
 			var r = confirm("Yakin dihapus?");
 			if (r == true) {
@@ -410,6 +423,22 @@
 			TOTAL_QTY += val;
 		});
 
+		$('body').on('click', '.select_no_po', function() {
+			var val = $(this).parents("tr").find(".NBBVAL").text();
+			target.parents("div").find(".NO_PO").val(val);
+			var val = $(this).parents("tr").find(".KDBVAL").text();
+			target.parents("div").find(".KD_BAG").val(val);
+			var val = $(this).parents("tr").find(".NMBVAL").text();
+			target.parents("div").find(".NM_BAG").val(val);
+			var val = $(this).parents("tr").find(".TGBVAL").text();
+			target.parents("div").find(".TGL_PO").val(val);
+			var val = $(this).parents("tr").find(".DRBVAL").text();
+			target.parents("div").find(".DR").val(val);
+			var val = $(this).parents("tr").find(".KETBVAL").text();
+			target.parents("div").find(".NA_BRG").val(val);
+			$('#modal_no_po').modal('toggle');
+			var no_so = $(this).parents("tr").find(".NBBVAL").text();
+		});
 		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
 
 		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
