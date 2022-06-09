@@ -216,6 +216,25 @@ class Transaksi_PesananLBBA extends CI_Controller
 
     public function input_aksi()
     {
+
+        $config['upload_path']          = './gambar/';
+		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+		$config['max_size']             = 1000;
+		$config['max_width']            = 3024;
+		$config['max_height']           = 3680;
+        $new_name = time().$_FILES['name'];
+        $config['file_name']            = $new_name; 
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('GAMBAR1')){
+			$error = array('error' => $this->upload->display_errors());
+			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form', $error);
+		}else{
+			$data = array('upload_data' => $this->upload->data());
+			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
+		}
+
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
@@ -272,7 +291,7 @@ class Transaksi_PesananLBBA extends CI_Controller
             'PESAN' => $this->input->post('PESAN', TRUE),
             'JO' => $this->input->post('JO', TRUE),
             'FLAG3' => $this->input->post('FLAG3', TRUE),
-            'GAMBAR1' => $this->input->post('GAMBAR1', TRUE),
+            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
             'VAL' => '0',
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
@@ -320,6 +339,25 @@ class Transaksi_PesananLBBA extends CI_Controller
 
     public function update_aksi()
     {
+
+        $config['upload_path']          = './gambar/';
+		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+		$config['max_size']             = 1000;
+		$config['max_width']            = 3024;
+		$config['max_height']           = 3680;
+        $new_name = time().$_FILES['name'];
+        $config['file_name']            = $new_name; 
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('GAMBAR1')){
+			$error = array('error' => $this->upload->display_errors());
+			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form', $error);
+		}else{
+			$data = array('upload_data' => $this->upload->data());
+			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
+		}
+
         $NO_ID = $this->input->post('NO_ID');
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
@@ -330,7 +368,7 @@ class Transaksi_PesananLBBA extends CI_Controller
             'PESAN' => $this->input->post('PESAN', TRUE),
             'JO' => $this->input->post('JO', TRUE),
             'FLAG3' => $this->input->post('FLAG3', TRUE),
-            'GAMBAR1' => $this->input->post('GAMBAR1', TRUE),
+            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
         );
         $where = array(
             'NO_ID' => $NO_ID

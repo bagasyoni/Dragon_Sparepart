@@ -206,6 +206,24 @@ class Transaksi_PesananPisau extends CI_Controller
 
     public function input_aksi()
     {
+        $config['upload_path']          = './gambar/';
+		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+		$config['max_size']             = 1000;
+		$config['max_width']            = 3024;
+		$config['max_height']           = 3680;
+        $new_name = time().$_FILES['name'];
+        $config['file_name']            = $new_name; 
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('GAMBAR')){
+			$error = array('error' => $this->upload->display_errors());
+			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
+		}else{
+			$data = array('upload_data' => $this->upload->data());
+			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau', $data);
+		}
+
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
@@ -262,7 +280,7 @@ class Transaksi_PesananPisau extends CI_Controller
             'JO' => $this->input->post('JO', TRUE),
             'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
             'TS' => $this->input->post('TS', TRUE),
-            // 'GAMBAR' => $this->input->post('GAMBAR', TRUE),
+            'GAMBAR' => "IMG".$this->upload->data('file_name'),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
@@ -272,16 +290,28 @@ class Transaksi_PesananPisau extends CI_Controller
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
         );
+        
+        $this->transaksi_model->input_datah('pp', $datah);
 
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
 		$config['max_size']             = 1000;
 		$config['max_width']            = 3024;
 		$config['max_height']           = 3680;
+        $new_name = time().$_FILES['name'];
+        $config['file_name']                 = $new_name; 
+
 
         $this->load->library('upload', $config);
-        
-        $this->transaksi_model->input_datah('pp', $datah);
+
+        if ( ! $this->upload->do_upload('GAMBAR1')){
+			$error = array('error' => $this->upload->display_errors());
+			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
+		}else{
+			$data = array('upload_data' => $this->upload->data());
+			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau', $data);
+		}
+
         $ID = $this->db->query("SELECT MAX(NO_ID) AS NO_ID FROM pp WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
         $REC = $this->input->post('REC');
         $NA_BHN = $this->input->post('NA_BHN');
@@ -290,7 +320,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $SATUAN = $this->input->post('SATUAN');
         $KET1 = $this->input->post('KET1');
         $TGL_DIMINTA = $this->input->post('TGL_DIMINTA');
-        $GAMBAR1 = $this->input->post('GAMBAR1');
+        $GAMBAR1 = "IMG".$this->upload->data('file_name');
         $DR = $this->input->post('DR');
         $i = 0;
         foreach ($REC as $a) {
@@ -304,7 +334,7 @@ class Transaksi_PesananPisau extends CI_Controller
                 'SATUAN' => $SATUAN[$i],
                 'KET1' => $KET1[$i],
                 'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$i])),
-                'GAMBAR1' => $GAMBAR1[$i],
+                'GAMBAR1' => $GAMBAR1,
                 'DR' => $DR[$i],
                 'FLAG' => 'PP',
                 'FLAG2' => 'SP',
@@ -317,14 +347,6 @@ class Transaksi_PesananPisau extends CI_Controller
             $this->transaksi_model->input_datad('ppd', $datad);
             $i++;
         }
-
-        if ( ! $this->upload->do_upload('GAMBAR')){
-			$error = array('error' => $this->upload->display_errors());
-			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
-		}else{
-			$data = array('upload_data' => $this->upload->data());
-			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau', $data);
-		}
 
         $this->session->set_flashdata(
             'pesan',
@@ -599,83 +621,5 @@ class Transaksi_PesananPisau extends CI_Controller
         $select['total_count'] =  $results->NUM_ROWS();
         $select['items'] = $selectajax;
         $this->output->set_content_type('application/json')->set_output(json_encode($select));
-    }
-
-    public function upload_image()
-    {
-		$config['upload_path']          = './gambar/';
-		$config['allowed_types']        = 'gif|jpg|png';
-		$config['max_size']             = 100;
-		$config['max_width']            = 1024;
-		$config['max_height']           = 768;
-
-        $this->load->library('GAMBAR', $config);
- 
-		if ( ! $this->upload->do_upload('GAMBAR')){
-			$error = array('error' => $this->upload->display_errors());
-			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
-		}else{
-			$data = array('upload_data' => $this->upload->data());
-			$this->load->view('admin/Transaksi_PesananPisau/index_Transaksi_PesananPisau', $data);
-		}
-	}
-
-    function JASPER($id)
-    {
-        $CI = &get_instance();
-        $CI->load->database();
-        $servername = $CI->db->hostname;
-        $username = $CI->db->username;
-        $password = $CI->db->password;
-        $database = $CI->db->database;
-        $conn = mysqli_connect($servername, $username, $password, $database);
-        error_reporting(E_ALL);
-        ob_start();
-        include_once('phpjasperxml/class/tcpdf/tcpdf.php');
-        include_once("phpjasperxml/class/PHPJasperXML.inc.php");
-        include_once("phpjasperxml/setting.php");
-        $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_PPStok.jrxml");
-        $no_id = $id;
-        $query = "SELECT pp.no_id as ID,
-                pp.no_sp AS MODEL,
-                pp.perke AS PERKE,
-                pp.tgl_sp AS TGL_SP,
-                pp.nodo AS NODO,
-                pp.tgldo AS TGLDO,
-                pp.tlusin AS TLUSIN,
-                pp.tpair AS TPAIR,
-
-                ppd.no_id AS NO_ID,
-                ppd.rec AS REC,
-                CONCAT(ppd.article,' - ',ppd.warna) AS ARTICLE,
-                ppd.size AS SIZE,
-                ppd.golong AS GOLONG,
-                ppd.sisa AS SISA,
-                ppd.lusin AS LUSIN,
-                ppd.pair AS PAIR,
-                CONCAT(ppd.kodecus,' - ',ppd.nama) AS KODECUS,
-                ppd.kota AS KOTA
-            FROM pp,ppd 
-            WHERE pp.no_id=$id 
-            AND pp.no_id=ppd.id 
-            ORDER BY ppd.rec";
-        $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
-        $PHPJasperXML->arraysqltable = array();
-        $result1 = mysqli_query($conn, $query);
-        while ($row1 = mysqli_fetch_assoc($result1)) {
-            array_push($PHPJasperXML->arraysqltable, array(
-                "KDMTS" => $row1["KDMTS"],
-                "MODEL" => $row1["MODEL"],
-                "TGL_SP" => $row1["TGL_SP"],
-                "KODECUS" => $row1["KODECUS"],
-                "ARTICLE" => $row1["ARTICLE"],
-                "LUSIN" => $row1["LUSIN"],
-                "PAIR" => $row1["PAIR"],
-                "REC" => $row1["REC"],
-            ));
-        }
-        ob_end_clean();
-        $PHPJasperXML->outpage("I");
     }
 }

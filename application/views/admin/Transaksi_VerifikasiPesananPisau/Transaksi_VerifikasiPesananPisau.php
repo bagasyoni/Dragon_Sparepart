@@ -79,11 +79,11 @@
         <div class="alert alert-success alert-container" role="alert">
             <i class="fas fa-university"></i>
             <label>
-                Transaksi Pesanan Meba
+                Transaksi Verifkikasi Pesanan Pisau
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
-        <form method="post" action="<?php echo base_url('admin/Transaksi_PesananMeba/delete_multiple') ?>">
+        <form method="post" action="<?php echo base_url('admin/Transaksi_VerifikasiPesananPisau/delete_multiple') ?>">
             <div class="btn-group" role="group" aria-label="Basic example">
             </div>
             <table id="example" class="table table-bordered table-striped table-hover table-responsive bodycontainer scrollable" style="width:100%;">
@@ -93,8 +93,10 @@
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
                         <th width="225px">No Bukti</th>
-                        <th width="275px">Tanggal</th>
-                        <th width="425px">Article</th>
+                        <th width="100px">Tanggal</th>
+                        <th width="225px">Article</th>
+                        <th width="225px">Pesan</th>
+                        <th width="225px">Gambar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -117,7 +119,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "<?php echo site_url('admin/Transaksi_PesananMeba/get_ajax_pp') ?>",
+                "url": "<?php echo site_url('admin/Transaksi_VerifikasiPesananPisau/get_ajax_pp') ?>",
                 "type": "POST"
             },
             "columnDefs": [{
@@ -125,10 +127,9 @@
                 "orderable": false
             }]
         });
-        $('.buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel').addClass('btn btn-primary mb-3');
+        // $('.buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel').addClass('btn btn-primary mb-3');
         // menambahkan button  di test_btn
-        $("div.test_btn").html('  <a class="btn  btn-md btn-success" href="input"> <i class="fas fa-plus fa-sm md-3" ></i></a> ' +
-            ' <button  type="submit" class="btn btn-md btn-danger" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"> <i class="fas fa-trash fa-sm md-3"></i></button> ' +
+        $("div.test_btn").html(' <button  type="submit" class="btn btn-md btn-danger" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Validasi? &quot;)"><i class="fa fa-check"></i> Validasi</button> ' +
             '  <a class="btn type="hidden" btn-md btn-primary"  href="<?php echo site_url('admin/account/print') ?>"></a> '
         );
         $('#example').show();

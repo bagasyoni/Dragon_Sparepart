@@ -134,7 +134,7 @@
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value='' readonly>
+							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value=''>
 						</div>
 					</div>
 				</div>

@@ -20,7 +20,7 @@ class Transaksi_PesananLasting extends CI_Controller
         }
         if ($this->session->userdata['menu_sparepart'] != 'pp') {
             $this->session->set_userdata('menu_sparepart', 'pp');
-            $this->session->set_userdata('kode_menu', 'T0028');
+            $this->session->set_userdata('kode_menu', 'T0035');
             $this->session->set_userdata('keyword_pp', '');
             $this->session->set_userdata('order_pp', 'NO_ID');
         }
@@ -138,6 +138,7 @@ class Transaksi_PesananLasting extends CI_Controller
     {
         $per = $this->session->userdata['periode'];
         $dr= $this->session->userdata['dr'];
+        $this->session->set_userdata('judul', 'Transaksi Pesanan Lasting');
         $where = array(
             'PER' => $per,
             'DR' => $dr,

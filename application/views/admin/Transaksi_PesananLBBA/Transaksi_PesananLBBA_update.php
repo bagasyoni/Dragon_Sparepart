@@ -210,6 +210,7 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
+						<img src="../gambar/<?= $GAMBAR1 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
 						<input type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						</div>
 					</div>

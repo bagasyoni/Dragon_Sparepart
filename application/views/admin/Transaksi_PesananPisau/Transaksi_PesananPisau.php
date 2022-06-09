@@ -83,7 +83,7 @@
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
-        <form method="post" action="<?php echo base_url('admin/Transaksi_PesananCetakanImport/delete_multiple') ?>">
+        <form method="post" action="<?php echo base_url('admin/Transaksi_VerifikasiPesananPisau/delete_multiple') ?>">
             <div class="btn-group" role="group" aria-label="Basic example">
             </div>
             <table id="example" class="table table-bordered table-striped table-hover table-responsive bodycontainer scrollable" style="width:100%;">

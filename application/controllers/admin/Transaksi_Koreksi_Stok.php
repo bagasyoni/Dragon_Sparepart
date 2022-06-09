@@ -242,13 +242,14 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
             $romawi = 'XII';
         }
         // BL / NOMER / DR / BULAN / TAHUN / SP
-        $bukti = 'LN' . '/' . $urut . '/' . 'DR' . $dr . '/' . $romawi . '/' . $tahun . '/' . $sub;
-        $this->session->set_userdata('bukti', $bukti);
+        // $bukti = 'LN' . '/' . $urut . '/' . 'DR' . $dr . '/' . $romawi . '/' . $tahun . '/' . $sub;
+        // $this->session->set_userdata('bukti', $bukti);
+        $bukti = $this->input->post('NO_BUKTI', TRUE);
         $datah = array(
             'FLAG' => 'SP',
             'FLAG2' => 'LN',
             'ATK' => '0',
-            'NO_BUKTI' => $bukti, 
+            'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE), 
             'NOTES' => $this->input->post('NOTES',TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL',TRUE))),
             'TOTAL_QTY' => str_replace(',','',$this->input->post('TOTAL_QTY',TRUE)),
@@ -272,7 +273,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
         foreach($REC as $a) {
             $datad = array(
                 'ID' => $ID[0]->no_id,
-                'NO_BUKTI' => $bukti,
+                'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
                 'TGL' => date("Y-m-d", strtotime($this->input->post('TGL',TRUE))),
                 'FLAG' => 'SP',
                 'FLAG2' => 'LN',
@@ -486,6 +487,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
 
     public function getDataAjax_Bahan() {
         $per = substr($this->session->userdata['periode'], 0, 2);
+        $dr = $this->session->userdata['dr'];
         $search = $this->input->post('search');
         $page = ((int)$this->input->post('page'));
         if ($page == 0) {
@@ -496,7 +498,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
         $perPage = 10;
         $results = $this->db->query("SELECT bhn.no_id, bhn.KD_BHN AS kd_bhn, bhn.NA_BHN AS na_bhn, bhn.SATUAN AS satuan, bhnd.AW$per AS qty 
             FROM bhn, bhnd
-            WHERE bhn.kd_bhn=bhnd.kd_bhn AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%')
+            WHERE bhn.kd_bhn=bhnd.kd_bhn AND bhn.DR = '$dr' AND bhn.FLAG = 'SP' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%')
             GROUP BY bhnd.kd_bhn
             ORDER BY bhn.KD_BHN LIMIT $xa,$perPage");
         $selectajax = array();

@@ -221,6 +221,24 @@ class Transaksi_PesananCetakanImport extends CI_Controller
 
     public function input_aksi()
     {
+        $config['upload_path']          = './gambar/';
+		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+		$config['max_size']             = 1000;
+		$config['max_width']            = 3024;
+		$config['max_height']           = 3680;
+        $new_name = time().$_FILES['name'];
+        $config['file_name']            = $new_name; 
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('GAMBAR1') && ! $this->upload->do_upload('GAMBAR2') && ! $this->upload->do_upload('GAMBAR3') ){
+			$error = array('error' => $this->upload->display_errors());
+			$this->load->view('admin/Transaksi_PesananCetakanImport/Transaksi_PesananCetakanImport_form', $error);
+		}else{
+			$data = array('upload_data' => $this->upload->data());
+			$this->load->view('admin/Transaksi_PesananCetakanImport/Transaksi_PesananCetakanImport', $data);
+		}
+
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
@@ -280,9 +298,9 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             'SIZE' => $this->input->post('SIZE', TRUE),
             'TIPE_CETAK' => $this->input->post('TIPE_CETAK', TRUE),
             'PROSES' => $this->input->post('PROSES', TRUE),
-            'GAMBAR1' => $this->input->post('GAMBAR1', TRUE),
-            'GAMBAR2' => $this->input->post('GAMBAR2', TRUE),
-            'GAMBAR3' => $this->input->post('GAMBAR3', TRUE),
+            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
+            'GAMBAR2' => "IMG".$this->upload->data('file_name'),
+            'GAMBAR3' => "IMG".$this->upload->data('file_name'),
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
             'FLAG3' => 'IMPORT',
@@ -362,6 +380,24 @@ class Transaksi_PesananCetakanImport extends CI_Controller
 
     public function update_aksi()
     {
+        $config['upload_path']          = './gambar/';
+		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+		$config['max_size']             = 1000;
+		$config['max_width']            = 3024;
+		$config['max_height']           = 3680;
+        $new_name = time().$_FILES['name'];
+        $config['file_name']            = $new_name; 
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('GAMBAR1') && ! $this->upload->do_upload('GAMBAR2') && ! $this->upload->do_upload('GAMBAR3') ){
+			$error = array('error' => $this->upload->display_errors());
+			$this->load->view('admin/Transaksi_PesananCetakanImport/Transaksi_PesananCetakanImport_form', $error);
+		}else{
+			$data = array('upload_data' => $this->upload->data());
+			$this->load->view('admin/Transaksi_PesananCetakanImport/Transaksi_PesananCetakanImport', $data);
+		}
+
         $NO_ID = $this->input->post('NO_ID');
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
@@ -375,9 +411,9 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             'SIZE' => $this->input->post('SIZE', TRUE),
             'TIPE_CETAK' => $this->input->post('TIPE_CETAK', TRUE),
             'PROSES' => $this->input->post('PROSES', TRUE),
-            'GAMBAR1' => $this->input->post('GAMBAR1', TRUE),
-            'GAMBAR2' => $this->input->post('GAMBAR2', TRUE),
-            'GAMBAR3' => $this->input->post('GAMBAR3', TRUE),
+            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
+            'GAMBAR2' => "IMG".$this->upload->data('file_name'),
+            'GAMBAR3' => "IMG".$this->upload->data('file_name'),
         );
         $where = array(
             'NO_ID' => $NO_ID
@@ -563,64 +599,5 @@ class Transaksi_PesananCetakanImport extends CI_Controller
         $select['total_count'] =  $results->NUM_ROWS();
         $select['items'] = $selectajax;
         $this->output->set_content_type('application/json')->set_output(json_encode($select));
-    }
-
-    function JASPER($id)
-    {
-        $CI = &get_instance();
-        $CI->load->database();
-        $servername = $CI->db->hostname;
-        $username = $CI->db->username;
-        $password = $CI->db->password;
-        $database = $CI->db->database;
-        $conn = mysqli_connect($servername, $username, $password, $database);
-        error_reporting(E_ALL);
-        ob_start();
-        include_once('phpjasperxml/class/tcpdf/tcpdf.php');
-        include_once("phpjasperxml/class/PHPJasperXML.inc.php");
-        include_once("phpjasperxml/setting.php");
-        $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_PPStok.jrxml");
-        $no_id = $id;
-        $query = "SELECT pp.no_id as ID,
-                pp.no_sp AS MODEL,
-                pp.perke AS PERKE,
-                pp.tgl_sp AS TGL_SP,
-                pp.nodo AS NODO,
-                pp.tgldo AS TGLDO,
-                pp.tlusin AS TLUSIN,
-                pp.tpair AS TPAIR,
-
-                ppd.no_id AS NO_ID,
-                ppd.rec AS REC,
-                CONCAT(ppd.article,' - ',ppd.warna) AS ARTICLE,
-                ppd.size AS SIZE,
-                ppd.golong AS GOLONG,
-                ppd.sisa AS SISA,
-                ppd.lusin AS LUSIN,
-                ppd.pair AS PAIR,
-                CONCAT(ppd.kodecus,' - ',ppd.nama) AS KODECUS,
-                ppd.kota AS KOTA
-            FROM pp,ppd 
-            WHERE pp.no_id=$id 
-            AND pp.no_id=ppd.id 
-            ORDER BY ppd.rec";
-        $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
-        $PHPJasperXML->arraysqltable = array();
-        $result1 = mysqli_query($conn, $query);
-        while ($row1 = mysqli_fetch_assoc($result1)) {
-            array_push($PHPJasperXML->arraysqltable, array(
-                "KDMTS" => $row1["KDMTS"],
-                "MODEL" => $row1["MODEL"],
-                "TGL_SP" => $row1["TGL_SP"],
-                "KODECUS" => $row1["KODECUS"],
-                "ARTICLE" => $row1["ARTICLE"],
-                "LUSIN" => $row1["LUSIN"],
-                "PAIR" => $row1["PAIR"],
-                "REC" => $row1["REC"],
-            ));
-        }
-        ob_end_clean();
-        $PHPJasperXML->outpage("I");
     }
 }

@@ -61,26 +61,49 @@
                     "showFooter" => true,
                     "showFooter" => "bottom",
                     "columns" => array(
-                        "NO_BUKTI" => array(
-                            "label" => "No Bukti",
-                        ),
-                        "TGL" => array(
-                            "label" => "Tanggal",
-                        ),
-                        "TGL_DIMINTA" => array(
-                            "label" => "Tanggal Diminta",
+                        "KD_BHN" => array(
+                            "label" => "Kode Barang",
                         ),
                         "NA_BHN" => array(
-                            "label" => "Article",
-                        ),
-                        "KET" => array(
-                            "label" => "Keterangan",
-                        ),
-                        "QTY" => array(
-                            "label" => "Qty",
+                            "label" => "Barang",
                         ),
                         "SATUAN" => array(
                             "label" => "Satuan",
+                        ),
+                        "PER" => array(
+                            "label" => "Periode",
+                        ),
+                        "MA" => array(
+                            "label" => "Masuk",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
+                            "footer" => "sum",
+                        ),
+                        "KE" => array(
+                            "label" => "Pakai",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
+                            "footer" => "sum",
+                        ),
+                        "LN" => array(
+                            "label" => "Koreksi Stok",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
+                            "footer" => "sum",
+                        ),
+                        "AK" => array(
+                            "label" => "Akhir",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
+                            "footer" => "sum",
                         ),
                     ),
                     "cssClass" => array(

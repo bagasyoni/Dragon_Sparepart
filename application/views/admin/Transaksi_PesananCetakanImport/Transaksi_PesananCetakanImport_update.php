@@ -251,7 +251,8 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<input type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<img src="../gambar/<?= $GAMBAR1 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp" value="<?= $GAMBAR1 ?>">
 						</div>
 					</div>
 				</div>
@@ -269,6 +270,7 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
+						<img src="../gambar/<?= $GAMBAR2 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
 						<input type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						</div>
 					</div>
@@ -287,7 +289,8 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<input type="file" name="GAMBAR3" id="GAMBAR3" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<img src="../gambar/<?= $GAMBAR3 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input type="file" name="GAMBAR3" id="GAMBAR3" accept="image/png, image/jpeg, image/jpg, image/bmp" value="<?= $GAMBAR3 ?>">
 						</div>
 					</div>
 				</div>

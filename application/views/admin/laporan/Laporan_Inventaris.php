@@ -17,22 +17,6 @@
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
         <form id="laporan_inventaris" method="post" action="<?php echo base_url('admin/laporan/index_Laporan_Inventaris') ?>">
-            <div class="col-md-12">
-                <div class="form-group row">
-                    <div class="col-md-1">
-                        <label class="label-title">Tanggal </label>
-                    </div>
-                    <div class="col-md-3 nopadding">
-                        <input type="text" class="date form-control text_input" id="TGL_1" name="TGL_1" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["TGL_1"]; } else echo date('d-m-Y'); ?>">
-                    </div>
-                    <div class="col-md-1">
-                        <label class="label-title">s/d</label>
-                    </div>
-                    <div class="col-md-3 nopadding">
-                        <input type="text" class="date form-control text_input" id="TGL_2" name="TGL_2" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["TGL_2"]; } else echo date('d-m-Y'); ?>">
-                    </div>
-                </div>
-            </div>
             <div class="col-md-6">
                 <div class="form-group row">
                     <div class="col-sm-2 nopadding">
@@ -77,23 +61,49 @@
                     "showFooter" => true,
                     "showFooter" => "bottom",
                     "columns" => array(
-                        "NO_BUKTI" => array(
-                            "label" => "No Bukti",
+                        "KD_BHN" => array(
+                            "label" => "Kode Barang",
                         ),
-                        "TGL" => array(
-                            "label" => "Tanggal",
-                        ),
-                        "NO_PO" => array(
-                            "label" => "No PO",
-                        ),
-                        "TD" => array(
-                            "label" => "TD",
+                        "NA_BHN" => array(
+                            "label" => "Barang",
                         ),
                         "SATUAN" => array(
                             "label" => "Satuan",
                         ),
-                        "ATK" => array(
-                            "label" => "ATK",
+                        "PER" => array(
+                            "label" => "Periode",
+                        ),
+                        "MA" => array(
+                            "label" => "Masuk",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
+                            "footer" => "sum",
+                        ),
+                        "KE" => array(
+                            "label" => "Pakai",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
+                            "footer" => "sum",
+                        ),
+                        "LN" => array(
+                            "label" => "Koreksi Stok",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
+                            "footer" => "sum",
+                        ),
+                        "AK" => array(
+                            "label" => "Akhir",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
+                            "footer" => "sum",
                         ),
                     ),
                     "cssClass" => array(

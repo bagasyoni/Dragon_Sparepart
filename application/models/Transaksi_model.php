@@ -72,9 +72,7 @@ class Transaksi_model extends CI_Model {
     function remove_checked($table, $tabled) {
         $delete = $this->input->post('check');
         for ($i = 0; $i < count($delete); $i++) {
-            // $nobkt = $data[0]->NO_BUKTI; 
-            $data = $this->db->query("select NO_BUKTI FROM " . $table . " where no_id=$delete[$i]")->result();
-            // $this->db->query("call ".$table."del('".$data[0]->NO_BUKTI."')");  
+            $data = $this->db->query("select NO_BUKTI FROM " . $table . " where no_id=$delete[$i]")->result(); 
             $this->db->where('no_id', $delete[$i]);
             $this->db->delete($table);
             $this->db->where('id', $delete[$i]);
