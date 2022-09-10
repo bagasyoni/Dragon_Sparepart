@@ -22,8 +22,8 @@ class Transaksi_Verifikasi_Bon extends CI_Controller {
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'KD_BAG', 'NM_BAG', 'DR', 'SUB');
-    var $column_search = array('NO_BUKTI', 'KD_BAG', 'NM_BAG', 'DR', 'SP');
+    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'KD_BAG', 'NM_BAG', 'DR', 'SUB');
+    var $column_search = array('NO_BUKTI', 'KD_BAG', 'TGL', 'NM_BAG', 'DR', 'SP');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query() {
@@ -31,11 +31,9 @@ class Transaksi_Verifikasi_Bon extends CI_Controller {
         $sub = $this->session->userdata['sub'];
         $where = array(
             'DR' => $dr,
-            // 'SUB' => $sub,
+            'SUB' => $sub,
             'OK' => '0',
-            // 'TUJUAN' => 'SP',
-            'VERIFIKASI_PO_SP' => '0',
-            'SP_SPAREPART' => '0'
+            'TTD2' => '',
         );
         $this->db->select('*');
         $this->db->from('bon');
@@ -81,11 +79,9 @@ class Transaksi_Verifikasi_Bon extends CI_Controller {
         $sub = $this->session->userdata['sub'];
         $where = array(
             'DR' => $dr,
-            // 'SUB' => $sub,
+            'SUB' => $sub,
             'OK' => '0',
-            // 'TUJUAN' => 'SP',
-            'VERIFIKASI_PO_SP' => '0',
-            'SP_SPAREPART' => '0'
+            'TTD2' => '',
         );
         $this->db->from('bon');
         $this->db->where($where);
@@ -111,7 +107,7 @@ class Transaksi_Verifikasi_Bon extends CI_Controller {
                     </div>';
             $row[] = $no . ".";
             $row[] = $bon->NO_BUKTI;
-            $row[] = $bon->KD_BAG;
+            $row[] = date("d-m-Y", strtotime($bon->TGL));
             $row[] = $bon->NM_BAG;
             $row[] = $bon->DR;
             $data[] = $row;
@@ -150,6 +146,7 @@ class Transaksi_Verifikasi_Bon extends CI_Controller {
                 bon.PER AS PER,
                 bon.TOTAL_QTY AS TOTAL_QTY,
                 bon.VERIFIKASI_PO_SP AS VERIFIKASI_PO_SP,
+                bon.TTD2,
 
                 bond.NO_ID AS NO_ID,
                 bond.REC AS REC,
@@ -172,22 +169,18 @@ class Transaksi_Verifikasi_Bon extends CI_Controller {
     public function update_aksi($ID) {}
 
     public function verifikasi_bl_bon($NO_ID) {
+        $sub = $this->session->userdata['sub'];
+        $username = $this->session->userdata['username'];
         $datah = array(
-            'OK' =>'1',
+            'TTD2' => $sub,
+            'TTD2_USR' => $username,
         );
         $where = array(
             'NO_ID' => "$NO_ID"
         );
 		$this->transaksi_model->update_data($where,$datah,'bon');
-		$datahd = array(
-            'OK' =>'0',
-        );
-        $whered = array(
-            'NO_ID' => "$NO_ID"
-        );
-		$this->transaksi_model->update_data($whered,$datahd,'bond');
 		$this->session->set_flashdata('pesan',
-			'<div class="alert alert-success alert-dismissible fade show" role="alert"> Data succesfully Updated.
+			'<div class="alert alert-success alert-dismissible fade show" role="alert"> Data Succesfully Verified.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
 				</button> 

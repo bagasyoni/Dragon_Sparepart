@@ -20,18 +20,10 @@
             <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-md-1">
-                        <label class="label-title">Kode Barang </label>
+                        <label class="label-title">Rak </label>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" id="KD_BHN_1" name="KD_BHN_1" class="form-control KD_BHN_1" placeholder="Kode barang ...">
-                    </div>
-                    <div class="col-md-1">
-                        <label class="label-title">Tanggal </label>
-                    </div>
-                    <div class="col-md-3 nopadding">
-                        <input type="text" class="date form-control text_input" id="TGL_1" name="TGL_1" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
-                                                                                                                                                    echo $_POST["TGL_1"];
-                                                                                                                                                } else echo date('d-m-Y'); ?>">
+                        <input type="text" id="RAK_1" name="RAK_1" class="form-control RAK_1" placeholder="Rak Barang">
                     </div>
                 </div>
             </div>

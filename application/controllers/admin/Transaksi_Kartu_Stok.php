@@ -113,7 +113,7 @@ class Transaksi_Kartu_Stok extends CI_Controller {
                     </div>';
             $row[] = $no . ".";
             $row[] = $sp_stok->NO_BUKTI;
-            $row[] = $sp_stok->TGL;
+            $row[] = date("d-m-Y", strtotime($sp_stok->TGL));
             $row[] = $sp_stok->NOTES;
             $row[] = $sp_stok->SP;
             $row[] = $sp_stok->DR;

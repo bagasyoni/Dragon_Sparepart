@@ -39,10 +39,10 @@ class Transaksi_PPStok extends CI_Controller
             'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'PPSTOK',
+            // 'TYP' => 'PPSTOK',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -94,10 +94,10 @@ class Transaksi_PPStok extends CI_Controller
             'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'PPSTOK',
+            // 'TYP' => 'PPSTOK',
         );
         $this->db->from('pp');
         $this->db->where($where);
@@ -126,7 +126,7 @@ class Transaksi_PPStok extends CI_Controller
                     </div>';
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
-            $row[] = $pp->TGL;
+            $row[] = date("d-m-Y", strtotime($pp->TGL));
             $row[] = $pp->NOTES;
             $row[] = $pp->SUB;
             $row[] = $pp->DR;
@@ -151,10 +151,10 @@ class Transaksi_PPStok extends CI_Controller
             'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'PPSTOK',
+            // 'TYP' => 'PPSTOK',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -277,6 +277,13 @@ class Transaksi_PPStok extends CI_Controller
             'FLAG2' => 'SP',
             'LOGISTIK' => '0',
             'TYP' => 'PPSTOK',
+            'TTD1' => '1',
+            'TTD2' => '1',
+            'TTD3' => '1',
+            'TTD4' => '1',
+            'TTD5' => '1',
+            'TTD6' => '1',
+            'TTD7' => '1',
             'SUB' => $this->session->userdata['sub'],
             'DR' => $this->session->userdata['dr'],
             'PER' => $this->session->userdata['periode'],
@@ -288,7 +295,7 @@ class Transaksi_PPStok extends CI_Controller
         $REC = $this->input->post('REC');
         $KD_BHN = $this->input->post('KD_BHN');
         $NA_BHN = $this->input->post('NA_BHN');
-        $JENIS = $this->input->post('JENIS');
+        $TIPE = $this->input->post('TIPE');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SISA = str_replace(',', '', $this->input->post('QTY', TRUE));
         $BILANGAN = $this->input->post('BILANGAN');
@@ -297,7 +304,7 @@ class Transaksi_PPStok extends CI_Controller
         $KET = $this->input->post('KET');
         $TGL_DIMINTA = $this->input->post('TGL_DIMINTA');
         $SISABON = str_replace(',', '', $this->input->post('SISABON', TRUE));
-        $URGENT = $this->input->post('URGENT');
+        $URGENT = str_replace(',', '', $this->input->post('URGENT', TRUE));
         $i = 0;
         foreach ($REC as $a) {
             $datad = array(
@@ -308,10 +315,10 @@ class Transaksi_PPStok extends CI_Controller
                 'NO_BON' => '-',
                 'KD_BHN' => $KD_BHN[$i],
                 'NA_BHN' => $NA_BHN[$i],
-                'JENIS' => $JENIS[$i],
+                'TIPE' => $TIPE[$i],
                 'QTY' => str_replace(',', '', $QTY[$i]),
                 'SISA' => str_replace(',', '', $SISA[$i]),
-                'BILANGAN' => $BILANGAN[$i],
+                'BILANGAN' => strtoupper($BILANGAN[$i]),
                 'SATUAN' => $SATUAN[$i],
                 'DEVISI' => $DEVISI[$i],
                 'KET' => $KET[$i],
@@ -326,7 +333,9 @@ class Transaksi_PPStok extends CI_Controller
                 'DR' => $this->session->userdata['dr'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
-                'TG_SMP' => date("Y-m-d h:i a")
+                'TG_SMP' => date("Y-m-d h:i a"),
+                'NO_TIKET' =>  $bukti."-".$KD_BHN[$i] ,
+                'PILIH' => '0',
             );
             $this->transaksi_model->input_datad('ppd', $datad);
             $i++;
@@ -355,12 +364,14 @@ class Transaksi_PPStok extends CI_Controller
                 pp.TTD3 AS TTD3,
                 pp.TTD4 AS TTD4,
                 pp.TTD5 AS TTD5,
+                pp.TTD6 AS TTD6,
+                pp.TTD7 AS TTD7,
 
                 ppd.NO_ID AS NO_ID,
                 ppd.REC AS REC,
                 ppd.KD_BHN AS KD_BHN,
                 ppd.NA_BHN AS NA_BHN,
-                ppd.JENIS AS JENIS,
+                ppd.TIPE AS TIPE,
                 ppd.BILANGAN AS BILANGAN,
                 ppd.QTY AS QTY,
                 ppd.SATUAN AS SATUAN,
@@ -368,7 +379,9 @@ class Transaksi_PPStok extends CI_Controller
                 ppd.KET AS KET,
                 ppd.TGL_DIMINTA AS TGL_DIMINTA,
                 ppd.SISABON AS SISABON,
-                ppd.URGENT AS URGENT
+                ppd.URGENT AS URGENT,
+                ppd.NO_TIKET AS NO_TIKET,
+                ppd.PILIH AS PILIH
             FROM pp,ppd 
             WHERE pp.NO_ID=$id 
             AND pp.NO_ID=ppd.ID 
@@ -391,6 +404,13 @@ class Transaksi_PPStok extends CI_Controller
             'FLAG2' => 'SP',
             'LOGISTIK' => '0',
             'TYP' => 'PPSTOK',
+            'TTD1' => '1',
+            'TTD2' => '1',
+            'TTD3' => '1',
+            'TTD4' => '1',
+            'TTD5' => '1',
+            'TTD6' => '1',
+            'TTD7' => '1',
             'SUB' => $this->session->userdata['sub'],
             'DR' => $this->session->userdata['dr'],
             'PER' => $this->session->userdata['periode'],
@@ -412,12 +432,14 @@ class Transaksi_PPStok extends CI_Controller
                 pp.TTD3 AS TTD3,
                 pp.TTD4 AS TTD4,
                 pp.TTD5 AS TTD5,
+                pp.TTD6 AS TTD6,
+                pp.TTD7 AS TTD7,
 
                 ppd.NO_ID AS NO_ID,
                 ppd.REC AS REC,
                 ppd.KD_BHN AS KD_BHN,
                 ppd.NA_BHN AS NA_BHN,
-                ppd.JENIS AS JENIS,
+                ppd.TIPE AS TIPE,
                 ppd.QTY AS QTY,
                 ppd.BILANGAN AS BILANGAN,
                 ppd.SATUAN AS SATUAN,
@@ -425,7 +447,9 @@ class Transaksi_PPStok extends CI_Controller
                 ppd.KET AS KET,
                 ppd.TGL_DIMINTA AS TGL_DIMINTA,
                 ppd.SISABON AS SISABON,
-                ppd.URGENT AS URGENT
+                ppd.URGENT AS URGENT,
+                ppd.NO_TIKET AS NO_TIKET,
+                ppd.PILIH AS PILIH
             FROM pp,ppd 
             WHERE pp.NO_ID=$id 
             AND pp.NO_ID=ppd.ID 
@@ -435,7 +459,7 @@ class Transaksi_PPStok extends CI_Controller
         $REC = $this->input->post('REC');
         $KD_BHN = $this->input->post('KD_BHN');
         $NA_BHN = $this->input->post('NA_BHN');
-        $JENIS = $this->input->post('JENIS');
+        $TIPE = $this->input->post('TIPE');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SISA = str_replace(',', '', $this->input->post('QTY', TRUE));
         $BILANGAN = $this->input->post('BILANGAN');
@@ -444,7 +468,7 @@ class Transaksi_PPStok extends CI_Controller
         $KET = $this->input->post('KET');
         $TGL_DIMINTA = $this->input->post('TGL_DIMINTA');
         $SISABON = str_replace(',', '', $this->input->post('SISABON', TRUE));
-        $URGENT = str_replace(',', '', $this->input->post('URGENT', TRUE));
+        $URGENT =  $this->input->post('URGENT');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -458,10 +482,10 @@ class Transaksi_PPStok extends CI_Controller
                     'REC' => $REC[$URUT],
                     'KD_BHN' => $KD_BHN[$URUT],
                     'NA_BHN' => $NA_BHN[$URUT],
-                    'JENIS' => $JENIS[$URUT],
+                    'TIPE' => $TIPE[$URUT],
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
                     'SISA' => str_replace(',', '', $SISA[$URUT]),
-                    'BILANGAN' => $BILANGAN[$URUT],
+                    'BILANGAN' => strtoupper($BILANGAN[$URUT]),
                     'SATUAN' => $SATUAN[$URUT],
                     'DEVISI' => $DEVISI[$URUT],
                     'KET' => $KET[$URUT],
@@ -500,16 +524,16 @@ class Transaksi_PPStok extends CI_Controller
                     'REC' => $REC[$i],
                     'KD_BHN' => $KD_BHN[$i],
                     'NA_BHN' => $NA_BHN[$i],
-                    'JENIS' => $JENIS[$i],
+                    'TIPE' => $TIPE[$i],
                     'QTY' => str_replace(',', '', $QTY[$i]),
                     'SISA' => str_replace(',', '', $SISA[$i]),
-                    'BILANGAN' => $BILANGAN[$i],
+                    'BILANGAN' => strtoupper($BILANGAN[$i]),
                     'SATUAN' => $SATUAN[$i],
                     'DEVISI' => $DEVISI[$i],
                     'KET' => $KET[$i],
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$i])),
                     'SISABON' => str_replace(',', '', $SISABON[$i]),
-                    'URGENT' => isset($URGENT[$i]) ? $URGENT[$i] : 0,
+                    'URGENT' => isset($URGENT[$URUT]) ? $URGENT[$URUT] : 0,
                     'FLAG' => 'PP',
                     'FLAG2' => 'SP',
                     'LOGISTIK' => '0',
@@ -693,7 +717,7 @@ class Transaksi_PPStok extends CI_Controller
             ppd.REC AS REC,
             ppd.KD_BHN AS KD_BHN,
             ppd.NA_BHN AS NA_BHN,
-            ppd.JENIS AS JENIS,
+            ppd.TIPE AS JENIS,
             ppd.BILANGAN AS BILANGAN,
             ppd.QTY AS QTY,
             ppd.SATUAN AS SATUAN,

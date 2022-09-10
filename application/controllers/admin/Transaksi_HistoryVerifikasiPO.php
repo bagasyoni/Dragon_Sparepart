@@ -119,7 +119,7 @@ class Transaksi_HistoryVerifikasiPO extends CI_Controller
             $row[] = $no . ".";
             $row[] = $po->NO_BUKTI;
             $row[] = $po->DR;
-            $row[] = $po->TGL;
+            $row[] = date("d-m-Y", strtotime($po->TGL));
             $row[] = $po->JTEMPO;
             $row[] = $po->NOTES;
             $data[] = $row;

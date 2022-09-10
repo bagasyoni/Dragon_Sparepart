@@ -158,7 +158,7 @@ foreach ($lpb_bengkel as $rowh) {
 							<label class="label">Diterima Dari </label>
 						</div>
 						<div class="col-md-3">
-							<input class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value="<?php echo $rowh->NOTES ?>">
+							<input class="form-control text_input NOTES" id="NAMAS" name="NAMAS" type="text" value="<?php echo $rowh->NAMAS ?>">
 						</div>
 					</div>
 				</div>

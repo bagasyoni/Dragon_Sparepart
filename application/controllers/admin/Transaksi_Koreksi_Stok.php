@@ -109,7 +109,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
                     </div>';
             $row[] = $no . ".";
             $row[] = $stocka->NO_BUKTI;
-            $row[] = $stocka->TGL;
+            $row[] = date("d-m-Y", strtotime($stocka->TGL));
             $row[] = $stocka->NOTES;
             $row[] = $stocka->TOTAL_QTY_AK;
             $data[] = $row;
@@ -269,6 +269,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
         $QTY_AK = str_replace(',','',$this->input->post('QTY_AK',TRUE));
         $SATUAN = $this->input->post('SATUAN');
         $KET1 = $this->input->post('KET1');
+        $RAK = $this->input->post('RAK');
         $i = 0;
         foreach($REC as $a) {
             $datad = array(
@@ -285,6 +286,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
                 'QTY_AK' => str_replace(',','',$QTY_AK[$i]),
                 'SATUAN' => $SATUAN[$i],
                 'KET1' => $KET1[$i],
+                'RAK' => $RAK[$i],
                 'DR' => $this->session->userdata['dr'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
@@ -319,6 +321,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
                 stockad.REC AS REC,
                 stockad.KD_BHN AS KD_BHN,
                 stockad.NA_BHN AS NA_BHN,
+                stockad.RAK AS RAK,
                 stockad.QTY AS QTY,
                 stockad.QTY_AK AS QTY_AK,
                 stockad.SATUAN AS SATUAN,
@@ -370,6 +373,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
                 stockad.REC AS REC,
                 stockad.KD_BHN AS KD_BHN,
                 stockad.NA_BHN AS NA_BHN,
+                stockad.RAK AS RAK,
                 stockad.QTY AS QTY,
                 stockad.QTY_AK AS QTY_AK,
                 stockad.SATUAN AS SATUAN,
@@ -387,6 +391,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
         $QTY_AK = str_replace(',','',$this->input->post('QTY_AK',TRUE));
         $SATUAN = $this->input->post('SATUAN');
         $KET1 = $this->input->post('KET1');
+        $RAK = $this->input->post('RAK');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -407,6 +412,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
                     'QTY_AK' => str_replace(',','',$QTY_AK[$URUT]),
                     'SATUAN' => $SATUAN[$URUT],
                     'KET1' => $KET1[$URUT],
+                    'RAK' => $RAK[$URUT],
                     'PER' => $this->session->userdata['periode'],
                     'DR' => $this->session->userdata['dr'],
                     'USRNM' => $this->session->userdata['username'],
@@ -441,6 +447,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
                     'QTY_AK' => str_replace(',','',$QTY_AK[$i]),
                     'SATUAN' => $SATUAN[$i],
                     'KET1' => $KET1[$i],
+                    'RAK' => $RAK[$i],
                     'PER' => $this->session->userdata['periode'],
                     'DR' => $this->session->userdata['dr'],
                     'USRNM' => $this->session->userdata['username'],
@@ -487,6 +494,7 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
 
     public function getDataAjax_Bahan() {
         $per = substr($this->session->userdata['periode'], 0, 2);
+        $sub = $this->session->userdata['sub'];
         $dr = $this->session->userdata['dr'];
         $search = $this->input->post('search');
         $page = ((int)$this->input->post('page'));
@@ -496,9 +504,9 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
             $xa = ($page - 1) * 10;
         }
         $perPage = 10;
-        $results = $this->db->query("SELECT bhn.no_id, bhn.KD_BHN AS kd_bhn, bhn.NA_BHN AS na_bhn, bhn.SATUAN AS satuan, bhnd.AW$per AS qty 
+        $results = $this->db->query("SELECT bhn.no_id, bhn.KD_BHN AS kd_bhn, bhn.NA_BHN AS na_bhn, bhn.SATUAN AS satuan, bhnd.AW$per AS qty, bhnd.RAK as rak 
             FROM bhn, bhnd
-            WHERE bhn.kd_bhn=bhnd.kd_bhn AND bhn.DR = '$dr' AND bhn.FLAG = 'SP' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%')
+            WHERE bhn.kd_bhn=bhnd.kd_bhn AND bhn.DR = '$dr' AND bhn.FLAG = 'SP' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%' OR bhnd.RAK LIKE '%$search%')
             GROUP BY bhnd.kd_bhn
             ORDER BY bhn.KD_BHN LIMIT $xa,$perPage");
         $selectajax = array();
@@ -506,7 +514,8 @@ class Transaksi_Koreksi_Stok extends CI_Controller {
             $selectajax[] = array(
                 'id' => $row['kd_bhn'],
                 'text' => $row['kd_bhn'],
-                'kd_bhn' => $row['kd_bhn'] . " - " . $row['na_bhn']. " - " . $row['satuan']. " - " . $row['qty'],
+                'kd_bhn' => $row['kd_bhn'] . " - " . $row['na_bhn']. " - " . $row['rak']. " - " . $row['satuan']. " - " . $row['qty'],
+                'rak' => $row['rak'],
                 'na_bhn' => $row['na_bhn'],
                 'satuan' => $row['satuan'],
                 'qty' => $row['qty'],

@@ -199,16 +199,16 @@
 							<tr>
 								<th width="50px">No</th>
 								<th width="150px">Bon</th>
-								<th width="100px">Kode</th>
-								<th width="125px">Uraian</th>
-								<th width="75px">Ket Barang</th>
-								<th width="100px">Qty</th>
+								<th width="75px">Kode</th>
+								<th width="175px">Uraian</th>
+								<th width="175	px">Ket Barang</th>
+								<th width="50px">Qty</th>
 								<th width="100px">Bilangan</th>
-								<th width="100px">Satuan</th>
+								<th width="75px">Satuan</th>
 								<th width="100px">Devisi</th>
 								<th width="225px">Keterangan</th>
 								<th width="100px">Tgl Diminta</th>
-								<th width="100px">Sisa</th>
+								<th width="50px">Sisa</th>
 								<th width="90px">Urgent</th>
 								<th width="50px"></th>
 							</tr>
@@ -227,7 +227,7 @@
 									</div>
 								</td>
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" required></td>
-								<td><input name="JENIS[]" id="JENIS0" type="text" class="form-control JENIS text_input" required></td>
+								<td><input name="TIPE[]" id="TIPE0" type="text" class="form-control TIPE text_input" required></td>
 								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="BILANGAN[]" id="BILANGAN0" type="text" class="form-control BILANGAN text_input" readonly></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
@@ -238,7 +238,7 @@
 								</td>
 								<td><input name="SISABON[]" onkeyup="hitung()" value="0" id="SISABON0" type="text" class="form-control SISABON rightJustified text-primary" readonly></td>
 								<td>
-									<input name="URGENT[]" id="URGENT0" type="checkbox" value="0" class="checkbox_container">
+									<input name="URGENT[]" id="URGENT" type="checkbox" value="0" class="checkbox_container URGENT" unchecked>
 								</td>
 								<td>
 									<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -431,6 +431,9 @@
 		for (i = 0; i < total_row; i++) {
 			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
 			var sisabon = parseFloat($('#SISABON' + i).val().replace(/,/g, ''));
+			
+			$('#BILANGAN' + i).val(angkaTerbilang(qty));
+			// console.log(angkaTerbilang('Terbilang :'+qty));
 
 			if (qty > sisabon) {
 				alert("Qty tidak boleh lebih besar dari Sisa Bon");
@@ -439,8 +442,6 @@
 			} else {
 				console.log('OK !!!')
 			}
-			$('#BILANGAN' + i).val(angkaTerbilang(qty));
-			// console.log(angkaTerbilang('Terbilang :'+qty));
 		};
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
@@ -494,7 +495,7 @@
 		td2.innerHTML = no_bon;
 		td3.innerHTML = kd_bhn;
 		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' required>";
-		td5.innerHTML = "<input name='JENIS[]' id=JENIS" + idrow + " type='text' class='form-control JENIS text_input' required>";
+		td5.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input' required>";
 		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td7.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
 		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
@@ -504,7 +505,7 @@
 		td12.innerHTML = "<input name='SISABON[]' onclick='select()' onkeyup='hitung()' value='0' id=SISABON" + idrow + " type='text' class='form-control SISABON rightJustified text-primary' readonly>";
 		
 		
-		td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='0'>";
+		td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
 		td14.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
@@ -591,7 +592,7 @@
 		return $container;
 	}
 
-	var jenis = '';
+	var tipe = '';
 	var na_bhn = '';
 	var ket = '';
 	var satuan = '';
@@ -601,7 +602,7 @@
 	var tgl_diminta = '';
 
 	function formatSelection_no_bon(repo_no_bon) {
-		jenis = repo_no_bon.JENIS;
+		tipe = repo_no_bon.TIPE;
 		na_bhn = repo_no_bon.NA_BHN;
 		ket = repo_no_bon.KET;
 		satuan = repo_no_bon.SATUAN;
@@ -614,7 +615,7 @@
 
 	function no_bon(x) {
 		var q = x.substring(6, 10);
-		$('#JENIS' + q).val(jenis);
+		$('#TIPE' + q).val(tipe);
 		$('#NA_BHN' + q).val(na_bhn);
 		$('#KET' + q).val(ket);
 		$('#QTY' + q).val(qty);

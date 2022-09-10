@@ -129,12 +129,13 @@ class Laporan_model extends CI_Model
 	{
 		$dr = $this->session->userdata['dr'];
 		$sub = $this->session->userdata['sub'];
-		$per = $this->session->userdata['periode'];
-		$bulan = substr($this->input->post('TGL_1'), 3, 2);
-		$tahun = substr($this->input->post('TGL_1'), -4);
 		$rak_1 = $this->input->post('RAK_1');
 		$per_1 = $this->input->post('PER_1');
-		// $tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
+		if ($per_1 == '') {
+			$per_1 = $this->session->userdata['periode']; 
+		} else {
+			$per_1 = $this->input->post('PER_1');
+		}
 		$q1 = "CALL spp_kartustok('$rak_1', '$dr', '$sub', '$per_1')";
 		return $this->db->query($q1);
 	}
@@ -143,12 +144,9 @@ class Laporan_model extends CI_Model
 	{
 		$dr = $this->session->userdata['dr'];
 		$sub = $this->session->userdata['sub'];
+		$rak_1 = $this->input->post('RAK_1');
 		$per = $this->session->userdata['periode'];
-		$bulan = substr($this->input->post('TGL_1'), 3, 2);
-		$tahun = substr($this->input->post('TGL_1'), -4);
-		$kd_bhn_1 = $this->input->post('KD_BHN_1');
-		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-		$q1 = "CALL spp_kartustok('$kd_bhn_1', '$dr', '$sub', '$tgl_1')";
+		$q1 = "CALL spp_kartustok_atk('$rak_1', '$dr', '$sub', '$per')";
 		return $this->db->query($q1);
 	}
 
@@ -160,19 +158,19 @@ class Laporan_model extends CI_Model
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$q1 = "SELECT beli.PER AS PER,
 				belid.TGL AS TGL,
-				belid.NO_BUKTI AS NO_BUKTI_BL_BELI,
+				belid.NO_BELI AS NO_BUKTI_BL_BELI,
 				CONCAT(belid.KD_BHN,' - ',belid.NA_BHN) AS BARANG,
 				belid.SATUAN AS SATUAN,
 				belid.QTY AS QTY,
 				belid.NO_PO AS NO_PO,
 				belid.NO_PP AS NO_PP,
-				belid.NO_BUKTI AS NO_BUKTI,
+				belid.NO_BELI AS NO_BUKTI,
 				belid.REC AS REC
 			FROM beli, belid
-			WHERE beli.NO_BUKTI = belid.NO_BUKTI
+			WHERE beli.NO_BELI = belid.NO_BELI
 			AND belid.TGL='$tgl_1'
-			-- AND belid.PER='$per'
-			AND belid.FLAG2='SP'
+			AND beli.SUB='$sub'
+			AND beli.FLAG2='SP'
 			ORDER BY belid.TGL";
 		return $this->db->query($q1);
 	}
@@ -485,7 +483,6 @@ class Laporan_model extends CI_Model
 			AND pakaid.FLAG ='PK'
 			AND pakaid.FLAG2 ='SP'
 			AND pakaid.GRUP ='$grup_1'
-			-- AND pakaid.PER='$per'
 			ORDER BY pakaid.TGL";
 		return $this->db->query($q1);
 	}
@@ -499,7 +496,7 @@ class Laporan_model extends CI_Model
 		$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
 		$q1 = "SELECT belid.rak AS RAK,
 				CONCAT(belid.kd_bhn,' - ',belid.na_bhn) AS BARANG,
-				beli.no_bukti AS NO_BUKTI,
+				beli.no_beli AS NO_BUKTI,
 				beli.tgl AS TGL,
 				belid.satuan AS SATUAN,
 				belid.qty AS QTY,
@@ -509,11 +506,9 @@ class Laporan_model extends CI_Model
 			WHERE beli.no_bukti=belid.no_bukti 
 			AND beli.TGL >='$tgl_1'
 			AND beli.TGL <='$tgl_2'
-			AND beli.SP = '$sub'
-			AND belid.DR='$dr'
-			AND belid.SP='SP'
+			AND beli.SUB = '$sub'
+			AND beli.DR='$dr'
 			AND belid.FLAG2='SP'
-			-- AND beli.PER ='$per'
 			ORDER BY belid.TGL";
 		return $this->db->query($q1);
 	}
@@ -542,7 +537,7 @@ class Laporan_model extends CI_Model
 			AND pakaid.TGL BETWEEN '$tgl_1' AND '$tgl_2'
 			AND pakai.DR = '$dr'
 			AND pakai.SUB = '$sub'
-			AND pakai.PER = '$per'
+			-- AND pakai.PER = '$per'
 			AND pakai.ATK = 0
 			AND pakai.FLAG = 'PK'
 			AND pakai.FLAG2 = 'SP'
@@ -1015,9 +1010,9 @@ class Laporan_model extends CI_Model
 						FROM bhnd, bhn
 						WHERE bhnd.KD_BHN = bhn.KD_BHN
 						AND bhnd.YER = '$tahun'
-						AND bhn.DR = '$dr'
+						-- AND bhn.DR = '$dr'
 						AND bhn.FLAG = 'SP'
-						AND bhn.SUB = '$sub'
+						AND bhn.SUB = 'SP'
 						GROUP BY bhn.KD_BHN
 						ORDER BY bhnd.TG_USIA DESC
 					) AS KD_BHN";
@@ -1045,9 +1040,9 @@ class Laporan_model extends CI_Model
 						FROM bhnd, bhn
 						WHERE bhnd.KD_BHN = bhn.KD_BHN
 						AND bhnd.YER = '$tahun'
-						AND bhn.DR = '$dr'
+						-- AND bhn.DR = '$dr'
 						AND bhn.FLAG = 'SP'
-						AND bhn.SUB = '$sub'
+						AND bhn.SUB = 'INV'
 						GROUP BY bhn.KD_BHN
 						ORDER BY bhnd.TG_USIA DESC
 					) AS KD_BHN";
@@ -1075,9 +1070,9 @@ class Laporan_model extends CI_Model
 						FROM bhnd, bhn
 						WHERE bhnd.KD_BHN = bhn.KD_BHN
 						AND bhnd.YER = '$tahun'
-						AND bhn.DR = '$dr'
+						-- AND bhn.DR = '$dr'
 						AND bhn.FLAG = 'SP'
-						AND bhn.SUB = '$sub'
+						AND bhn.SUB = 'ATK'
 					GROUP BY bhn.KD_BHN
 					ORDER BY bhnd.TG_USIA DESC
 					) AS KD_BHN";

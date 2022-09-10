@@ -117,7 +117,7 @@ class Transaksi_PPSelesai extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PPSelesai/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PPSelesai/update/' . $pp->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PPSelesai/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
@@ -125,8 +125,8 @@ class Transaksi_PPSelesai extends CI_Controller
             $row[] = $no . ".";
             $row[] = $pp->NA_BRG;
             $row[] = $pp->NO_BUKTI;
-            $row[] = $pp->TGL;
-            $row[] = $pp->TGL_DIMINTA;
+            $row[] = date("d-m-Y", strtotime($pp->TGL));
+            $row[] = date("d-m-Y", strtotime($pp->TGL_DIMINTA));
             $row[] = $pp->NOTES;
             $row[] = $pp->OK;
             $data[] = $row;

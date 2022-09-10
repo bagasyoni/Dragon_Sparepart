@@ -79,6 +79,7 @@ $db['default'] = array(
 	'username' => 'root',
 	'password' => 'admin',
 	'database' => 'db_intidragon',
+	// 'port' => '3306',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -95,3 +96,26 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 
+// $db['default'] = array(
+// 	'dsn'	=> '',
+// 	'hostname' => 'localhost:3306',
+// 	'username' => 'root',
+// 	// 'password' => '123456',
+// 	'password' => '',
+// 	'database' => 'dragon_fixed_test',
+// 	'port' => '3306',
+// 	'dbdriver' => 'mysqli',
+// 	'dbprefix' => '',
+// 	'pconnect' => FALSE,
+// 	'db_debug' => (ENVIRONMENT !== 'production'),
+// 	'cache_on' => FALSE,
+// 	'cachedir' => '',
+// 	'char_set' => 'utf8',
+// 	'dbcollat' => 'utf8_general_ci',
+// 	'swap_pre' => '',
+// 	'encrypt' => FALSE,
+// 	'compress' => FALSE,
+// 	'stricton' => FALSE,
+// 	'failover' => array(),
+// 	'save_queries' => TRUE
+// );

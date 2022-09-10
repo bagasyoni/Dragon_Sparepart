@@ -23,13 +23,13 @@
                         <label class="label-title">Kode Rak </label>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" id="RAK_1" name="RAK_1" class="form-control RAK_1" placeholder="Kode Rak">
+                        <input type="text" value="<?= $RAK_1 ?>" id="RAK_1" name="RAK_1" class="form-control RAK_1" placeholder="Kode Rak">
                     </div>
                     <div class="col-md-1">
                         <label class="label-title">Periode </label>
                     </div>
                     <div class="col-md-3 nopadding">
-                        <input type="text" id="PER_1" name="PER_1" class="date form-control PER_1" placeholder="mm/yyyy">
+                        <input type="text" value="<?= $PER_1 ?>" id="PER_1" name="PER_1" class="form-control PER_1" placeholder="mm/yyyy">
                     </div>
                 </div>
             </div>

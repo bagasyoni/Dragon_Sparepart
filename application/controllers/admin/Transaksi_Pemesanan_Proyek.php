@@ -115,7 +115,7 @@ class Transaksi_Pemesanan_Proyek extends CI_Controller {
                     </div>';
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
-            $row[] = $pp->TGL;
+            $row[] = date("d-m-Y", strtotime($pp->TGL));
             $row[] = $pp->KET;
             $data[] = $row;
         }

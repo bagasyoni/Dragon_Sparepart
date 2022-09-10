@@ -90,7 +90,7 @@
 							<label class="label">Diterima Dari </label>
 						</div>
 						<div class="col-md-3">
-							<input class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value=''>
+							<input class="form-control text_input NAMAS" id="NAMAS" name="NAMAS" type="text" value=''>
 						</div>
 					</div>
 				</div>

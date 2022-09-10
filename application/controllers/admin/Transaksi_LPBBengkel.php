@@ -33,7 +33,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SP' => $sub,
+            'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
             'ATK' => '0',
@@ -84,7 +84,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SP' => $sub,
+            'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
             'ATK' => '0',
@@ -115,8 +115,8 @@ class Transaksi_LPBBengkel extends CI_Controller {
                     </div>';
             $row[] = $no . ".";
             $row[] = $beli->NO_BUKTI;
-            $row[] = $beli->TGL;
-            $row[] = $beli->NOTES;
+            $row[] = date("d-m-Y", strtotime($beli->TGL));
+            $row[] = $beli->NAMAS;
             $data[] = $row;
         }
         $output = array(
@@ -136,9 +136,9 @@ class Transaksi_LPBBengkel extends CI_Controller {
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SP' => $sub,
+            'SUB' => $sub,
             'FLAG' => 'BL',
-            'FLAG' => 'SP',
+            'FLAG2' => 'SP',
             'ATK' => '0',
         );
         $data['beli'] = $this->transaksi_model->tampil_data($where,'beli','NO_ID')->result();
@@ -254,12 +254,12 @@ class Transaksi_LPBBengkel extends CI_Controller {
         $bukti = $this->input->post('NO_BUKTI', TRUE);
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
-            'NOTES' => $this->input->post('NOTES', TRUE),
+            'NAMAS' => $this->input->post('NAMAS', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'SP' => $this->session->userdata['sub'],
+            'SUB' => $this->session->userdata['sub'],
             'DR' => $this->session->userdata['dr'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
@@ -289,7 +289,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
                 'KET' => $KET[$i],
                 'FLAG' => 'BL',
                 'FLAG2' => 'SP',
-                'SP' => $this->session->userdata['sub'],
+                'SUB' => $this->session->userdata['sub'],
                 'DR' => $this->session->userdata['dr'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
@@ -316,7 +316,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
     public function update($id) {
         $q1="SELECT beli.NO_ID as ID,
                 beli.NO_BUKTI AS NO_BUKTI,
-                beli.NOTES AS NOTES,
+                beli.NAMAS AS NAMAS,
                 beli.TGL AS TGL,
                 beli.TOTAL_QTY AS TOTAL_QTY,
                 beli.PIN1 AS PIN1,
@@ -345,7 +345,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
         $bukti = $this->input->post('NO_BUKTI');
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI',TRUE), 
-            'KET' => $this->input->post('KET',TRUE),
+            'NOTES' => $this->input->post('NOTES',TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL',TRUE))),
             'TOTAL_QTY' => str_replace(',','',$this->input->post('TOTAL_QTY',TRUE)),
             'FLAG' => 'BL',
@@ -362,7 +362,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
         $id = $this->input->post('ID', TRUE);
         $q1="SELECT beli.NO_ID as ID,
                 beli.NO_BUKTI AS NO_BUKTI,
-                beli.KET AS KET,
+                beli.NAMAS AS NAMAS,
                 beli.TGL AS TGL,
                 beli.TOTAL_QTY AS TOTAL_QTY,
                 beli.TTD1 AS TTD1,

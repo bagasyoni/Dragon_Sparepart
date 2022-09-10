@@ -18,35 +18,23 @@ class Transaksi_BonNonStok extends CI_Controller
             );
             redirect('admin/auth');
         }
-        if ($this->session->userdata['menu_sparepart'] != 'beli') {
-            $this->session->set_userdata('menu_sparepart', 'beli');
+        if ($this->session->userdata['menu_sparepart'] != 'bond') {
+            $this->session->set_userdata('menu_sparepart', 'bond');
             $this->session->set_userdata('kode_menu', 'T0021');
             $this->session->set_userdata('keyword_beli', '');
             $this->session->set_userdata('order_beli', 'NO_ID');
         }
     }
 
-    var $column_order = array(null, null, null, 'TGL', 'NO_BUKTI', 'TGL', 'DEVISI', 'DR', 'NA_BHN', 'VAL');
-    var $column_search = array('TGL', 'NO_BUKTI', 'TGL', 'DEVISI', 'DR', 'NA_BHN', 'VAL');
+    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'DEVISI', 'DR', 'NA_BHN', 'SLS');
+    var $column_search = array('NO_BUKTI', 'TGL', 'DEVISI', 'DR', 'NA_BHN', 'SLS');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query()
     {
         $dr = $this->session->userdata['dr'];
-        $per = $this->session->userdata['periode'];
-        $sub = $this->session->userdata['sub'];
         $where = array(
             'DR' => $dr,
-            'PER' => $per,
-            'SUB' => $sub,
-            'FLAG' => 'BL',
-            'FLAG2' => 'SP',
-            'TTD1' => '1',
-            'TTD2' => '1',
-            'TTD3' => '1',
-            'TTD4' => '1',
-            'TTD5' => '1',
-            'TTD6' => '1',
         );
         $this->db->select('*');
         $this->db->from('beli');
@@ -133,7 +121,7 @@ class Transaksi_BonNonStok extends CI_Controller
                     </div>';
             $row[] = $no . ".";
             $row[] = $beli->NO_BUKTI;
-            $row[] = $beli->TGL;
+            $row[] = date("d-m-Y", strtotime($beli->TGL));
             $row[] = $beli->DEVISI;
             $row[] = $beli->DR;
             $data[] = $row;

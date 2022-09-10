@@ -74,7 +74,7 @@
 						<div class="col-md-3"></div>
 						<div class="col-md-2">
 							<?php
-								if ($rowh->VERIFIKASI_PO_SP == 0) 
+								if ($rowh->TTD2 == '') 
 									echo '<a 
 										type="button" 
 										class="btn btn-warning"
@@ -143,14 +143,6 @@
             </div>
 		</div>
 		<br><br>
-		<!--tab-->
-		<!-- <div class="col-md-12">
-			<div class="form-group row">
-				<div class="col-md-1">
-					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
-				</div>
-			</div>
-		</div> -->
 		<br>
 	</form>
 </div>

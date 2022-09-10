@@ -36,6 +36,8 @@
 	<field name="TGL" class="java.lang.String"/>
 	<field name="KET" class="java.lang.String"/>
 	<field name="SUB" class="java.lang.String"/>
+	<field name="QTY" class="java.lang.String"/>
+	<field name="BILANGAN" class="java.lang.String"/>
 	<variable name="SUB_LBL" class="java.lang.Double" resetType="Group" resetGroup="GroupT" calculation="Sum">
 		<variableExpression><![CDATA[$F{LBL}]]></variableExpression>
 	</variable>
@@ -1384,7 +1386,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="8"/>
+					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
 			</textField>
@@ -1481,7 +1483,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="8"/>
+					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{BILANGAN}]]></textFieldExpression>
 			</textField>
@@ -1498,7 +1500,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="8"/>
+					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{KET}]]></textFieldExpression>
 			</textField>

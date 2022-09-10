@@ -168,10 +168,10 @@ foreach ($barang_masuk as $rowh) {
 							<input type="text" class="form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()" readonly>
 						</div>
 						<div class="col-md-1">
-							<label class="label">Ket </label>
+							<label class="label">Diterima Dari </label>
 						</div>
 						<div class="col-md-3">
-							<input class="form-control text_input KET" id="KET" name="KET" type="text" value="<?php echo $rowh->KET ?>" readonly>
+							<input class="form-control text_input NAMAS" id="NAMAS" name="NAMAS" type="text" value="<?php echo $rowh->NAMAS ?>" readonly>
 						</div>
 						<!-- <div class="col-md-3"></div>
 						<div class="col-md-1">
@@ -212,7 +212,7 @@ foreach ($barang_masuk as $rowh) {
 											<select <?php if ($rowh->VAL == !0) echo 'readonly'; ?> value="<?= $row->RAK ?>" class="js-example-responsive-kd_bhn form-control RAK" name="RAK[]" id="RAK0" onchange="kd_bhn(this.id)" onfocusout="hitung()" required></select>
 										</div>
 									</td>
-									<td><input name="QTYPP[]" onkeyup="hitung()" id="QTYPP<?php echo $no; ?>" value="<?php echo number_format($row->QTYPP, 2, '.', ','); ?>" type="text" class="form-control QTYPP rightJustified text-primary" readonly></td>
+									<td><input name="QTY_BL[]" onkeyup="hitung()" id="QTY_BL<?php echo $no; ?>" value="<?php echo number_format($row->QTY_BL, 2, '.', ','); ?>" type="text" class="form-control QTY_BL rightJustified text-primary" readonly></td>
 									<td><input name="SATUANPP[]" id="SATUANPP<?php echo $no; ?>" value="<?= $row->SATUANPP ?>" type="text" class="form-control SATUANPP text_input" readonly></td>
 									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"></td>

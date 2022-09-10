@@ -22,19 +22,21 @@ class Transaksi_Verifikasi_PO extends CI_Controller {
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'DR');
-    var $column_search = array('NO_BUKTI', 'DR');
+    var $column_order = array(null, null, null, 'NO_BUKTI', 'DR', 'TGL', 'JTEMPO', 'NOTES');
+    var $column_search = array( 'NO_BUKTI', 'DR', 'TGL', 'JTEMPO', 'NOTES');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query() {
         $dr = $this->session->userdata['dr'];
-        $sub = $this->session->userdata('sub');
-        $per = $this->session->userdata('per');
+        $per = $this->session->userdata('periode');
+        // $sub = $this->session->userdata('sub');
         $where = array(
-            // 'DR' => $dr,
-            // 'PER' => $per,
-            'FLAG' => 'PB',
-            'FLAG2' => 'SP',
+            'DR' => $dr,
+            'PER' => $per,
+            'TTD1' => '1',
+            'TTD2' => '1',
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '0',
         );
         $this->db->select('*');
         $this->db->from('po');
@@ -80,10 +82,12 @@ class Transaksi_Verifikasi_PO extends CI_Controller {
         $sub = $this->session->userdata('sub');
         $per = $this->session->userdata('periode');
         $where = array(
-            // 'DR' => $dr,
-            // 'PER' => $per,
-            'FLAG' => 'PB',
-            'FLAG2' => 'SP',
+            'DR' => $dr,
+            'PER' => $per,
+            'TTD1' => '1',
+            'TTD2' => '1',
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '0',
         );
         $this->db->from('po');
         $this->db->where($where);
@@ -104,12 +108,17 @@ class Transaksi_Verifikasi_PO extends CI_Controller {
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Verifikasi_PO/update/' . $po->NO_ID) . '"> <i class="fa fa-edit"></i> Validasi</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Verifikasi_PO/update/' . $po->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
             $row[] = $po->NO_BUKTI;
+            $row[] = $po->KODES;
+            $row[] = $po->NAMAS;
             $row[] = $po->DR;
+            $row[] = date("d-m-Y", strtotime($po->TGL));
+            $row[] = date("d-m-Y", strtotime($po->JTEMPO));
+            $row[] = $po->NOTES;
             $data[] = $row;
         }
         $output = array(
@@ -127,11 +136,12 @@ class Transaksi_Verifikasi_PO extends CI_Controller {
         $per = $this->session->userdata('per');
         $this->session->set_userdata('judul', 'Transaksi Verifikasi PO');
         $where = array(
-            // 'DR' => $dr,
-            // 'PER' => $per,
-            'FLAG' => 'PB',
-            'FLAG2' => 'SP',
-
+            'DR' => $dr,
+            'PER' => $per,
+            'TTD1' => '1',
+            'TTD2' => '1',
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '0',
         );
         $data['po'] = $this->transaksi_model->tampil_data($where,'po','NO_ID')->result();
         $this->load->view('templates_admin/header');

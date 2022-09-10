@@ -172,6 +172,7 @@
 							<tr>
 								<th width="50px">No</th>
 								<th width="250px">Kode</th>
+								<th width="75px">Rak</th>
 								<th width="200px">Uraian</th>
 								<th width="200px">Satuan</th>
 								<th width="150px">Qty</th>
@@ -186,6 +187,7 @@
 								<td>
 									<select class="js-example-responsive-kd_bhn form-control KD_BHN0" name="KD_BHN[]" id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()" required></select>
 								</td>
+								<td><input name="RAK[]" id="RAK0" type="text" class="form-control RAK" readonly></td>
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN" readonly></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN" readonly></td>
 								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" readonly></td>
@@ -199,6 +201,7 @@
 							</tr>
 						</tbody>
 						<tfoot>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -349,6 +352,7 @@
 		var td6 = x.insertCell(5);
 		var td7 = x.insertCell(6);
 		var td8 = x.insertCell(7);
+		var td9 = x.insertCell(8);
 
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
@@ -356,12 +360,13 @@
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control' onkeypress='return tabE(this,event)' readonly>";
 		td2.innerHTML = kd_bhn;
-		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN' readonly>";
-		td4.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN' readonly>";
-		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' readonly>";
-		td6.innerHTML = "<input name='QTY_AK[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY_AK" + idrow + " type='text' class='form-control QTY_AK rightJustified text-primary' required>";
-		td7.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1'>";
-		td8.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0' >" +
+		td3.innerHTML = "<input name='RAK[]' id=RAK0" + idrow + " type='text' class='form-control RAK' readonly>";
+		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN' readonly>";
+		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN' readonly>";
+		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' readonly>";
+		td7.innerHTML = "<input name='QTY_AK[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY_AK" + idrow + " type='text' class='form-control QTY_AK rightJustified text-primary' required>";
+		td8.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1'>";
+		td9.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0' >" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -440,11 +445,13 @@
 		return $container;
 	}
 
+	var rak ='';
 	var na_bhn = '';
 	var satuan = '';
 	var qty = '';
 
 	function formatSelection_kd_bhn(repo_kd_bhn) {
+		rak = repo_kd_bhn.rak;
 		na_bhn = repo_kd_bhn.na_bhn;
 		satuan = repo_kd_bhn.satuan;
 		qty = repo_kd_bhn.qty;
@@ -453,6 +460,7 @@
 
 	function kd_bhn(x) {
 		var q = x.substring(6, 12);
+		$('#RAK' + q).val(rak);
 		$('#NA_BHN' + q).val(na_bhn);
 		$('#SATUAN' + q).val(satuan);
 		$('#QTY' + q).val(qty);

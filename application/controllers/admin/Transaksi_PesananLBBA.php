@@ -36,10 +36,11 @@ class Transaksi_PesananLBBA extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            // 'DR' => $dr,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
-            'TYP' => 'RND_LBBA',
+            'DR' => $dr,
+            'FLAG' => 'PBL',
+            'SUB' => 'MB',
+            // 'FLAG2' => 'SP',
+            // 'TYP' => 'RND_LBBA',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -88,10 +89,11 @@ class Transaksi_PesananLBBA extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            // 'DR' => $dr,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
-            'TYP' => 'RND_LBBA',
+            'DR' => $dr,
+            'FLAG' => 'PBL',
+            'SUB' => 'MB',
+            // 'FLAG2' => 'SP',
+            // 'TYP' => 'RND_LBBA',
         );
         $this->db->from('pp');
         $this->db->where($where);
@@ -114,16 +116,17 @@ class Transaksi_PesananLBBA extends CI_Controller
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananLBBA/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananLBBA/validasi/' . $pp->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananLBBA/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
-            $row[] = $pp->TGL;
-            $row[] = $pp->TGL_DIMINTA;
+            $row[] = date("d-m-Y", strtotime($pp->TGL));
+            $row[] = date("d-m-Y", strtotime($pp->TGL_DIMINTA));
             $row[] = $pp->DEVISI;
-            $row[] = $pp->KET;
+            $row[] = $pp->ARTICLE;
             $row[] = $pp->PESAN;
             $row[] = $pp->JO;
             $row[] = $pp->FLAG3;
@@ -146,10 +149,11 @@ class Transaksi_PesananLBBA extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            // 'DR' => $dr,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
-            'TYP' => 'RND_LBBA',
+            'DR' => $dr,
+            'FLAG' => 'PBL',
+            'SUB' => 'MB',
+            // 'FLAG2' => 'SP',
+            // 'TYP' => 'RND_LBBA',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -287,15 +291,15 @@ class Transaksi_PesananLBBA extends CI_Controller
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
             'DEVISI' => $this->input->post('DEVISI', TRUE),
-            'KET' => $this->input->post('KET', TRUE),
+            'ARTICLE' => $this->input->post('ARTICLE', TRUE),
             'PESAN' => $this->input->post('PESAN', TRUE),
             'JO' => $this->input->post('JO', TRUE),
             'FLAG3' => $this->input->post('FLAG3', TRUE),
             'GAMBAR1' => "IMG".$this->upload->data('file_name'),
-            'VAL' => '0',
-            'FLAG' => 'PP',
+            'FLAG' => 'PBL',
             'FLAG2' => 'SP',
             'TYP' => 'RND_LBBA',
+            'SUB' => 'MB',
             'DR' => $this->session->userdata['dr'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
@@ -325,11 +329,12 @@ class Transaksi_PesananLBBA extends CI_Controller
             'TGL' => $r['TGL'],
             'TGL_DIMINTA' => $r['TGL_DIMINTA'],
             'DEVISI' => $r['DEVISI'],
-            'KET' => $r['KET'],
+            'ARTICLE' => $r['ARTICLE'],
             'PESAN' => $r['PESAN'],
             'JO' => $r['JO'],
             'FLAG3' => $r['FLAG3'],
             'GAMBAR1' => $r['GAMBAR1'],
+            'VAL' => $r['VAL'],
         ];
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
@@ -364,7 +369,7 @@ class Transaksi_PesananLBBA extends CI_Controller
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
             'DEVISI' => $this->input->post('DEVISI', TRUE),
-            'KET' => $this->input->post('KET', TRUE),
+            'ARTICLE' => $this->input->post('ARTICLE', TRUE),
             'PESAN' => $this->input->post('PESAN', TRUE),
             'JO' => $this->input->post('JO', TRUE),
             'FLAG3' => $this->input->post('FLAG3', TRUE),
@@ -378,6 +383,80 @@ class Transaksi_PesananLBBA extends CI_Controller
             'pesan',
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
                 Data Berhasil Di Update.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> 
+            </div>'
+        );
+        redirect('admin/Transaksi_PesananLBBA/index_Transaksi_PesananLBBA');
+    }
+
+    public function validasi($NO_ID)
+    {
+        $where = array('NO_ID' => $NO_ID);
+        $ambildata = $this->master_model->edit_data($where, 'pp');
+        $r = $ambildata->row_array();
+        $data = [
+            'NO_ID' => $r['NO_ID'],
+            'NO_BUKTI' => $r['NO_BUKTI'],
+            'TGL' => $r['TGL'],
+            'TGL_DIMINTA' => $r['TGL_DIMINTA'],
+            'DEVISI' => $r['DEVISI'],
+            'ARTICLE' => $r['ARTICLE'],
+            'PESAN' => $r['PESAN'],
+            'JO' => $r['JO'],
+            'FLAG3' => $r['FLAG3'],
+            'GAMBAR1' => $r['GAMBAR1'],
+            'VAL' => $r['VAL'],
+        ];
+        $this->load->view('templates_admin/header');
+        $this->load->view('templates_admin/navbar');
+        $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_validasi', $data);
+        $this->load->view('templates_admin/footer');
+    }
+
+    public function validasi_aksi()
+    {
+
+        $config['upload_path']          = './gambar/';
+		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+		$config['max_size']             = 1000;
+		$config['max_width']            = 3024;
+		$config['max_height']           = 3680;
+        $new_name = time().$_FILES['name'];
+        $config['file_name']            = $new_name; 
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('GAMBAR1')){
+			$error = array('error' => $this->upload->display_errors());
+			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form', $error);
+		}else{
+			$data = array('upload_data' => $this->upload->data());
+			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
+		}
+
+        $NO_ID = $this->input->post('NO_ID');
+        $datah = array(
+            'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
+            'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
+            'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
+            'DEVISI' => $this->input->post('DEVISI', TRUE),
+            'ARTICLE' => $this->input->post('ARTICLE', TRUE),
+            'PESAN' => $this->input->post('PESAN', TRUE),
+            'JO' => $this->input->post('JO', TRUE),
+            'FLAG3' => $this->input->post('FLAG3', TRUE),
+            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
+            'VAL' => '1',
+        );
+        $where = array(
+            'NO_ID' => $NO_ID
+        );
+        $this->transaksi_model->update_data($where, $datah, 'pp');
+        $this->session->set_flashdata(
+            'pesan',
+            '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
+                Data Berhasil Di Validasi.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button> 

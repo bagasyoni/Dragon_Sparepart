@@ -27,7 +27,7 @@
         <div class="alert alert-success alert-container" role="alert">
             <i class="fas fa-university"></i>
             <label>
-                Transaksi Verifikasi Bon
+                Transaksi Verifikasi PO
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
@@ -40,12 +40,13 @@
                         <th width="75px"><input type="checkbox" id="selectall" /></th>
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
-                        <th width="570px">No PO</th>
-                        <!-- <th width="250px">Tanggal</th>
-                        <th width="250px">Jatuh Tempo</th>
-                        <th width="170px">Kode</th>
-                        <th width="275px">Nama</th> -->
-                        <th width="400px">DR</th>
+                        <th width="275px">No Bukti</th>
+                        <th width="275px">Kode Supplier</th>
+                        <th width="275px">Nama Supplier</th>
+                        <th width="75px">Dragon</th>
+                        <th width="170px">Tanggal</th>
+                        <th width="170px">Jatuh Tempo</th>
+                        <th width="300px">Notes</th>
                     </tr>
                 </thead>
                 <tbody>

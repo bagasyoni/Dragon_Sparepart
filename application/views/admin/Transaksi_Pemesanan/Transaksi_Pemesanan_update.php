@@ -282,16 +282,16 @@ foreach ($pemesanan as $rowh) {
 							<tr>
 								<th width="50px">No</th>
 								<th width="150px">Bon</th>
-								<th width="100px">Kode</th>
-								<th width="125px">Uraian</th>
-								<th width="75px">Ket Barang</th>
-								<th width="100px">Qty</th>
+								<th width="75px">Kode</th>
+								<th width="175px">Uraian</th>
+								<th width="175	px">Ket Barang</th>
+								<th width="50px">Qty</th>
 								<th width="100px">Bilangan</th>
-								<th width="100px">Satuan</th>
+								<th width="75px">Satuan</th>
 								<th width="100px">Devisi</th>
 								<th width="225px">Keterangan</th>
 								<th width="100px">Tgl Diminta</th>
-								<th width="100px">Sisa</th>
+								<th width="50px">Sisa</th>
 								<th width="90px">Urgent</th>
 								<th width="50px"></th>
 							</tr>
@@ -316,7 +316,7 @@ foreach ($pemesanan as $rowh) {
 									<td><input name="NO_BON[]" id="NO_BON<?php echo $no; ?>" value="<?= $row->NO_BON ?>" type="text" class="form-control NO_BON text_input" readonly></td>
 									<td><input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly></td>
 									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
-									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="JENIS[]" id="JENIS<?php echo $no; ?>" value="<?= $row->JENIS ?>" type="text" class="form-control JENIS text_input"></td>
+									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="TIPE[]" id="TIPE<?php echo $no; ?>" value="<?= $row->TIPE ?>" type="text" class="form-control TIPE text_input"></td>
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="QTY[]" onclick="select()" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input name="BILANGAN[]" id="BILANGAN<?php echo $no; ?>" value="<?= $row->BILANGAN ?>" type="text" class="form-control BILANGAN text_input" readonly></td>
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
@@ -328,7 +328,7 @@ foreach ($pemesanan as $rowh) {
 									<td><input name="SISABON[]" onkeyup="hitung()" id="SISABON<?php echo $no; ?>" value="<?php echo number_format($row->SISABON, 2, '.', ','); ?>" type="text" class="form-control SISABON rightJustified text-primary" readonly></td>
 									<td>
 										<input <?php
-												if ($row->URGENT != "0") echo 'checked'; ?> name="URGENT[]" id="URGENT<?php echo $no; ?>" type="checkbox" value="<?= $row->URGENT ?>" class="checkbox_container">
+												if ($row->URGENT != "0") echo 'checked'; ?> name="URGENT[]" id="URGENT<?php echo $no; ?>" type="checkbox" value="<?= $row->URGENT ?>" class="checkbox_container URGENT">
 									</td>
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
@@ -369,7 +369,8 @@ foreach ($pemesanan as $rowh) {
 			</div>
 		</div>
 		<br>
-		<div class="col-md-12" <?php if ($rowh->TTD3 == !0) echo 'style="visibility: hidden;"'; ?>>
+		<!-- <div class="col-md-12" <?php if ($rowh->TTD3 == !0) echo 'style="visibility: hidden;"'; ?>> -->
+		<div class="col-md-12">
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
@@ -500,6 +501,17 @@ foreach ($pemesanan as $rowh) {
 		$('#TOTAL_QTY').autoNumeric('update');
 	}
 
+	function chekbox() {
+		$(".URGENT").each(function() {
+			if ($(this).is(":checked") == true) {
+				$(this).attr('value', '1');
+			} else {
+				$(this).prop('checked', true);
+				$(this).attr('value', '0');
+			}
+		});
+	}
+
 	function tambah() {
 
 		var x = document.getElementById('datatable').insertRow(idrow + 1);
@@ -528,7 +540,7 @@ foreach ($pemesanan as $rowh) {
 		td2.innerHTML = no_bon;
 		td3.innerHTML = kd_bhn;
 		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
-		td5.innerHTML = "<input name='JENIS[]' id=JENIS" + idrow + " type='text' class='form-control JENIS text_input'>";
+		td5.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input'>";
 		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
 		td7.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
 		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
@@ -538,7 +550,7 @@ foreach ($pemesanan as $rowh) {
 																																																			echo $_POST["TGL_DIMINTA"];
 																																																		} else echo date('d-m-Y'); ?>'>";
 		td12.innerHTML = "<input name='SISABON[]' onclick='select()' onkeyup='hitung()' value='0' id=SISABON" + idrow + " type='text' class='form-control SISABON rightJustified text-primary' readonly>";
-		td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='1' unchecked>";
+		td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='0' unchecked>";
 		td14.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
@@ -625,7 +637,7 @@ foreach ($pemesanan as $rowh) {
 		return $container;
 	}
 
-	var jenis = '';
+	var tipe = '';
 	var na_bhn = '';
 	var ket = '';
 	var satuan = '';
@@ -635,7 +647,7 @@ foreach ($pemesanan as $rowh) {
 	var tgl_diminta = '';
 
 	function formatSelection_no_bon(repo_no_bon) {
-		jenis = repo_no_bon.JENIS;
+		tipe = repo_no_bon.TIPE;
 		na_bhn = repo_no_bon.NA_BHN;
 		ket = repo_no_bon.KET;
 		satuan = repo_no_bon.SATUAN;
@@ -648,7 +660,7 @@ foreach ($pemesanan as $rowh) {
 
 	function no_bon(x) {
 		var q = x.substring(6, 10);
-		$('#JENIS' + q).val(jenis);
+		$('#TIPE' + q).val(tipe);
 		$('#NA_BHN' + q).val(na_bhn);
 		$('#KET' + q).val(ket);
 		$('#SATUAN' + q).val(satuan);

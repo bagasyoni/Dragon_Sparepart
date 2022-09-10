@@ -195,12 +195,12 @@
 						<thead>
 							<tr>
 								<th width="50px">No</th>
-								<th width="150px">Kode</th>
-								<th width="125px">Uraian</th>
+								<th width="75px">Kode</th>
+								<th width="175px">Uraian</th>
 								<th width="175px">Ket Barang</th>
-								<th width="100px">Qty</th>
-								<th width="100px">Bilangan</th>
-								<th width="100px">Satuan</th>
+								<th width="75px">Qty</th>
+								<th width="125px">Bilangan</th>
+								<th width="75px">Satuan</th>
 								<th width="100px">Devisi</th>
 								<th width="120px">Keterangan</th>
 								<th width="100px">Tgl Diminta</th>
@@ -217,7 +217,7 @@
 									</div>
 								</td>
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" readonly></td>
-								<td><input name="JENIS[]" id="JENIS0" type="text" class="form-control JENIS text_input" required></td>
+								<td><input name="TIPE[]" id="TIPE0" type="text" class="form-control TIPE text_input" required></td>
 								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="BILANGAN[]" id="BILANGAN0" type="text" class="form-control BILANGAN text_input" readonly></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input" readonly></td>
@@ -229,7 +229,7 @@
 																																										} else echo date('d-m-Y'); ?>" onclick="select()">
 								</td>
 								<td>
-									<input name="URGENT[]" id="URGENT0" type="checkbox" value="0" class="checkbox_container">
+									<input name="URGENT[]" id="URGENT" type="checkbox" value="0" class="checkbox_container URGENT" unchecked>
 								</td>
 								<td>
 									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -420,7 +420,7 @@
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
 		td2.innerHTML = kd_bhn;
 		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
-		td4.innerHTML = "<input name='JENIS[]' id=JENIS" + idrow + " type='text' class='form-control JENIS text_input' required>";
+		td4.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input' required>";
 		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td6.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
 		td7.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
@@ -429,7 +429,7 @@
 		td10.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
 																																																			echo $_POST["TGLSG"];
 																																																		} else echo date('d-m-Y'); ?>'>";
-		td11.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='0'>";
+		td11.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
 		td12.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;

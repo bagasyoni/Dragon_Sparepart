@@ -123,84 +123,84 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td class="border-left"><input name="N1" id="N1" type="text" class="form-control N1" ></td>
+								<td class="border-left"><input name="N1" id="N1" type="text" class="form-control N1" value="<?= $N1 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J1" id="J1" type="text" onkeyup="hitung()" class="form-control J1 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J1,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N2" id="N2" type="text" class="form-control N2" ></td>
+								<td class="border-left"><input name="N2" id="N2" type="text" class="form-control N2" value="<?= $N2 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J2" id="J2" type="text" onkeyup="hitung()" class="form-control J2 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J2,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N3" id="N3" type="text" class="form-control N3" ></td>
+								<td class="border-left"><input name="N3" id="N3" type="text" class="form-control N3" value="<?= $N3 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J3" id="J3" type="text" onkeyup="hitung()" class="form-control J3 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J3,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N4" id="N4" type="text" class="form-control N4" ></td>
+								<td class="border-left"><input name="N4" id="N4" type="text" class="form-control N4" value="<?= $N4 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J4" id="J4" type="text" onkeyup="hitung()" class="form-control J4 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J4,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N5" id="N5" type="text" class="form-control N5" ></td>
+								<td class="border-left"><input name="N5" id="N5" type="text" class="form-control N5" value="<?= $N5 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J5" id="J5" type="text" onkeyup="hitung()" class="form-control J5 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J5,2,'.',',');?>"></td>
 							</tr>
 							<tr>
-								<td class="border-left"><input name="N6" id="N6" type="text" class="form-control N6" ></td>
+								<td class="border-left"><input name="N6" id="N6" type="text" class="form-control N6" value="<?= $N6 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J6" id="J6" type="text" onkeyup="hitung()" class="form-control J6 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J6,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N7" id="N7" type="text" class="form-control N7" ></td>
+								<td class="border-left"><input name="N7" id="N7" type="text" class="form-control N7" value="<?= $N7 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J7" id="J7" type="text" onkeyup="hitung()" class="form-control J7 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J7,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N8" id="N8" type="text" class="form-control N8" ></td>
+								<td class="border-left"><input name="N8" id="N8" type="text" class="form-control N8" value="<?= $N8 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J8" id="J8" type="text" onkeyup="hitung()" class="form-control J8 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J8,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N9" id="N9" type="text" class="form-control N9" ></td>
+								<td class="border-left"><input name="N9" id="N9" type="text" class="form-control N9" value="<?= $N9 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J9" id="J9" type="text" onkeyup="hitung()" class="form-control J9 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J9,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N10" id="N1" type="text" class="form-control N10" ></td>
+								<td class="border-left"><input name="N10" id="N1" type="text" class="form-control N10" value="<?= $N10 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J10" id="J10" type="text" onkeyup="hitung()" class="form-control J10 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J10,2,'.',',');?>"></td>
 							</tr>
 							<tr>
-								<td class="border-left"><input name="N11" id="N11" type="text" class="form-control N11" ></td>
+								<td class="border-left"><input name="N11" id="N11" type="text" class="form-control N11" value="<?= $N11 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J11" id="J11" type="text" onkeyup="hitung()" class="form-control J11 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J11,2,'.',',');?>"></td>
-                                <td class="border-left"><input name="N12" id="N12" type="text" class="form-control N12" ></td>
+                                <td class="border-left"><input name="N12" id="N12" type="text" class="form-control N12" value="<?= $N12 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J12" id="J12" type="text" onkeyup="hitung()" class="form-control J12 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J12,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N13" id="N13" type="text" class="form-control N13" ></td>
+								<td class="border-left"><input name="N13" id="N13" type="text" class="form-control N13" value="<?= $N13 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J13" id="J13" type="text" onkeyup="hitung()" class="form-control J13 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J13,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N14" id="N14" type="text" class="form-control N14" ></td>
+								<td class="border-left"><input name="N14" id="N14" type="text" class="form-control N14" value="<?= $N14 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J14" id="J14" type="text" onkeyup="hitung()" class="form-control J14 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J14,2,'.',',');?>"></td>
-                                <td class="border-left"><input name="N15" id="N15" type="text" class="form-control N15" ></td>
+                                <td class="border-left"><input name="N15" id="N15" type="text" class="form-control N15" value="<?= $N15 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J15" id="J15" type="text" onkeyup="hitung()" class="form-control J15 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J15,2,'.',',');?>"></td>
 							</tr>
 							<tr>
-								<td class="border-left"><input name="N16" id="N16" type="text" class="form-control N16" ></td>
+								<td class="border-left"><input name="N16" id="N16" type="text" class="form-control N16" value="<?= $N16 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J16" id="J16" type="text" onkeyup="hitung()" class="form-control J16 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J16,2,'.',',');?>"></td>
-                                <td class="border-left"><input name="N17" id="N17" type="text" class="form-control N17" ></td>
+                                <td class="border-left"><input name="N17" id="N17" type="text" class="form-control N17" value="<?= $N17 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J17" id="J17" type="text" onkeyup="hitung()" class="form-control J17 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J17,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N18" id="N18" type="text" class="form-control N18" ></td>
+								<td class="border-left"><input name="N18" id="N18" type="text" class="form-control N18" value="<?= $N18 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J18" id="J18" type="text" onkeyup="hitung()" class="form-control J18 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J18,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N19" id="N19" type="text" class="form-control N19" ></td>
+								<td class="border-left"><input name="N19" id="N19" type="text" class="form-control N19" value="<?= $N19 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J19" id="J19" type="text" onkeyup="hitung()" class="form-control J19 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J19,2,'.',',');?>"></td>
-                                <td class="border-left"><input name="N20" id="N20" type="text" class="form-control N20" ></td>
+                                <td class="border-left"><input name="N20" id="N20" type="text" class="form-control N20" value="<?= $N20 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J20" id="J20" type="text" onkeyup="hitung()" class="form-control J20 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J20,2,'.',',');?>"></td>
 							</tr>
 							<tr>
-								<td class="border-left"><input name="N21" id="N21" type="text" class="form-control N21" ></td>
+								<td class="border-left"><input name="N21" id="N21" type="text" class="form-control N21" value="<?= $N21 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J21" id="J21" type="text" onkeyup="hitung()" class="form-control J21 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J21,2,'.',',');?>"></td>
-                                <td class="border-left"><input name="N22" id="N22" type="text" class="form-control N22" ></td>
+                                <td class="border-left"><input name="N22" id="N22" type="text" class="form-control N22" value="<?= $N22 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J22" id="J22" type="text" onkeyup="hitung()" class="form-control J22 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J22,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N23" id="N23" type="text" class="form-control N23" ></td>
+								<td class="border-left"><input name="N23" id="N23" type="text" class="form-control N23" value="<?= $N23 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right"><input name="J23" id="J23" type="text" onkeyup="hitung()" class="form-control J23 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J23,2,'.',',');?>"></td>
-								<td class="border-left"><input name="N24" id="N24" type="text" class="form-control N24" ></td>
+								<td class="border-left"><input name="N24" id="N24" type="text" class="form-control N24" value="<?= $N24 ?>"></td>
 								<td class="border-middle" style="width: 10px;"><label class="per"> / </label></td>
 								<td class="border-right">
 									<input name="J24" id="J24" type="text" onkeyup="hitung()" class="form-control J24 rightJustified text-primary font-weight-bold" value="<?php echo number_format($J24,2,'.',',');?>">

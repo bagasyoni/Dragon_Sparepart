@@ -42,12 +42,12 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
             'ATK' => '0',
-            'TTD1' => '1',
-            'TTD2' => '1',
-            'TTD3' => '1',
-            'TTD4' => '1',
-            'TTD5' => '1',
-            'TTD6' => '1',
+            // 'TTD1' => '1',
+            // 'TTD2' => '1',
+            // 'TTD3' => '1',
+            // 'TTD4' => '1',
+            // 'TTD5' => '1',
+            // 'TTD6' => '1',
         );
         $this->db->select('*');
         $this->db->from('beli');
@@ -102,12 +102,12 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
             'ATK' => '0',
-            'TTD1' => '1',
-            'TTD2' => '1',
-            'TTD3' => '1',
-            'TTD4' => '1',
-            'TTD5' => '1',
-            'TTD6' => '1',
+            // 'TTD1' => '1',
+            // 'TTD2' => '1',
+            // 'TTD3' => '1',
+            // 'TTD4' => '1',
+            // 'TTD5' => '1',
+            // 'TTD6' => '1',
         );
         $this->db->from('beli');
         $this->db->where($where);
@@ -134,8 +134,9 @@ class Transaksi_Barang_Masuk extends CI_Controller
                         </div>
                     </div>';
             $row[] = $no . ".";
-            $row[] = $beli->TGL;
+            $row[] = date("d-m-Y", strtotime($beli->TGL));
             $row[] = $beli->NO_BUKTI;
+            $row[] = $beli->NAMAS;
             $row[] = $beli->DR;
             $data[] = $row;
         }
@@ -161,12 +162,12 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
             'ATK' => '0',
-            'TTD1' => '1',
-            'TTD2' => '1',
-            'TTD3' => '1',
-            'TTD4' => '1',
-            'TTD5' => '1',
-            'TTD6' => '1',
+            // 'TTD1' => '1',
+            // 'TTD2' => '1',
+            // 'TTD3' => '1',
+            // 'TTD4' => '1',
+            // 'TTD5' => '1',
+            // 'TTD6' => '1',
         );
         $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -187,7 +188,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
     {
         $q1 = "SELECT beli.NO_ID as ID,
                 beli.NO_BUKTI AS NO_BUKTI,
-                beli.KET AS KET,
+                beli.NAMAS AS NAMAS,
                 beli.TGL AS TGL,
                 beli.PIN1 AS PIN1,
                 beli.TOTAL_QTYPP AS TOTAL_QTYPP,
@@ -226,7 +227,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $bukti = $this->input->post('NO_BUKTI');
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
-            'KET' => $this->input->post('KET', TRUE),
+            'NAMAS' => $this->input->post('NAMAS', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TOTAL_QTYPP' => str_replace(',', '', $this->input->post('TOTAL_QTYPP', TRUE)),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
@@ -245,7 +246,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         var_dump($id);
         $q1 = "SELECT beli.NO_ID as ID,
                 beli.NO_BUKTI AS NO_BUKTI,
-                beli.KET AS KET,
+                beli.NAMAS AS NAMAS,
                 beli.TGL AS TGL,
                 beli.PIN1 AS PIN1,
                 beli.TOTAL_QTYPP AS TOTAL_QTYPP,

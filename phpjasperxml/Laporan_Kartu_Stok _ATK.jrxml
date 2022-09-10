@@ -10,25 +10,25 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="inch"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="inch"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="inch"/>
-	<parameter name="BARANG" class="java.lang.String"/>
+	<parameter name="KD_BHN" class="java.lang.String"/>
 	<parameter name="RAK" class="java.lang.String"/>
 	<parameter name="TGL" class="java.lang.String"/>
 	<parameter name="NO_BUKTI" class="java.lang.String"/>
-	<parameter name="AWAL" class="java.lang.String"/>
-	<parameter name="MASUK" class="java.lang.String"/>
-	<parameter name="KELUAR" class="java.lang.String"/>
-	<parameter name="AKHIR" class="java.lang.String"/>
+	<parameter name="AW" class="java.lang.String"/>
+	<parameter name="MA" class="java.lang.String"/>
+	<parameter name="KE" class="java.lang.String"/>
+	<parameter name="AK" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="BARANG" class="java.lang.String"/>
+	<field name="KD_BHN" class="java.lang.String"/>
 	<field name="RAK" class="java.lang.String"/>
 	<field name="TGL" class="java.lang.String"/>
 	<field name="NO_BUKTI" class="java.lang.String"/>
-	<field name="AWAL" class="java.lang.String"/>
-	<field name="MASUK" class="java.lang.String"/>
-	<field name="KELUAR" class="java.lang.String"/>
-	<field name="AKHIR" class="java.lang.String"/>
+	<field name="AW" class="java.lang.String"/>
+	<field name="MA" class="java.lang.String"/>
+	<field name="KE" class="java.lang.String"/>
+	<field name="AK" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -36,7 +36,7 @@
 		<band height="61" splitType="Stretch">
 			<textField>
 				<reportElement x="10" y="10" width="241" height="20" uuid="851e5b4f-c54b-4268-be46-0e52fc418462"/>
-				<textFieldExpression><![CDATA[$F{BARANG}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{KD_BHN}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="30" width="100" height="20" uuid="ffedc4d2-fb21-495a-a124-fb581fbcf607"/>
@@ -143,14 +143,14 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{KELUAR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{KE}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="508" y="0" width="91" height="21" uuid="02439e20-1c8f-4d31-862b-974a962a6a92"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{AKHIR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{AK}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="506" y="-1" width="1" height="22" uuid="bd030cd1-3ca9-4882-9c01-5da65293af2f"/>
@@ -160,7 +160,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{MASUK}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{MA}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="413" y="-1" width="1" height="22" uuid="f54fcebf-6430-4fb9-a9b4-deb480585ad3"/>
@@ -173,7 +173,7 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{AWAL}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{AW}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="221" y="-1" width="1" height="22" uuid="0b512dd4-8538-4760-9c46-c898f286f8e7"/>

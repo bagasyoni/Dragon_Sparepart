@@ -119,6 +119,7 @@ class Transaksi_Inventaris_Cetakan extends CI_Controller {
 
     public function index_Transaksi_Inventaris_Cetakan() {
         $data['sp_invenc'] = $this->master_model->tampil_data('sp_invenc', 'NO_ID')->result();
+        $this->session->set_userdata('judul', 'Transaksi Inventaris Cetakan');
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_Inventaris_Cetakan/Transaksi_Inventaris_Cetakan', $data);

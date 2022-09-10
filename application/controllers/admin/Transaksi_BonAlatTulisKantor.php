@@ -122,7 +122,7 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
                     </div>';
             $row[] = $no . ".";
             $row[] = $pakai->NO_BUKTI;
-            $row[] = $pakai->TGL;
+            $row[] = date("d-m-Y", strtotime($pakai->TGL));
             $row[] = $pakai->NOTES;
             $row[] = $pakai->SUB;
             $row[] = $pakai->DR;

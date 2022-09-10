@@ -32,13 +32,16 @@ class Transaksi_MonitorPO extends CI_Controller
 
     private function _get_datatables_query()
     {
+        $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
-        $sub = $this->session->userdata['sub'];
+        // $sub = $this->session->userdata['sub'];
         $where = array(
+            'DR' => $dr,
             'PER' => $per,
-            'SUBDIV' => $sub,
-            'FLAG' => 'SP',
-            'FLAG2' => $sub,
+            'TTD1' => '1',
+            'TTD2' => '1',
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '0',
         );
         $this->db->select('*');
         $this->db->from('po');
@@ -83,13 +86,16 @@ class Transaksi_MonitorPO extends CI_Controller
 
     function count_all()
     {
+        $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $where = array(
+            'DR' => $dr,
             'PER' => $per,
-            'SUBDIV' => $sub,
-            'FLAG' => 'SP',
-            'FLAG2' => $sub,
+            'TTD1' => '1',
+            'TTD2' => '1',
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '0',
         );
         $this->db->from('po');
         $this->db->where($where);
@@ -118,9 +124,11 @@ class Transaksi_MonitorPO extends CI_Controller
                     </div>';
             $row[] = $no . ".";
             $row[] = $po->NO_BUKTI;
+            $row[] = $po->KODES;
+            $row[] = $po->NAMAS;
             $row[] = $po->DR;
-            $row[] = $po->TGL;
-            $row[] = $po->JTEMPO;
+            $row[] = date("d-m-Y", strtotime($po->TGL));
+            $row[] = date("d-m-Y", strtotime($po->JTEMPO));
             $row[] = $po->NOTES;
             $data[] = $row;
         }
@@ -135,14 +143,17 @@ class Transaksi_MonitorPO extends CI_Controller
 
     public function index_Transaksi_MonitorPO()
     {
+        $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $this->session->set_userdata('judul', 'Transaksi Monitor PO');
         $where = array(
+            'DR' => $dr,
             'PER' => $per,
-            'SUBDIV' => $sub,
-            'FLAG' => 'SP',
-            'FLAG2' => $sub,
+            'TTD1' => '1',
+            'TTD2' => '1',
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '0',
         );
         $data['monitorpo'] = $this->transaksi_model->tampil_data($where, 'po', 'NO_ID')->result();
         $this->load->view('templates_admin/header');

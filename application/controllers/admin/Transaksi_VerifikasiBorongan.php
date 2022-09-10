@@ -124,7 +124,7 @@ class Transaksi_VerifikasiBorongan extends CI_Controller
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
             $row[] = $pp->DEVISI;
-            $row[] = $pp->TGL;
+            $row[] = date("d-m-Y", strtotime($pp->TGL));
             $row[] = $pp->NA_BRG;
             $row[] = $pp->NOTES;
             $data[] = $row;

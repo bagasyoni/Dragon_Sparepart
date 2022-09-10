@@ -156,7 +156,7 @@
 							<label class="label">Article </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NA_BRG" id="NA_BRG" name="NA_BRG" type="text" required>
+							<input class="form-control text_input ARTICLE" id="ARTICLE" name="ARTICLE" type="text" required>
 						</div>
 					</div>
 				</div>

@@ -119,12 +119,11 @@ class Transaksi_BonPemakaian extends CI_Controller
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonPemakaian/update/' . $pakai->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonPemakaian/delete/' . $pakai->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
-                            <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
             $row[] = $pakai->NO_BUKTI;
-            $row[] = $pakai->TGL;
+            $row[] = date("d-m-Y", strtotime($pakai->TGL));
             $row[] = $pakai->NOTES;
             $row[] = $pakai->SUB;
             $row[] = $pakai->DR;

@@ -37,9 +37,10 @@ class Transaksi_PesananMeba extends CI_Controller
         $where = array(
             'PER' => $per,
             'DR' => $dr,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
-            'TYP' => 'RND_MEBA',
+            'FLAG' => 'CNC',
+            'SUB' => 'MB',
+            // 'FLAG2' => 'SP',
+            // 'TYP' => 'RND_MEBA',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -89,9 +90,10 @@ class Transaksi_PesananMeba extends CI_Controller
         $where = array(
             'PER' => $per,
             'DR' => $dr,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
-            'TYP' => 'RND_MEBA',
+            'FLAG' => 'CNC',
+            'SUB' => 'MB',
+            // 'FLAG2' => 'SP',
+            // 'TYP' => 'RND_MEBA',
         );
         $this->db->from('pp');
         $this->db->where($where);
@@ -114,14 +116,15 @@ class Transaksi_PesananMeba extends CI_Controller
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananMeba/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananMeba/validasi/' . $pp->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananMeba/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
-            $row[] = $pp->TGL;
-            $row[] = $pp->NA_BRG;
+            $row[] = date("d-m-Y", strtotime($pp->TGL));
+            $row[] = $pp->ARTICLE;
             $data[] = $row;
         }
         $output = array(
@@ -141,9 +144,11 @@ class Transaksi_PesananMeba extends CI_Controller
         $where = array(
             'PER' => $per,
             'DR' => $dr,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
-            'TYP' => 'RND_MEBA',
+            'FLAG' => 'CNC',
+            'SUB' => 'MB',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
+            // 'TYP' => 'RND_MEBA',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -258,10 +263,10 @@ class Transaksi_PesananMeba extends CI_Controller
         $datah = array(
             'NO_BUKTI' => $bukti,
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-            'NA_BRG' => $this->input->post('NA_BRG', TRUE),
+            'ARTICLE' => $this->input->post('ARTICLE', TRUE),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'FLAG' => 'CNC',
+            'SUB' => 'MB',
             'TYP' => 'RND_MEBA',
             'DR' => $this->session->userdata['dr'],
             'PER' => $this->session->userdata['periode'],
@@ -289,8 +294,8 @@ class Transaksi_PesananMeba extends CI_Controller
                 'QTY' => str_replace(',', '', $QTY[$i]),
                 'SATUAN' => $SATUAN[$i],
                 'KET' => $KET[$i],
-                'FLAG' => 'PP',
-                'FLAG2' => 'SP',
+                'FLAG' => 'CNC',
+                'SUB' => 'MB',
                 'TYP' => 'RND_MEBA',
                 'DR' => $this->session->userdata['dr'],
                 'PER' => $this->session->userdata['periode'],
@@ -317,9 +322,10 @@ class Transaksi_PesananMeba extends CI_Controller
         $q1 = "SELECT pp.NO_ID as ID,
                 pp.NO_BUKTI AS NO_BUKTI,
                 pp.TGL AS TGL,
-                pp.NA_BRG AS NA_BRG,
+                pp.ARTICLE AS ARTICLE,
                 pp.TOTAL_QTY AS TOTAL_QTY,
                 pp.TYP AS TYP,
+                pp.VAL AS VAL,
 
                 ppd.NO_ID AS NO_ID,
                 ppd.REC AS REC,
@@ -346,10 +352,10 @@ class Transaksi_PesananMeba extends CI_Controller
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-            'NA_BRG' => $this->input->post('NA_BRG', TRUE),
+            'ARTICLE' => $this->input->post('ARTICLE', TRUE),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'FLAG' => 'CNC',
+            'SUB' => 'MB',
             'TYP' => 'RND_MEBA',
             'DR' => $this->session->userdata['dr'],
             'PER' => $this->session->userdata['periode'],
@@ -364,9 +370,10 @@ class Transaksi_PesananMeba extends CI_Controller
         $q1 = "SELECT pp.NO_ID as ID,
                 pp.NO_BUKTI AS NO_BUKTI,
                 pp.TGL AS TGL,
-                pp.NA_BRG AS NA_BRG,
+                pp.ARTICLE AS ARTICLE,
                 pp.TOTAL_QTY AS TOTAL_QTY,
                 pp.TYP AS TYP,
+                pp.VAL AS VAL,
 
                 ppd.NO_ID AS NO_ID,
                 ppd.REC AS REC,
@@ -407,8 +414,8 @@ class Transaksi_PesananMeba extends CI_Controller
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
                     'SATUAN' => $SATUAN[$URUT],
                     'KET' => $KET[$URUT],
-                    'FLAG' => 'PP',
-                    'FLAG2' => 'SP',
+                    'FLAG' => 'CNC',
+                    'SUB' => 'MB',
                     'TYP' => 'RND_MEBA',
                     'DR' => $this->session->userdata['dr'],
                     'PER' => $this->session->userdata['periode'],
@@ -441,8 +448,8 @@ class Transaksi_PesananMeba extends CI_Controller
                     'QTY' => str_replace(',', '', $QTY[$i]),
                     'SATUAN' => $SATUAN[$i],
                     'KET' => $KET[$i],
-                    'FLAG' => 'PP',
-                    'FLAG2' => 'SP',
+                    'FLAG' => 'CNC',
+                    'SUB' => 'MB',
                     'TYP' => 'RND_MEBA',
                     'DR' => $this->session->userdata['dr'],
                     'PER' => $this->session->userdata['periode'],
@@ -457,6 +464,162 @@ class Transaksi_PesananMeba extends CI_Controller
             'pesan',
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
                 Data Berhasil Di Update.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> 
+            </div>'
+        );
+        redirect('admin/Transaksi_PesananMeba/index_Transaksi_PesananMeba');
+    }
+
+    public function validasi($id)
+    {
+        $q1 = "SELECT pp.NO_ID as ID,
+                pp.NO_BUKTI AS NO_BUKTI,
+                pp.TGL AS TGL,
+                pp.ARTICLE AS ARTICLE,
+                pp.TOTAL_QTY AS TOTAL_QTY,
+                pp.TYP AS TYP,
+                pp.VAL AS VAL,
+
+                ppd.NO_ID AS NO_ID,
+                ppd.REC AS REC,
+                ppd.NA_BHN AS NA_BHN,
+                ppd.WARNA AS WARNA,
+                ppd.SERI AS SERI,
+                ppd.QTY AS QTY,
+                ppd.SATUAN AS SATUAN,
+                ppd.KET AS KET,
+                ppd.TYP AS TYP
+            FROM pp,ppd 
+            WHERE pp.NO_ID=$id 
+            AND pp.NO_ID=ppd.ID 
+            ORDER BY ppd.REC";
+        $data['rnd'] = $this->transaksi_model->edit_data($q1)->result();
+        $this->load->view('templates_admin/header');
+        $this->load->view('templates_admin/navbar');
+        $this->load->view('admin/Transaksi_PesananMeba/Transaksi_PesananMeba_validasi', $data);
+        $this->load->view('templates_admin/footer');
+    }
+
+    public function validasi_aksi()
+    {
+        $datah = array(
+            'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
+            'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
+            'ARTICLE' => $this->input->post('ARTICLE', TRUE),
+            'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
+            'FLAG' => 'CNC',
+            'SUB' => 'MB',
+            'TYP' => 'RND_MEBA',
+            'VAL' => '1',
+            'DR' => $this->session->userdata['dr'],
+            'PER' => $this->session->userdata['periode'],
+            'USRNM' => $this->session->userdata['username'],
+            'TG_SMP' => date("Y-m-d h:i a")
+        );
+        $where = array(
+            'NO_ID' => $this->input->post('ID', TRUE)
+        );
+        $this->transaksi_model->update_data($where, $datah, 'pp');
+        $id = $this->input->post('ID', TRUE);
+        $q1 = "SELECT pp.NO_ID as ID,
+                pp.NO_BUKTI AS NO_BUKTI,
+                pp.TGL AS TGL,
+                pp.ARTICLE AS ARTICLE,
+                pp.TOTAL_QTY AS TOTAL_QTY,
+                pp.TYP AS TYP,
+                pp.VAL AS VAL,
+
+                ppd.NO_ID AS NO_ID,
+                ppd.REC AS REC,
+                ppd.NA_BHN AS NA_BHN,
+                ppd.WARNA AS WARNA,
+                ppd.SERI AS SERI,
+                ppd.QTY AS QTY,
+                ppd.SATUAN AS SATUAN,
+                ppd.KET AS KET,
+                ppd.TYP AS TYP
+            FROM pp,ppd 
+            WHERE pp.NO_ID=$id 
+            AND pp.NO_ID=ppd.ID 
+            ORDER BY ppd.REC";
+        $data = $this->transaksi_model->edit_data($q1)->result();
+        $NO_ID = $this->input->post('NO_ID');
+        $REC = $this->input->post('REC');
+        $NA_BHN = $this->input->post('NA_BHN');
+        $WARNA = $this->input->post('WARNA');
+        $SERI = $this->input->post('SERI');
+        $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
+        $SATUAN = $this->input->post('SATUAN');
+        $KET = $this->input->post('KET');
+        $jum = count($data);
+        $ID = array_column($data, 'NO_ID');
+        $jumy = count($NO_ID);
+        $i = 0;
+        while ($i < $jum) {
+            if (in_array($ID[$i], $NO_ID)) {
+                $URUT = array_search($ID[$i], $NO_ID);
+                $datad = array(
+                    'NO_BUKTI' => $this->input->post('NO_BUKTI'),
+                    'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
+                    'REC' => $REC[$URUT],
+                    'NA_BHN' => $NA_BHN[$URUT],
+                    'WARNA' => $WARNA[$URUT],
+                    'SERI' => $SERI[$URUT],
+                    'QTY' => str_replace(',', '', $QTY[$URUT]),
+                    'SATUAN' => $SATUAN[$URUT],
+                    'KET' => $KET[$URUT],
+                    'FLAG' => 'CNC',
+                    'SUB' => 'MB',
+                    'TYP' => 'RND_MEBA',
+                    'DR' => $this->session->userdata['dr'],
+                    'PER' => $this->session->userdata['periode'],
+                    'USRNM' => $this->session->userdata['username'],
+                    'TG_SMP' => date("Y-m-d h:i a")
+                );
+                $where = array(
+                    'NO_ID' => $NO_ID[$URUT]
+                );
+                $this->transaksi_model->update_data($where, $datad, 'ppd');
+            } else {
+                $where = array(
+                    'NO_ID' => $ID[$i]
+                );
+                $this->transaksi_model->hapus_data($where, 'ppd');
+            }
+            $i++;
+        }
+        $i = 0;
+        while ($i < $jumy) {
+            if ($NO_ID[$i] == "0") {
+                $datad = array(
+                    'ID' => $this->input->post('ID', TRUE),
+                    'REC' => $REC[$i],
+                    'NO_BUKTI' => $this->input->post('NO_BUKTI'),
+                    'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
+                    'NA_BHN' => $NA_BHN[$i],
+                    'WARNA' => $WARNA[$i],
+                    'SERI' => $SERI[$i],
+                    'QTY' => str_replace(',', '', $QTY[$i]),
+                    'SATUAN' => $SATUAN[$i],
+                    'KET' => $KET[$i],
+                    'FLAG' => 'CNC',
+                    'SUB' => 'MB',
+                    'TYP' => 'RND_MEBA',
+                    'DR' => $this->session->userdata['dr'],
+                    'PER' => $this->session->userdata['periode'],
+                    'USRNM' => $this->session->userdata['username'],
+                    'TG_SMP' => date("Y-m-d h:i a")
+                );
+                $this->transaksi_model->input_datad('ppd', $datad);
+            }
+            $i++;
+        }
+        $this->session->set_flashdata(
+            'pesan',
+            '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
+                Data Berhasil Di Validasi.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button> 

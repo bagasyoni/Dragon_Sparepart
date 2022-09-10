@@ -119,16 +119,16 @@ class Transaksi_PesananRNDInternal extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananRNDInternal/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> val</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananRNDInternal/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananRNDInternal/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
-            $row[] = $pp->TGL;
+            $row[] = date("d-m-Y", strtotime($pp->TGL));
             $row[] = $pp->KET;
-            $row[] = $pp->TGL_DIMINTA;
+            $row[] = date("d-m-Y", strtotime($pp->TGL_DIMINTA));
             $row[] = $pp->NOTES;
             $data[] = $row;
         }

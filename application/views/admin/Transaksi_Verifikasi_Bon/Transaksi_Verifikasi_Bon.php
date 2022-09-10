@@ -40,9 +40,9 @@
                         <th width="75px"><input type="checkbox" id="selectall" /></th>
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
-                        <th width="275px">No Bukti</th>
-                        <th width="450px">Kode Bagian</th>
-                        <th width="170px">Nama Bagian</th>
+                        <th width="275px">Nomor Order</th>
+                        <th width="150px">Tanggal</th>
+                        <th width="370px">Nama Bagian</th>
                         <th width="75px">Dragon</th>
                     </tr>
                 </thead>

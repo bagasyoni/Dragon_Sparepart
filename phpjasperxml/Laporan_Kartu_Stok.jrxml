@@ -11,7 +11,7 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="inch"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="inch"/>
 	<parameter name="NA_BHN" class="java.lang.String"/>
-	<parameter name="KD_BHN" class="java.lang.String"/>
+	<parameter name="RAK" class="java.lang.String"/>
 	<parameter name="TGL" class="java.lang.String"/>
 	<parameter name="NO_BUKTI" class="java.lang.String"/>
 	<parameter name="AW" class="java.lang.String"/>
@@ -22,7 +22,7 @@
 		<![CDATA[]]>
 	</queryString>
 	<field name="NA_BHN" class="java.lang.String"/>
-	<field name="KD_BHN" class="java.lang.String"/>
+	<field name="RAK" class="java.lang.String"/>
 	<field name="TGL" class="java.lang.String"/>
 	<field name="NO_BUKTI" class="java.lang.String"/>
 	<field name="AW" class="java.lang.String"/>
@@ -48,7 +48,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="120" y="30" width="131" height="20" uuid="873ac5df-e6c8-482f-91ef-5a1b00ec22a1"/>
-				<textFieldExpression><![CDATA[$F{KD_BHN}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{RAK}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

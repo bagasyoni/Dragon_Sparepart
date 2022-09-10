@@ -146,7 +146,7 @@
 							<label class="label">DR </label>
 						</div>
 						<div class="col-md-1">
-							<select value="" class="js-example-responsive-dragon form-control DR" name="DR" id="DR" onchange="dragon(this.id)" onfocusout="hitung()" required></select>
+							<select value="" class="js-example-responsive-dragon form-control DEVISI" name="DEVISI" id="DEVISI" onchange="dragon(this.id)" onfocusout="hitung()" required></select>
 						</div>
 					</div>
 				</div>
@@ -156,7 +156,7 @@
 							<label class="label">Article </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input KET" id="KET" name="KET" type="text" required>
+							<input class="form-control text_input ARTICLE" id="ARTICLE" name="ARTICLE" type="text" required>
 						</div>
 						<div class="col-md-1">
 							<label class="label">Pesan </label>
@@ -184,7 +184,7 @@
 							<label class="label">Tanggal Diminta </label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL_DIMINTA"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+							<input type="text" class="date form-control TGL_DIMINTA_H text_input" id="TGL_DIMINTA_H" name="TGL_DIMINTA_H" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL_DIMINTA_H"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
 						</div>
 					</div>
 				</div>
@@ -226,7 +226,7 @@
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1 text_input"></td>
 								<td>
-									<input name="TGL_DIMINTA[]" id="TGL_DIMINTA0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																		} else echo date('d-m-Y'); ?>" onclick="select()">
+									<input name="TGL_DIMINTA_D[]" id="TGL_DIMINTA_D0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																		} else echo date('d-m-Y'); ?>" onclick="select()">
 								</td>
 								<td><input name="GAMBAR1[]" id="GAMBAR10" type="file" accept="image/png, image/jpeg, image/jpg, image/gif"></td>
 								<td>
@@ -408,7 +408,7 @@
 		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' required>";
 		td6.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
-		td7.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {} else echo date('d-m-Y'); ?>'>";
+		td7.innerHTML = "<input name='TGL_DIMINTA_D[]' ocnlick='select()' id=TGL_DIMINTA_D" + idrow + " type='text' class='date form-control TGL_DIMINTA_D text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {} else echo date('d-m-Y'); ?>'>";
 		td8.innerHTML = "<input name='GAMBAR1[]' id=GAMBAR1" + idrow + " type='file' accept='image/jpeg, image/png, image/jpg, image/gif'>";
 		td9.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";

@@ -42,7 +42,7 @@
                         <th width="75px">No</th>
                         <th width="375px">No Bukti</th>
                         <th width="300px">Tgl</th>
-                        <th width="300px">Keterangan</th>
+                        <th width="300px">Diterima Dari</th>
                     </tr>
                 </thead>
                 <tbody>

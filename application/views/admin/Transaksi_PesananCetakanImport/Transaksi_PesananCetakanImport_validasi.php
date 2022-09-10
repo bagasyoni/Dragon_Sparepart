@@ -132,9 +132,9 @@
 <div class="container-fluid">
 	<br>
 	<div class="alert alert-success alert-container" role="alert">
-		<i class="fas fa-university"></i> Update Pesanan LBBA
+		<i class="fas fa-university"></i> Validasi Pesanan Cetakan Import
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananLBBA/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakanImport/validasi_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -153,7 +153,9 @@
 							<label class="label">DR </label>
 						</div>
 						<div class="col-md-1">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" value="<?= $DEVISI ?>">
+							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="js-example-responsive-dragon form-control DEVISI text_input" name="DEVISI" id="DEVISI" onchange="dragon(this.id)" required>
+								<option value="<?= $DEVISI ?>" selected id="DEVISI"><?= $DEVISI ?></option>
+							</select>
 						</div>
 						<div class="col-md-2"></div>
 						<div class="col-md-2">
@@ -186,13 +188,60 @@
 						<div class="col-md-2">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Pesan </label>
+							<label class="label">Size </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input PESAN" id="PESAN" name="PESAN" value="<?= $PESAN ?>" type="text">
+							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input SIZE" id="SIZE" name="SIZE" type="text" value="<?= $SIZE ?>">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-1">
+							<label class="label">Jumlah </label>
 						</div>
 						<div class="col-md-2">
-							<input  <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input JO" id="JO" name="JO" value="<?= $JO ?>" type="text">
+							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input JUMLAH" id="JUMLAH" name="JUMLAH" type="text" value="<?= $JUMLAH ?>" required>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-1">
+							<label class="label">Keterangan </label>
+						</div>
+						<div class="col-md-2">
+							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value="<?= $NOTES ?>" required>
+						</div>
+						<div class="col-md-2">
+						</div>
+						<div class="col-md-1">
+							<label <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="label">Tipe Cetakan </label>
+						</div>
+						<div class="col-md-2">
+							<input class="form-control text_input TIPE_CETAK" id="TIPE_CETAK" name="TIPE_CETAK" type="text" value="<?= $TIPE_CETAK ?>">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-1">
+							<label class="label">M Lasting </label>
+						</div>
+						<div class="col-md-2">
+							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input M_LASTING" id="M_LASTING" name="M_LASTING" type="text" value="<?= $M_LASTING ?>" required>
+						</div>
+						<div class="col-md-2">
+						</div>
+						<div class="col-md-1">
+							<label class="label">Pilih Proses </label>
+						</div>
+						<div class="col-md-2">
+							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text">
+								<option selected><?php echo $PROSES ?></option>
+								<option value="CETAKAN">CETAKAN</option>
+								<option value="MATRAS">MATRAS</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -202,15 +251,7 @@
 							<label class="label">Tanggal Diminta </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($TGL_DIMINTA, TRUE)); ?>" onclick="select()">
-						</div>
-						<div class="col-md-2">
-						</div>
-						<div class="col-md-1">
-							<label class="label">Flag </label>
-						</div>
-						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input FLAG3" id="FLAG3" name="FLAG3" type="text" value="<?= $FLAG3 ?>">
+							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
 						</div>
 					</div>
 				</div>
@@ -228,13 +269,47 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<img src="../gambar/<?php $GAMBAR1 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
-						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<img src="../gambar/<?= $GAMBAR1 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp" value="<?= $GAMBAR1 ?>">
 						</div>
 					</div>
 				</div>
 				<div class="col-md-12">
 					<div class="form-group row">
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="label">Gambar Cetakan Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-2">
+						<img src="../gambar/<?= $GAMBAR2 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-4">
+							<label class="label">Gambar Cetakan Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-2">
+						<img src="../gambar/<?= $GAMBAR3 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR3" id="GAMBAR3" accept="image/png, image/jpeg, image/jpg, image/bmp" value="<?= $GAMBAR3 ?>">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -246,7 +321,7 @@
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<button type="submit" onclick="chekbox()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+						<button type="submit" onclick="chekbox()" class="btn btn-primary"><i class="fa fa-save"></i> Validasi</button>
 						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
 					</div>
 					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
@@ -255,6 +330,21 @@
 		</div>
 	</form>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#modal_beli').DataTable({
+			dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
+				"<'row'<'col-md-6'f><'col-md-6'l>>" + // peletakan entries, search, dan test_btn
+				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
+			buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+			order: true,
+		});
+		$('.modal-footer').on('click', '#close', function() {
+			$('input[type=search]').val('').keyup(); // this line and next one clear the search dialog
+		});
+	});
+</script>
 
 <script>
 	(function() {
@@ -326,6 +416,15 @@
 			$(this).val(i++);
 		});
 		hitung();
+	}
+
+	function btVerifikasi() {
+		if (confirm("Yakin Posting?")) {
+			// document.getElementById("transaksipemesanan").submit();
+			window.location.replace("<?php echo base_url('admin/Transaksi_PesananRNDInternal/verifikasi_ttd1/' . $rowh->ID) ?>");
+		} else {
+			alert("Batal Posting!");
+		}
 	}
 
 	function hitung() {
@@ -422,7 +521,7 @@
 	function select_dragon() {
 		$('.js-example-responsive-dragon').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_PesananLBBA/getDataAjax_dragon') ?>",
+				url: "<?= base_url('admin/Transaksi_PesananCetakanImport/getDataAjax_dragon') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,

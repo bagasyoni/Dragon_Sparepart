@@ -39,10 +39,10 @@ class Transaksi_Pemesanan extends CI_Controller
             'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'PEMESANAN',
+            // 'TYP' => 'PEMESANAN',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -94,10 +94,10 @@ class Transaksi_Pemesanan extends CI_Controller
             'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'PEMESANAN',
+            // 'TYP' => 'PEMESANAN',
         );
         $this->db->from('pp');
         $this->db->where($where);
@@ -126,7 +126,7 @@ class Transaksi_Pemesanan extends CI_Controller
                     </div>';
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
-            $row[] = $pp->TGL;
+            $row[] = date("d-m-Y", strtotime($pp->TGL));
             $row[] = $pp->NOTES;
             $row[] = $pp->SUB;
             $row[] = $pp->DR;
@@ -146,15 +146,15 @@ class Transaksi_Pemesanan extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
-        $this->session->set_userdata('judul', 'Transaksi Pemesanan PP');
+        $this->session->set_userdata('judul', 'Transaksi Pemesanan');
         $where = array(
             'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'PEMESANAN',
+            // 'TYP' => 'PEMESANAN',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -276,6 +276,13 @@ class Transaksi_Pemesanan extends CI_Controller
             'FLAG' => 'PP',
             'FLAG2' => 'SP',
             'LOGISTIK' => '0',
+            'TTD1' => '1',
+            'TTD2' => '1',
+            'TTD3' => '1',
+            'TTD4' => '1',
+            'TTD5' => '1',
+            'TTD6' => '1',
+            'TTD7' => '1',
             'TYP' => 'PEMESANAN',
             'SUB' => $this->session->userdata['sub'],
             'DR' => $this->session->userdata['dr'],
@@ -289,7 +296,7 @@ class Transaksi_Pemesanan extends CI_Controller
         $NO_BON = $this->input->post('NO_BON');
         $KD_BHN = $this->input->post('KD_BHN');
         $NA_BHN = $this->input->post('NA_BHN');
-        $JENIS = $this->input->post('JENIS');
+        $TIPE = $this->input->post('TIPE');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SISA = str_replace(',', '', $this->input->post('QTY', TRUE));
         $BILANGAN = $this->input->post('BILANGAN');
@@ -298,7 +305,7 @@ class Transaksi_Pemesanan extends CI_Controller
         $KET = $this->input->post('KET');
         $TGL_DIMINTA = $this->input->post('TGL_DIMINTA');
         $SISABON = str_replace(',', '', $this->input->post('SISABON', TRUE));
-        $URGENT = $this->input->post('URGENT');
+        $URGENT = str_replace(',', '', $this->input->post('URGENT', TRUE));
         $i = 0;
         foreach ($REC as $a) {
             $datad = array(
@@ -309,10 +316,10 @@ class Transaksi_Pemesanan extends CI_Controller
                 'NO_BON' => $NO_BON[$i],
                 'KD_BHN' => $KD_BHN[$i],
                 'NA_BHN' => $NA_BHN[$i],
-                'JENIS' => $JENIS[$i],
+                'TIPE' => $TIPE[$i],
                 'QTY' => str_replace(',', '', $QTY[$i]),
                 'SISA' => str_replace(',', '', $SISA[$i]),
-                'BILANGAN' => $BILANGAN[$i],
+                'BILANGAN' => strtoupper($BILANGAN[$i]),
                 'SATUAN' => $SATUAN[$i],
                 'DEVISI' => $DEVISI[$i],
                 'KET' => $KET[$i],
@@ -327,7 +334,9 @@ class Transaksi_Pemesanan extends CI_Controller
                 'DR' => $this->session->userdata['dr'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
-                'TG_SMP' => date("Y-m-d h:i a")
+                'TG_SMP' => date("Y-m-d h:i a"),
+                'NO_TIKET' => $bukti."_".$KD_BHN[$i],
+                'PILIH' => '0',
             );
             $this->transaksi_model->input_datad('ppd', $datad);
             $i++;
@@ -359,13 +368,15 @@ class Transaksi_Pemesanan extends CI_Controller
                 pp.TTD3 AS TTD3,
                 pp.TTD4 AS TTD4,
                 pp.TTD5 AS TTD5,
+                pp.TTD6 AS TTD6,
+                pp.TTD7 AS TTD7,
 
                 ppd.NO_ID AS NO_ID,
                 ppd.REC AS REC,
                 ppd.NO_BON AS NO_BON,
                 ppd.KD_BHN AS KD_BHN,
                 ppd.NA_BHN AS NA_BHN,
-                ppd.JENIS AS JENIS,
+                ppd.TIPE AS TIPE,
                 ppd.BILANGAN AS BILANGAN,
                 ppd.QTY AS QTY,
                 ppd.SATUAN AS SATUAN,
@@ -373,7 +384,9 @@ class Transaksi_Pemesanan extends CI_Controller
                 ppd.KET AS KET,
                 ppd.TGL_DIMINTA AS TGL_DIMINTA,
                 ppd.SISABON AS SISABON,
-                ppd.URGENT AS URGENT
+                ppd.URGENT AS URGENT,
+                ppd.NO_TIKET AS NO_TIKET,
+                ppd.PILIH AS PILIH
             FROM pp,ppd 
             WHERE pp.NO_ID=$id 
             AND pp.NO_ID=ppd.ID 
@@ -397,6 +410,13 @@ class Transaksi_Pemesanan extends CI_Controller
             'FLAG2' => 'SP',
             'LOGISTIK' => '0',
             'TYP' => 'PEMESANAN',
+            'TTD1' => '1',
+            'TTD2' => '1',
+            'TTD3' => '1',
+            'TTD4' => '1',
+            'TTD5' => '1',
+            'TTD6' => '1',
+            'TTD7' => '1',
             'SUB' => $this->session->userdata['sub'],
             'DR' => $this->session->userdata['dr'],
             'PER' => $this->session->userdata['periode'],
@@ -421,13 +441,15 @@ class Transaksi_Pemesanan extends CI_Controller
                 pp.TTD3 AS TTD3,
                 pp.TTD4 AS TTD4,
                 pp.TTD5 AS TTD5,
+                pp.TTD6 AS TTD6,
+                pp.TTD7 AS TTD7,
 
                 ppd.NO_ID AS NO_ID,
                 ppd.REC AS REC,
                 ppd.NO_BON AS NO_BON,
                 ppd.KD_BHN AS KD_BHN,
                 ppd.NA_BHN AS NA_BHN,
-                ppd.JENIS AS JENIS,
+                ppd.TIPE AS TIPE,
                 ppd.QTY AS QTY,
                 ppd.BILANGAN AS BILANGAN,
                 ppd.SATUAN AS SATUAN,
@@ -435,7 +457,9 @@ class Transaksi_Pemesanan extends CI_Controller
                 ppd.KET AS KET,
                 ppd.TGL_DIMINTA AS TGL_DIMINTA,
                 ppd.SISABON AS SISABON,
-                ppd.URGENT AS URGENT
+                ppd.URGENT AS URGENT,
+                ppd.NO_TIKET AS NO_TIKET,
+                ppd.PILIH AS PILIH
             FROM pp,ppd 
             WHERE pp.NO_ID=$id 
             AND pp.NO_ID=ppd.ID 
@@ -446,7 +470,7 @@ class Transaksi_Pemesanan extends CI_Controller
         $NO_BON = $this->input->post('NO_BON');
         $KD_BHN = $this->input->post('KD_BHN');
         $NA_BHN = $this->input->post('NA_BHN');
-        $JENIS = $this->input->post('JENIS');
+        $TIPE = $this->input->post('TIPE');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SISA = str_replace(',', '', $this->input->post('QTY', TRUE));
         $BILANGAN = $this->input->post('BILANGAN');
@@ -455,7 +479,7 @@ class Transaksi_Pemesanan extends CI_Controller
         $KET = $this->input->post('KET');
         $TGL_DIMINTA = $this->input->post('TGL_DIMINTA');
         $SISABON = str_replace(',', '', $this->input->post('SISABON', TRUE));
-        $URGENT = str_replace(',', '', $this->input->post('URGENT', TRUE));
+        $URGENT =  $this->input->post('URGENT');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -470,10 +494,10 @@ class Transaksi_Pemesanan extends CI_Controller
                     'NO_BON' => $NO_BON[$URUT],
                     'KD_BHN' => $KD_BHN[$URUT],
                     'NA_BHN' => $NA_BHN[$URUT],
-                    'JENIS' => $JENIS[$URUT],
+                    'TIPE' => $TIPE[$URUT],
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
                     'SISA' => str_replace(',', '', $SISA[$URUT]),
-                    'BILANGAN' => $BILANGAN[$URUT],
+                    'BILANGAN' => strtoupper($BILANGAN[$URUT]),
                     'SATUAN' => $SATUAN[$URUT],
                     'DEVISI' => $DEVISI[$URUT],
                     'KET' => $KET[$URUT],
@@ -513,16 +537,16 @@ class Transaksi_Pemesanan extends CI_Controller
                     'NO_BON' => $NO_BON[$i],
                     'KD_BHN' => $KD_BHN[$i],
                     'NA_BHN' => $NA_BHN[$i],
-                    'JENIS' => $JENIS[$i],
+                    'TIPE' => $TIPE[$i],
                     'QTY' => str_replace(',', '', $QTY[$i]),
                     'SISA' => str_replace(',', '', $SISA[$i]),
-                    'BILANGAN' => $BILANGAN[$i],
+                    'BILANGAN' => strtoupper($BILANGAN[$i]),
                     'SATUAN' => $SATUAN[$i],
                     'DEVISI' => $DEVISI[$i],
                     'KET' => $KET[$i],
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$i])),
                     'SISABON' => str_replace(',', '', $SISABON[$i]),
-                    'URGENT' => isset($URGENT[$i]) ? $URGENT[$i] : 0,
+                    'URGENT' => isset($URGENT[$URUT]) ? $URGENT[$URUT] : 0,
                     'FLAG' => 'PP',
                     'FLAG2' => 'SP',
                     'LOGISTIK' => '0',
@@ -627,25 +651,25 @@ class Transaksi_Pemesanan extends CI_Controller
                 bond.NA_BHN,
                 bond.TYPE,
                 bond.KET,
-                bond.NOTES AS JENIS,
+                bond.NOTES AS TIPE,
                 (bond.QTY-bond.KIRIM) AS QTY,
                 (bond.QTY-bond.KIRIM) AS SISABON,
                 bond.SATUAN,
 
                 bon.NM_BAG AS DEVISI,
-                bon.TGL AS TGL_DIMINTA,
+                date_format(bon.TGL ,'%d-%m-%Y') AS TGL_DIMINTA,
                 bon.SUB
             FROM bon, bond
-            WHERE bon.NO_BUKTI=bond.NO_BUKTI AND bon.DR='$dr' AND bon.OK=1 AND bond.OK=0 AND bond.QTY - bond.KIRIM <> 0 AND (bond.NO_BUKTI LIKE '%$search%' OR bond.NA_BHN LIKE '%$search%')
+            WHERE bon.NO_BUKTI=bond.NO_BUKTI AND bon.TTD2<>'' AND bon.DR='$dr' AND bon.OK=1 AND bond.OK=0 AND bond.QTY - bond.KIRIM <> 0 AND (bond.NO_BUKTI LIKE '%$search%' OR bond.NA_BHN LIKE '%$search%')
             ORDER BY bond.NO_BUKTI LIMIT $xa,$perPage");
         $selectajax = array();
         foreach ($results->RESULT_ARRAY() as $row) {
             $selectajax[] = array(
                 'id' => $row['NO_BON'],
                 'text' => $row['NO_BON'],
-                'NO_BON' => $row['NO_BON'] . " - " . $row['NA_BHN'] . " - " . $row['JENIS'] . " - " . $row['QTY'] . " - " . $row['SATUAN'] . " - " . $row['SUB'] . " - " . $row['DEVISI'] . " - " . $row['KET'] . " - " . $row['TGL_DIMINTA'],
+                'NO_BON' => $row['NO_BON'] . " - " . $row['NA_BHN'] . " - " . $row['TIPE'] . " - " . $row['QTY'] . " - " . $row['SATUAN'] . " - " . $row['SUB'] . " - " . $row['DEVISI'] . " - " . $row['KET'] . " - " . $row['TGL_DIMINTA'],
                 'NA_BHN' => $row['NA_BHN'],
-                'JENIS' => $row['JENIS'],
+                'TIPE' => $row['TIPE'],
                 'KET' => $row['KET'],
                 'SUB' => $row['SUB'],
                 'SATUAN' => $row['SATUAN'],
@@ -765,7 +789,7 @@ class Transaksi_Pemesanan extends CI_Controller
             ppd.NO_BON AS NO_BON,
             ppd.KD_BHN AS KD_BHN,
             ppd.NA_BHN AS NA_BHN,
-            ppd.JENIS AS JENIS,
+            ppd.TIPE AS JENIS,
             ppd.BILANGAN AS BILANGAN,
             ppd.QTY AS QTY,
             ppd.SATUAN AS SATUAN,

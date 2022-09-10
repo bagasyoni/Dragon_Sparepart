@@ -581,20 +581,24 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
-			$kd_bhn_1 = $this->input->post('KD_BHN_1');
-			$kd_bhn_2 = $this->input->post('KD_BHN_2');
-			$query = "CALL sp_kartustok('$kd_bhn_1', '$dr', '$sub', '$tgl_1')";
+			$rak_1 = $this->input->post('RAK_1');
+			$per_1 = $this->input->post('PER_1');
+			if ($per_1 == '') {
+				$per_1 = $this->session->userdata['periode']; 
+			} else {
+				$per_1 = $this->input->post('PER_1');
+			}
+			$query = "CALL spp_kartustok('$rak_1', '$dr', '$sub', '$per_1')";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
-					"KD_BHN" => $row1["KD_BHN"],
+					"RAK" => $row1["RAK"],
 					"NA_BHN" => $row1["NA_BHN"],
 					"TGL" => $row1["TGL"],
 					"NO_BUKTI" => $row1["NO_BUKTI"],
 					"AW" => $row1["AW"],
 					"MA" => $row1["MA"],
 					"KE" => $row1["KE"],
-					"LN" => $row1["LN"],
 					"AK" => $row1["AK"],
 				));
 			}
@@ -602,8 +606,8 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->outpage("I");
 		} else {
 			$data = array(
-				'TGL_1' => set_value('TGL_1'),
-				'KD_BHN_1' => set_value('KD_BHN_1'),
+				'RAK_1' => set_value('RAK_1'),
+				'PER_1' => set_value('PER_1'),
 			);
 			$data['kartustok'] = $this->laporan_model->tampil_data_kartustok()->result();
 			mysqli_next_result($this->db->conn_id);
@@ -630,28 +634,31 @@ class Laporan extends CI_Controller
 			include('phpjasperxml/class/PHPJasperXML.inc.php');
 			include('phpjasperxml/setting.php');
 			$PHPJasperXML = new \PHPJasperXML();
-			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Kartu_Stok_Atk.jrxml");
+			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Kartu_Stok_ATK.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
-			$kd_bhn_1 = $this->input->post('KD_BHN_1');
-			$kd_bhn_2 = $this->input->post('KD_BHN_2');
-			$query = "";
+			$rak_1 = $this->input->post('RAK_1');
+			$per = $this->session->userdata['periode'];
+			$query = "CALL spp_kartustok_atk('$rak_1', '$dr', '$sub', '$per')";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
-					"ID" => $row1["ID"],
-					"KD_BRG" => $row1["KD_BRG"],
-					"NA_BRG" => $row1["NA_BRG"],
-					"SATUAN" => $row1["SATUAN"],
+					"RAK" => $row1["RAK"],
+					"KD_BHN" => $row1["KD_BHN"],
+					"TGL" => $row1["TGL"],
+					"NO_BUKTI" => $row1["NO_BUKTI"],
+					"AW" => $row1["AW"],
+					"MA" => $row1["MA"],
+					"KE" => $row1["KE"],
+					"AK" => $row1["AK"],
 				));
 			}
 			ob_end_clean();
 			$PHPJasperXML->outpage("I");
 		} else {
 			$data = array(
-				'TGL_1' => set_value('TGL_1'),
-				'KD_BHN_1' => set_value('KD_BHN_1'),
+				'RAK_1' => set_value('RAK_1'),
 			);
 			$data['kartustok_atk'] = $this->laporan_model->tampil_data_kartustok_atk()->result();
 			mysqli_next_result($this->db->conn_id);
@@ -686,19 +693,19 @@ class Laporan extends CI_Controller
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 			$query = "SELECT beli.PER AS PER,
 					belid.TGL AS TGL,
-					belid.NO_BUKTI AS NO_BUKTI_BL_BELI,
+					belid.NO_BELI AS NO_BUKTI_BL_BELI,
 					CONCAT(belid.KD_BHN,' - ',belid.NA_BHN) AS BARANG,
 					belid.SATUAN AS SATUAN,
 					belid.QTY AS QTY,
 					belid.NO_PO AS NO_PO,
 					belid.NO_PP AS NO_PP,
-					belid.NO_BUKTI AS NO_BUKTI,
+					belid.NO_BELI AS NO_BUKTI,
 					belid.REC AS REC
 				FROM beli, belid
-				WHERE beli.NO_BUKTI = belid.NO_BUKTI
+				WHERE beli.NO_BELI = belid.NO_BELI
 				AND belid.TGL='$tgl_1'
-				-- AND belid.PER='$per'
-				AND belid.FLAG2='SP'
+				AND beli.SUB='$sub'
+				AND beli.FLAG2='SP'
 				ORDER BY belid.TGL";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -1222,7 +1229,7 @@ class Laporan extends CI_Controller
 					pakaid.NO_BUKTI AS NO_BUKTI,
 					pakaid.TGL AS TGL,
 					pakaid.QTY AS QTY,
-					pakaid.NA_GOL AS NA_GOL
+					pakaid.GRUP AS NA_GOL
 				FROM pakaid
 				WHERE pakaid.TGL >='$tgl_1'
 				AND pakaid.TGL <='$tgl_2'
@@ -1231,7 +1238,6 @@ class Laporan extends CI_Controller
 				AND pakaid.FLAG ='PK'
 				AND pakaid.FLAG2 ='SP'
 				AND pakaid.GRUP ='$grup_1'
-				-- AND pakaid.PER ='$per'
 				ORDER BY pakaid.TGL";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -1290,7 +1296,7 @@ class Laporan extends CI_Controller
 						belid.kd_bhn AS KD_BHN,
 						belid.na_bhn AS NA_BHN,
 						CONCAT(belid.kd_bhn,' - ',belid.na_bhn) AS BARANG,
-						beli.no_bukti AS NO_BUKTI,
+						beli.no_beli AS NO_BUKTI,
 						beli.tgl AS TGL,
 						belid.satuan AS SATUAN,
 						belid.qty AS QTY,
@@ -1300,11 +1306,9 @@ class Laporan extends CI_Controller
 					WHERE beli.no_bukti=belid.no_bukti 
 					AND beli.TGL >='$tgl_1'
 					AND beli.TGL <='$tgl_2'
-					AND beli.SP = '$sub'
-					AND belid.DR='$dr'
-					AND belid.SP='SP'
+					AND beli.SUB = '$sub'
+					AND beli.DR='$dr'
 					AND belid.FLAG2='SP'
-					-- AND beli.PER ='$per'
 					GROUP BY belid.na_bhn
 					ORDER BY belid.TGL";
 			$result1 = mysqli_query($conn, $query);
@@ -1377,7 +1381,7 @@ class Laporan extends CI_Controller
 					AND pakaid.TGL BETWEEN '$tgl_1' AND '$tgl_2'
 					AND pakai.DR = '$dr'
 					AND pakai.SUB = '$sub'
-					AND pakai.PER = '$per'
+					-- AND pakai.PER = '$per'
 					AND pakai.ATK = 0
 					AND pakai.FLAG = 'PK'
 					AND pakai.FLAG2 = 'SP'

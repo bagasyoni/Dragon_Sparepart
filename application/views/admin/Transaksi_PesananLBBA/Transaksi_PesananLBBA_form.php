@@ -153,7 +153,7 @@
 							<label class="label">Article </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input KET" id="KET" name="KET" type="text" required>
+							<input class="form-control text_input ARTICLE" id="ARTICLE" name="ARTICLE" type="text" required>
 						</div>
 						<div class="col-md-2">
 						</div>
@@ -224,21 +224,6 @@
 		</div>
 	</form>
 </div>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#modal_beli').DataTable({
-			dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
-				"<'row'<'col-md-6'f><'col-md-6'l>>" + // peletakan entries, search, dan test_btn
-				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
-			buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-			order: true,
-		});
-		$('.modal-footer').on('click', '#close', function() {
-			$('input[type=search]').val('').keyup(); // this line and next one clear the search dialog
-		});
-	});
-</script>
 
 <script>
 	(function() {

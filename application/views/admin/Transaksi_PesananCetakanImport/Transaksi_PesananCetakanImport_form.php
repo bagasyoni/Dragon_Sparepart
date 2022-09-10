@@ -143,7 +143,7 @@
 							<label class="label">DR </label>
 						</div>
 						<div class="col-md-1">
-						<select value="" class="js-example-responsive-dragon form-control DR" name="DR" id="DR" onchange="dragon(this.id)" onfocusout="hitung()" required></select>
+						<select value="" class="js-example-responsive-dragon form-control DEVISI" name="DEVISI" id="DEVISI" onchange="dragon(this.id)" onfocusout="hitung()" required></select>
 						</div>
 					</div>
 				</div>
@@ -153,7 +153,7 @@
 							<label class="label">Article </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input KET" id="KET" name="KET" type="text" required>
+							<input class="form-control text_input ARTICLE" id="ARTICLE" name="ARTICLE" type="text" required>
 						</div>
 						<div class="col-md-2">
 						</div>

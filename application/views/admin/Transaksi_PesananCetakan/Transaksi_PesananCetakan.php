@@ -92,16 +92,16 @@
                         <th width="75px"><input type="checkbox" id="selectall" /></th>
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
-                        <th width="325px">No Bukti</th>
-                        <th width="275px">Tanggal</th>
-                        <th width="275px">Tanggal Diminta</th>
+                        <th width="100px">No Bukti</th>
+                        <th width="75px">Tanggal</th>
+                        <th width="75px">Tanggal Diminta</th>
                         <th width="100px">Article</th>
                         <th width="225px">Ket</th>
-                        <th width="200px">Tipe</th>
-                        <th width="200px">Tipe Cetakan</th>
-                        <th width="200px">M Lasting</th>
-                        <th width="200px">Jenis</th>
-                        <th width="200px">Flag</th>
+                        <th width="100px">Tipe</th>
+                        <th width="100px">Tipe Cetakan</th>
+                        <th width="100px">M Lasting</th>
+                        <th width="75px">Jenis</th>
+                        <th width="75px">Flag</th>
                         <th width="200px">Tujuan</th>
                         <th width="200px">Gambar</th>
                     </tr>
