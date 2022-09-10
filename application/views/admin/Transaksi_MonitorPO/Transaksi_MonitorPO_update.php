@@ -182,7 +182,7 @@ foreach ($monitor_po as $rowh) {
 							<input class="form-control text_input KURS text_input" id="KURS" name="KURS" type="text" value="<?php echo $rowh->KURS ?>" required readonly>
 						</div>
 						<div class="col-md-1">
-							<input class="form-control text_input RATE text_input" id="RATE" name="RATE" type="text" value="<?php echo $rowh->RATE ?>" placeholder="Kurs" required readonly>
+							<input class="form-control text_input RATE text_input" id="RATE" name="RATE" type="text" value="<?php echo $rowh->RATE ?>" placeholder="Rate" required readonly>
 						</div>
 						<div class="col-md-1">
 							<input class="form-control text_input PROD text_input" id="PROD" name="PROD" type="text" value="<?php echo $rowh->PROD ?>" placeholder="Prod" required readonly>

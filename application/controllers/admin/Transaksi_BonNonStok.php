@@ -32,9 +32,11 @@ class Transaksi_BonNonStok extends CI_Controller
 
     private function _get_datatables_query()
     {
+        $sub = $this->session->userdata['sub'];
         $dr = $this->session->userdata['dr'];
         $where = array(
             'DR' => $dr,
+            'TUJUAN' => $sub,
         );
         $this->db->select('*');
         $this->db->from('beli');

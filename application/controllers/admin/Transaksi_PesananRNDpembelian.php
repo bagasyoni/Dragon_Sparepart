@@ -36,13 +36,13 @@ class Transaksi_PesananRNDPembelian extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'BL_CNC',
+            // 'TYP' => 'BL_CNC',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -91,13 +91,13 @@ class Transaksi_PesananRNDPembelian extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'BL_CNC',
+            // 'TYP' => 'BL_CNC',
         );
         $this->db->from('pp');
         $this->db->where($where);
@@ -128,9 +128,9 @@ class Transaksi_PesananRNDPembelian extends CI_Controller
             $row[] = $pp->NO_BUKTI;
             $row[] = $pp->DEVISI;
             $row[] = date("d-m-Y", strtotime($pp->TGL));
-            $row[] = $pp->NA_BRG;
+            $row[] = $pp->ARTICLE;
             $row[] = date("d-m-Y", strtotime($pp->TGL_DIMINTA));
-            $row[] = $pp->NOTES;
+            $row[] = $pp->KET;
             $data[] = $row;
         }
         $output = array(
@@ -149,13 +149,13 @@ class Transaksi_PesananRNDPembelian extends CI_Controller
         $sub = $this->session->userdata['sub'];
         $this->session->set_userdata('judul', 'Transaksi Pesanan RND (Pembelian)');
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'BL_CNC',
+            // 'TYP' => 'BL_CNC',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
         $this->load->view('templates_admin/header');

@@ -1315,8 +1315,8 @@ class Laporan_model extends CI_Model
 			WHERE pp.NO_BUKTI = ppd.NO_BUKTI
 			AND pp.SUB = '$sub'
 			AND pp.PER = '$per'
-			AND pp.TYP = 'BL_CNC'
-			AND belid.FLAG2 = 'SP'
+			-- AND pp.TYP = 'BL_CNC'
+			-- AND belid.FLAG2 = 'SP'
 			GROUP BY pp.NO_BUKTI
 			ORDER BY pp.TGL";
 		return $this->db->query($q1);

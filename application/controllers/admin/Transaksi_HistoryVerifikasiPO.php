@@ -32,13 +32,16 @@ class Transaksi_HistoryVerifikasiPO extends CI_Controller
 
     private function _get_datatables_query()
     {
-        $per = $this->session->userdata['periode'];
-        $sub = $this->session->userdata['sub'];
+        $dr = $this->session->userdata['dr'];
+        $per = $this->session->userdata('periode');
+        // $sub = $this->session->userdata('sub');
         $where = array(
+            'DR' => $dr,
             'PER' => $per,
-            'SUBDIV' => $sub,
-            'FLAG' => 'SP',
-            'FLAG2' => $sub,
+            'KD_TTD1 !=' => '',
+            'KD_TTD2 !=' => '',
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '1',
         );
         $this->db->select('*');
         $this->db->from('po');
@@ -83,13 +86,16 @@ class Transaksi_HistoryVerifikasiPO extends CI_Controller
 
     function count_all()
     {
-        $per = $this->session->userdata['periode'];
-        $sub = $this->session->userdata['sub'];
+        $dr = $this->session->userdata['dr'];
+        $per = $this->session->userdata('periode');
+        // $sub = $this->session->userdata('sub');
         $where = array(
+            'DR' => $dr,
             'PER' => $per,
-            'SUBDIV' => $sub,
-            'FLAG' => 'SP',
-            'FLAG2' => $sub,
+            'KD_TTD1 !=' => '',
+            'KD_TTD2 !=' => '',
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '1',
         );
         $this->db->from('po');
         $this->db->where($where);
@@ -111,17 +117,19 @@ class Transaksi_HistoryVerifikasiPO extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_HistoryVerifikasiPO/update/' . $po->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_HistoryVerifikasiPO/update/' . $po->NO_ID) . '"> <i class="fa fa-edit"></i> Lihat</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_HistoryVerifikasiPO/delete/' . $po->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
             $row[] = $po->NO_BUKTI;
+            $row[] = $po->KODES;
+            $row[] = $po->NAMAS;
             $row[] = $po->DR;
             $row[] = date("d-m-Y", strtotime($po->TGL));
-            $row[] = $po->JTEMPO;
-            $row[] = $po->NOTES;
+            $row[] = date("d-m-Y", strtotime($po->JTEMPO));
+            $row[] = $po->VERIFIKASI_PO_SP;
             $data[] = $row;
         }
         $output = array(
@@ -135,14 +143,17 @@ class Transaksi_HistoryVerifikasiPO extends CI_Controller
 
     public function index_Transaksi_HistoryVerifikasiPO()
     {
-        $per = $this->session->userdata['periode'];
-        $sub = $this->session->userdata['sub'];
-        $this->session->set_userdata('judul', 'Transaksi History Verifikasi PO');
+        $dr = $this->session->userdata['dr'];
+        $sub = $this->session->userdata('sub');
+        $per = $this->session->userdata('per');
+        $this->session->set_userdata('judul', 'Transaksi Verifikasi PO');
         $where = array(
+            'DR' => $dr,
             'PER' => $per,
-            'SUBDIV' => $sub,
-            'FLAG' => 'SP',
-            'FLAG2' => $sub,
+            'KD_TTD1 !=' => '',
+            'KD_TTD2 !=' => '',
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '1',
         );
         $data['historypo'] = $this->transaksi_model->tampil_data($where, 'po', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -340,6 +351,7 @@ class Transaksi_HistoryVerifikasiPO extends CI_Controller
                 po.AN AS AN,
                 po.TOTAL_QTY AS TOTAL_QTY,
                 po.NO_PP AS NO_PP,
+                po.VERIFIKASI_PO_SP,
 
                 pod.NO_ID AS NO_ID,
                 pod.REC AS REC,

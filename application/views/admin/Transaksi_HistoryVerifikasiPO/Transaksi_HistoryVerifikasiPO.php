@@ -93,10 +93,12 @@
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
                         <th width="275px">No Bukti</th>
+                        <th width="275px">Kode Supplier</th>
+                        <th width="275px">Nama Supplier</th>
                         <th width="75px">Dragon</th>
                         <th width="170px">Tanggal</th>
                         <th width="170px">Jatuh Tempo</th>
-                        <th width="300px">Notes</th>
+                        <th width="300px">Status</th>
                     </tr>
                 </thead>
                 <tbody>

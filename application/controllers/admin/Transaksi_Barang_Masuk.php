@@ -41,7 +41,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'ATK' => '0',
+            // 'ATK' => '0',
             // 'TTD1' => '1',
             // 'TTD2' => '1',
             // 'TTD3' => '1',
@@ -101,7 +101,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'ATK' => '0',
+            // 'ATK' => '0',
             // 'TTD1' => '1',
             // 'TTD2' => '1',
             // 'TTD3' => '1',
@@ -161,7 +161,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'ATK' => '0',
+            // 'ATK' => '0',
             // 'TTD1' => '1',
             // 'TTD2' => '1',
             // 'TTD3' => '1',
@@ -210,7 +210,8 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 belid.QTYPP AS QTYPP,
                 belid.SATUANPP AS SATUANPP,
                 belid.SISA AS QTY,
-                belid.SATUAN AS SATUAN
+                belid.SATUAN AS SATUAN,
+                belid.QTY_BL
             FROM beli, belid 
             WHERE beli.NO_ID = $id 
             AND beli.NO_ID = belid.ID 
@@ -268,7 +269,8 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 belid.QTYPP AS QTYPP,
                 belid.SATUANPP AS SATUANPP,
                 belid.SISA AS QTY,
-                belid.SATUAN AS SATUAN
+                belid.SATUAN AS SATUAN,
+                belid.QTY_BL
             FROM beli, belid 
             WHERE beli.NO_ID = $id
             AND beli.NO_ID = belid.ID 
@@ -284,6 +286,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SISA = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SATUAN = $this->input->post('SATUAN');
+        $QTY_BL = $this->input->post('QTY_BL');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -303,6 +306,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
                     'SISA' => str_replace(',', '', $SISA[$URUT]),
                     'SATUAN' => $SATUAN[$URUT],
+                    'QTY_BL' => str_replace(',', '', $QTY_BL[$URUT]),
                     'FLAG' => 'BL',
                     'FLAG2' => 'SP',
                     'ATK' => '0',
@@ -338,6 +342,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
                     'QTY' => str_replace(',', '', $QTY[$i]),
                     'SISA' => str_replace(',', '', $SISA[$i]),
                     'SATUAN' => $SATUAN[$i],
+                    'QTY_BL' => str_replace(',', '', $QTY_BL[$i]),
                     'FLAG' => 'BL',
                     'FLAG2' => 'SP',
                     'ATK' => '0',

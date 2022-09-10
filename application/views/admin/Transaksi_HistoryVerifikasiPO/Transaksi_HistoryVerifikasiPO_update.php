@@ -167,6 +167,26 @@ foreach ($history_po as $rowh) {
 								<a class="btn default" onfocusout="hitung()" id="0" data-target="#mymodal_kodes" data-toggle="modal" href="#modalkodes" ><i class="fa fa-search"></i></a>
 							</span> -->
 						</div>
+						<div class="col-md-1"></div>
+						<div class="col-md-2">
+							<?php
+								if ($rowh->VERIFIKASI_PO_SP == 0) 
+									echo '<a 
+										type="button" 
+										class="btn btn-warning"
+										onclick="btPosting()" 
+										href="#"
+									>
+										<span style="color: black; font-weight: bold;"><i class="fa fa-upload"></i> VERIFIKASI</span>
+									</a>';
+								else echo '<a 
+									type="button" 
+									class="btn btn-success" 
+								>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-check"></i> VERIFIKASI</span>
+								</a>';
+							?>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-12">

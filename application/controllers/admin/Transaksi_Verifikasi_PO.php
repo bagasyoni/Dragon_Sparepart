@@ -33,8 +33,8 @@ class Transaksi_Verifikasi_PO extends CI_Controller {
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'TTD1' => '1',
-            'TTD2' => '1',
+            'KD_TTD1 !=' => '',
+            'KD_TTD2 !=' => '',
             'FLAG2' => 'NB',
             'VERIFIKASI_PO_SP' => '0',
         );
@@ -84,8 +84,8 @@ class Transaksi_Verifikasi_PO extends CI_Controller {
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'TTD1' => '1',
-            'TTD2' => '1',
+            'KD_TTD1 !=' => '',
+            'KD_TTD2 !=' => '',
             'FLAG2' => 'NB',
             'VERIFIKASI_PO_SP' => '0',
         );
@@ -138,8 +138,8 @@ class Transaksi_Verifikasi_PO extends CI_Controller {
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'TTD1' => '1',
-            'TTD2' => '1',
+            'KD_TTD1 !=' => '',
+            'KD_TTD2 !=' => '',
             'FLAG2' => 'NB',
             'VERIFIKASI_PO_SP' => '0',
         );
