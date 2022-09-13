@@ -1098,12 +1098,13 @@ class Laporan_model extends CI_Model
 
 	public function tampil_data_monitor_order_lasting()
 	{
+		$dr = $this->session->userdata['dr'];
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$q1 = "SELECT pp.NO_BUKTI,
 				pp.TGL,
 				pp.TGL_DIMINTA,
 				pp.DEVISI,
-				pp.NA_BRG,
+				pp.ARTICLE AS NA_BRG,
 				pp.KET,
 				pp.TOTAL_QTY,
 				'-' AS AREA,
@@ -1116,19 +1117,21 @@ class Laporan_model extends CI_Model
 				ppd.NA_BHN,					
 				ppd.QTY,					
 				ppd.SATUAN,				
-				ppd.KET1 AS KET,
+				ppd.KET1 AS KET
 
-				pod.NO_BUKTI AS NO_PO,
-				pod.TGL AS TGL_PO,
-				pod.NO_PP,
+				-- pod.NO_BUKTI AS NO_PO,
+				-- pod.TGL AS TGL_PO,
+				-- pod.NO_PP,
 
-				belid.NO_BUKTI AS NO_BELI,
-				belid.NO_PO,
-				belid.TGL AS TGL_BELI
-			FROM pp, ppd, pod, belid
+				-- belid.NO_BUKTI AS NO_BELI,
+				-- belid.NO_PO,
+				-- belid.TGL AS TGL_BELI
+			FROM pp, ppd
 			WHERE pp.NO_BUKTI = ppd.NO_BUKTI
-			AND pp.TYP = 'RND_LASTING'
-			AND belid.FLAG2 = 'SP'
+			AND pp.DR ='$dr'
+			AND pp.SUB ='LS'
+			-- AND pp.TYP = 'RND_LASTING'
+			-- AND belid.FLAG2 = 'SP'
 			GROUP BY pp.NO_BUKTI
 			ORDER BY pp.TGL";
 		return $this->db->query($q1);
@@ -1136,12 +1139,13 @@ class Laporan_model extends CI_Model
 
 	public function tampil_data_monitor_order_cetakan()
 	{
+		$dr = $this->session->userdata['dr'];
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$q1 = "SELECT pp.NO_BUKTI,
 				pp.TGL,
 				pp.TGL_DIMINTA,
 				pp.DEVISI,
-				pp.NA_BRG,
+				pp.ARTICLE AS NA_BRG,
 				pp.KET,
 				pp.TOTAL_QTY,
 				'-' AS AREA,
@@ -1154,19 +1158,21 @@ class Laporan_model extends CI_Model
 				ppd.NA_BHN,					
 				ppd.QTY,					
 				ppd.SATUAN,				
-				ppd.KET1 AS KET,
+				ppd.KET1 AS KET
 
-				pod.NO_BUKTI AS NO_PO,
-				pod.TGL AS TGL_PO,
-				pod.NO_PP,
+				-- pod.NO_BUKTI AS NO_PO,
+				-- pod.TGL AS TGL_PO,
+				-- pod.NO_PP,
 
-				belid.NO_BUKTI AS NO_BELI,
-				belid.NO_PO,
-				belid.TGL AS TGL_BELI
-			FROM pp, ppd, pod, belid
+				-- belid.NO_BUKTI AS NO_BELI,
+				-- belid.NO_PO,
+				-- belid.TGL AS TGL_BELI
+			FROM pp, ppd
 			WHERE pp.NO_BUKTI = ppd.NO_BUKTI
-			AND pp.TYP = 'RND_IMPORT'
-			AND belid.FLAG2 = 'SP'
+			AND pp.DR ='$dr'
+			AND pp.SUB ='CT'
+			-- AND pp.TYP = 'RND_LASTING'
+			-- AND belid.FLAG2 = 'SP'
 			GROUP BY pp.NO_BUKTI
 			ORDER BY pp.TGL";
 		return $this->db->query($q1);
@@ -1174,12 +1180,13 @@ class Laporan_model extends CI_Model
 
 	public function tampil_data_monitor_order_pisau()
 	{
+		$dr = $this->session->userdata['dr'];
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$q1 = "SELECT pp.NO_BUKTI,
 				pp.TGL,
 				pp.TGL_DIMINTA,
 				pp.DEVISI,
-				pp.NA_BRG,
+				pp.ARTICLE AS NA_BRG,
 				pp.KET,
 				pp.TOTAL_QTY,
 				'-' AS AREA,
@@ -1192,19 +1199,21 @@ class Laporan_model extends CI_Model
 				ppd.NA_BHN,					
 				ppd.QTY,					
 				ppd.SATUAN,				
-				ppd.KET1 AS KET,
+				ppd.KET1 AS KET
 
-				pod.NO_BUKTI AS NO_PO,
-				pod.TGL AS TGL_PO,
-				pod.NO_PP,
+				-- pod.NO_BUKTI AS NO_PO,
+				-- pod.TGL AS TGL_PO,
+				-- pod.NO_PP,
 
-				belid.NO_BUKTI AS NO_BELI,
-				belid.NO_PO,
-				belid.TGL AS TGL_BELI
-			FROM pp, ppd, pod, belid
+				-- belid.NO_BUKTI AS NO_BELI,
+				-- belid.NO_PO,
+				-- belid.TGL AS TGL_BELI
+			FROM pp, ppd
 			WHERE pp.NO_BUKTI = ppd.NO_BUKTI
-			AND pp.TYP = 'RND_PISAU'
-			AND belid.FLAG2 = 'SP'
+			AND pp.DR ='$dr'
+			AND pp.SUB ='1R&'
+			-- AND pp.TYP = 'RND_LASTING'
+			-- AND belid.FLAG2 = 'SP'
 			GROUP BY pp.NO_BUKTI
 			ORDER BY pp.TGL";
 		return $this->db->query($q1);
@@ -1212,12 +1221,13 @@ class Laporan_model extends CI_Model
 
 	public function tampil_data_monitor_order_meba()
 	{
+		$dr = $this->session->userdata['dr'];
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$q1 = "SELECT pp.NO_BUKTI,
 				pp.TGL,
 				pp.TGL_DIMINTA,
 				pp.DEVISI,
-				pp.NA_BRG,
+				pp.ARTICLE AS NA_BRG,
 				pp.KET,
 				pp.TOTAL_QTY,
 				'-' AS AREA,
@@ -1230,19 +1240,21 @@ class Laporan_model extends CI_Model
 				ppd.NA_BHN,					
 				ppd.QTY,					
 				ppd.SATUAN,				
-				ppd.KET1 AS KET,
+				ppd.KET1 AS KET
 
-				pod.NO_BUKTI AS NO_PO,
-				pod.TGL AS TGL_PO,
-				pod.NO_PP,
+				-- pod.NO_BUKTI AS NO_PO,
+				-- pod.TGL AS TGL_PO,
+				-- pod.NO_PP,
 
-				belid.NO_BUKTI AS NO_BELI,
-				belid.NO_PO,
-				belid.TGL AS TGL_BELI
-			FROM pp, ppd, pod, belid
+				-- belid.NO_BUKTI AS NO_BELI,
+				-- belid.NO_PO,
+				-- belid.TGL AS TGL_BELI
+			FROM pp, ppd
 			WHERE pp.NO_BUKTI = ppd.NO_BUKTI
-			AND pp.TYP = 'RND_MEBA'
-			AND belid.FLAG2 = 'SP'
+			AND pp.DR ='$dr'
+			AND pp.SUB ='MB'
+			-- AND pp.TYP = 'RND_LASTING'
+			-- AND belid.FLAG2 = 'SP'
 			GROUP BY pp.NO_BUKTI
 			ORDER BY pp.TGL";
 		return $this->db->query($q1);
@@ -1292,7 +1304,7 @@ class Laporan_model extends CI_Model
 				pp.TGL_DIMINTA,
 				pp.DEVISI,
 				pp.KD_DEV,
-				pp.NA_BRG,
+				pp.ARTICLE AS NA_BRG,
 				pp.KET,
 				pp.TOTAL_QTY,
 				'-' AS AREA,
@@ -1302,16 +1314,8 @@ class Laporan_model extends CI_Model
 
 				ppd.NA_BHN,					
 				ppd.QTY,					
-				ppd.SATUAN,				
-
-				pod.NO_BUKTI AS NO_PO,
-				pod.TGL AS TGL_PO,
-				pod.NO_PP,
-
-				belid.NO_BUKTI AS NO_BELI,
-				belid.NO_PO,
-				belid.TGL AS TGL_BELI
-			FROM pp, ppd, pod, belid
+				ppd.SATUAN
+			FROM pp, ppd
 			WHERE pp.NO_BUKTI = ppd.NO_BUKTI
 			AND pp.SUB = '$sub'
 			AND pp.PER = '$per'
@@ -1331,7 +1335,7 @@ class Laporan_model extends CI_Model
 				pp.TGL_DIMINTA,
 				pp.DEVISI,
 				pp.KD_DEV,
-				pp.NA_BRG,
+				pp.ARTICLE AS NA_BRG,
 				pp.KET,
 				pp.TOTAL_QTY,
 				'-' AS AREA,
@@ -1341,21 +1345,21 @@ class Laporan_model extends CI_Model
 
 				ppd.NA_BHN,					
 				ppd.QTY,					
-				ppd.SATUAN,				
+				ppd.SATUAN			
 
-				pod.NO_BUKTI AS NO_PO,
-				pod.TGL AS TGL_PO,
-				pod.NO_PP,
+				-- pod.NO_BUKTI AS NO_PO,
+				-- pod.TGL AS TGL_PO,
+				-- pod.NO_PP,
 
-				belid.NO_BUKTI AS NO_BELI,
-				belid.NO_PO,
-				belid.TGL AS TGL_BELI
-			FROM pp, ppd, pod, belid
+				-- belid.NO_BUKTI AS NO_BELI,
+				-- belid.NO_PO,
+				-- belid.TGL AS TGL_BELI
+			FROM pp, ppd
 			WHERE pp.NO_BUKTI = ppd.NO_BUKTI
 			AND pp.SUB = '$sub'
 			AND pp.PER = '$per'
-			AND pp.TYP = 'BOR_CNC'
-			AND belid.FLAG2 = 'SP'
+			-- AND pp.TYP = 'BOR_CNC'
+			-- AND belid.FLAG2 = 'SP'
 			GROUP BY pp.NO_BUKTI
 			ORDER BY pp.TGL";
 		return $this->db->query($q1);
@@ -1370,7 +1374,7 @@ class Laporan_model extends CI_Model
 				pp.TGL_DIMINTA,
 				pp.DEVISI,
 				pp.KD_DEV,
-				pp.NA_BRG,
+				pp.ARTICLE AS NA_BRG,
 				pp.KET,
 				pp.TOTAL_QTY,
 				'-' AS AREA,
@@ -1380,21 +1384,21 @@ class Laporan_model extends CI_Model
 
 				ppd.NA_BHN,					
 				ppd.QTY,					
-				ppd.SATUAN,				
+				ppd.SATUAN		
 
-				pod.NO_BUKTI AS NO_PO,
-				pod.TGL AS TGL_PO,
-				pod.NO_PP,
+				-- pod.NO_BUKTI AS NO_PO,
+				-- pod.TGL AS TGL_PO,
+				-- pod.NO_PP,
 
-				belid.NO_BUKTI AS NO_BELI,
-				belid.NO_PO,
-				belid.TGL AS TGL_BELI
-			FROM pp, ppd, pod, belid
+				-- belid.NO_BUKTI AS NO_BELI,
+				-- belid.NO_PO,
+				-- belid.TGL AS TGL_BELI
+			FROM pp, ppd
 			WHERE pp.NO_BUKTI = ppd.NO_BUKTI
 			AND pp.SUB = '$sub'
 			AND pp.PER = '$per'
-			AND pp.TYP = 'BOR_CNC'
-			AND belid.FLAG2 = 'SP'
+			-- AND pp.TYP = 'BOR_CNC'
+			-- AND belid.FLAG2 = 'SP'
 			GROUP BY pp.NO_BUKTI
 			ORDER BY pp.TGL";
 		return $this->db->query($q1);
@@ -1409,7 +1413,7 @@ class Laporan_model extends CI_Model
 				pp.TGL_DIMINTA,
 				pp.DEVISI,
 				pp.KD_DEV,
-				pp.NA_BRG,
+				pp.ARTICLE AS NA_BRG,
 				pp.KET,
 				pp.TOTAL_QTY,
 				'-' AS AREA,
@@ -1419,21 +1423,21 @@ class Laporan_model extends CI_Model
 
 				ppd.NA_BHN,					
 				ppd.QTY,					
-				ppd.SATUAN,				
+				ppd.SATUAN			
 
-				pod.NO_BUKTI AS NO_PO,
-				pod.TGL AS TGL_PO,
-				pod.NO_PP,
+				-- pod.NO_BUKTI AS NO_PO,
+				-- pod.TGL AS TGL_PO,
+				-- pod.NO_PP,
 
-				belid.NO_BUKTI AS NO_BELI,
-				belid.NO_PO,
-				belid.TGL AS TGL_BELI
-			FROM pp, ppd, pod, belid
+				-- belid.NO_BUKTI AS NO_BELI,
+				-- belid.NO_PO,
+				-- belid.TGL AS TGL_BELI
+			FROM pp, ppd
 			WHERE pp.NO_BUKTI = ppd.NO_BUKTI
 			AND pp.SUB = '$sub'
 			AND pp.PER = '$per'
-			AND pp.TYP = 'IN_CNC'
-			AND belid.FLAG2 = 'SP'
+			-- AND pp.TYP = 'IN_CNC'
+			-- AND belid.FLAG2 = 'SP'
 			GROUP BY pp.NO_BUKTI
 			ORDER BY pp.TGL";
 		return $this->db->query($q1);
@@ -1443,39 +1447,27 @@ class Laporan_model extends CI_Model
 	{
 		$per = $this->session->userdata['periode'];
 		$sub = $this->session->userdata['sub'];
-		$q1 = "SELECT pp.NO_BUKTI,
-			pp.TGL,
-			pp.TGL_DIMINTA,
-			pp.DEVISI,
-			pp.KD_DEV,
-			pp.NA_BRG,
-			pp.KET,
-			pp.TOTAL_QTY,
-			'-' AS AREA,
-			'-' AS KABAG,
-			'-' AS HARI,
-			if(pp.VAL = 1, 'SELESAI', 'BELUM SELESAI') AS STAT,
+		$dr = $this->session->userdata['dr'];
+		$q1 = "SELECT po.NO_BUKTI AS NO_PO,
+				po.KODES,
+				po.NAMAS,
+				po.DR,
+				po.TGL,
+				po.JTEMPO,
+				po.NOTESKRM,
 
-			ppd.NA_BHN,					
-			ppd.QTY,					
-			ppd.SATUAN,
-			ppd.NAMAS,
-			'-' AS ALAMAT,		
-
-			pod.NO_BUKTI AS NO_PO,
-			pod.TGL AS TGL_PO,
-			pod.NO_PP AS NO_PP,
-
-			belid.NO_BUKTI AS NO_BELI,
-			belid.NO_PO,
-			belid.TGL AS TGL_BELI
-		FROM pp, ppd, pod, belid
-		WHERE pp.NO_BUKTI = ppd.NO_BUKTI
-		AND pp.SUB = '$sub'
-		AND pp.PER = '$per'
-		AND belid.FLAG2 = 'SP'
-		GROUP BY pp.NO_BUKTI
-		ORDER BY pp.TGL";
+				pod.NO_BUKTI AS NO_PO,
+				pod.TGL AS TGL_PO,
+				pod.NO_PP AS NO_PP
+			FROM po, pod
+			WHERE po.NO_BUKTI = pod.NO_BUKTI
+			AND po.DR = '$dr'
+			AND po.PER = '$per'
+			AND po.KD_TTD1 <> ''
+			AND po.KD_TTD2 <> ''
+			AND po.FLAG2 = 'NB'
+			GROUP BY po.NO_BUKTI
+			ORDER BY po.TGL";
 		return $this->db->query($q1);
 	}
 

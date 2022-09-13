@@ -2504,19 +2504,21 @@ class Laporan extends CI_Controller
 					ppd.NA_BHN,					
 					ppd.QTY,					
 					ppd.SATUAN,				
-					ppd.KET1 AS KET,
+					ppd.KET1 AS KET
 
-					pod.NO_BUKTI AS NO_PO,
-					pod.TGL AS TGL_PO,
-					pod.NO_PP,
+					-- pod.NO_BUKTI AS NO_PO,
+					-- pod.TGL AS TGL_PO,
+					-- pod.NO_PP,
 
-					belid.NO_BUKTI AS NO_BELI,
-					belid.NO_PO,
-					belid.TGL AS TGL_BELI
-				FROM pp, ppd, pod, belid
+					-- belid.NO_BUKTI AS NO_BELI,
+					-- belid.NO_PO,
+					-- belid.TGL AS TGL_BELI
+				FROM pp, ppd
 				WHERE pp.NO_BUKTI = ppd.NO_BUKTI
-				AND pp.TYP = 'RND_LASTING'
-				AND belid.FLAG2 = 'SP'
+				AND pp.DR ='$dr'
+				AND pp.SUB ='LS'
+				-- AND pp.TYP = 'RND_LASTING'
+				-- AND belid.FLAG2 = 'SP'
 				GROUP BY pp.NO_BUKTI
 				ORDER BY pp.TGL";
 			$result1 = mysqli_query($conn, $query);
@@ -2572,12 +2574,13 @@ class Laporan extends CI_Controller
 			$PHPJasperXML = new \PHPJasperXML();
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Monitor_Order_Cetakan.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
+			$dr = $this->session->userdata['dr'];
 			$tgl_1 = $this->input->post('TGL_1');
 			$query = "SELECT pp.NO_BUKTI,
 					pp.TGL,
 					pp.TGL_DIMINTA,
 					pp.DEVISI,
-					pp.NA_BRG,
+					pp.ARTICLE AS NA_BRG,
 					pp.KET,
 					pp.TOTAL_QTY,
 					'-' AS AREA,
@@ -2590,19 +2593,21 @@ class Laporan extends CI_Controller
 					ppd.NA_BHN,					
 					ppd.QTY,					
 					ppd.SATUAN,				
-					ppd.KET1 AS KET,
+					ppd.KET1 AS KET
 
-					pod.NO_BUKTI AS NO_PO,
-					pod.TGL AS TGL_PO,
-					pod.NO_PP,
+					-- pod.NO_BUKTI AS NO_PO,
+					-- pod.TGL AS TGL_PO,
+					-- pod.NO_PP,
 
-					belid.NO_BUKTI AS NO_BELI,
-					belid.NO_PO,
-					belid.TGL AS TGL_BELI
-				FROM pp, ppd, pod, belid
+					-- belid.NO_BUKTI AS NO_BELI,
+					-- belid.NO_PO,
+					-- belid.TGL AS TGL_BELI
+				FROM pp, ppd
 				WHERE pp.NO_BUKTI = ppd.NO_BUKTI
-				AND pp.TYP = 'RND_IMPORT'
-				AND belid.FLAG2 = 'SP'
+				AND pp.DR ='$dr'
+				AND pp.SUB ='CT'
+				-- AND pp.TYP = 'RND_LASTING'
+				-- AND belid.FLAG2 = 'SP'
 				GROUP BY pp.NO_BUKTI
 				ORDER BY pp.TGL";
 			$result1 = mysqli_query($conn, $query);
@@ -2659,38 +2664,41 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Monitor_Order_Pisau.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$tgl_1 = $this->input->post('TGL_1');
+			$dr = $this->session->userdata['dr'];
 			$query = "SELECT pp.NO_BUKTI,
-				pp.TGL,
-				pp.TGL_DIMINTA,
-				pp.DEVISI,
-				pp.NA_BRG,
-				pp.KET,
-				pp.TOTAL_QTY,
-				'-' AS AREA,
-				'-' AS KABAG,
-				'-' AS HARI,
-				'-' AS TGLSLS,
-				'-' AS SLS,
-				if(pp.VAL = 1, 'SELESAI', 'BELUM SELESAI') AS STAT,
+					pp.TGL,
+					pp.TGL_DIMINTA,
+					pp.DEVISI,
+					pp.ARTICLE AS NA_BRG,
+					pp.KET,
+					pp.TOTAL_QTY,
+					'-' AS AREA,
+					'-' AS KABAG,
+					'-' AS HARI,
+					'-' AS TGLSLS,
+					'-' AS SLS,
+					if(pp.VAL = 1, 'SELESAI', 'BELUM SELESAI') AS STAT,
 
-				ppd.NA_BHN,					
-				ppd.QTY,					
-				ppd.SATUAN,				
-				ppd.KET1 AS KET,
+					ppd.NA_BHN,					
+					ppd.QTY,					
+					ppd.SATUAN,				
+					ppd.KET1 AS KET
 
-				pod.NO_BUKTI AS NO_PO,
-				pod.TGL AS TGL_PO,
-				pod.NO_PP,
+					-- pod.NO_BUKTI AS NO_PO,
+					-- pod.TGL AS TGL_PO,
+					-- pod.NO_PP,
 
-				belid.NO_BUKTI AS NO_BELI,
-				belid.NO_PO,
-				belid.TGL AS TGL_BELI
-			FROM pp, ppd, pod, belid
-			WHERE pp.NO_BUKTI = ppd.NO_BUKTI
-			AND pp.TYP = 'RND_PISAU'
-			AND belid.FLAG2 = 'SP'
-			GROUP BY pp.NO_BUKTI
-			ORDER BY pp.TGL";
+					-- belid.NO_BUKTI AS NO_BELI,
+					-- belid.NO_PO,
+					-- belid.TGL AS TGL_BELI
+				FROM pp, ppd
+				WHERE pp.NO_BUKTI = ppd.NO_BUKTI
+				AND pp.DR ='$dr'
+				AND pp.SUB ='1R&'
+				-- AND pp.TYP = 'RND_LASTING'
+				-- AND belid.FLAG2 = 'SP'
+				GROUP BY pp.NO_BUKTI
+				ORDER BY pp.TGL";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -2745,11 +2753,12 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Monitor_Order_Meba.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$tgl_1 = $this->input->post('TGL_1');
+			$dr = $this->session->userdata['dr'];
 			$query = "SELECT pp.NO_BUKTI,
 					pp.TGL,
 					pp.TGL_DIMINTA,
 					pp.DEVISI,
-					pp.NA_BRG,
+					pp.ARTICLE AS NA_BRG,
 					pp.KET,
 					pp.TOTAL_QTY,
 					'-' AS AREA,
@@ -2762,19 +2771,21 @@ class Laporan extends CI_Controller
 					ppd.NA_BHN,					
 					ppd.QTY,					
 					ppd.SATUAN,				
-					ppd.KET1 AS KET,
+					ppd.KET1 AS KET
 
-					pod.NO_BUKTI AS NO_PO,
-					pod.TGL AS TGL_PO,
-					pod.NO_PP,
+					-- pod.NO_BUKTI AS NO_PO,
+					-- pod.TGL AS TGL_PO,
+					-- pod.NO_PP,
 
-					belid.NO_BUKTI AS NO_BELI,
-					belid.NO_PO,
-					belid.TGL AS TGL_BELI
-				FROM pp, ppd, pod, belid
+					-- belid.NO_BUKTI AS NO_BELI,
+					-- belid.NO_PO,
+					-- belid.TGL AS TGL_BELI
+				FROM pp, ppd
 				WHERE pp.NO_BUKTI = ppd.NO_BUKTI
-				AND pp.TYP = 'RND_MEBA'
-				AND belid.FLAG2 = 'SP'
+				AND pp.DR ='$dr'
+				AND pp.SUB ='MB'
+				-- AND pp.TYP = 'RND_LASTING'
+				-- AND belid.FLAG2 = 'SP'
 				GROUP BY pp.NO_BUKTI
 				ORDER BY pp.TGL";
 			$result1 = mysqli_query($conn, $query);
@@ -2836,7 +2847,7 @@ class Laporan extends CI_Controller
 					pp.TGL,
 					pp.DEVISI,
 					pp.KD_DEV,
-					pp.NA_BRG,
+					pp.ARTICLE AS NA_BRG,
 					pp.KET,
 					pp.TOTAL_QTY,
 					'-' AS AREA,
@@ -2847,16 +2858,8 @@ class Laporan extends CI_Controller
 					ppd.TGL_DIMINTA,					
 					ppd.NA_BHN,
 					ppd.QTY,					
-					ppd.SATUAN,				
-
-					pod.NO_BUKTI AS NO_PO,
-					pod.TGL AS TGL_PO,
-					pod.NO_PP,
-
-					belid.NO_BUKTI AS NO_BELI,
-					belid.NO_PO,
-					belid.TGL AS TGL_BELI
-				FROM pp, ppd, pod, belid
+					ppd.SATUAN
+				FROM pp, ppd
 				WHERE pp.NO_BUKTI = ppd.NO_BUKTI
 				AND pp.SUB = '$sub'
 				AND pp.PER = '$per'
@@ -2921,7 +2924,7 @@ class Laporan extends CI_Controller
 					pp.TGL_DIMINTA,
 					pp.DEVISI,
 					pp.KD_DEV,
-					pp.NA_BRG,
+					pp.ARTICLE AS NA_BRG,
 					pp.KET,
 					pp.TOTAL_QTY,
 					'-' AS AREA,
@@ -2933,21 +2936,21 @@ class Laporan extends CI_Controller
 					ppd.QTY,					
 					ppd.SATUAN,			
 					ppd.HARGA,			
-					ppd.TOTAL,			
+					ppd.TOTAL		
 
-					pod.NO_BUKTI AS NO_PO,
-					pod.TGL AS TGL_PO,
-					pod.NO_PP,
+					-- pod.NO_BUKTI AS NO_PO,
+					-- pod.TGL AS TGL_PO,
+					-- pod.NO_PP,
 
-					belid.NO_BUKTI AS NO_BELI,
-					belid.NO_PO,
-					belid.TGL AS TGL_BELI
+					-- belid.NO_BUKTI AS NO_BELI,
+					-- belid.NO_PO,
+					-- belid.TGL AS TGL_BELI
 				FROM pp, ppd, pod, belid
 				WHERE pp.NO_BUKTI = ppd.NO_BUKTI
 				AND pp.SUB = '$sub'
 				AND pp.PER = '$per'
-				AND pp.TYP = 'BOR_CNC'
-				AND belid.FLAG2 = 'SP'
+				-- AND pp.TYP = 'BOR_CNC'
+				-- AND belid.FLAG2 = 'SP'
 				GROUP BY pp.NO_BUKTI
 				ORDER BY pp.TGL";
 			$result1 = mysqli_query($conn, $query);
@@ -3010,7 +3013,7 @@ class Laporan extends CI_Controller
 					pp.TGL_DIMINTA,
 					pp.DEVISI,
 					pp.KD_DEV,
-					pp.NA_BRG,
+					pp.ARTICLE AS NA_BRG,
 					pp.KET,
 					pp.TOTAL_QTY,
 					'-' AS AREA,
@@ -3020,21 +3023,21 @@ class Laporan extends CI_Controller
 
 					ppd.NA_BHN,					
 					ppd.QTY,					
-					ppd.SATUAN,				
+					ppd.SATUAN			
 
-					pod.NO_BUKTI AS NO_PO,
-					pod.TGL AS TGL_PO,
-					pod.NO_PP,
+					-- pod.NO_BUKTI AS NO_PO,
+					-- pod.TGL AS TGL_PO,
+					-- pod.NO_PP,
 
-					belid.NO_BUKTI AS NO_BELI,
-					belid.NO_PO,
-					belid.TGL AS TGL_BELI
-				FROM pp, ppd, pod, belid
+					-- belid.NO_BUKTI AS NO_BELI,
+					-- belid.NO_PO,
+					-- belid.TGL AS TGL_BELI
+				FROM pp, ppd
 				WHERE pp.NO_BUKTI = ppd.NO_BUKTI
 				AND pp.SUB = '$sub'
 				AND pp.PER = '$per'
-				AND pp.TYP = 'BOR_CNC'
-				AND belid.FLAG2 = 'SP'
+				-- AND pp.TYP = 'BOR_CNC'
+				-- AND belid.FLAG2 = 'SP'
 				GROUP BY pp.NO_BUKTI
 				ORDER BY pp.TGL";
 			$result1 = mysqli_query($conn, $query);
@@ -3097,7 +3100,7 @@ class Laporan extends CI_Controller
 					pp.TGL_DIMINTA,
 					pp.DEVISI,
 					pp.KD_DEV,
-					pp.NA_BRG,
+					pp.ARTICLE AS NA_BRG,
 					pp.KET,
 					pp.TOTAL_QTY,
 					'-' AS AREA,
@@ -3107,21 +3110,21 @@ class Laporan extends CI_Controller
 
 					ppd.NA_BHN,					
 					ppd.QTY,					
-					ppd.SATUAN,				
+					ppd.SATUAN				
 
-					pod.NO_BUKTI AS NO_PO,
-					pod.TGL AS TGL_PO,
-					pod.NO_PP,
+					-- pod.NO_BUKTI AS NO_PO,
+					-- pod.TGL AS TGL_PO,
+					-- pod.NO_PP,
 
-					belid.NO_BUKTI AS NO_BELI,
-					belid.NO_PO,
-					belid.TGL AS TGL_BELI
-				FROM pp, ppd, pod, belid
+					-- belid.NO_BUKTI AS NO_BELI,
+					-- belid.NO_PO,
+					-- belid.TGL AS TGL_BELI
+				FROM pp, ppd
 				WHERE pp.NO_BUKTI = ppd.NO_BUKTI
 				AND pp.SUB = '$sub'
 				AND pp.PER = '$per'
-				AND pp.TYP = 'IN_CNC'
-				AND belid.FLAG2 = 'SP'
+				-- AND pp.TYP = 'IN_CNC'
+				-- AND belid.FLAG2 = 'SP'
 				GROUP BY pp.NO_BUKTI
 				ORDER BY pp.TGL";
 			$result1 = mysqli_query($conn, $query);
@@ -3181,39 +3184,27 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$per = $this->session->userdata['periode'];
 			$sub = $this->session->userdata['sub'];
-			$query = "SELECT pp.NO_BUKTI,
-					pp.TGL,
-					pp.TGL_DIMINTA,
-					pp.DEVISI,
-					pp.KD_DEV,
-					pp.NA_BRG,
-					pp.KET,
-					pp.TOTAL_QTY,
-					'-' AS AREA,
-					'-' AS KABAG,
-					'-' AS HARI,
-					if(pp.VAL = 1, 'SELESAI', 'BELUM SELESAI') AS STAT,
-
-					ppd.NA_BHN,					
-					ppd.QTY,					
-					ppd.SATUAN,
-					ppd.NAMAS,
-					'-' AS ALAMAT,		
+			$dr = $this->session->userdata['dr'];
+			$query = "SELECT po.NO_BUKTI AS NO_PO,
+					po.KODES,
+					po.NAMAS,
+					po.DR,
+					po.TGL,
+					po.JTEMPO,
+					po.NOTESKRM,		
 
 					pod.NO_BUKTI AS NO_PO,
 					pod.TGL AS TGL_PO,
-					pod.NO_PP AS NO_PP,
-
-					belid.NO_BUKTI AS NO_BELI,
-					belid.NO_PO,
-					belid.TGL AS TGL_BELI
-				FROM pp, ppd, pod, belid
-				WHERE pp.NO_BUKTI = ppd.NO_BUKTI
-				AND pp.SUB = '$sub'
-				AND pp.PER = '$per'
-				AND belid.FLAG2 = 'SP'
-				GROUP BY pp.NO_BUKTI
-				ORDER BY pp.TGL";
+					pod.NO_PP AS NO_PP
+				FROM po, pod
+				WHERE po.NO_BUKTI = pod.NO_BUKTI
+				AND po.DR = '$dr'
+				AND po.PER = '$per'
+				AND po.KD_TTD1 <> ''
+				AND po.KD_TTD2 <> ''
+				AND po.FLAG2 = 'NB'
+				GROUP BY po.NO_BUKTI
+				ORDER BY po.TGL";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(

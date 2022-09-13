@@ -36,13 +36,13 @@ class Transaksi_PesananRNDInternal extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'IN_CNC',
+            // 'TYP' => 'IN_CNC',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -91,13 +91,13 @@ class Transaksi_PesananRNDInternal extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'IN_CNC',
+            // 'TYP' => 'IN_CNC',
         );
         $this->db->from('pp');
         $this->db->where($where);
@@ -148,13 +148,13 @@ class Transaksi_PesananRNDInternal extends CI_Controller
         $sub = $this->session->userdata['sub'];
         $this->session->set_userdata('judul', 'Transaksi Pesanan RND (Internal)');
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'IN_CNC',
+            // 'TYP' => 'IN_CNC',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
         $this->load->view('templates_admin/header');

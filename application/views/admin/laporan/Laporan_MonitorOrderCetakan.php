@@ -86,14 +86,17 @@
                         "TGL_DIMINTA" => array(
                             "label" => "Tanggal Diminta",
                         ),
+                        "DEVISI" => array(
+                            "label" => "Devisi",
+                        ),
                         "NA_BRG" => array(
-                            "label" => "Article",
+                            "label" => "Nama Barang",
                         ),
-                        "TGL_PO" => array(
-                            "label" => "Tanggal PO",
+                        "KET" => array(
+                            "label" => "Keterangan",
                         ),
-                        "NO_PO" => array(
-                            "label" => "No PO",
+                        "TOTAL_QTY" => array(
+                            "label" => "Total Qty.",
                         ),
                         "STAT" => array(
                             "label" => "Status",

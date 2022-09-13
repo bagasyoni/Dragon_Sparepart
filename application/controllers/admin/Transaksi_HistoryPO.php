@@ -26,19 +26,19 @@ class Transaksi_HistoryPO extends CI_Controller
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'DR', 'TGL', 'JTEMPO', 'NOTES');
-    var $column_search = array( 'NO_BUKTI', 'DR', 'TGL', 'JTEMPO', 'NOTES');
+    var $column_order = array(null, null, null, 'NO_BUKTI','NAMAS', 'DR', 'TGL', 'JTEMPO', 'NOTES');
+    var $column_search = array( 'NO_BUKTI','NAMAS', 'DR', 'TGL', 'JTEMPO', 'NOTES');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query()
     {
         $per = $this->session->userdata['periode'];
-        $sub = $this->session->userdata['sub'];
+        $dr = $this->session->userdata['dr'];
         $where = array(
-            'PER' => $per,
-            'SUBDIV' => $sub,
-            'FLAG' => 'SP',
-            'FLAG2' => $sub,
+            'DR' => $dr,
+            // 'PER' => $per,
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '1',
         );
         $this->db->select('*');
         $this->db->from('po');
@@ -84,12 +84,12 @@ class Transaksi_HistoryPO extends CI_Controller
     function count_all()
     {
         $per = $this->session->userdata['periode'];
-        $sub = $this->session->userdata['sub'];
+        $dr = $this->session->userdata['dr'];
         $where = array(
-            'PER' => $per,
-            'SUBDIV' => $sub,
-            'FLAG' => 'SP',
-            'FLAG2' => $sub,
+            'DR' => $dr,
+            // 'PER' => $per,
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '1',
         );
         $this->db->from('po');
         $this->db->where($where);
@@ -118,9 +118,11 @@ class Transaksi_HistoryPO extends CI_Controller
                     </div>';
             $row[] = $no . ".";
             $row[] = $po->NO_BUKTI;
+            $row[] = $po->KODES;
+            $row[] = $po->NAMAS;
             $row[] = $po->DR;
             $row[] = date("d-m-Y", strtotime($po->TGL));
-            $row[] = $po->JTEMPO;
+            $row[] = date("d-m-Y", strtotime($po->JTEMPO));
             $row[] = $po->NOTES;
             $data[] = $row;
         }
@@ -136,13 +138,13 @@ class Transaksi_HistoryPO extends CI_Controller
     public function index_Transaksi_HistoryPO()
     {
         $per = $this->session->userdata['periode'];
-        $sub = $this->session->userdata['sub'];
+        $dr = $this->session->userdata['dr'];
         $this->session->set_userdata('judul', 'Transaksi History PO');
         $where = array(
-            'PER' => $per,
-            'SUBDIV' => $sub,
-            'FLAG' => 'SP',
-            'FLAG2' => $sub,
+            'DR' => $dr,
+            // 'PER' => $per,
+            'FLAG2' => 'NB',
+            'VERIFIKASI_PO_SP' => '1',
         );
         $data['historypo'] = $this->transaksi_model->tampil_data($where, 'po', 'NO_ID')->result();
         $this->load->view('templates_admin/header');

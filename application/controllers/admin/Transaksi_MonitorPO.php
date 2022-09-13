@@ -26,20 +26,20 @@ class Transaksi_MonitorPO extends CI_Controller
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'DR', 'TGL', 'JTEMPO', 'NOTES');
-    var $column_search = array( 'NO_BUKTI', 'DR', 'TGL', 'JTEMPO', 'NOTES');
+    var $column_order = array(null, null, null, 'NO_BUKTI','KODES','NAMAS', 'DR', 'TGL', 'JTEMPO', 'NOTES');
+    var $column_search = array( 'NO_BUKTI','KODES','NAMAS', 'DR', 'TGL', 'JTEMPO', 'NOTES');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query()
     {
         $dr = $this->session->userdata['dr'];
-        $per = $this->session->userdata['periode'];
+        // $per = $this->session->userdata['periode'];
         // $sub = $this->session->userdata['sub'];
         $where = array(
             'DR' => $dr,
-            'PER' => $per,
-            'KD_TTD1 !=' => '',
-            'KD_TTD2 !=' => '',
+            // 'PER' => $per,
+            // 'KD_TTD1 !=' => '',
+            // 'KD_TTD2 !=' => '',
             'FLAG2' => 'NB',
             'VERIFIKASI_PO_SP' => '0',
         );
@@ -87,13 +87,13 @@ class Transaksi_MonitorPO extends CI_Controller
     function count_all()
     {
         $dr = $this->session->userdata['dr'];
-        $per = $this->session->userdata['periode'];
+        // $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $where = array(
             'DR' => $dr,
-            'PER' => $per,
-            'KD_TTD1 !=' => '',
-            'KD_TTD2 !=' => '',
+            // 'PER' => $per,
+            // 'KD_TTD1 !=' => '',
+            // 'KD_TTD2 !=' => '',
             'FLAG2' => 'NB',
             'VERIFIKASI_PO_SP' => '0',
         );
@@ -144,14 +144,14 @@ class Transaksi_MonitorPO extends CI_Controller
     public function index_Transaksi_MonitorPO()
     {
         $dr = $this->session->userdata['dr'];
-        $per = $this->session->userdata['periode'];
+        // $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $this->session->set_userdata('judul', 'Transaksi Monitor PO');
         $where = array(
             'DR' => $dr,
-            'PER' => $per,
-            'KD_TTD1 !=' => '',
-            'KD_TTD2 !=' => '',
+            // 'PER' => $per,
+            // 'KD_TTD1 !=' => '',
+            // 'KD_TTD2 !=' => '',
             'FLAG2' => 'NB',
             'VERIFIKASI_PO_SP' => '0',
         );

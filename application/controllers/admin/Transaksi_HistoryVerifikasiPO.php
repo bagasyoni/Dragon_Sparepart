@@ -26,8 +26,8 @@ class Transaksi_HistoryVerifikasiPO extends CI_Controller
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'DR', 'TGL', 'JTEMPO', 'NOTES');
-    var $column_search = array( 'NO_BUKTI', 'DR', 'TGL', 'JTEMPO', 'NOTES');
+    var $column_order = array(null, null, null, 'NO_BUKTI','NAMAS', 'DR', 'TGL', 'JTEMPO', 'NOTES');
+    var $column_search = array( 'NO_BUKTI','NAMAS', 'DR', 'TGL', 'JTEMPO', 'NOTES');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query()
@@ -37,7 +37,7 @@ class Transaksi_HistoryVerifikasiPO extends CI_Controller
         // $sub = $this->session->userdata('sub');
         $where = array(
             'DR' => $dr,
-            'PER' => $per,
+            // 'PER' => $per,
             'KD_TTD1 !=' => '',
             'KD_TTD2 !=' => '',
             'FLAG2' => 'NB',
@@ -91,7 +91,7 @@ class Transaksi_HistoryVerifikasiPO extends CI_Controller
         // $sub = $this->session->userdata('sub');
         $where = array(
             'DR' => $dr,
-            'PER' => $per,
+            // 'PER' => $per,
             'KD_TTD1 !=' => '',
             'KD_TTD2 !=' => '',
             'FLAG2' => 'NB',
@@ -129,7 +129,13 @@ class Transaksi_HistoryVerifikasiPO extends CI_Controller
             $row[] = $po->DR;
             $row[] = date("d-m-Y", strtotime($po->TGL));
             $row[] = date("d-m-Y", strtotime($po->JTEMPO));
-            $row[] = $po->VERIFIKASI_PO_SP;
+            $verifikasi = $po->VERIFIKASI_PO_SP;
+            if($verifikasi == 1){
+                $verifikasi = 'VERIFIKASI';
+            } else {
+                $verifikasi = 'BELUM TERVERIFIKASI';
+            }
+            $row[] = $verifikasi;
             $data[] = $row;
         }
         $output = array(
@@ -149,7 +155,7 @@ class Transaksi_HistoryVerifikasiPO extends CI_Controller
         $this->session->set_userdata('judul', 'Transaksi Verifikasi PO');
         $where = array(
             'DR' => $dr,
-            'PER' => $per,
+            // 'PER' => $per,
             'KD_TTD1 !=' => '',
             'KD_TTD2 !=' => '',
             'FLAG2' => 'NB',

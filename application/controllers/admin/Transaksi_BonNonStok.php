@@ -21,13 +21,13 @@ class Transaksi_BonNonStok extends CI_Controller
         if ($this->session->userdata['menu_sparepart'] != 'bond') {
             $this->session->set_userdata('menu_sparepart', 'bond');
             $this->session->set_userdata('kode_menu', 'T0021');
-            $this->session->set_userdata('keyword_beli', '');
-            $this->session->set_userdata('order_beli', 'NO_ID');
+            $this->session->set_userdata('keyword_bon', '');
+            $this->session->set_userdata('order_bon', 'NO_ID');
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'DEVISI', 'DR', 'NA_BHN', 'SLS');
-    var $column_search = array('NO_BUKTI', 'TGL', 'DEVISI', 'DR', 'NA_BHN', 'SLS');
+    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGLD', 'NA_BHN', 'DR', 'NA_BHN', 'SLS');
+    var $column_search = array('NO_BUKTI', 'TGLD', 'NA_BHN', 'DR', 'NA_BHN', 'SLS');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query()
@@ -36,10 +36,11 @@ class Transaksi_BonNonStok extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $where = array(
             'DR' => $dr,
-            'TUJUAN' => $sub,
+            'SLS' => '0',
+            'SPD' => $sub,
         );
         $this->db->select('*');
-        $this->db->from('beli');
+        $this->db->from('bond');
         $this->db->where($where);
         $i = 0;
         foreach ($this->column_search as $item) {
@@ -82,50 +83,50 @@ class Transaksi_BonNonStok extends CI_Controller
     function count_all()
     {
         $dr = $this->session->userdata['dr'];
-        $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $where = array(
             'DR' => $dr,
-            'PER' => $per,
-            'SUB' => $sub,
-            'FLAG' => 'BL',
-            'FLAG2' => 'SP',
-            'TTD1' => '1',
-            'TTD2' => '1',
-            'TTD3' => '1',
-            'TTD4' => '1',
-            'TTD5' => '1',
-            'TTD6' => '1',
+            'SLS' => '0',
+            'SPD' => $sub,
         );
-        $this->db->from('beli');
+        $this->db->from('bond');
         $this->db->where($where);
         return $this->db->count_all_results();
     }
 
-    function get_ajax_beli()
+    function get_ajax_bon()
     {
         $list = $this->get_datatables();
         $data = array();
         $no = @$_POST['start'];
-        foreach ($list as $beli) {
-            $JASPER = "window.open('JASPER/" . $beli->NO_ID . "','', 'width=1000','height=900');";
+        foreach ($list as $bon) {
+            $JASPER = "window.open('JASPER/" . $bon->NO_ID . "','', 'width=1000','height=900');";
             $no++;
             $row = array();
-            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $beli->NO_ID . "'>";
+            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $bon->NO_ID . "'>";
             $row[] = '<div class="dropdown">
                         <a style="background-color: #e89517;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonNonStok/update/' . $beli->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonNonStok/update/' . $bon->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
-            $row[] = $beli->NO_BUKTI;
-            $row[] = date("d-m-Y", strtotime($beli->TGL));
-            $row[] = $beli->DEVISI;
-            $row[] = $beli->DR;
+            $row[] = $bon->NO_BUKTI;
+            $row[] = date("d-m-Y", strtotime($bon->TGLD));
+            // $row[] = $bon->NM_BAG;
+            $row[] = $bon->DR;
+            $row[] = $bon->NA_BHN;
+            $status = $bon->SLS;
+            if($status == '1'){
+                $status = 'SELESAI';
+            }
+            else{
+                $status = 'BELUM SELESAI';
+            }
+            $row[] = $status;
             $data[] = $row;
         }
         $output = array(
@@ -140,23 +141,14 @@ class Transaksi_BonNonStok extends CI_Controller
     public function index_Transaksi_BonNonStok()
     {
         $dr = $this->session->userdata['dr'];
-        $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $this->session->set_userdata('judul', 'Transaksi Bon Non Stok');
         $where = array(
             'DR' => $dr,
-            'PER' => $per,
-            'SUB' => $sub,
-            'FLAG' => 'BL',
-            'FLAG2' => 'SP',
-            'TTD1' => '1',
-            'TTD2' => '1',
-            'TTD3' => '1',
-            'TTD4' => '1',
-            'TTD5' => '1',
-            'TTD6' => '1',
+            'SLS' => '0',
+            'SPD' => $sub,
         );
-        $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
+        $data['bond'] = $this->transaksi_model->tampil_data($where, 'bond', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_BonNonStok/Transaksi_BonNonStok', $data);

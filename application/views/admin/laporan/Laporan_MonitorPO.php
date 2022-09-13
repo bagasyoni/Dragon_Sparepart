@@ -77,26 +77,26 @@
                     "showFooter" => true,
                     "showFooter" => "bottom",
                     "columns" => array(
-                        "NO_BUKTI" => array(
+                        "NO_PO" => array(
                             "label" => "No Bukti",
                         ),
                         "TGL" => array(
                             "label" => "Tanggal",
                         ),
-                        "TGL_DIMINTA" => array(
-                            "label" => "Tanggal Diminta",
+                        "JTEMPO" => array(
+                            "label" => "Jatuh Tempo",
                         ),
-                        "NA_BRG" => array(
-                            "label" => "Article",
+                        "KODES" => array(
+                            "label" => "Kode Supplier",
                         ),
-                        "KD_DEVISI" => array(
-                            "label" => "Kode Devisi",
+                        "NAMAS" => array(
+                            "label" => "Nama Supplier",
                         ),
-                        "DEVISI" => array(
-                            "label" => "Nama Devisi",
-                        ),
-                        "KET" => array(
+                        "NOTESKRM" => array(
                             "label" => "Keterangan",
+                        ),
+                        "NO_PP" => array(
+                            "label" => "No PP",
                         ),
                     ),
                     "cssClass" => array(

@@ -40,10 +40,12 @@
                         <th width="75px"><input type="checkbox" id="selectall" /></th>
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
-                        <th width="200px">No Bukti</th>
+                        <th width="200px">No Order</th>
                         <th width="200px">Tanggal</th>
-                        <th width="150px">Devisi</th>
+                        <!-- <th width="150px">Devisi</th> -->
                         <th width="150px">Dragon</th>
+                        <th width="150px">Nama Barang</th>
+                        <th width="150px">Selesai</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,7 +68,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "<?php echo site_url('admin/Transaksi_BonNonStok/get_ajax_beli') ?>",
+                "url": "<?php echo site_url('admin/Transaksi_BonNonStok/get_ajax_bon') ?>",
                 "type": "POST"
             },
             "columnDefs": [{
