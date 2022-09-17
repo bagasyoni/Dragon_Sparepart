@@ -660,7 +660,7 @@ class Transaksi_Pemesanan extends CI_Controller
                 date_format(bon.TGL ,'%d-%m-%Y') AS TGL_DIMINTA,
                 bon.SUB
             FROM bon, bond
-            WHERE bon.NO_BUKTI=bond.NO_BUKTI AND bon.TTD2<>'' AND bon.DR='$dr' AND bon.OK=1 AND bond.OK=0 AND bond.QTY - bond.KIRIM <> 0 AND (bond.NO_BUKTI LIKE '%$search%' OR bond.NA_BHN LIKE '%$search%')
+            WHERE bon.NO_BUKTI=bond.NO_BUKTI AND bon.TTD2<>'' AND bon.DR='$dr' AND bond.OK=0 AND bond.QTY - bond.KIRIM <> 0 AND (bond.NO_BUKTI LIKE '%$search%' OR bond.NA_BHN LIKE '%$search%')
             ORDER BY bond.NO_BUKTI LIMIT $xa,$perPage");
         $selectajax = array();
         foreach ($results->RESULT_ARRAY() as $row) {

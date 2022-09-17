@@ -129,10 +129,10 @@ class Transaksi_Barang_Masuk extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Barang_Masuk/update/' . $beli->NO_ID) . '"> <i class="fa fa-edit"></i> Val</a>
-                            <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
-                        </div>
-                    </div>';
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Barang_Masuk/update/' . $beli->NO_ID) . '"> <i class="fa fa-edit"></i> Validasi</a>
+                            </div>
+                            </div>';
+                            // <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
             $row[] = $no . ".";
             $row[] = date("d-m-Y", strtotime($beli->TGL));
             $row[] = $beli->NO_BUKTI;
@@ -191,7 +191,6 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 beli.NAMAS AS NAMAS,
                 beli.TGL AS TGL,
                 beli.PIN1 AS PIN1,
-                beli.TOTAL_QTYPP AS TOTAL_QTYPP,
                 beli.TOTAL_QTY AS TOTAL_QTY,
                 beli.VAL AS VAL,
                 beli.TTD1 AS TTD1,
@@ -207,10 +206,10 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 belid.KD_BHN AS KD_BHN,
                 belid.NA_BHN AS NA_BHN,
                 belid.RAK AS RAK,
-                belid.QTYPP AS QTYPP,
-                belid.SATUANPP AS SATUANPP,
                 belid.SISA AS QTY,
                 belid.SATUAN AS SATUAN,
+                belid.SAT_BL,
+                belid.QTY,
                 belid.QTY_BL
             FROM beli, belid 
             WHERE beli.NO_ID = $id 
@@ -250,15 +249,14 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 beli.NAMAS AS NAMAS,
                 beli.TGL AS TGL,
                 beli.PIN1 AS PIN1,
-                beli.TOTAL_QTYPP AS TOTAL_QTYPP,
                 beli.TOTAL_QTY AS TOTAL_QTY,
                 beli.VAL AS VAL,
                 beli.TTD1 AS TTD1,
-                beli.TTD1 AS TTD2,
-                beli.TTD1 AS TTD3,
-                beli.TTD1 AS TTD4,
-                beli.TTD1 AS TTD5,
-                beli.TTD1 AS TTD6,
+                beli.TTD2 AS TTD2,
+                beli.TTD3 AS TTD3,
+                beli.TTD4 AS TTD4,
+                beli.TTD5 AS TTD5,
+                beli.TTD6 AS TTD6,
 
                 belid.NO_ID AS NO_ID,
                 belid.REC AS REC,
@@ -266,11 +264,12 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 belid.KD_BHN AS KD_BHN,
                 belid.NA_BHN AS NA_BHN,
                 belid.RAK AS RAK,
-                belid.QTYPP AS QTYPP,
-                belid.SATUANPP AS SATUANPP,
                 belid.SISA AS QTY,
                 belid.SATUAN AS SATUAN,
-                belid.QTY_BL
+                belid.SAT_BL,
+                belid.QTY,
+                belid.QTY_BL,
+                belid.VAL
             FROM beli, belid 
             WHERE beli.NO_ID = $id
             AND beli.NO_ID = belid.ID 
@@ -281,12 +280,11 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $KD_BHN = $this->input->post('KD_BHN');
         $NA_BHN = $this->input->post('NA_BHN');
         $RAK = $this->input->post('RAK');
-        $QTYPP = str_replace(',', '', $this->input->post('QTYPP', TRUE));
-        $SATUANPP = $this->input->post('SATUANPP');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
-        $SISA = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SATUAN = $this->input->post('SATUAN');
-        $QTY_BL = $this->input->post('QTY_BL');
+        $QTY_BL = str_replace(',', '', $this->input->post('QTY_BL', TRUE));
+        $SAT_BL = $this->input->post('SAT_BL');
+        $SISA = str_replace(',', '', $this->input->post('QTY', TRUE));
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -301,15 +299,13 @@ class Transaksi_Barang_Masuk extends CI_Controller
                     'KD_BHN' => $KD_BHN[$URUT],
                     'NA_BHN' => $NA_BHN[$URUT],
                     'RAK' => $RAK[$URUT],
-                    'QTYPP' => str_replace(',', '', $QTYPP[$URUT]),
-                    'SATUANPP' => $SATUANPP[$URUT],
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
-                    'SISA' => str_replace(',', '', $SISA[$URUT]),
                     'SATUAN' => $SATUAN[$URUT],
                     'QTY_BL' => str_replace(',', '', $QTY_BL[$URUT]),
+                    'SAT_BL' => $SAT_BL[$URUT],
+                    'SISA' => str_replace(',', '', $SISA[$URUT]),
                     'FLAG' => 'BL',
                     'FLAG2' => 'SP',
-                    'ATK' => '0',
                     'VAL' => '1',
                     'PIN2' => $this->session->userdata['pin'],
                     'TTD2_USR' => $this->session->userdata['username']
@@ -337,15 +333,14 @@ class Transaksi_Barang_Masuk extends CI_Controller
                     'KD_BHN' => $KD_BHN[$i],
                     'NA_BHN' => $NA_BHN[$i],
                     'RAK' => $RAK[$i],
-                    'QTYPP' => str_replace(',', '', $QTYPP[$i]),
-                    'SATUANPP' => $SATUANPP[$i],
                     'QTY' => str_replace(',', '', $QTY[$i]),
-                    'SISA' => str_replace(',', '', $SISA[$i]),
                     'SATUAN' => $SATUAN[$i],
+                    'QTY_BL' => str_replace(',', '', $QTY_BL[$i]),
+                    'SAT_BL' => $SAT_BL[$i],
+                    'SISA' => str_replace(',', '', $SISA[$i]),
                     'QTY_BL' => str_replace(',', '', $QTY_BL[$i]),
                     'FLAG' => 'BL',
                     'FLAG2' => 'SP',
-                    'ATK' => '0',
                     'VAL' => '1',
                     'PIN2' => $this->session->userdata['pin'],
                     'TTD2_USR' => $this->session->userdata['username']
