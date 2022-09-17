@@ -113,16 +113,16 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             $row = array();
             $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $pp->NO_ID . "'>";
             $row[] = '<div class="dropdown">
-                        <a style="background-color: #e89517;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a style="background-color:  #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananCetakanImport/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananCetakanImport/validasi/' . $pp->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananCetakanImport/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
-                            <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
-                        </div>
-                    </div>';
+                            </div>
+                            </div>';
+                            // <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
             $row[] = date("d-m-Y", strtotime($pp->TGL));
@@ -135,7 +135,7 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             $row[] = $pp->M_LASTING;
             $row[] = $pp->PROSES;
             $row[] = $pp->FLAG;
-            $row[] = $pp->GAMBAR1;
+            $row[] = "<img src='/Dragon_Sparepart/gambar/$pp->GAMBAR1' width='auto' height='120'>";
             $data[] = $row;
         }
         $output = array(
@@ -225,17 +225,20 @@ class Transaksi_PesananCetakanImport extends CI_Controller
 
     public function input_aksi()
     {
+        $dr = $this->session->userdata['dr'];
+        $tgl = date("Y-m-d");
+        $number = rand(0,100);
+
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-		$config['max_size']             = 1000;
-		$config['max_width']            = 3024;
-		$config['max_height']           = 3680;
-        $new_name = time().$_FILES['name'];
-        $config['file_name']            = $new_name; 
+        $na_gambar1                     = '-CTK-'; 
+        $na_gambar2                     = '-PST-';
+        $gambar                         = $number;
+        $config['file_name']            = $gambar;
 
         $this->load->library('upload', $config);
 
-        if ( ! $this->upload->do_upload('GAMBAR1') && ! $this->upload->do_upload('GAMBAR2') && ! $this->upload->do_upload('GAMBAR3') ){
+        if ( ! $this->upload->do_upload('GAMBAR1') && ! $this->upload->do_upload('GAMBAR2') && ! $this->upload->do_upload('GAMBAR3')){
 			$error = array('error' => $this->upload->display_errors());
 			$this->load->view('admin/Transaksi_PesananCetakanImport/Transaksi_PesananCetakanImport_form', $error);
 		}else{
@@ -246,7 +249,7 @@ class Transaksi_PesananCetakanImport extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND DR='$dr' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='CI' AND DR='$dr' AND FLAG='IMPORT' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         $value11 = substr($nom[0], 3, 7);
         $value22 = STRVAL($value11) + 1;
@@ -302,9 +305,9 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             'SIZE' => $this->input->post('SIZE', TRUE),
             'TIPE_CETAK' => $this->input->post('TIPE_CETAK', TRUE),
             'PROSES' => $this->input->post('PROSES', TRUE),
-            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
-            'GAMBAR2' => "IMG".$this->upload->data('file_name'),
-            'GAMBAR3' => "IMG".$this->upload->data('file_name'),
+            'GAMBAR1' => $sub.$na_gambar1.$tgl.'-'.$this->upload->data('file_name'),
+            'GAMBAR2' => $sub.$na_gambar2.$tgl.'-'.$this->upload->data('file_name'),
+            'GAMBAR3' => $sub.'-'.$tgl.'-'.$this->upload->data('file_name'),
             'FLAG' => 'IMPORT',
             'FLAG2' => 'SP',
             'FLAG3' => '',
@@ -316,34 +319,6 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             'TG_SMP' => date("Y-m-d h:i a")
         );
         $this->transaksi_model->input_datah('pp', $datah);
-        // $ID = $this->db->query("SELECT MAX(NO_ID) AS NO_ID FROM pp WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
-        // $REC = $this->input->post('REC');
-        // $SIZE = $this->input->post('SIZE');
-        // $SATUAN = $this->input->post('SATUAN');
-        // $GAMBAR1 = $this->input->post('GAMBAR1');
-        // $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
-        // $i = 0;
-        // foreach ($REC as $a) {
-        //     $datad = array(
-        //         'ID' => $ID[0]->NO_ID,
-        //         'NO_BUKTI' => $bukti,
-        //         'REC' => $REC[$i],
-        //         'SIZE' => $SIZE[$i],
-        //         'SATUAN' => $SATUAN[$i],
-        //         'GAMBAR1' => $GAMBAR1[$i],
-        //         'QTY' => str_replace(',', '', $QTY[$i]),
-        //         'FLAG' => 'PP',
-        //         'FLAG2' => 'SP',
-        //         'FLAG3' => 'IMPORT',
-        //         'TYP' => 'RND_CETAK',
-        //         'DR' => $this->input->post('DR', TRUE),
-        //         'PER' => $this->session->userdata['periode'],
-        //         'USRNM' => $this->session->userdata['username'],
-        //         'TG_SMP' => date("Y-m-d h:i a")
-        //     );
-        //     $this->transaksi_model->input_datad('ppd', $datad);
-        //     $i++;
-        // }
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
@@ -387,13 +362,17 @@ class Transaksi_PesananCetakanImport extends CI_Controller
 
     public function update_aksi()
     {
+        $dr = $this->session->userdata['dr'];
+        $tgl = date("Y-m-d");
+        $number = rand(0,100);
+
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-		$config['max_size']             = 1000;
-		$config['max_width']            = 3024;
-		$config['max_height']           = 3680;
-        $new_name = time().$_FILES['name'];
-        $config['file_name']            = $new_name; 
+		// $config['max_size']             = 1000;
+		// $config['max_width']            = 3024;
+		// $config['max_height']           = 3680;
+        $gambar                         = $dr.'-CTK-'.$tgl.'-'.$number;
+        $config['file_name']            = $gambar;
 
         $this->load->library('upload', $config);
 
@@ -418,100 +397,15 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             'SIZE' => $this->input->post('SIZE', TRUE),
             'TIPE_CETAK' => $this->input->post('TIPE_CETAK', TRUE),
             'PROSES' => $this->input->post('PROSES', TRUE),
-            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
-            'GAMBAR2' => "IMG".$this->upload->data('file_name'),
-            'GAMBAR3' => "IMG".$this->upload->data('file_name'),
+            'GAMBAR1' => $this->upload->data('file_name'),
+            // 'GAMBAR2' => $this->upload->data('file_name'),
+            // 'GAMBAR3' => $this->upload->data('file_name'),
         );
         $where = array(
             'NO_ID' => $NO_ID
         );
         $this->transaksi_model->update_data($where, $datah, 'pp');
-        // $id = $this->input->post('ID', TRUE);
-        // $q1 = "SELECT pp.NO_ID as ID,
-        //         pp.NO_BUKTI AS NO_BUKTI,
-        //         pp.TGL AS TGL,
-        //         pp.NA_BRG AS NA_BRG,
-        //         pp.PESAN AS PESAN,
-        //         pp.M_LASTING AS M_LASTING,
-        //         pp.JENIS AS JENIS,
-        //         pp.KET AS KET,
-        //         pp.TGL_DIMINTA AS TGL_DIMINTA,
-        //         pp.TOTAL_QTY AS TOTAL_QTY,
-        //         pp.TYP AS TYP,
-
-        //         ppd.NO_ID AS NO_ID,
-        //         ppd.REC AS REC,
-        //         ppd.SIZE AS SIZE,
-        //         ppd.QTY AS QTY,
-        //         ppd.SATUAN AS SATUAN,
-        //         ppd.TYP AS TYP
-        //     FROM pp,ppd 
-        //     WHERE pp.NO_ID=$id 
-        //     AND pp.NO_ID=ppd.ID 
-        //     ORDER BY ppd.REC";
-        // $data = $this->transaksi_model->edit_data($q1)->result();
-        // $NO_ID = $this->input->post('NO_ID');
-        // $REC = $this->input->post('REC');
-        // $SIZE = $this->input->post('SIZE');
-        // $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
-        // $SATUAN = $this->input->post('SATUAN');
-        // $jum = count($data);
-        // $ID = array_column($data, 'NO_ID');
-        // $jumy = count($NO_ID);
-        // $i = 0;
-        // while ($i < $jum) {
-        //     if (in_array($ID[$i], $NO_ID)) {
-        //         $URUT = array_search($ID[$i], $NO_ID);
-        //         $datad = array(
-        //             'NO_BUKTI' => $this->input->post('NO_BUKTI'),
-        //             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-        //             'REC' => $REC[$URUT],
-        //             'SIZE' => $SIZE[$URUT],
-        //             'QTY' => str_replace(',', '', $QTY[$URUT]),
-        //             'SATUAN' => $SATUAN[$URUT],
-        //             'FLAG' => 'PP',
-        //             'FLAG2' => 'SP',
-        //             'TYP' => 'RND_IMPORT',
-        //             'DR' => $this->session->userdata['dr'],
-        //             'PER' => $this->session->userdata['periode'],
-        //             'USRNM' => $this->session->userdata['username'],
-        //             'TG_SMP' => date("Y-m-d h:i a")
-        //         );
-        //         $where = array(
-        //             'NO_ID' => $NO_ID[$URUT]
-        //         );
-        //         $this->transaksi_model->update_data($where, $datad, 'ppd');
-        //     } else {
-        //         $where = array(
-        //             'NO_ID' => $ID[$i]
-        //         );
-        //         $this->transaksi_model->hapus_data($where, 'ppd');
-        //     }
-        //     $i++;
-        // }
-        // $i = 0;
-        // while ($i < $jumy) {
-        //     if ($NO_ID[$i] == "0") {
-        //         $datad = array(
-        //             'ID' => $this->input->post('ID', TRUE),
-        //             'REC' => $REC[$i],
-        //             'NO_BUKTI' => $this->input->post('NO_BUKTI'),
-        //             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-        //             'SIZE' => $SIZE[$i],
-        //             'QTY' => str_replace(',', '', $QTY[$i]),
-        //             'SATUAN' => $SATUAN[$i],
-        //             'FLAG' => 'PP',
-        //             'FLAG2' => 'SP',
-        //             'TYP' => 'RND_IMPORT',
-        //             'DR' => $this->session->userdata['dr'],
-        //             'PER' => $this->session->userdata['periode'],
-        //             'USRNM' => $this->session->userdata['username'],
-        //             'TG_SMP' => date("Y-m-d h:i a")
-        //         );
-        //         $this->transaksi_model->input_datad('ppd', $datad);
-        //     }
-        //     $i++;
-        // }
+        
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 

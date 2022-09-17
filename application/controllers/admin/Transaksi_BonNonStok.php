@@ -35,12 +35,15 @@ class Transaksi_BonNonStok extends CI_Controller
         $sub = $this->session->userdata['sub'];
         $dr = $this->session->userdata['dr'];
         $where = array(
+            
             'DR' => $dr,
             'SLS' => '0',
             'SPD' => $sub,
+            // 'a.no_bukti' => 'b.no_bukti',
         );
         $this->db->select('*');
         $this->db->from('bond');
+        // $this->db->join('bon', 'bon.no_bukti = bond.no_bukti');
         $this->db->where($where);
         $i = 0;
         foreach ($this->column_search as $item) {

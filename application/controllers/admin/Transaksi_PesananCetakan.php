@@ -347,6 +347,7 @@ class Transaksi_PesananCetakan extends CI_Controller
             'PROSES' => $r['PROSES'],
             'GAMBAR1' => $r['GAMBAR1'],
             'GAMBAR2' => $r['GAMBAR2'],
+            'GAMBAR3' => $r['GAMBAR3'],
             'VAL' => $r['VAL'],
         ];
         $this->load->view('templates_admin/header');

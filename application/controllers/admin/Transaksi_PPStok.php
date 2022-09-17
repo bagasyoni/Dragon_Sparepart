@@ -42,7 +42,7 @@ class Transaksi_PPStok extends CI_Controller
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            // 'TYP' => 'PPSTOK',
+            'TYP' => 'PPSTOK',
         );
         $this->db->select('*');
         $this->db->from('pp');

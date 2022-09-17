@@ -143,7 +143,7 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-1">
-							<label class="label">Tgl </label>
+							<label class="label">Tanggal </label>
 						</div>
 						<div class="col-md-2">
 							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
@@ -185,7 +185,7 @@
 								<th width="50px">No</th>
 								<th width="150px">Kode</th>
 								<th width="125px">Uraian</th>
-								<th width="175px">Ket Barang</th>
+								<th width="175px">Keterangan Barang</th>
 								<th width="100px">Qty</th>
 								<th width="100px">Satuan</th>
 								<th width="100px">Devisi</th>
@@ -215,7 +215,7 @@
 																																										} else echo date('d-m-Y'); ?>" onclick="select()">
 								</td> -->
 								<td>
-									<input name="URGENT[]" id="URGENT0" type="checkbox" value="0" class="checkbox_container">
+									<input name="URGENT[]" id="URGENT" type="checkbox" value="0" class="checkbox_container URGENT" unchecked>
 								</td>
 								<td>
 									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -411,7 +411,7 @@
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
 		td7.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input' required>";
 		td8.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
-		td9.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='0'>";
+		td9.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0'> unchecked";
 		td10.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;

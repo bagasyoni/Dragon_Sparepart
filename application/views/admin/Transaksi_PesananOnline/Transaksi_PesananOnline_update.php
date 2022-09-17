@@ -159,7 +159,7 @@ foreach ($ppstok as $rowh) {
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-1">
-							<label class="label">Tgl </label>
+							<label class="label">Tanggal </label>
 						</div>
 						<div class="col-md-2">
 							<input <?php if ($rowh->TTD3 == !0) echo 'class="form-control TGL text_input" readonly'; ?> type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()">
@@ -177,7 +177,7 @@ foreach ($ppstok as $rowh) {
 										class="btn btn-primary" 
 										onclick="btVerifikasi()" 
 									>
-										<span style="color: white; font-weight: bold;"><i class="fa fa-upload"></i> UPLOAD</span>
+										<span style="color: white; font-weight: bold;"><i class="fa fa-upload"></i> VALIDASI</span>
 									</a>';
 							else echo '<a 
 									type="button" 
@@ -268,7 +268,7 @@ foreach ($ppstok as $rowh) {
 								<th width="50px">No</th>
 								<th width="150px">Kode</th>
 								<th width="125px">Uraian</th>
-								<th width="175px">Ket Barang</th>
+								<th width="175px">Keterangan Barang</th>
 								<th width="100px">Qty</th>
 								<th width="100px">Satuan</th>
 								<th width="100px">Devisi</th>
@@ -293,7 +293,7 @@ foreach ($ppstok as $rowh) {
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="KET[]" id="KET<?php echo $no; ?>" value="<?= $row->KET ?>" type="text" class="form-control KET text_input"></td>
 									<td>
 										<input <?php
-												if ($row->URGENT != "0") echo 'checked'; ?> name="URGENT[]" id="URGENT<?php echo $no; ?>" type="checkbox" value="<?= $row->URGENT ?>" class="checkbox_container">
+												if ($row->URGENT != "0") echo 'checked'; ?> name="URGENT[]" id="URGENT<?php echo $no; ?>" type="checkbox" value="<?= $row->URGENT ?>" class="checkbox_container URGENT">
 									</td>
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
@@ -306,6 +306,7 @@ foreach ($ppstok as $rowh) {
 							<?php endforeach; ?>
 						</tbody>
 						<tfoot>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -323,7 +324,7 @@ foreach ($ppstok as $rowh) {
 		</div>
 		<br><br>
 		<!--tab-->
-		<div class="col-md-12">
+		<div class="col-md-12"  <?php if ($rowh->TTD3 == !0) echo 'style="visibility: hidden;"'; ?>>
 			<div class="form-group row">
 				<div class="col-md-1">
 					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
@@ -431,7 +432,7 @@ foreach ($ppstok as $rowh) {
 	function btVerifikasi() {
 		if (confirm("Yakin Posting?")) {
 			// document.getElementById("transaksipemesanan").submit();
-			window.location.replace("<?php echo base_url('admin/Transaksi_PesanOnlinek/verifikasi_ttd1/' . $rowh->ID) ?>");
+			window.location.replace("<?php echo base_url('admin/Transaksi_PesanOnline/verifikasi_ttd1/' . $rowh->ID) ?>");
 		} else {
 			alert("Batal Posting!");
 		}
@@ -498,7 +499,7 @@ foreach ($ppstok as $rowh) {
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
 		td7.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input'>";
 		td8.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
-		td9.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='0'>";
+		td9.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='0' unchecked>";
 		td10.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;

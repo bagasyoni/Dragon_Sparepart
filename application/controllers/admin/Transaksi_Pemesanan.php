@@ -329,6 +329,7 @@ class Transaksi_Pemesanan extends CI_Controller
                 'FLAG' => 'PP',
                 'FLAG2' => 'SP',
                 'LOGISTIK' => '0',
+                'PILIH' => '0',
                 'TYP' => 'PEMESANAN',
                 'SUB' => $this->session->userdata['sub'],
                 'DR' => $this->session->userdata['dr'],
@@ -336,7 +337,6 @@ class Transaksi_Pemesanan extends CI_Controller
                 'USRNM' => $this->session->userdata['username'],
                 'TG_SMP' => date("Y-m-d h:i a"),
                 'NO_TIKET' => $bukti."_".$KD_BHN[$i],
-                'PILIH' => '0',
             );
             $this->transaksi_model->input_datad('ppd', $datad);
             $i++;

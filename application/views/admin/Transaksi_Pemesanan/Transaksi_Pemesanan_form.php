@@ -152,7 +152,7 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-1">
-							<label class="label">Tgl </label>
+							<label class="label">Tanggal </label>
 						</div>
 						<div class="col-md-2">
 							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {

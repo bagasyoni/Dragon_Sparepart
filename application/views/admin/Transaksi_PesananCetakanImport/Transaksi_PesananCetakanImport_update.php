@@ -134,7 +134,7 @@
 	<div class="alert alert-success alert-container" role="alert">
 		<i class="fas fa-university"></i> Update Pesanan Cetakan Import
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakanImport/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<?php echo form_open_multipart('admin/Transaksi_PesananCetakanImport/update_aksi'); ?>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -269,12 +269,12 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<img src="../gambar/<?= $GAMBAR1 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
-						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp" value="<?= $GAMBAR1 ?>">
+							<img src="<?php echo base_url(); ?>gambar/<?php echo $GAMBAR1; ?>" width="190" height="auto">
+							<input type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp" value="<?= $GAMBAR1 ?>">
 						</div>
 					</div>
 				</div>
-				<div class="col-md-12">
+				<!-- <div class="col-md-12">
 					<div class="form-group row">
 					</div>
 				</div>
@@ -288,7 +288,7 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<img src="../gambar/<?= $GAMBAR2 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<img src="<?php echo base_url(); ?>gambar/<?php echo $GAMBAR2; ?>" width="190" height="auto">
 						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						</div>
 					</div>
@@ -307,11 +307,11 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<img src="../gambar/<?= $GAMBAR3 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<img src="<?php echo base_url(); ?>gambar/<?php echo $GAMBAR3; ?>" width="190" height="auto">
 						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR3" id="GAMBAR3" accept="image/png, image/jpeg, image/jpg, image/bmp" value="<?= $GAMBAR3 ?>">
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<br><br>
@@ -328,7 +328,7 @@
 				</div>
 			</div>
 		</div>
-	</form>
+	<?php echo form_close(); ?>
 </div>
 
 <script type="text/javascript">

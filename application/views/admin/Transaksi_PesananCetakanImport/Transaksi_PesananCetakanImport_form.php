@@ -125,7 +125,7 @@
 	<div class="alert alert-success alert-container" role="alert">
 		<i class="fas fa-university"></i> Input Pesanan Cetakan Import
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakanImport/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<?php echo form_open_multipart('admin/Transaksi_PesananCetakanImport/input_aksi'); ?>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -292,23 +292,9 @@
 				</div>
 			</div>
 		</div>
-	</form>
+	<?php echo form_close(); ?>
+	<!-- </form> -->
 </div>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#modal_beli').DataTable({
-			dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
-				"<'row'<'col-md-6'f><'col-md-6'l>>" + // peletakan entries, search, dan test_btn
-				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
-			buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-			order: true,
-		});
-		$('.modal-footer').on('click', '#close', function() {
-			$('input[type=search]').val('').keyup(); // this line and next one clear the search dialog
-		});
-	});
-</script>
 
 <script>
 	(function() {

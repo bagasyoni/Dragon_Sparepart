@@ -294,7 +294,7 @@ class Transaksi_PesananOnline extends CI_Controller
         $DEVISI = $this->input->post('DEVISI');
         $SISA = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SISABON = str_replace(',', '', $this->input->post('SISABON', TRUE));
-        $URGENT = $this->input->post('URGENT');
+        $URGENT = str_replace(',', '', $this->input->post('URGENT', TRUE));
         $i = 0;
         foreach ($REC as $a) {
             $datad = array(
@@ -321,7 +321,8 @@ class Transaksi_PesananOnline extends CI_Controller
                 'DR' => $this->session->userdata['dr'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
-                'TG_SMP' => date("Y-m-d h:i a")
+                'TG_SMP' => date("Y-m-d h:i a"),
+                'NO_TIKET' => $bukti."_".$KD_BHN[$i],
             );
             $this->transaksi_model->input_datad('ppd', $datad);
             $i++;
@@ -430,7 +431,7 @@ class Transaksi_PesananOnline extends CI_Controller
         $DEVISI = $this->input->post('DEVISI');
         $KET = $this->input->post('KET');
         $SISABON = str_replace(',', '', $this->input->post('SISABON', TRUE));
-        $URGENT = str_replace(',', '', $this->input->post('URGENT', TRUE));
+        $URGENT =  $this->input->post('URGENT');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -491,7 +492,7 @@ class Transaksi_PesananOnline extends CI_Controller
                     'DEVISI' => $DEVISI[$i],
                     'KET' => $KET[$i],
                     'SISABON' => str_replace(',', '', $SISABON[$i]),
-                    'URGENT' => isset($URGENT[$i]) ? $URGENT[$i] : 0,
+                    'URGENT' => isset($URGENT[$URUT]) ? $URGENT[$URUT] : 0,
                     'FLAG' => 'PP',
                     'FLAG2' => 'SP',
                     'LOGISTIK' => '0',

@@ -168,7 +168,7 @@ foreach ($pemesanan as $rowh) {
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-1">
-							<label class="label">Tgl </label>
+							<label class="label">Tanggal </label>
 						</div>
 						<div class="col-md-2">
 							<input <?php if ($rowh->TTD3 == !0) echo 'class="form-control TGL text_input" readonly'; ?> type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()">
@@ -192,7 +192,7 @@ foreach ($pemesanan as $rowh) {
 										class="btn btn-primary" 
 										onclick="btVerifikasi()" 
 									>
-										<span style="color: white; font-weight: bold;"><i class="fa fa-upload"></i> UPLOAD</span>
+										<span style="color: white; font-weight: bold;"><i class="fa fa-upload"></i> VALIDASI</span>
 									</a>';
 							else echo '<a 
 									type="button" 

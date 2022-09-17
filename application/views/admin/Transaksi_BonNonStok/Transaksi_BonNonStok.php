@@ -4,20 +4,72 @@
 <?php $dr = $this->session->userdata['dr']; ?>
 
 <style>
-    .alert-container { background-color: #e89517; color: black; font-weight: bolder;}
-    .table {height: 350px; overflow: scroll;}
-    .table>thead>tr>th { background-color: #e89517; top: 0; position: sticky !important; z-index: 999; text-align: center; color: black; font-weight: bold; }
-    .table>tbody>tr>td { color: black; text-align: center; }
-    .table-striped>tbody>tr:nth-child(odd)>td, 
-    .table-striped>tbody>tr:nth-child(odd)>th { background-color: #f2b352; }
+    .alert-container {
+        background-color: #00b386;
+        color: black;
+        font-weight: bolder;
+    }
+
+    .table {
+        height: 650px;
+        overflow: scroll;
+    }
+
+    .table>thead>tr>th {
+        background-color: #00b386;
+        top: 0;
+        position: sticky !important;
+        z-index: 999;
+        text-align: center;
+        color: black;
+        font-weight: bold;
+    }
+
+    .table>tbody>tr>td {
+        color: black;
+        text-align: center;
+    }
+
+    .table-striped>tbody>tr:nth-child(odd)>td,
+    .table-striped>tbody>tr:nth-child(odd)>th {
+        background-color: #f2f2f2;
+    }
+
     .table-striped>tbody>tr:nth-child(even)>td,
-    .table-striped>tbody>tr:nth-child(even)>th { background-color: #face89; }
-    .table>tbody>tr>td>div {text-align: center;}
-    .table>tbody>tr>td>div>a { font-size: 13px; color: black; background-color: #e89517; }
-    .table>tbody>tr>td>div>a:hover { transition: 0.4s; color: #b3b3b3; background-color: #e89517; }
-    .table>tbody>tr>td>div>a::selection { color: white;}
-    .table>tbody>tr>td>div>div>a:hover {transition: 0.4s; color: white; background-color: #e89517;}
-    .table>tbody>tr>td>div>div>a>i {color: black; background-color: transparent;}
+    .table-striped>tbody>tr:nth-child(even)>th {
+        background-color: #d9d9d9;
+    }
+
+    .table>tbody>tr>td>div {
+        text-align: center;
+    }
+
+    .table>tbody>tr>td>div>a {
+        font-size: 13px;
+        color: black;
+        background-color: #00b386;
+    }
+
+    .table>tbody>tr>td>div>a:hover {
+        transition: 0.4s;
+        color: #b3b3b3;
+        background-color: #00b386;
+    }
+
+    .table>tbody>tr>td>div>a::selection {
+        color: white;
+    }
+
+    .table>tbody>tr>td>div>div>a:hover {
+        transition: 0.4s;
+        color: white;
+        background-color: #00b386;
+    }
+
+    .table>tbody>tr>td>div>div>a>i {
+        color: black;
+        background-color: transparent;
+    }
 </style>
 
 
@@ -37,14 +89,13 @@
             <table id="example" class="table table-bordered table-striped table-hover table-responsive bodycontainer scrollable" style="width:100%;">
                 <thead>
                     <tr>
-                        <th width="75px"><input type="checkbox" id="selectall" /></th>
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
-                        <th width="200px">No Order</th>
+                        <th width="300px">No Order</th>
                         <th width="200px">Tanggal</th>
-                        <!-- <th width="150px">Devisi</th> -->
+                        <th width="150px">Tujuan</th>
                         <th width="150px">Dragon</th>
-                        <th width="150px">Nama Barang</th>
+                        <th width="350px">Nama Barang</th>
                         <th width="150px">Selesai</th>
                     </tr>
                 </thead>
