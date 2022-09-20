@@ -134,7 +134,7 @@ foreach ($lpb_bengkel as $rowh) {
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input type="hidden" name="ID" class="form-control" value="<?php echo $rowh->ID ?>">
+							<input type="hidden" name="ID" id="ID" class="form-control" value="<?php echo $rowh->ID ?>">
 							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
 						</div>
 					</div>
@@ -230,6 +230,9 @@ foreach ($lpb_bengkel as $rowh) {
 					<div class="btn-group cxx">
 						<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
 						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
+						<a type="text" class="btn btn-light">  </a>	
+						<button class="btn btn-secondary" type="button" onclick="prev()"><< PREV</button>
+						<button class="btn btn-secondary" type="button" onclick="next()">NEXT >></button>
 					</div>
 					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 				</div>
@@ -464,4 +467,44 @@ foreach ($lpb_bengkel as $rowh) {
 		console.log(q);
 	}
 
+</script>
+
+<script>
+	function prev() {
+		var ID = $('#ID').val();
+		$.ajax({
+			type: 'get',
+			url: '<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/prev'); ?>',
+			data: {
+				ID: ID
+			},
+			dataType: 'json',
+			success: function(response) {
+				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_LPBBengkel/update/'); ?>" + response[0].NO_ID);
+				// console.log('test');
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				// console.log('error');
+			}
+		});
+	}
+
+	function next() {
+		var ID = $('#ID').val();
+		$.ajax({
+			type: 'get',
+			url: '<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/next'); ?>',
+			data: {
+				ID: ID
+			},
+			dataType: 'json',
+			success: function(response) {
+				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_LPBBengkel/update/'); ?>" + response[0].NO_ID);
+				console.log(response[0].NO_ID);
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				// console.log('error');
+			}
+		});
+	}
 </script>
