@@ -558,7 +558,7 @@ foreach ($bonpemakaian as $rowh) {
 		var ID = $('#ID').val();
 		$.ajax({
 			type: 'get',
-			url: '<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/prev'); ?>',
+			url: '<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/prev'); ?>',
 			data: {
 				ID: ID
 			},
@@ -577,7 +577,7 @@ foreach ($bonpemakaian as $rowh) {
 		var ID = $('#ID').val();
 		$.ajax({
 			type: 'get',
-			url: '<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/next'); ?>',
+			url: '<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/next'); ?>',
 			data: {
 				ID: ID
 			},

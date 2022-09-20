@@ -618,7 +618,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID<'$ID' AND FLAG = 'PK' AND FLAG2 = 'SP' AND PER='$per' AND ATK = '0' AND DR = '$dr' SUB = '$sub' ORDER BY NO_ID DESC LIMIT 1";
+        $q1 = " SELECT NO_ID FROM pakai WHERE NO_ID<'$ID' AND FLAG = 'PK' AND FLAG2 = 'SP' AND PER='$per' AND ATK = '0' AND DR = '$dr' AND SUB = '$sub' ORDER BY NO_ID DESC LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
@@ -636,7 +636,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID>'$ID' AND FLAG = 'PK' AND FLAG2 = 'SP' AND PER='$per' AND ATK = '0' AND DR = '$dr' SUB = '$sub' ORDER BY NO_ID LIMIT 1";
+        $q1 = " SELECT NO_ID FROM pakai WHERE NO_ID>'$ID' AND FLAG = 'PK' AND FLAG2 = 'SP' AND PER='$per' AND ATK = '0' AND DR = '$dr' AND SUB = '$sub' ORDER BY NO_ID LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
