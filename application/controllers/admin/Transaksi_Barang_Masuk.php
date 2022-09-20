@@ -534,6 +534,42 @@ class Transaksi_Barang_Masuk extends CI_Controller
         ob_end_clean();
         $PHPJasperXML->outpage("I");
     }
+
+    function prev()
+    {
+        $ID = $this->input->get('ID');
+
+        $per = $this->session->userdata['periode'];
+
+        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID<'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' ORDER BY NO_ID DESC LIMIT 1";
+
+        $q2 = $this->db->query($q1);
+        if ($q2->num_rows() > 0) {
+            foreach ($q2->result() as $row) {
+                $hasil[] = $row;
+            }
+        };
+        echo json_encode($hasil);
+    }
+
+    function next()
+    {
+        $ID = $this->input->get('ID');
+
+        $per = $this->session->userdata['periode'];
+
+        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID>'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' ORDER BY NO_ID LIMIT 1";
+
+        $q2 = $this->db->query($q1);
+        if ($q2->num_rows() > 0) {
+            foreach ($q2->result() as $row) {
+                $hasil[] = $row;
+            }
+        };
+        echo json_encode($hasil);
+    }
+
+    
 }
 
 

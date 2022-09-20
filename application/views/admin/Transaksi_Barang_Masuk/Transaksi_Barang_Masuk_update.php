@@ -134,7 +134,7 @@ foreach ($barang_masuk as $rowh) {
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input type="hidden" name="ID" class="form-control" value="<?php echo $rowh->ID ?>">
+							<input type="hidden" name="ID" id="ID" class="form-control" value="<?php echo $rowh->ID ?>">
 							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
 						</div>
 						<div class="col-md-7"></div>
@@ -171,6 +171,19 @@ foreach ($barang_masuk as $rowh) {
 						<div class="col-md-3">
 							<input class="form-control text_input NAMAS" id="NAMAS" name="NAMAS" type="text" value="<?php echo $rowh->NAMAS ?>" readonly>
 						</div>
+						<div class="col-md-3">
+						</div>
+						<div class="col-md-1">
+							<div class="form-group row">
+								<div class="col-md-6">
+									<button class="btn btn-primary" type="button" onclick="prev()">PREV</button>
+								</div>
+								<div class="col-md-6">
+									<button class="btn btn-primary" type="button" onclick="next()">NEXT</button>
+								</div>
+							</div>
+						</div>
+						
 						<!-- <div class="col-md-3"></div>
 						<div class="col-md-1">
 							<input <?php if ($rowh->VAL == !0) echo 'hidden'; ?> class="form-control text_input PIN" id="PIN" name="PIN" type="password" maxlength="6" value="" placeholder="PIN ...">
@@ -256,11 +269,13 @@ foreach ($barang_masuk as $rowh) {
 				<div class="wells">
 					<div class="btn-group cxx">
 						<button <?php if ($rowh->VAL == !0) echo 'hidden'; ?> type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Validasi</button>
-						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Kembali</a>
+						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Kembali</a>				
 					</div>
 					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 				</div>
 			</div>
+			<!-- <button class="btn btn-secondary" onclick="prev()"><< PREV</button>
+			<button class="btn btn-secondary" onclick="next()">NEXT >></button>	 -->
 		</div>
 	</form>
 </div>
@@ -513,5 +528,45 @@ foreach ($barang_masuk as $rowh) {
 		$('#SATUAN' + q).val(satuan);
 		$('#RAK' + q).val(rak);
 		console.log(q);
+	}
+</script>
+
+<script>
+	function prev() {
+		var ID = $('#ID').val();
+		$.ajax({
+			type: 'get',
+			url: '<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/prev'); ?>',
+			data: {
+				ID: ID
+			},
+			dataType: 'json',
+			success: function(response) {
+				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/update/'); ?>" + response[0].NO_ID);
+				// console.log('test');
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				// console.log('error');
+			}
+		});
+	}
+
+	function next() {
+		var ID = $('#ID').val();
+		$.ajax({
+			type: 'get',
+			url: '<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/next'); ?>',
+			data: {
+				ID: ID
+			},
+			dataType: 'json',
+			success: function(response) {
+				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/update/'); ?>" + response[0].NO_ID);
+				console.log(response[0].NO_ID);
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				// console.log('error');
+			}
+		});
 	}
 </script>
