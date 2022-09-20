@@ -195,15 +195,16 @@
 						<thead>
 							<tr>
 								<th width="50px">No</th>
-								<th width="75px">Kode</th>
+								<th width="100px">Kode</th>
 								<th width="175px">Uraian</th>
-								<th width="175px">Ket Barang</th>
+								<th width="175px">Keterangan Barang</th>
 								<th width="75px">Qty</th>
-								<th width="125px">Bilangan</th>
+								<th width="100px">Bilangan</th>
 								<th width="75px">Satuan</th>
 								<th width="100px">Devisi</th>
-								<th width="120px">Keterangan</th>
+								<th width="225px">Keterangan</th>
 								<th width="100px">Tgl Diminta</th>
+								<th width="75px">Sisa</th>
 								<th width="90px">Urgent</th>
 								<th width="50px"></th>
 							</tr>
@@ -218,15 +219,16 @@
 								</td>
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" readonly></td>
 								<td><input name="TIPE[]" id="TIPE0" type="text" class="form-control TIPE text_input" required></td>
-								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
+								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required readonly></td>
 								<td><input name="BILANGAN[]" id="BILANGAN0" type="text" class="form-control BILANGAN text_input" readonly></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input" readonly></td>
 								<td><input name="DEVISI[]" id="DEVISI0" type="text" class="form-control DEVISI text_input" required></td>
 								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
 								<td>
-									<input name="TGL_DIMINTA[]" id="TGL_DIMINTA0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
-																																											echo $_POST["TGL_DIMINTA"];
-																																										} else echo date('d-m-Y'); ?>" onclick="select()">
+									<input name="TGL_DIMINTA[]" id="TGL_DIMINTA0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {echo $_POST["TGL_DIMINTA"];} else echo date('d-m-Y'); ?>" onclick="select()">
+								</td>
+								<td>
+									<input name="SISA[]" onclick="select()" onkeyup="hitung()" value="0" id="SISA0" type="text" class="form-control SISA rightJustified text-primary"></td>
 								</td>
 								<td>
 									<input name="URGENT[]" id="URGENT" type="checkbox" value="0" class="checkbox_container URGENT" unchecked>
@@ -244,6 +246,8 @@
 							<td></td>
 							<td></td>
 							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
+							<td></td>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -369,14 +373,26 @@
 		var total_row = idrow;
 		for (i = 0; i < total_row; i++) {
 			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
+			var sisa = parseFloat($('#SISA' + i).val().replace(/,/g, ''));
 
 			$('#BILANGAN' + i).val(angkaTerbilang(qty));
-			// console.log(angkaTerbilang('Terbilang :'+qty));
+
+			if (qty > sisa) {
+				alert("Qty tidak boleh lebih besar dari Sisa");
+				$('#QTY' + i).val(0);
+				console.log('TIDAK OK !!!')
+			} else {
+				console.log('OK !!!')
+			}
 		};
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
 			if (isNaN(val)) val = 0;
 			TOTAL_QTY += val;
+		});
+		$(".SISA").each(function() {
+			var val = parseFloat($(this).val().replace(/,/g, ''));
+			if (isNaN(val)) val = 0;
 		});
 
 		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
@@ -412,6 +428,7 @@
 		var td10 = x.insertCell(9);
 		var td11 = x.insertCell(10);
 		var td12 = x.insertCell(11);
+		var td13 = x.insertCell(12);
 
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
@@ -421,16 +438,15 @@
 		td2.innerHTML = kd_bhn;
 		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
 		td4.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input' required>";
-		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
+		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required readonly>";
 		td6.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
 		td7.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
 		td8.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input' required>";
 		td9.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
-		td10.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
-																																																			echo $_POST["TGLSG"];
-																																																		} else echo date('d-m-Y'); ?>'>";
-		td11.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
-		td12.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+		td10.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {echo $_POST["TGLSG"];} else echo date('d-m-Y'); ?>'>";
+		td11.innerHTML = "<input name='SISA[]' onclick='select()' onkeyup='hitung()' value='0' id=SISA" + idrow + " type='text' class='form-control SISA rightJustified text-primary' required>";
+		td12.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
+		td13.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -512,10 +528,14 @@
 
 	var na_bhn = '';
 	var satuan = '';
+	var qty = '';
+	var sisa = '';
 
 	function formatSelection_kd_bhn(repo_kd_bhn) {
 		na_bhn = repo_kd_bhn.NA_BHN;
 		satuan = repo_kd_bhn.SATUAN;
+		qty = repo_kd_bhn.QTY;
+		sisa = repo_kd_bhn.SISA;
 		return repo_kd_bhn.text;
 	}
 
@@ -523,5 +543,7 @@
 		var qq = xx.substring(6, 10);
 		$('#NA_BHN' + qq).val(na_bhn);
 		$('#SATUAN' + qq).val(satuan);
+		$('#QTY' + qq).val(qty);
+		$('#SISA' + qq).val(sisa);
 	}
 </script>

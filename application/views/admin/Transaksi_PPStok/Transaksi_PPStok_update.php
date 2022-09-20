@@ -275,15 +275,16 @@ foreach ($ppstok as $rowh) {
 						<thead>
 							<tr>
 								<th width="50px">No</th>
-								<th width="75px">Kode</th>
+								<th width="100px">Kode</th>
 								<th width="175px">Uraian</th>
-								<th width="175px">Ket Barang</th>
+								<th width="175px">Keterangan Barang</th>
 								<th width="75px">Qty</th>
-								<th width="125px">Bilangan</th>
+								<th width="100px">Bilangan</th>
 								<th width="75px">Satuan</th>
 								<th width="100px">Devisi</th>
-								<th width="120px">Keterangan</th>
+								<th width="225px">Keterangan</th>
 								<th width="100px">Tgl Diminta</th>
+								<th width="75px">Sisa</th>
 								<th width="90px">Urgent</th>
 								<th width="50px"></th>
 							</tr>
@@ -300,12 +301,15 @@ foreach ($ppstok as $rowh) {
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="TIPE[]" id="TIPE<?php echo $no; ?>" value="<?= $row->TIPE ?>" type="text" class="form-control TIPE text_input"></td>
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="QTY[]" onclick="select()" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input name="BILANGAN[]" id="BILANGAN<?php echo $no; ?>" value="<?= $row->BILANGAN ?>" type="text" class="form-control BILANGAN text_input" readonly></td>
-									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
+									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" required readonly></td>
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="DEVISI[]" id="DEVISI<?php echo $no; ?>" value="<?= $row->DEVISI ?>" type="text" class="form-control DEVISI text_input"></td>
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="KET[]" id="KET<?php echo $no; ?>" value="<?= $row->KET ?>" type="text" class="form-control KET text_input"></td>
 									<td>
 										<input <?php if ($rowh->TTD3 == !0) echo 'class="form-control TGL_DIMINTA text_input" readonly'; ?> name="TGL_DIMINTA[]" id="TGL_DIMINTA<?php echo $no; ?>" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($row->TGL_DIMINTA, TRUE)); ?>" onclick="select()">
 									</td>
+									<td>
+										<input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="SISA[]" onkeyup="hitung()" id="SISA<?php echo $no; ?>" value="<?php echo number_format($row->SISA, 2, '.', ','); ?>" type="text" class="form-control SISA rightJustified text-primary" required></td>
+									<td>
 									<td>
 										<input <?php
 												if ($row->URGENT != "0") echo 'checked'; ?> name="URGENT[]" id="URGENT<?php echo $no; ?>" type="checkbox" value="<?= $row->URGENT ?>" class="checkbox_container URGENT">
@@ -331,7 +335,7 @@ foreach ($ppstok as $rowh) {
 							<td></td>
 							<td></td>
 							<td></td>
-							<!-- <td></td> -->
+							<td></td>
 							<td></td>
 						</tfoot>
 					</table>
@@ -459,14 +463,25 @@ foreach ($ppstok as $rowh) {
 		var total_row = idrow;
 		for (i = 0; i < total_row; i++) {
 			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
-
+			var sisa = parseFloat($('#SISA' + i).val().replace(/,/g, ''));
+			
 			$('#BILANGAN' + i).val(angkaTerbilang(qty));
-			// console.log(angkaTerbilang('Terbilang :'+qty));
+			if (qty > sisa) {
+				alert("Qty tidak boleh lebih besar dari Sisa");
+				$('#QTY' + i).val(0);
+				console.log('TIDAK OK !!!')
+			} else {
+				console.log('OK !!!')
+			}
 		};
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
 			if (isNaN(val)) val = 0;
 			TOTAL_QTY += val;
+		});
+		$(".SISA").each(function() {
+			var val = parseFloat($(this).val().replace(/,/g, ''));
+			if (isNaN(val)) val = 0;
 		});
 
 		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
@@ -502,6 +517,7 @@ foreach ($ppstok as $rowh) {
 		var td10 = x.insertCell(9);
 		var td11 = x.insertCell(10);
 		var td12 = x.insertCell(11);
+		var td13 = x.insertCell(12);
 
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
@@ -516,11 +532,10 @@ foreach ($ppstok as $rowh) {
 		td7.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
 		td8.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input'>";
 		td9.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
-		td10.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
-																																																			echo $_POST["TGLSG"];
-																																																		} else echo date('d-m-Y'); ?>'>";
-		td11.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
-		td12.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+		td10.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {} else echo date('d-m-Y'); ?>'>";
+		td11.innerHTML = "<input name='SISA[]' onclick='select()' onkeyup='hitung()' value='0' id=SISA" + idrow + " type='text' class='form-control SISA rightJustified text-primary' required>";
+		td12.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
+		td13.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -602,10 +617,14 @@ foreach ($ppstok as $rowh) {
 
 	var na_bhn = '';
 	var satuan = '';
+	var qty = '';
+	var sisa = '';
 
 	function formatSelection_kd_bhn(repo_kd_bhn) {
 		na_bhn = repo_kd_bhn.NA_BHN;
 		satuan = repo_kd_bhn.SATUAN;
+		qty = repo_kd_bhn.QTY;
+		sisa = repo_kd_bhn.SISA;
 		return repo_kd_bhn.text;
 	}
 
@@ -613,5 +632,7 @@ foreach ($ppstok as $rowh) {
 		var qq = xx.substring(6, 10);
 		$('#NA_BHN' + qq).val(na_bhn);
 		$('#SATUAN' + qq).val(satuan);
+		$('#QTY' + qq).val(qty);
+		$('#SISA' + qq).val(sisa);
 	}
 </script>

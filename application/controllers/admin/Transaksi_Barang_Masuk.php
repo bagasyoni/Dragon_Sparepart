@@ -535,3 +535,43 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $PHPJasperXML->outpage("I");
     }
 }
+
+
+
+
+/*
+function tes() {
+    var ID = $('#ID').val();
+    $.ajax({
+        type: 'get',
+        url: '<?php echo base_url('index.php/admin/Transaksi_PO_Bahan/tes'); ?>',
+        data: {
+            ID: ID
+        },
+        dataType: 'json',
+        success: function(response) {
+            window.location.replace("<?php echo base_url('index.php/admin/Transaksi_PO_Bahan/update/'); ?>" + response[0].NO_ID);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {}
+    });
+}
+
+function tes()
+    {
+        $ID = $this->input->get('ID');
+
+        $per = $this->session->userdata['periode'];
+
+        $q1 = " SELECT NO_ID FROM po WHERE NO_ID>'$ID' AND PER='$per' LIMIT 1";
+
+        $q2 = $this->db->query($q1);
+        if ($q2->num_rows() > 0) {
+            foreach ($q2->result() as $row) {
+                $hasil[] = $row;
+            }
+        };
+        echo json_encode($hasil);
+    }
+
+<button class="btn btn-primary" onclick="tes()">NEXT</button>
+*/

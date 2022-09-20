@@ -377,6 +377,7 @@ class Transaksi_PPStok extends CI_Controller
                 ppd.SATUAN AS SATUAN,
                 ppd.DEVISI AS DEVISI,
                 ppd.KET AS KET,
+                ppd.SISA AS SISA,
                 ppd.TGL_DIMINTA AS TGL_DIMINTA,
                 ppd.SISABON AS SISABON,
                 ppd.URGENT AS URGENT,
@@ -445,6 +446,7 @@ class Transaksi_PPStok extends CI_Controller
                 ppd.SATUAN AS SATUAN,
                 ppd.DEVISI AS DEVISI,
                 ppd.KET AS KET,
+                ppd.SISA AS SISA,
                 ppd.TGL_DIMINTA AS TGL_DIMINTA,
                 ppd.SISABON AS SISABON,
                 ppd.URGENT AS URGENT,
@@ -461,7 +463,7 @@ class Transaksi_PPStok extends CI_Controller
         $NA_BHN = $this->input->post('NA_BHN');
         $TIPE = $this->input->post('TIPE');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
-        $SISA = str_replace(',', '', $this->input->post('QTY', TRUE));
+        $SISA = str_replace(',', '', $this->input->post('SISA', TRUE));
         $BILANGAN = $this->input->post('BILANGAN');
         $SATUAN = $this->input->post('SATUAN');
         $DEVISI = $this->input->post('DEVISI');
@@ -618,7 +620,7 @@ class Transaksi_PPStok extends CI_Controller
     public function getDataAjax_bhn()
     {
         $dr = $this->session->userdata['dr'];
-        $per = substr($this->session->userdata['periode'], 2);
+        $per = substr($this->session->userdata['periode'], 0, -5);
         $sub = $this->session->userdata['sub'];
         $search = $this->input->post('search');
         $page = ((int)$this->input->post('page'));
@@ -628,7 +630,7 @@ class Transaksi_PPStok extends CI_Controller
             $xa = ($page - 1) * 10;
         }
         $perPage = 10;
-        $results = $this->db->query("SELECT bhn.NO_ID, bhn.KD_BHN, bhn.NA_BHN, bhn.SATUAN, bhnd.AW$per AS STOK, bhnd.RAK, bhnd.AK$per AS SISA 
+        $results = $this->db->query("SELECT bhn.NO_ID, bhn.KD_BHN, bhn.NA_BHN, bhn.SATUAN, bhnd.AW$per AS QTY, bhnd.RAK, bhnd.AK$per AS SISA 
             FROM bhn, bhnd
             WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND bhnd.DR = '$dr' AND bhnd.SUB='$sub' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%')
             GROUP BY bhn.KD_BHN
@@ -638,9 +640,12 @@ class Transaksi_PPStok extends CI_Controller
             $selectajax[] = array(
                 'id' => $row['KD_BHN'],
                 'text' => $row['KD_BHN'],
-                'KD_BHN' => $row['KD_BHN'] . " - " . $row['NA_BHN'] . " - " . $row['SATUAN'] . " - " . $row['STOK'],
+                'KD_BHN' => $row['KD_BHN'] . " - " . $row['NA_BHN'] . " - " . $row['SATUAN'] . " - " . $row['QTY'] . " - " . $row['RAK']. " - " . $row['SISA'],
                 'NA_BHN' => $row['NA_BHN'],
                 'SATUAN' => $row['SATUAN'],
+                'QTY' => $row['QTY'],
+                'RAK' => $row['RAK'],
+                'SISA' => $row['SISA'],
             );
         }
         $select['total_count'] =  $results->NUM_ROWS();
