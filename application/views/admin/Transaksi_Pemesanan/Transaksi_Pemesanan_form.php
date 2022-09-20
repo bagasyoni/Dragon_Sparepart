@@ -383,6 +383,9 @@
 				vMin: '-999999999.99'
 			});
 		}
+		$('#modal_no_bon').on('show.bs.modal', function(e) {
+			target = $(e.relatedTarget);
+		});
 		$('body').on('click', '.btn-delete', function() {
 			var r = confirm("Yakin dihapus?");
 			if (r == true) {
@@ -395,9 +398,6 @@
 			} else {
 				// txt = "Batal Hapus";
 			}
-		});
-		$('#modal_no_bon').on('show.bs.modal', function(e) {
-			target = $(e.relatedTarget);
 		});
 		$('input[type="checkbox"]').on('change', function() {
 			this.value ^= 1;
@@ -496,12 +496,12 @@
 		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()' required></select></div>";
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 		
-		var no_bon = "<input name='NO_BON[]' id=NO_BON" + idrow + " maxlength='500' type='text' class='form-control NO_BON text_input' onkeypress='return tabE(this,event)' readonly>";
-		var button = "<span class='input-group-btn'><a class='btn default' onfocusout='hitung()' id='0' data-target='#modal_no_bon' data-toggle='modal' href='#no_bon' ><i class='fa fa-search'></i></a></span>";
+		var no_bon0 = "<input name='NO_BON[]' id=NO_BON" + idrow + " maxlength='500' type='text' class='form-control NO_BON text_input' onkeypress='return tabE(this,event)' readonly>";
+		var button0 = "<span class='input-group-btn'><a class='btn default' onfocusout='hitung()' id='0' data-target='#modal_no_bon' data-toggle='modal' href='#no_bon' ><i class='fa fa-search'></i></a></span>";
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = no_bon;
-		td3.innerHTML = button;
+		td2.innerHTML = no_bon0;
+		td3.innerHTML = button0;
 		td4.innerHTML = "<input name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' required>";
 		td5.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' required>";
 		td6.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input' required>";
