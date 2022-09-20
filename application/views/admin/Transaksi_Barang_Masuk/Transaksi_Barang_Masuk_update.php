@@ -173,7 +173,7 @@ foreach ($barang_masuk as $rowh) {
 						</div>
 						<div class="col-md-3">
 						</div>
-						<div class="col-md-1">
+						<!-- <div class="col-md-1">
 							<div class="form-group row">
 								<div class="col-md-6">
 									<button class="btn btn-primary" type="button" onclick="prev()">PREV</button>
@@ -182,7 +182,7 @@ foreach ($barang_masuk as $rowh) {
 									<button class="btn btn-primary" type="button" onclick="next()">NEXT</button>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						
 						<!-- <div class="col-md-3"></div>
 						<div class="col-md-1">
@@ -269,7 +269,10 @@ foreach ($barang_masuk as $rowh) {
 				<div class="wells">
 					<div class="btn-group cxx">
 						<button <?php if ($rowh->VAL == !0) echo 'hidden'; ?> type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Validasi</button>
-						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Kembali</a>				
+						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Kembali</a>	
+						<a type="text" class="btn btn-light">  </a>	
+						<button class="btn btn-secondary" type="button" onclick="prev()"><< PREV</button>
+						<button class="btn btn-secondary" type="button" onclick="next()">NEXT >></button>
 					</div>
 					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 				</div>
