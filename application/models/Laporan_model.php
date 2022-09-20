@@ -1303,7 +1303,7 @@ class Laporan_model extends CI_Model
 				pp.TGL,
 				pp.TGL_DIMINTA,
 				pp.DEVISI,
-				pp.KD_DEV,
+				pp.KD_DEV AS KD_DEVISI,
 				pp.ARTICLE AS NA_BRG,
 				pp.KET,
 				pp.TOTAL_QTY,

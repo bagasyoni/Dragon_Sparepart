@@ -31,8 +31,8 @@ use \koolreport\clients\Bootstrap;
 			<p> Anda login sebagai <strong><?php echo $level; ?> </strong> </p>
 			<p> Dragon <strong><?php echo $dr; ?> </strong> </p>
 			<p> Sub <strong><?php echo $sub; ?> </strong> </p>
-			<p>periode <?php echo $periode; ?> </p>
-			<p>PIN <?php echo $pin; ?> </p>
+			<p> Periode <?php echo $periode; ?> </p>
+			<p> PIN <?php echo $pin; ?> </p>
 			<hr>
 			<div class="row">
 				<div class="col-xl-3 col-md-3">

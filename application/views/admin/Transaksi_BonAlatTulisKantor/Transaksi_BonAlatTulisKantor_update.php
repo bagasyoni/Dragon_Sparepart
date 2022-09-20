@@ -90,7 +90,7 @@ foreach ($bon_atk as $rowh) {
 	}
 
 	.alert-container {
-		background-color: #e89517;
+		background-color: #00b386;
 		color: black;
 		font-weight: bolder;
 	}

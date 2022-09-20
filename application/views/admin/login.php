@@ -85,7 +85,7 @@
 	}
 
 	.alert-container {
-		background-color: #e89517;
+		background-color: #00b386;
 		color: black;
 		font-weight: bolder;
 	}
@@ -138,6 +138,8 @@
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+  <link rel="shortcut icon" href="https://intidragonst.com/verifikasi/assets/dist/img/dr.png">
 
 </head>
 

@@ -5,7 +5,7 @@
 
 <style>
     .alert-container {
-        background-color: #e89517;
+        background-color: #00b386;
         color: black;
         font-weight: bolder;
     }
@@ -16,7 +16,7 @@
     }
 
     .table>thead>tr>th {
-        background-color: #e89517;
+        background-color: #00b386;
         top: 0;
         position: sticky !important;
         z-index: 999;
@@ -32,12 +32,12 @@
 
     .table-striped>tbody>tr:nth-child(odd)>td,
     .table-striped>tbody>tr:nth-child(odd)>th {
-        background-color: #f2b352;
+        background-color: #f2f2f2;
     }
 
     .table-striped>tbody>tr:nth-child(even)>td,
     .table-striped>tbody>tr:nth-child(even)>th {
-        background-color: #face89;
+        background-color: #d9d9d9;
     }
 
     .table>tbody>tr>td>div {
@@ -47,13 +47,13 @@
     .table>tbody>tr>td>div>a {
         font-size: 13px;
         color: black;
-        background-color: #e89517;
+        background-color: #00b386;
     }
 
     .table>tbody>tr>td>div>a:hover {
         transition: 0.4s;
         color: #b3b3b3;
-        background-color: #e89517;
+        background-color: #00b386;
     }
 
     .table>tbody>tr>td>div>a::selection {
@@ -63,7 +63,7 @@
     .table>tbody>tr>td>div>div>a:hover {
         transition: 0.4s;
         color: white;
-        background-color: #e89517;
+        background-color: #00b386;
     }
 
     .table>tbody>tr>td>div>div>a>i {

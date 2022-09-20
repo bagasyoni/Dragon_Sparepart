@@ -106,7 +106,7 @@ class Master_Inventaris extends CI_Controller
             $row = array();
             $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $inventaris->NO_ID . "'>";
             $row[] = '<div class="dropdown">
-                        <a style="background-color: #e89517;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a style="background-color: #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">

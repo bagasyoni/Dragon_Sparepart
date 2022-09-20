@@ -1,5 +1,5 @@
 <style>
-	.alert-container { background-color: #e89517; color: black; font-weight: bolder;}
+	.alert-container { background-color: #00b386; color: black; font-weight: bolder;}
     .label-title { color: black; font-weight: bold; }
     .label { color: black; font-weight: bold; }
     .detail { color: black; text-align: center; }

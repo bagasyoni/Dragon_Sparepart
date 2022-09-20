@@ -226,15 +226,16 @@ class Transaksi_PesananCetakanImport extends CI_Controller
     public function input_aksi()
     {
         $dr = $this->session->userdata['dr'];
+        $sub = $this->session->userdata['sub'];
         $tgl = date("Y-m-d");
         $number = rand(0,100);
 
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
         $na_gambar1                     = '-CTK-'; 
-        $na_gambar2                     = '-PST-';
+        $na_gambar2                     = '-SPT-';
         $gambar                         = $number;
-        $config['file_name']            = $gambar;
+        $config['file_name']            = $sub.$na_gambar1.$tgl.'-'.$gambar;
 
         $this->load->library('upload', $config);
 
@@ -305,7 +306,7 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             'SIZE' => $this->input->post('SIZE', TRUE),
             'TIPE_CETAK' => $this->input->post('TIPE_CETAK', TRUE),
             'PROSES' => $this->input->post('PROSES', TRUE),
-            'GAMBAR1' => $sub.$na_gambar1.$tgl.'-'.$this->upload->data('file_name'),
+            'GAMBAR1' => $this->upload->data('file_name'),
             'GAMBAR2' => $sub.$na_gambar2.$tgl.'-'.$this->upload->data('file_name'),
             'GAMBAR3' => $sub.'-'.$tgl.'-'.$this->upload->data('file_name'),
             'FLAG' => 'IMPORT',
@@ -363,16 +364,16 @@ class Transaksi_PesananCetakanImport extends CI_Controller
     public function update_aksi()
     {
         $dr = $this->session->userdata['dr'];
+        $sub = $this->session->userdata['sub'];
         $tgl = date("Y-m-d");
         $number = rand(0,100);
 
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-		// $config['max_size']             = 1000;
-		// $config['max_width']            = 3024;
-		// $config['max_height']           = 3680;
-        $gambar                         = $dr.'-CTK-'.$tgl.'-'.$number;
-        $config['file_name']            = $gambar;
+        $na_gambar1                     = '-CTK-'; 
+        $na_gambar2                     = '-SPT-';
+        $gambar                         = $number;
+        $config['file_name']            = $sub.$na_gambar1.$tgl.'-'.$gambar;
 
         $this->load->library('upload', $config);
 
@@ -449,13 +450,17 @@ class Transaksi_PesananCetakanImport extends CI_Controller
 
     public function validasi_aksi()
     {
+        $dr = $this->session->userdata['dr'];
+        $sub = $this->session->userdata['sub'];
+        $tgl = date("Y-m-d");
+        $number = rand(0,100);
+
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-		$config['max_size']             = 1000;
-		$config['max_width']            = 3024;
-		$config['max_height']           = 3680;
-        $new_name = time().$_FILES['name'];
-        $config['file_name']            = $new_name; 
+        $na_gambar1                     = '-CTK-'; 
+        $na_gambar2                     = '-SPT-';
+        $gambar                         = $number;
+        $config['file_name']            = $sub.$na_gambar1.$tgl.'-'.$gambar;
 
         $this->load->library('upload', $config);
 
@@ -480,9 +485,9 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             'SIZE' => $this->input->post('SIZE', TRUE),
             'TIPE_CETAK' => $this->input->post('TIPE_CETAK', TRUE),
             'PROSES' => $this->input->post('PROSES', TRUE),
-            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
-            'GAMBAR2' => "IMG".$this->upload->data('file_name'),
-            'GAMBAR3' => "IMG".$this->upload->data('file_name'),
+            'GAMBAR1' => $this->upload->data('file_name'),
+            'GAMBAR2' => $this->upload->data('file_name'),
+            'GAMBAR3' => $this->upload->data('file_name'),
             'VAL' => '1',
         );
         $where = array(

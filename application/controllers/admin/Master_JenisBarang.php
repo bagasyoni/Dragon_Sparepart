@@ -91,7 +91,7 @@ class Master_JenisBarang extends CI_Controller
             $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $sp_jenis_inv->NO_ID . "'>";
             if ($dr === 'SUPER_ADMIN') {
                 $row[] = '<div class="dropdown">
-                            <a style="background-color: #e89517;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a style="background-color: #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -101,7 +101,7 @@ class Master_JenisBarang extends CI_Controller
                         </div>';
             } else {
                 $row[] = '<div class="dropdown">
-                        <a style="background-color: #e89517;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a style="background-color: #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">

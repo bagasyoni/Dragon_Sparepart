@@ -115,7 +115,7 @@ class Transaksi_Pemesanan extends CI_Controller
             $row = array();
             $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $pp->NO_ID . "'>";
             $row[] = '<div class="dropdown">
-                        <a style="background-color: #e89517;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a style="background-color: #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -646,7 +646,7 @@ class Transaksi_Pemesanan extends CI_Controller
         }
         $perPage = 10;
         $results = $this->db->query("SELECT bond.NO_ID, 
-                bond.NO_BUKTI AS NO_BON, 
+                bond.NO_BUKTI AS NO_BON,
                 bond.KD_BHN, 
                 bond.NA_BHN,
                 bond.TYPE,

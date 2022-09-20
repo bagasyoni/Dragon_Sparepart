@@ -2846,7 +2846,7 @@ class Laporan extends CI_Controller
 			$query = "SELECT pp.NO_BUKTI,
 					pp.TGL,
 					pp.DEVISI,
-					pp.KD_DEV,
+					pp.KD_DEV AS KD_DEVISI,
 					pp.ARTICLE AS NA_BRG,
 					pp.KET,
 					pp.TOTAL_QTY,

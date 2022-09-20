@@ -38,7 +38,7 @@
 		padding: 2px !important;
 		vertical-align: middle;
 	}
-	.alert-container { background-color: #e89517; color: black; font-weight: bolder;}
+	.alert-container { background-color: #00b386; color: black; font-weight: bolder;}
 	.table-scrollable {	margin: 0; padding: 0; }
 	.modal-bodys { max-height: 250px; overflow-y: auto; }
 	.select2-dropdown {	width: 500px !important; }

@@ -18,6 +18,7 @@
 	<link href="<?php echo base_url() ?>assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="shortcut icon" href="https://intidragonst.com/verifikasi/assets/dist/img/dr.png">
 	<!-- <script src="https://kit.fontawesome.com/a076d05399.js"></script> -->
 	<!-- Custom styles for this template-->
 	<link href="<?php echo base_url() ?>assets/css/sb-admin-2.min.css" rel="stylesheet">
@@ -106,7 +107,7 @@
 		/* set css dengan sesi font dan size */
 		p, a, span, h4, div, label, th, td,thead {
 		font-family: <?= $this->session->userdata('font') !== NULL ? $this->session->userdata('font') : 'Lucida, sans-serif;'; ?>
-			font-size: <?= $this->session->userdata('size_font') ?>px;
+			font-size: <?= $this->session->userdata('size_font') ?>px
 		}
 
 		.dropdown-submenu {

@@ -36,7 +36,7 @@
 		padding: 2px !important;
 		vertical-align: middle;
 	}
-	.alert-container { background-color: #e89517; color: black; font-weight: bolder;}
+	.alert-container { background-color: #00b386; color: black; font-weight: bolder;}
 	.per {
 		font-weight: bolder;
 		color: black;
