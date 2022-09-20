@@ -11,7 +11,7 @@
     }
 
     .table {
-        height: 350px;
+        height: 600px;
         overflow: scroll;
     }
 
@@ -45,7 +45,7 @@
     }
 
     .table>tbody>tr>td>div>a {
-        font-size: 13px;
+        font-size: 5px;
         color: black;
         background-color: #00b386;
     }
@@ -93,7 +93,7 @@
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
                         <th width="225px">Kode Barang</th>
-                        <th width="375px">Nama Barang</th>
+                        <th width="575px">Nama Barang</th>
                         <th width="175px">Satuan</th>
                         <th width="150px">Rak</th>
                         <!-- <th width="100px">Aktif</th>

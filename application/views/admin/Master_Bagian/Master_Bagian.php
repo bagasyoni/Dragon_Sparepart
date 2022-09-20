@@ -11,7 +11,7 @@
     }
 
     .table {
-        height: 350px;
+        height: 600px;
         overflow: scroll;
     }
 
@@ -45,7 +45,7 @@
     }
 
     .table>tbody>tr>td>div>a {
-        font-size: 13px;
+        font-size: 5px;
         color: black;
         background-color: #00b386;
     }
