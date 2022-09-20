@@ -439,6 +439,7 @@
 			$('#modal_no_po').modal('toggle');
 			var no_so = $(this).parents("tr").find(".NBBVAL").text();
 		});
+		
 		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
 
 		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
