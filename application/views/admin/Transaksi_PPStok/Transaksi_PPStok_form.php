@@ -164,28 +164,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- <div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-1">
-							<label class="label">Tanda Tangan </label>
-						</div>
-						<div class="col-md-1">
-							<button type="button" class="btn btn-warning" onclick="" disabled>ADMIN</button>
-						</div>
-						<div class="col-md-1">
-							<button type="button" class="btn btn-warning" onclick="" disabled>KABAG</button>
-						</div>
-						<div class="col-md-1">
-							<button type="button" class="btn btn-warning" onclick="" disabled>FM</button>
-						</div>
-						<div class="col-md-1">
-							<button type="button" class="btn btn-warning" onclick="" disabled>PURCH</button>
-						</div>
-						<div class="col-md-1">
-							<button type="button" class="btn btn-warning" onclick="" disabled>DIREKTUR</button>
-						</div>
-					</div>
-				</div> -->
 			</div>
 		</div>
 		<div class="row">
