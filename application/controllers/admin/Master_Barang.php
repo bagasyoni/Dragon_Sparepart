@@ -26,7 +26,7 @@ class Master_Barang extends CI_Controller
             $this->session->set_userdata('order_bhn', 'NO_ID');
         }
     }
-    var $column_order = array(null, null, null, 'bhnd.KD_BHN', 'bhnd.NA_BHN', 'bhnd.RAK', 'bhn.AKTIF', 'bhnd.FLAG', 'bhnd.DR');
+    var $column_order = array(null, null, 'bhnd.KD_BHN', 'bhnd.NA_BHN', 'bhnd.RAK', 'bhn.AKTIF', 'bhnd.FLAG', 'bhnd.DR');
     var $column_search = array('bhnd.KD_BHN', 'bhnd.NA_BHN', 'bhnd.RAK', 'bhn.AKTIF', 'bhnd.FLAG', 'bhnd.DR');
     var $order = array('bhn.NO_ID' => 'asc');
 
@@ -110,11 +110,11 @@ class Master_Barang extends CI_Controller
         foreach ($list as $bhn) {
             $no++;
             $row = array();
-            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $bhn->NO_ID . "'>";
+            // $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $bhn->NO_ID . "'>";
             if ($dr === 'SUPER_ADMIN') {
                 $row[] = '<div class="dropdown">
                             <a style="background-color: ##00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-bars icon" style="font-size: 13px;"></i>
+                                <i class="fa fa-bars icon" style="font-size: 5px;"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="' . site_url('admin/Master_Barang/update/' . $bhn->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
@@ -124,7 +124,7 @@ class Master_Barang extends CI_Controller
             } else {
                 $row[] = '<div class="dropdown">
                         <a style="background-color: ##00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bars icon" style="font-size: 13px;"></i>
+                            <i class="fa fa-bars icon" style="font-size: 5px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="' . site_url('admin/Master_Barang/update/' . $bhn->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>

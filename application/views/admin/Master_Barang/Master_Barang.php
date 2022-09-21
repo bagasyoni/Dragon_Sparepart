@@ -11,7 +11,7 @@
     }
 
     .table {
-        height: 600px;
+        height: 550px;
         overflow: scroll;
     }
 
@@ -89,7 +89,7 @@
                 <thead>
                     <tr>
                         <!-- 1200px -->
-                        <th width="75px"><input type="checkbox" id="selectall" /></th>
+                        <!-- <th width="75px"><input type="checkbox" id="selectall" /></th> -->
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
                         <th width="225px">Kode Barang</th>

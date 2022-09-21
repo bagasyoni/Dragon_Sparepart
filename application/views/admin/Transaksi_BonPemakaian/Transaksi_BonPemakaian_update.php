@@ -169,10 +169,10 @@ foreach ($bonpemakaian as $rowh) {
 								<th width="250px">Uraian</th>
 								<th width="75px">Qty</th>
 								<th width="100px">Satuan</th>
+								<th width="125px">Nama Golongan</th>
 								<th width="150px">Keterangan 1</th>
 								<th width="125px">Keterangan 2</th>
 								<th width="175px">Grup</th>
-								<th width="125px">Nama Gol</th>
 								<th width="50px"></th>
 							</tr>
 						</thead>
@@ -194,7 +194,6 @@ foreach ($bonpemakaian as $rowh) {
 									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
 									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
-									<td><input name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
 									<td>
 										<div class="input-group">
 											<select class="js-example-responsive-sp_mesin form-control KET2 text_input" name="KET2[]" id="KET2<?php echo $no; ?>" onchange="kd_gol(this.id)" required>
@@ -202,8 +201,9 @@ foreach ($bonpemakaian as $rowh) {
 											</select>
 										</div>
 									</td>
-									<td><input name="GRUP[]" id="GRUP<?php echo $no; ?>" value="<?= $row->GRUP ?>" type="text" class="form-control GRUP text_input" readonly></td>
+									<td><input name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
 									<td><input name="NA_GOL[]" id="NA_GOL<?php echo $no; ?>" value="<?= $row->NA_GOL ?>" type="text" class="form-control NA_GOL text_input" readonly></td>
+									<td><input name="GRUP[]" id="GRUP<?php echo $no; ?>" value="<?= $row->GRUP ?>" type="text" class="form-control GRUP text_input" readonly></td>
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
 										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -220,6 +220,7 @@ foreach ($bonpemakaian as $rowh) {
 							<td></td>
 							<td></td>
 							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>

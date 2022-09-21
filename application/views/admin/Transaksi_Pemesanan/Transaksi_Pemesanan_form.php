@@ -104,7 +104,6 @@
 		width: 500px !important;
 	}
 
-	/* .container { text-align: center; vertical-align: middle;} */
 	.checkbox_container {
 		width: 25px;
 		height: 25px;
@@ -244,7 +243,6 @@
 			</div>
 		</div>
 		<br><br>
-		<!--tab-->
 		<div class="col-md-12">
 			<div class="form-group row">
 				<div class="col-md-1">
@@ -270,14 +268,14 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#no_bon').DataTable({
-			dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
-				"<'row'<'col-md-6'f><'col-md-6'l>>" + // peletakan entries, search, dan test_btn
-				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
+			dom: "<'row'<'col-md-6'><'col-md-6'>>" +
+				"<'row'<'col-md-6'f><'col-md-6'l>>" +
+				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>",
 			buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
 			order: true,
 		});
 		$('.modal-footer').on('click', '#close', function() {
-			$('input[type=search]').val('').keyup(); // this line and next one clear the search dialog
+			$('input[type=search]').val('').keyup();
 		});
 	});
 </script>
@@ -389,14 +387,12 @@
 		$('body').on('click', '.btn-delete', function() {
 			var r = confirm("Yakin dihapus?");
 			if (r == true) {
-				// txt = "Dihapus";
 				if (idrow > 1) {
 					var val = $(this).parents("tr").remove();
 					idrow--;
 					nomor();
 				}
 			} else {
-				// txt = "Batal Hapus";
 			}
 		});
 		$('input[type="checkbox"]').on('change', function() {
