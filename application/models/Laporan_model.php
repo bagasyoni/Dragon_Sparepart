@@ -460,21 +460,21 @@ class Laporan_model extends CI_Model
 		$dr = $this->session->userdata['dr'];
 		$sub = $this->session->userdata['sub'];
 		$per = $this->session->userdata['periode'];
-		$grup_1 = $this->input->post('GRUP_1');
+		$na_gol = $this->input->post('NA_GOL_1');
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
 		$q1 = "SELECT pakaid.NO_ID AS ID,
-				pakaid.RAK AS RAK,
+				pakaid.RAK,
 				'$per' AS PER,
-				pakaid.NA_BHN AS NA_BHN,
-				pakaid.KD_BHN AS KD_BHN,
-				pakaid.SATUAN AS SATUAN,
-				pakaid.KET2 AS KET2,
-				pakaid.NO_BUKTI AS NO_BUKTI,
-				pakaid.TGL AS TGL,
-				pakaid.QTY AS QTY,
-				pakaid.NA_GOL AS NA_GOL,
-				pakaid.GRUP AS GRUP
+				pakaid.NA_BHN,
+				pakaid.KD_BHN,
+				pakaid.SATUAN,
+				pakaid.KET2,
+				pakaid.NO_BUKTI,
+				pakaid.TGL,
+				pakaid.QTY,
+				pakaid.NA_GOL,
+				pakaid.GRUP
 			FROM pakaid
 			WHERE pakaid.TGL >='$tgl_1'
 			AND pakaid.TGL <='$tgl_2'
@@ -482,7 +482,7 @@ class Laporan_model extends CI_Model
 			AND pakaid.SUB = '$sub'
 			AND pakaid.FLAG ='PK'
 			AND pakaid.FLAG2 ='SP'
-			AND pakaid.GRUP ='$grup_1'
+			AND pakaid.KET2 ='$na_gol'
 			ORDER BY pakaid.TGL";
 		return $this->db->query($q1);
 	}

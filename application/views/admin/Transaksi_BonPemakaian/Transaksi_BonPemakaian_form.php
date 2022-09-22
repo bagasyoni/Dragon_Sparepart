@@ -160,8 +160,8 @@
 						<thead>
 							<tr>
 								<th width="50px">No</th>
-								<th width="75px">Kode</th>
 								<th width="75px">Rak</th>
+								<th width="75px">Kode</th>
 								<th width="250px">Uraian</th>
 								<th width="75px">Qty</th>
 								<th width="100px">Satuan</th>
@@ -176,9 +176,9 @@
 							<tr>
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
 								<td>
-									<select class="js-example-responsive-kd_bhn form-control KD_BHN0 text_input" name="KD_BHN[]" id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()" required></select>
+									<select class="js-example-responsive-rak form-control RAK0 text_input" name="RAK[]" id="RAK0" onchange="rak(this.id)" onfocusout="hitung()" required></select>
 								</td>
-								<td><input name="RAK[]" id="RAK0" type="text" class="form-control RAK text_input" readonly></td>
+								<td><input name="KD_BHN[]" id="KD_BHN0" type="text" class="form-control KD_BHN text_input"></td>
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" readonly></td>
 								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input" readonly></td>
@@ -354,24 +354,24 @@
 		var td10 = x.insertCell(9);
 		var td11 = x.insertCell(10);
 
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0 text_input' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
+		var rak0 = "<div class='input-group'><select class='js-example-responsive-rak form-control RAK0 text_input' name='RAK[]' id=RAK0" + idrow + " onchange='rak(this.id)' onfocusout='hitung()' required></select></div>";
 
-		var kd_bhn = kd_bhn0;
+		var rak = rak0;
 
 		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET20" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_gol = kd_gol0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = kd_bhn;
-		td3.innerHTML = "<input name='RAK[]' id=RAK0" + idrow + " type='text' class='form-control RAK text_input' readonly>";
+		td2.innerHTML = rak;
+		td3.innerHTML = "<input name='KD_BHN[]' id=KD_BHN0" + idrow + " type='text' class='form-control KD_BHN text_input'>";
 		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
 		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
-		td7.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
-		td8.innerHTML = kd_gol;
-		td9.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
-		td10.innerHTML = "<input name='NA_GOL[]' id=NA_GOL0" + idrow + " type='text' class='form-control NA_GOL text_input' readonly>";
+		td7.innerHTML = kd_gol;
+		td8.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
+		td9.innerHTML = "<input name='NA_GOL[]' id=NA_GOL0" + idrow + " type='text' class='form-control NA_GOL text_input' readonly>";
+		td10.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
 		td11.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
@@ -391,7 +391,7 @@
 			this.value ^= 1;
 			console.log(this.value)
 		});
-		select_kd_bhn();
+		select_rak();
 		select_sp_mesin();
 	}
 
@@ -406,7 +406,7 @@
 
 <script>
 	$(document).ready(function() {
-		select_kd_bhn();
+		select_rak();
 		select_sp_mesin();
 	});
 
@@ -468,12 +468,10 @@
 		$('#GRUP' + q).val(grup);
 		
 		console.log(q);
-		// console.log(na_gol);
-		// console.log(grup);
 	}
 
-	function select_kd_bhn() {
-		$('.js-example-responsive-kd_bhn').select2({
+	function select_rak() {
+		$('.js-example-responsive-rak').select2({
 			ajax: {
 				url: "<?= base_url('admin/Transaksi_BonPemakaian/getDataAjax_bhn') ?>",
 				dataType: "json",
@@ -496,39 +494,36 @@
 				},
 				cache: true
 			},
-			placeholder: 'Pilih Barang',
+			placeholder: 'Pilih Rak',
 			minimumInputLength: 0,
-			templateResult: format_kd_bhn,
-			templateSelection: formatSelection_kd_bhn
+			templateResult: format_rak,
+			templateSelection: formatSelection_rak
 		});
 	}
 
-	function format_kd_bhn(repo_kd_bhn) {
-		if (repo_kd_bhn.loading) {
-			return repo_kd_bhn.text;
+	function format_rak(repo_rak) {
+		if (repo_rak.loading) {
+			return repo_rak.text;
 		}
 		var $container = $(
 			"<div class='select2-result-repository clearfix text_input'>" +
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_kd_bhn.KD_BHN);
+		$container.find(".select2-result-repository__title").text(repo_rak.RAK);
 		return $container;
 	}
-	var rak = '';
 	var na_bhn = '';
 	var satuan = '';
 
-	function formatSelection_kd_bhn(repo_kd_bhn) {
-		rak = repo_kd_bhn.RAK;
-		na_bhn = repo_kd_bhn.NA_BHN;
-		satuan = repo_kd_bhn.SATUAN;
-		return repo_kd_bhn.text;
+	function formatSelection_rak(repo_rak) {
+		na_bhn = repo_rak.NA_BHN;
+		satuan = repo_rak.SATUAN;
+		return repo_rak.text;
 	}
 
-	function kd_bhn(x) {
+	function rak(x) {
 		var q = x.substring(6, 12);
-		$('#RAK' + q).val(rak);
 		$('#NA_BHN' + q).val(na_bhn);
 		$('#SATUAN' + q).val(satuan);
 		console.log(q);

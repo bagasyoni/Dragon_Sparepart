@@ -164,12 +164,12 @@ foreach ($bonpemakaian as $rowh) {
 						<thead>
 							<tr>
 								<th width="50px">No</th>
-								<th width="75px">Kode</th>
 								<th width="75px">Rak</th>
+								<th width="75px">Kode</th>
 								<th width="250px">Uraian</th>
 								<th width="75px">Qty</th>
 								<th width="100px">Satuan</th>
-								<th width="125px">Nama Golongan</th>
+								<th width="125px">Kode Golongan</th>
 								<th width="150px">Keterangan 1</th>
 								<th width="125px">Keterangan 2</th>
 								<th width="175px">Grup</th>
@@ -375,24 +375,24 @@ foreach ($bonpemakaian as $rowh) {
 		var td10 = x.insertCell(9);
 		var td11 = x.insertCell(10);
 
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0 text_input' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
+		var rak0 = "<div class='input-group'><select class='js-example-responsive-rak form-control RAK0 text_input' name='RAK[]' id=RAK0" + idrow + " onchange='rak(this.id)' onfocusout='hitung()' required></select></div>";
 
-		var kd_bhn = kd_bhn0;
+		var rak = rak0;
 
-		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET20" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()'></select></div>";
+		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET20" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_gol = kd_gol0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = kd_bhn;
-		td3.innerHTML = "<input name='RAK[]' id=RAK0" + idrow + " type='text' class='form-control RAK text_input' readonly>";
+		td2.innerHTML = rak;
+		td3.innerHTML = "<input name='KD_BHN[]' id=KD_BHN0" + idrow + " type='text' class='form-control KD_BHN text_input'>";
 		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
-		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
-		td7.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
-		td8.innerHTML = kd_gol;
-		td9.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input'>";
-		td10.innerHTML = "<input name='NA_GOL[]' id=NA_GOL0" + idrow + " type='text' class='form-control NA_GOL text_input'>";
+		td7.innerHTML = kd_gol;
+		td8.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
+		td9.innerHTML = "<input name='NA_GOL[]' id=NA_GOL0" + idrow + " type='text' class='form-control NA_GOL text_input' readonly>";
+		td10.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
 		td11.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
@@ -566,10 +566,8 @@ foreach ($bonpemakaian as $rowh) {
 			dataType: 'json',
 			success: function(response) {
 				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/update/'); ?>" + response[0].NO_ID);
-				// console.log('test');
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				// console.log('error');
 			}
 		});
 	}

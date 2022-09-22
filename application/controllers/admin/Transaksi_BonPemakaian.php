@@ -500,18 +500,17 @@ class Transaksi_BonPemakaian extends CI_Controller
             $xa = ($page - 1) * 10;
         }
         $perPage = 10;
-        $results = $this->db->query("SELECT bhn.NO_ID, bhn.KD_BHN, bhn.NA_BHN, bhn.SATUAN, bhnd.RAK
+        $results = $this->db->query("SELECT bhn.NO_ID, bhn.NA_BHN, bhn.SATUAN, bhnd.RAK
             FROM bhn, bhnd
-            WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND bhnd.DR = '$dr' AND bhnd.SUB='$sub' AND bhnd.RAK <> '' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%' OR bhnd.RAK LIKE '%$search%')
+            WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND bhnd.DR='$dr' AND bhnd.SUB='$sub' AND bhnd.RAK <> '' AND (bhn.NA_BHN LIKE '%$search%' OR bhnd.RAK LIKE '%$search%')
             GROUP BY bhn.KD_BHN
             ORDER BY bhn.KD_BHN LIMIT $xa,$perPage");
         $selectajax = array();
         foreach ($results->RESULT_ARRAY() as $row) {
             $selectajax[] = array(
-                'id' => $row['KD_BHN'],
-                'text' => $row['KD_BHN'],
-                'KD_BHN' => $row['KD_BHN'] . " - " . $row['RAK'] . " - " . $row['NA_BHN'] . " - " . $row['SATUAN'],
-                'RAK' => $row['RAK'],
+                'id' => $row['RAK'],
+                'text' => $row['RAK'],
+                'RAK' => $row['RAK'] . " - " . $row['NA_BHN'] . " - " . $row['SATUAN'],
                 'NA_BHN' => $row['NA_BHN'],
                 'SATUAN' => $row['SATUAN'],
             );

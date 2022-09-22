@@ -1216,28 +1216,29 @@ class Laporan extends CI_Controller
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
 			$per = $this->session->userdata['periode'];
-			$grup_1 = $this->input->post('GRUP_1');
+			$na_gol = $this->input->post('NA_GOL_1');
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 			$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
 			$query = "SELECT pakaid.NO_ID AS ID,
-					pakaid.RAK AS RAK,
+					pakaid.RAK,
 					'$per' AS PER,
-					pakaid.NA_BHN AS NA_BHN,
-					pakaid.KD_BHN AS KD_BHN,
-					pakaid.SATUAN AS SATUAN,
-					pakaid.KET2 AS KET2,
-					pakaid.NO_BUKTI AS NO_BUKTI,
-					pakaid.TGL AS TGL,
-					pakaid.QTY AS QTY,
-					pakaid.GRUP AS NA_GOL
+					pakaid.NA_BHN,
+					pakaid.KD_BHN,
+					pakaid.SATUAN,
+					pakaid.KET2,
+					pakaid.NO_BUKTI,
+					pakaid.TGL,
+					pakaid.QTY,
+					pakaid.NA_GOL,
+					pakaid.GRUP
 				FROM pakaid
 				WHERE pakaid.TGL >='$tgl_1'
 				AND pakaid.TGL <='$tgl_2'
-				AND pakaid.DR ='$dr'
-				AND pakaid.SUB ='$sub'
+				AND pakaid.DR = '$dr'
+				AND pakaid.SUB = '$sub'
 				AND pakaid.FLAG ='PK'
 				AND pakaid.FLAG2 ='SP'
-				AND pakaid.GRUP ='$grup_1'
+				AND pakaid.KET2 ='$na_gol'
 				ORDER BY pakaid.TGL";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -1259,7 +1260,7 @@ class Laporan extends CI_Controller
 			$data = array(
 				'TGL_1' => set_value('TGL_1'),
 				'TGL_2' => set_value('TGL_2'),
-				'GRUP_1' => set_value('GRUP_1'),
+				'NA_GOL_1' => set_value('NA_GOL_1'),
 			);
 			$data['pemeliharaan'] = $this->laporan_model->tampil_data_pemeliharaan()->result();
 			$this->load->view('templates_admin/header');
@@ -1378,11 +1379,9 @@ class Laporan extends CI_Controller
 					FROM pakaid, pakai
 					WHERE pakai.NO_BUKTI = pakaid.NO_BUKTI
 					AND pakai.TGL BETWEEN '$tgl_1' AND '$tgl_2'
-					AND pakaid.TGL BETWEEN '$tgl_1' AND '$tgl_2'
 					AND pakai.DR = '$dr'
 					AND pakai.SUB = '$sub'
 					-- AND pakai.PER = '$per'
-					AND pakai.ATK = 0
 					AND pakai.FLAG = 'PK'
 					AND pakai.FLAG2 = 'SP'
 					ORDER BY pakaid.TGL";
@@ -3686,12 +3685,12 @@ class Laporan extends CI_Controller
 			FROM sp_mesin
 			WHERE (KD_GOL LIKE '%$search%' OR NA_GOL LIKE '%$search%' OR GRUP LIKE '%$search%')
 			AND DR='$dr'
-			GROUP BY GRUP
+			GROUP BY NA_GOL
 			ORDER BY KD_GOL LIMIT $xa,$perPage");
 		$selectajax = array();
 		foreach ($results->RESULT_ARRAY() as $row) {
 			$selectajax[] = array(
-				'id' => $row['GRUP_1'],
+				'id' => $row['NA_GOL_1'],
 				'text' => $row['NA_GOL_1']
 			);
 		}

@@ -22,10 +22,10 @@
                         <label class="label-title"> Mesin </label>
                     </div>
                     <div class="col-md-3">
-                        <select class="js-example-responsive form-control GRUP_1" name="GRUP_1" id="GRUP_1" style="width: 100%;">
+                        <select class="js-example-responsive form-control NA_GOL_1" name="NA_GOL_1" id="NA_GOL_1" style="width: 100%;">
                             <?php
-                            if (isset($_POST["tampilkan"]) &&  $_POST["GRUP_1"] == $GRUP_1) {
-                                echo '<option value="' . $GRUP_1 . '" selected >' . $GRUP_1 . '</option>';
+                            if (isset($_POST["tampilkan"]) &&  $_POST["NA_GOL_1"] == $NA_GOL_1) {
+                                echo '<option value="' . $NA_GOL_1 . '" selected >' . $NA_GOL_1 . '</option>';
                             } ?>
                         </select>
                     </div>
@@ -99,7 +99,7 @@
                         "KD_BHN" => array(
                             "label" => "Kode"
                         ),
-                        "NA_GOL" => array(
+                        "KET2" => array(
                             "label" => "Golongan"
                         ),
                         "GRUP" => array(
@@ -201,7 +201,7 @@
     });
 
     function select_grup_mesin_1() {
-        $('#GRUP_1').select2({
+        $('#NA_GOL_1').select2({
             ajax: {
                 url: "<?= base_url('admin/laporan/getData_grup_mesin_1') ?>",
                 dataType: "json",
@@ -253,7 +253,7 @@
         return repo.text;
     }
 
-    function grup_1(x) {
+    function NA_GOL_1(x) {
         var q = x.substring(8, 12);
         $('#NA_GOL_1' + q).val(na_gol_1);
     }

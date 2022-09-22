@@ -19,7 +19,7 @@
         background-color: #00b386;
         top: 0;
         position: sticky !important;
-        z-index: 999;
+        /* z-index: 999; */
         text-align: center;
         color: black;
         font-weight: bold;
