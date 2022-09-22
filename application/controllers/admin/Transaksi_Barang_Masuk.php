@@ -190,7 +190,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 beli.NO_BUKTI AS NO_BUKTI,
                 beli.NAMAS AS NAMAS,
                 beli.TGL AS TGL,
-                beli.PIN1 AS PIN1,
+                beli.PIN2 AS PIN2,
                 beli.TOTAL_QTY AS TOTAL_QTY,
                 beli.VAL AS VAL,
                 beli.TTD1 AS TTD1,
@@ -234,21 +234,17 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
             'ATK' => '0',
-            'VAL' => '1',
-            'PIN2' => $this->session->userdata['pin'],
-            'TTD2_USR' => $this->session->userdata['username']
         );
         $where = array(
             'NO_ID' => $this->input->post('ID', TRUE)
         );
         $this->transaksi_model->update_data($where, $datah, 'beli');
         $id = $this->input->post('ID', TRUE);
-        var_dump($id);
         $q1 = "SELECT beli.NO_ID as ID,
                 beli.NO_BUKTI AS NO_BUKTI,
                 beli.NAMAS AS NAMAS,
                 beli.TGL AS TGL,
-                beli.PIN1 AS PIN1,
+                beli.PIN2 AS PIN2,
                 beli.TOTAL_QTY AS TOTAL_QTY,
                 beli.VAL AS VAL,
                 beli.TTD1 AS TTD1,
@@ -306,9 +302,6 @@ class Transaksi_Barang_Masuk extends CI_Controller
                     'SISA' => str_replace(',', '', $SISA[$URUT]),
                     'FLAG' => 'BL',
                     'FLAG2' => 'SP',
-                    'VAL' => '1',
-                    'PIN2' => $this->session->userdata['pin'],
-                    'TTD2_USR' => $this->session->userdata['username']
                 );
                 $where = array(
                     'NO_ID' => $NO_ID[$URUT]
@@ -341,17 +334,14 @@ class Transaksi_Barang_Masuk extends CI_Controller
                     'QTY_BL' => str_replace(',', '', $QTY_BL[$i]),
                     'FLAG' => 'BL',
                     'FLAG2' => 'SP',
-                    'VAL' => '1',
-                    'PIN2' => $this->session->userdata['pin'],
-                    'TTD2_USR' => $this->session->userdata['username']
                 );
                 $this->transaksi_model->input_datad('belid', $datad);
             }
             $i++;
         }
-        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_BUKTI='$bukti'")->result();
-        $no_bukti = $xx[0]->BUKTIX;
-        $this->db->query("CALL spp_beliins('" . $no_bukti . "')");
+        // $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_BUKTI='$bukti'")->result();
+        // $no_bukti = $xx[0]->BUKTIX;
+        // $this->db->query("CALL spp_beliins('" . $no_bukti . "')");
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
@@ -372,51 +362,39 @@ class Transaksi_Barang_Masuk extends CI_Controller
     {
     }
 
-    public function verifikasi_ttd1($NO_BUKTI)
+    public function verifikasi_pin($ID)
     {
+        $pin = $this->session->userdata['pin'];
+        $username = $this->session->userdata['username'];
         $bukti = $this->input->post('NO_BUKTI');
         $datah = array(
-            'FLAG' => 'BL',
-            'FLAG2' => 'SP',
-            'ATK' => '0',
             'VAL' => '1',
-            'TTD1' => 1,
-            'TTD2' => 1,
-            'TTD3' => 1,
-            'TTD4' => 1,
-            'TTD5' => 1,
-            'TTD6' => 1,
-            'PIN2' => $this->session->userdata['pin'],
-            'TTD2_USR' => $this->session->userdata['username']
+            'PIN2' => $pin,
+            'TTD2' => '1',
+            'TTD2_USR' => $username,
+            'TTD2_SMP' => date("Y-m-d h:i a"),
         );
         $where = array(
-            'NO_BUKTI' => "$NO_BUKTI"
+            'NO_ID' => "$ID"
         );
         $this->transaksi_model->update_data($where, $datah, 'beli');
         $datahd = array(
-            'FLAG' => 'BL',
-            'FLAG2' => 'SP',
-            'ATK' => '0',
             'VAL' => '1',
-            'TTD1' => 1,
-            'TTD2' => 1,
-            'TTD3' => 1,
-            'TTD4' => 1,
-            'TTD5' => 1,
-            'TTD6' => 1,
-            'PIN2' => $this->session->userdata['pin'],
-            'TTD2_USR' => $this->session->userdata['username']
+            'PIN2' => $pin,
+            'TTD2' => '1',
+            'TTD2_USR' => $username,
+            'TTD2_SMP' => date("Y-m-d h:i a"),
         );
         $whered = array(
-            'NO_BUKTI' => "$NO_BUKTI"
+            'NO_ID' => "$ID"
         );
+        $this->transaksi_model->update_data($whered, $datahd, 'belid');
         $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_BUKTI='$bukti'")->result();
         $no_bukti = $xx[0]->BUKTIX;
         $this->db->query("CALL spp_beliins('" . $no_bukti . "')");
-        $this->transaksi_model->update_data($whered, $datahd, 'belid');
         $this->session->set_flashdata(
             'pesan',
-            '<div class="alert alert-success alert-dismissible fade show" role="alert"> Data succesfully Updated.
+            '<div class="alert alert-warning alert-dismissible fade show" role="alert"> Data Succesfully Verified.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
 				</button> 
@@ -571,43 +549,3 @@ class Transaksi_Barang_Masuk extends CI_Controller
 
     
 }
-
-
-
-
-/*
-function tes() {
-    var ID = $('#ID').val();
-    $.ajax({
-        type: 'get',
-        url: '<?php echo base_url('index.php/admin/Transaksi_PO_Bahan/tes'); ?>',
-        data: {
-            ID: ID
-        },
-        dataType: 'json',
-        success: function(response) {
-            window.location.replace("<?php echo base_url('index.php/admin/Transaksi_PO_Bahan/update/'); ?>" + response[0].NO_ID);
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {}
-    });
-}
-
-function tes()
-    {
-        $ID = $this->input->get('ID');
-
-        $per = $this->session->userdata['periode'];
-
-        $q1 = " SELECT NO_ID FROM po WHERE NO_ID>'$ID' AND PER='$per' LIMIT 1";
-
-        $q2 = $this->db->query($q1);
-        if ($q2->num_rows() > 0) {
-            foreach ($q2->result() as $row) {
-                $hasil[] = $row;
-            }
-        };
-        echo json_encode($hasil);
-    }
-
-<button class="btn btn-primary" onclick="tes()">NEXT</button>
-*/

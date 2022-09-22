@@ -137,17 +137,37 @@ foreach ($barang_masuk as $rowh) {
 							<input type="hidden" name="ID" id="ID" class="form-control" value="<?php echo $rowh->ID ?>">
 							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
 						</div>
-						<div class="col-md-7"></div>
+						<div class="col-md-5"></div>
 						<div class="col-md-2">
 							<?php
 							if ($rowh->VAL == 0)
-									echo '<a 
-									type="label"
-									class="btn btn-warning btn-center"
-								>
-							<span style="color: black; font-weight: bold;"><i class="fa fa-upload"></i> Belum Validasi</span>
+								echo '<a 
+								type="label" 
+								class="btn btn-danger btn-center"
+							>
+							<span style="color: black; font-weight: bold;"></i> Belum Validasi</span>
 						</a>';
 							else echo '<a 
+							type="label"
+							class="btn btn-success btn-center" 
+								>
+							<span style="color: black; font-weight: bold;"><i class="fa fa-check"></i> Tervalidasi</span>
+						</a>';
+							?>
+						</div>
+						<div class="col-md-2">
+							<?php
+							if ($rowh->VAL == 0)
+								echo '<a 
+								type="button" 
+								class="btn btn-warning btn-center"
+								onclick="btVerifikasi()"
+								href="#"
+							>
+							<span style="color: black; font-weight: bold;"><i class="fa fa-upload"></i> Tombol Validasi</span>
+						</a>';
+							else echo '<a 
+							hidden
 							type="label"
 							class="btn btn-success btn-center" 
 								>
@@ -171,22 +191,9 @@ foreach ($barang_masuk as $rowh) {
 						<div class="col-md-3">
 							<input class="form-control text_input NAMAS" id="NAMAS" name="NAMAS" type="text" value="<?php echo $rowh->NAMAS ?>" readonly>
 						</div>
-						<div class="col-md-3">
-						</div>
-						<!-- <div class="col-md-1">
-							<div class="form-group row">
-								<div class="col-md-6">
-									<button class="btn btn-primary" type="button" onclick="prev()">PREV</button>
-								</div>
-								<div class="col-md-6">
-									<button class="btn btn-primary" type="button" onclick="next()">NEXT</button>
-								</div>
-							</div>
-						</div> -->
-						
 						<div class="col-md-3"></div>
 						<div class="col-md-1">
-							<input <?php if ($rowh->VAL == !0) echo 'hidden'; ?> class="form-control text_input PIN" id="PIN" name="PIN" type="password" maxlength="6" value="" placeholder="PIN ...">
+							<input <?php if ($rowh->VAL == !0) echo 'hidden'; ?> class="form-control text_input PIN2" id="PIN2" name="PIN2" type="password" maxlength="6" value="" placeholder="PIN ...">
 						</div>
 					</div>
 				</div>
@@ -255,30 +262,21 @@ foreach ($barang_masuk as $rowh) {
 			</div>
 		</div>
 		<br><br>
-		<!--tab-->
-		<!-- <div class="col-md-12">
-			<div class="form-group row">
-				<div class="col-md-1">
-					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
-				</div>
-			</div>
-		</div> -->
 		<br>
 		<div class="row">
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<button <?php if ($rowh->VAL == !0) echo 'hidden'; ?> type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Validasi</button>
+						<button <?php if ($rowh->VAL == !0) echo 'hidden'; ?> type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
 						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Kembali</a>	
-						<a type="text" class="btn btn-light">  </a>	
-						<button class="btn btn-secondary" type="button" onclick="prev()"><< PREV</button>
-						<button class="btn btn-secondary" type="button" onclick="next()">NEXT >></button>
+					</div>
+						<a type="text" class="btn btn-light">  </a>
+						<button class="btn btn-secondary" type="button" onclick="prev()"><i class="fa fa-angle-double-left"></i> Prev</button>
+						<button class="btn btn-secondary" type="button" onclick="next()">Next <i class="fa fa-angle-double-right"></i></button>
 					</div>
 					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 				</div>
 			</div>
-			<!-- <button class="btn btn-secondary" onclick="prev()"><< PREV</button>
-			<button class="btn btn-secondary" onclick="next()">NEXT >></button>	 -->
 		</div>
 	</form>
 </div>
@@ -455,13 +453,13 @@ foreach ($barang_masuk as $rowh) {
 	}
 
 	function btVerifikasi() {
-		if ($('#PIN').val() == '<?= $this->session->userdata['pin'] ?>') {
-			if (confirm("Yakin Posting?")) {
+		if ($('#PIN2').val() == '<?= $this->session->userdata['pin'] ?>') {
+			if (confirm("Yakin Verifikasi?")) {
 				// document.getElementById("transaksipemesanan").submit();
-				window.location.replace("<?php echo base_url('admin/Transaksi_Barang_Masuk/verifikasi_ttd1/' . $rowh->NO_BUKTI) ?>");
+				window.location.replace("<?php echo base_url('admin/Transaksi_Barang_Masuk/verifikasi_pin/' . $rowh->ID) ?>");
 			}
 		} else {
-			alert("Verifikasi Gagal!");
+			alert("PIN MU SALAH COOK");
 		}
 	}
 </script>

@@ -423,6 +423,17 @@ foreach ($bonpemakaian as $rowh) {
 			nomor();
 		}
 	}
+
+	function btVerifikasi() {
+		if ($('#PIN').val() == '<?= $this->session->userdata['pin'] ?>') {
+			if (confirm("Yakin Posting?")) {
+				// document.getElementById("transaksipemesanan").submit();
+				window.location.replace("<?php echo base_url('admin/Transaksi_Barang_Masuk/verifikasi_ttd1/' . $rowh->NO_BUKTI) ?>");
+			}
+		} else {
+			alert("Verifikasi Gagal!");
+		}
+	}
 </script>
 
 <script>
