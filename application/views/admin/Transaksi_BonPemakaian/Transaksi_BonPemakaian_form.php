@@ -523,7 +523,7 @@
 	}
 
 	function rak(x) {
-		var q = x.substring(6, 12);
+		var q = x.substring(3, 12);
 		$('#NA_BHN' + q).val(na_bhn);
 		$('#SATUAN' + q).val(satuan);
 		console.log(q);

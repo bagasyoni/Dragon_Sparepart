@@ -184,10 +184,10 @@ foreach ($barang_masuk as $rowh) {
 							</div>
 						</div> -->
 						
-						<!-- <div class="col-md-3"></div>
+						<div class="col-md-3"></div>
 						<div class="col-md-1">
 							<input <?php if ($rowh->VAL == !0) echo 'hidden'; ?> class="form-control text_input PIN" id="PIN" name="PIN" type="password" maxlength="6" value="" placeholder="PIN ...">
-						</div> -->
+						</div>
 					</div>
 				</div>
 			</div>

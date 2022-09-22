@@ -185,12 +185,12 @@ foreach ($bonpemakaian as $rowh) {
 									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
 									<td>
 										<div class="input-group">
-											<select class="js-example-responsive-kd_bhn form-control KD_BHN text_input" name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" onchange="kd_bhn(this.id)" required>
-												<option value="<?php echo $row->KD_BHN; ?>" selected id="KD_BHN<?php echo $no; ?>"><?php echo $row->KD_BHN; ?></option>
+											<select class="js-example-responsive-rak form-control RAK text_input" name="RAK[]" id="RAK<?php echo $no; ?>" onchange="rak(this.id)" required>
+												<option value="<?php echo $row->RAK; ?>" selected id="RAK<?php echo $no; ?>"><?php echo $row->RAK; ?></option>
 											</select>
 										</div>
 									</td>
-									<td><input name="RAK[]" id="RAK<?php echo $no; ?>" value="<?= $row->RAK ?>" type="text" class="form-control RAK text_input" readonly></td>
+									<td><input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input"></td>
 									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
 									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
@@ -412,7 +412,7 @@ foreach ($bonpemakaian as $rowh) {
 			this.value ^= 1;
 			console.log(this.value)
 		});
-		select_kd_bhn();
+		select_rak();
 		select_sp_mesin();
 	}
 
@@ -427,7 +427,7 @@ foreach ($bonpemakaian as $rowh) {
 
 <script>
 	$(document).ready(function() {
-		select_kd_bhn();
+		select_rak();
 		select_sp_mesin();
 	});
 
@@ -491,8 +491,8 @@ foreach ($bonpemakaian as $rowh) {
 		console.log(q);
 	}
 
-	function select_kd_bhn() {
-		$('.js-example-responsive-kd_bhn').select2({
+	function select_rak() {
+		$('.js-example-responsive-rak').select2({
 			ajax: {
 				url: "<?= base_url('admin/Transaksi_BonPemakaian/getDataAjax_bhn') ?>",
 				dataType: "json",
@@ -515,79 +515,38 @@ foreach ($bonpemakaian as $rowh) {
 				},
 				cache: true
 			},
-			placeholder: 'Pilih Barang',
+			placeholder: 'Pilih Rak',
 			minimumInputLength: 0,
-			templateResult: format_kd_bhn,
-			templateSelection: formatSelection_kd_bhn
+			templateResult: format_rak,
+			templateSelection: formatSelection_rak
 		});
 	}
 
-	function format_kd_bhn(repo_kd_bhn) {
-		if (repo_kd_bhn.loading) {
-			return repo_kd_bhn.text;
+	function format_rak(repo_rak) {
+		if (repo_rak.loading) {
+			return repo_rak.text;
 		}
 		var $container = $(
 			"<div class='select2-result-repository clearfix text_input'>" +
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_kd_bhn.KD_BHN);
+		$container.find(".select2-result-repository__title").text(repo_rak.RAK);
 		return $container;
 	}
-	var rak = '';
 	var na_bhn = '';
 	var satuan = '';
 
-	function formatSelection_kd_bhn(repo_kd_bhn) {
-		rak = repo_kd_bhn.RAK;
-		na_bhn = repo_kd_bhn.NA_BHN;
-		satuan = repo_kd_bhn.SATUAN;
-		return repo_kd_bhn.text;
+	function formatSelection_rak(repo_rak) {
+		na_bhn = repo_rak.NA_BHN;
+		satuan = repo_rak.SATUAN;
+		return repo_rak.text;
 	}
 
-	function kd_bhn(x) {
-		var q = x.substring(6, 12);
-		$('#RAK' + q).val(rak);
+	function rak(x) {
+		var q = x.substring(3, 12);
 		$('#NA_BHN' + q).val(na_bhn);
 		$('#SATUAN' + q).val(satuan);
 		console.log(q);
-	}
-</script>
-
-<script>
-	function prev() {
-		var ID = $('#ID').val();
-		$.ajax({
-			type: 'get',
-			url: '<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/prev'); ?>',
-			data: {
-				ID: ID
-			},
-			dataType: 'json',
-			success: function(response) {
-				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/update/'); ?>" + response[0].NO_ID);
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-			}
-		});
-	}
-
-	function next() {
-		var ID = $('#ID').val();
-		$.ajax({
-			type: 'get',
-			url: '<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/next'); ?>',
-			data: {
-				ID: ID
-			},
-			dataType: 'json',
-			success: function(response) {
-				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/update/'); ?>" + response[0].NO_ID);
-				// console.log(response[0].ID);
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				// console.log('error');
-			}
-		});
 	}
 </script>
