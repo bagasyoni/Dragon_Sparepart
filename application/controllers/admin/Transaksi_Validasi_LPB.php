@@ -1,6 +1,6 @@
 <?php
 
-class Transaksi_Barang_Masuk extends CI_Controller
+class Transaksi_Validasi_LPB extends CI_Controller
 {
 
     function __construct()
@@ -20,7 +20,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         }
         if ($this->session->userdata['menu_sparepart'] != 'beli') {
             $this->session->set_userdata('menu_sparepart', 'beli');
-            $this->session->set_userdata('kode_menu', 'T0003');
+            $this->session->set_userdata('kode_menu', 'T0036');
             $this->session->set_userdata('keyword_beli', '');
             $this->session->set_userdata('order_beli', 'NO_ID');
         }
@@ -41,13 +41,6 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'OK' => '0',
-            // 'TTD1' => '1',
-            // 'TTD2' => '1',
-            // 'TTD3' => '1',
-            // 'TTD4' => '1',
-            // 'TTD5' => '1',
-            // 'TTD6' => '1',
         );
         $this->db->select('*');
         $this->db->from('beli');
@@ -100,44 +93,43 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'PER' => $per,
             'SUB' => $sub,
             'FLAG' => 'BL',
-            'FLAG2' => 'SP',
-            'OK' => '0',
-            // 'TTD1' => '1',
-            // 'TTD2' => '1',
-            // 'TTD3' => '1',
-            // 'TTD4' => '1',
-            // 'TTD5' => '1',
-            // 'TTD6' => '1',
         );
         $this->db->from('beli');
         $this->db->where($where);
         return $this->db->count_all_results();
     }
 
-    function get_ajax_beli()
+    function get_ajax_validasi_lpb()
     {
         $list = $this->get_datatables();
         $data = array();
         $no = @$_POST['start'];
-        foreach ($list as $beli) {
-            $JASPER = "window.open('JASPER/" . $beli->NO_ID . "','', 'width=1000','height=900');";
+        foreach ($list as $lpb) {
+            $JASPER = "window.open('JASPER/" . $lpb->NO_ID . "','', 'width=1000','height=900');";
             $no++;
             $row = array();
-            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $beli->NO_ID . "'>";
+            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $lpb->NO_ID . "'>";
             $row[] = '<div class="dropdown">
                         <a style="background-color: #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Barang_Masuk/update/' . $beli->NO_ID) . '"> <i class="fa fa-edit"></i> Validasi</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Validasi_LPB/update/' . $lpb->NO_ID) . '"> <i class="fa fa-edit"></i> Validasi</a>
                             </div>
                             </div>';
                             // <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
             $row[] = $no . ".";
-            $row[] = date("d-m-Y", strtotime($beli->TGL));
-            $row[] = $beli->NO_BUKTI;
-            $row[] = $beli->NAMAS;
-            $row[] = $beli->DR;
+            $row[] = date("d-m-Y", strtotime($lpb->TGL));
+            $row[] = $lpb->NO_BUKTI;
+            $row[] = $lpb->NAMAS;
+            $row[] = $lpb->DR;
+            $verifikasi = $lpb->OK;
+            if($verifikasi == 1){
+                $verifikasi = 'NON STOK';
+            } else {
+                $verifikasi = 'STOK';
+            }
+            $row[] = $verifikasi;
             $data[] = $row;
         }
         $output = array(
@@ -149,39 +141,24 @@ class Transaksi_Barang_Masuk extends CI_Controller
         echo json_encode($output);
     }
 
-    public function index_Transaksi_Barang_Masuk()
+    public function index_Transaksi_Validasi_LPB()
     {
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
-        $this->session->set_userdata('judul', 'Transaksi Barang Masuk');
+        $this->session->set_userdata('judul', 'Transaksi Validasi LPB');
         $where = array(
             'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'OK' => '0',
-            // 'TTD1' => '1',
-            // 'TTD2' => '1',
-            // 'TTD3' => '1',
-            // 'TTD4' => '1',
-            // 'TTD5' => '1',
-            // 'TTD6' => '1',
         );
         $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
-        $this->load->view('admin/Transaksi_Barang_Masuk/Transaksi_Barang_Masuk', $data);
+        $this->load->view('admin/Transaksi_Validasi_LPB/Transaksi_Validasi_LPB', $data);
         $this->load->view('templates_admin/footer');
-    }
-
-    public function input()
-    {
-    }
-
-    public function input_aksi()
-    {
     }
 
     public function update($id)
@@ -192,17 +169,16 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 beli.TGL AS TGL,
                 beli.PIN2 AS PIN2,
                 beli.TOTAL_QTY AS TOTAL_QTY,
-                beli.VAL AS VAL,
                 beli.TTD1 AS TTD1,
                 beli.TTD2 AS TTD2,
                 beli.TTD3 AS TTD3,
                 beli.TTD4 AS TTD4,
                 beli.TTD5 AS TTD5,
                 beli.TTD6 AS TTD6,
+                beli.OK,
 
                 belid.NO_ID AS NO_ID,
                 belid.REC AS REC,
-                belid.VAL AS VAL,
                 belid.KD_BHN AS KD_BHN,
                 belid.NA_BHN AS NA_BHN,
                 belid.RAK AS RAK,
@@ -210,15 +186,16 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 belid.SATUAN AS SATUAN,
                 belid.SAT_BL,
                 belid.QTY,
-                belid.QTY_BL
+                belid.QTY_BL,
+                belid.OK
             FROM beli, belid 
             WHERE beli.NO_ID = $id 
             AND beli.NO_ID = belid.ID 
             ORDER BY belid.REC";
-        $data['barang_masuk'] = $this->transaksi_model->edit_data($q1)->result();
+        $data['validasi_lpb'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
-        $this->load->view('admin/Transaksi_Barang_Masuk/Transaksi_Barang_Masuk_update', $data);
+        $this->load->view('admin/Transaksi_Validasi_LPB/Transaksi_Validasi_LPB_update', $data);
         $this->load->view('templates_admin/footer');
     }
 
@@ -233,6 +210,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
             'ATK' => '0',
+            'OK' => '1',
         );
         $where = array(
             'NO_ID' => $this->input->post('ID', TRUE)
@@ -245,17 +223,16 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 beli.TGL AS TGL,
                 beli.PIN2 AS PIN2,
                 beli.TOTAL_QTY AS TOTAL_QTY,
-                beli.VAL AS VAL,
                 beli.TTD1 AS TTD1,
                 beli.TTD2 AS TTD2,
                 beli.TTD3 AS TTD3,
                 beli.TTD4 AS TTD4,
                 beli.TTD5 AS TTD5,
                 beli.TTD6 AS TTD6,
+                beli.OK,
 
                 belid.NO_ID AS NO_ID,
                 belid.REC AS REC,
-                belid.VAL AS VAL,
                 belid.KD_BHN AS KD_BHN,
                 belid.NA_BHN AS NA_BHN,
                 belid.RAK AS RAK,
@@ -264,7 +241,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 belid.SAT_BL,
                 belid.QTY,
                 belid.QTY_BL,
-                belid.VAL
+                belid.OK
             FROM beli, belid 
             WHERE beli.NO_ID = $id
             AND beli.NO_ID = belid.ID 
@@ -301,6 +278,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
                     'SISA' => str_replace(',', '', $SISA[$URUT]),
                     'FLAG' => 'BL',
                     'FLAG2' => 'SP',
+                    'OK' => '1',
                 );
                 $where = array(
                     'NO_ID' => $NO_ID[$URUT]
@@ -333,6 +311,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
                     'QTY_BL' => str_replace(',', '', $QTY_BL[$i]),
                     'FLAG' => 'BL',
                     'FLAG2' => 'SP',
+                    'OK' => '1',
                 );
                 $this->transaksi_model->input_datad('belid', $datad);
             }
@@ -341,13 +320,13 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
-                Data Berhasil Di Update.
+                Data Berhasil Masuk Non Stok.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button> 
             </div>'
         );
-        redirect('admin/Transaksi_Barang_Masuk/index_Transaksi_Barang_Masuk');
+        redirect('admin/Transaksi_Validasi_LPB/index_Transaksi_Validasi_LPB');
     }
 
     public function delete($id)
@@ -356,48 +335,6 @@ class Transaksi_Barang_Masuk extends CI_Controller
 
     function delete_multiple()
     {
-    }
-
-    public function verifikasi_pin($ID)
-    {
-        $pin = $this->session->userdata['pin'];
-        $username = $this->session->userdata['username'];
-        // $bukti = $this->input->post('NO_BUKTI');
-        $datah = array(
-            'VAL' => '1',
-            'PIN2' => $pin,
-            'TTD2' => '1',
-            'TTD2_USR' => $username,
-            'TTD2_SMP' => date("Y-m-d h:i a"),
-        );
-        $where = array(
-            'NO_ID' => "$ID"
-        );
-        $this->transaksi_model->update_data($where, $datah, 'beli');
-        $datahd = array(
-            'VAL' => '1',
-            'PIN2' => $pin,
-            'TTD2' => '1',
-            'TTD2_USR' => $username,
-            'TTD2_SMP' => date("Y-m-d h:i a"),
-        );
-        $whered = array(
-            'ID' => "$ID"
-        );
-        $this->transaksi_model->update_data($whered, $datahd, 'belid');
-        $bukti = $this->db->query("SELECT NO_BUKTI FROM beli WHERE NO_ID='$ID'")->result();
-        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_BUKTI='$bukti'")->result();
-        $no_bukti = $xx[0]->BUKTIX;
-        $this->db->query("CALL spp_beliins('" . $no_bukti . "')");
-        $this->session->set_flashdata(
-            'pesan',
-            '<div class="alert alert-warning alert-dismissible fade show" role="alert"> Data Succesfully Verified.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-				</button> 
-			</div>'
-        );
-        redirect('admin/Transaksi_Barang_Masuk/index_Transaksi_Barang_Masuk');
     }
 
     public function getDataAjax_bhn()
