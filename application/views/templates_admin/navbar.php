@@ -164,6 +164,12 @@
 										</form>
 									</div>
 								</li>
+								<li class="nav-item">
+          							<a href="#" class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+										<i class="fas fa-fw fa-bell"></i>
+										<span>Notifikasi (<b>99</b>)</span>
+									</a>
+								</li>
 						</ul>
 					<span>Periode <?php echo $this->session->userdata['periode']; ?></span>
 				</nav>

@@ -191,7 +191,33 @@ foreach ($barang_masuk as $rowh) {
 						<div class="col-md-3">
 							<input class="form-control text_input NAMAS" id="NAMAS" name="NAMAS" type="text" value="<?php echo $rowh->NAMAS ?>" readonly>
 						</div>
-						<div class="col-md-3"></div>
+						<div class="col-md-1"></div>
+						<div class="col-md-2">
+							<?php
+							if ($rowh->VAL == 1 && $rowh->OK == 0)
+								echo '<a 
+								type="button" 
+									class="btn btn-warning btn-center"
+									>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> STOK</span>
+									</a>';
+							if ($rowh->VAL == 1 && $rowh->OK == 1)
+							echo '<a 
+									type="button"
+									class="btn btn-warning btn-center" 
+									>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> NON STOK</span>
+									</a>';
+							if ($rowh->VAL == 0 && $rowh->OK == 0)
+							echo '<a 
+									hidden
+									type="button"
+									class="btn btn-warning btn-center" 
+									>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> NON STOK</span>
+									</a>';
+									?>
+						</div>
 						<div class="col-md-1">
 							<input <?php if ($rowh->VAL == !0) echo 'hidden'; ?> class="form-control text_input PIN2" id="PIN2" name="PIN2" type="password" maxlength="6" value="" placeholder="PIN ...">
 						</div>

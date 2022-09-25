@@ -41,13 +41,6 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'OK' => '0',
-            // 'TTD1' => '1',
-            // 'TTD2' => '1',
-            // 'TTD3' => '1',
-            // 'TTD4' => '1',
-            // 'TTD5' => '1',
-            // 'TTD6' => '1',
         );
         $this->db->select('*');
         $this->db->from('beli');
@@ -101,13 +94,6 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'OK' => '0',
-            // 'TTD1' => '1',
-            // 'TTD2' => '1',
-            // 'TTD3' => '1',
-            // 'TTD4' => '1',
-            // 'TTD5' => '1',
-            // 'TTD6' => '1',
         );
         $this->db->from('beli');
         $this->db->where($where);
@@ -138,6 +124,16 @@ class Transaksi_Barang_Masuk extends CI_Controller
             $row[] = $beli->NO_BUKTI;
             $row[] = $beli->NAMAS;
             $row[] = $beli->DR;
+            $ok = $beli->OK;
+            $val = $beli->VAL;
+            if($ok == 1 && $val == 1){
+                $status = 'NON STOK';
+            }if($ok == 0 && $val == 1){
+                $status = 'STOK';
+            }if($ok == 0 && $val == 0){
+                $status = 'BELUM DIVALIDASI';
+            }
+            $row[] = $status;
             $data[] = $row;
         }
         $output = array(
@@ -161,13 +157,6 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'OK' => '0',
-            // 'TTD1' => '1',
-            // 'TTD2' => '1',
-            // 'TTD3' => '1',
-            // 'TTD4' => '1',
-            // 'TTD5' => '1',
-            // 'TTD6' => '1',
         );
         $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -176,41 +165,35 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $this->load->view('templates_admin/footer');
     }
 
-    public function input()
-    {
-    }
-
-    public function input_aksi()
-    {
-    }
-
     public function update($id)
     {
         $q1 = "SELECT beli.NO_ID as ID,
-                beli.NO_BUKTI AS NO_BUKTI,
-                beli.NAMAS AS NAMAS,
-                beli.TGL AS TGL,
-                beli.PIN2 AS PIN2,
-                beli.TOTAL_QTY AS TOTAL_QTY,
-                beli.VAL AS VAL,
-                beli.TTD1 AS TTD1,
-                beli.TTD2 AS TTD2,
-                beli.TTD3 AS TTD3,
-                beli.TTD4 AS TTD4,
-                beli.TTD5 AS TTD5,
-                beli.TTD6 AS TTD6,
+                beli.NO_BUKTI,
+                beli.NAMAS,
+                beli.TGL,
+                beli.PIN2,
+                beli.TOTAL_QTY,
+                beli.VAL,
+                beli.TTD1,
+                beli.TTD2,
+                beli.TTD3,
+                beli.TTD4,
+                beli.TTD5,
+                beli.TTD6,
+                beli.OK,
 
-                belid.NO_ID AS NO_ID,
-                belid.REC AS REC,
-                belid.VAL AS VAL,
-                belid.KD_BHN AS KD_BHN,
-                belid.NA_BHN AS NA_BHN,
-                belid.RAK AS RAK,
+                belid.NO_ID,
+                belid.REC,
+                belid.OK,
+                belid.KD_BHN,
+                belid.NA_BHN,
+                belid.RAK,
                 belid.SISA AS QTY,
-                belid.SATUAN AS SATUAN,
+                belid.SATUAN,
                 belid.SAT_BL,
                 belid.QTY,
-                belid.QTY_BL
+                belid.QTY_BL,
+                belid.VAL
             FROM beli, belid 
             WHERE beli.NO_ID = $id 
             AND beli.NO_ID = belid.ID 
@@ -232,7 +215,6 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'ATK' => '0',
         );
         $where = array(
             'NO_ID' => $this->input->post('ID', TRUE)
@@ -240,27 +222,28 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $this->transaksi_model->update_data($where, $datah, 'beli');
         $id = $this->input->post('ID', TRUE);
         $q1 = "SELECT beli.NO_ID as ID,
-                beli.NO_BUKTI AS NO_BUKTI,
-                beli.NAMAS AS NAMAS,
-                beli.TGL AS TGL,
-                beli.PIN2 AS PIN2,
-                beli.TOTAL_QTY AS TOTAL_QTY,
-                beli.VAL AS VAL,
-                beli.TTD1 AS TTD1,
-                beli.TTD2 AS TTD2,
-                beli.TTD3 AS TTD3,
-                beli.TTD4 AS TTD4,
-                beli.TTD5 AS TTD5,
-                beli.TTD6 AS TTD6,
+                beli.NO_BUKTI,
+                beli.NAMAS,
+                beli.TGL,
+                beli.PIN2,
+                beli.TOTAL_QTY,
+                beli.VAL,
+                beli.TTD1,
+                beli.TTD2,
+                beli.TTD3,
+                beli.TTD4,
+                beli.TTD5,
+                beli.TTD6,
+                beli.OK,
 
-                belid.NO_ID AS NO_ID,
-                belid.REC AS REC,
-                belid.VAL AS VAL,
-                belid.KD_BHN AS KD_BHN,
-                belid.NA_BHN AS NA_BHN,
-                belid.RAK AS RAK,
+                belid.NO_ID,
+                belid.REC,
+                belid.OK,
+                belid.KD_BHN,
+                belid.NA_BHN,
+                belid.RAK,
                 belid.SISA AS QTY,
-                belid.SATUAN AS SATUAN,
+                belid.SATUAN,
                 belid.SAT_BL,
                 belid.QTY,
                 belid.QTY_BL,
@@ -365,6 +348,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         // $bukti = $this->input->post('NO_BUKTI');
         $datah = array(
             'VAL' => '1',
+            'OK' => '0',
             'PIN2' => $pin,
             'TTD2' => '1',
             'TTD2_USR' => $username,
@@ -376,6 +360,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $this->transaksi_model->update_data($where, $datah, 'beli');
         $datahd = array(
             'VAL' => '1',
+            'OK' => 'OK',
             'PIN2' => $pin,
             'TTD2' => '1',
             'TTD2_USR' => $username,

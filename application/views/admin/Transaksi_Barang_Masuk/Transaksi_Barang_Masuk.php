@@ -42,8 +42,9 @@
                         <th width="75px">No</th>
                         <th width="200px">Tanggal</th>
                         <th width="300px">No Bukti</th>
-                        <th width="600px">Diterima Dari</th>
+                        <th width="400px">Diterima Dari</th>
                         <th width="150px">Dragon</th>
+                        <th width="150px">Status</th>
                     </tr>
                 </thead>
                 <tbody>
