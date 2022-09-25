@@ -1,5 +1,5 @@
 <?php
-foreach ($validasi_lpb as $rowh) {
+foreach ($tarik_data as $rowh) {
 };
 ?>
 
@@ -125,7 +125,7 @@ foreach ($validasi_lpb as $rowh) {
 	<div class="alert alert-success alert-container" role="alert">
 		<i class="fas fa-university"></i> Update <?php echo $this->session->userdata['judul']; ?>
 	</div>
-	<form id="barangmasuk" name="barangmasuk" action="<?php echo base_url('admin/Transaksi_Validasi_LPB/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="barangmasuk" name="barangmasuk" action="<?php echo base_url('admin/Transaksi_Tarik_Data/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -139,19 +139,18 @@ foreach ($validasi_lpb as $rowh) {
 						</div>
 						<div class="col-md-5"></div>
 						<div class="col-md-2">
-						<input <?php if ($rowh->OK != "0") echo 'checked'; ?> name="OK" id="OK" type="checkbox" value="<?= $rowh->OK ?>" class="checkbox_container OK">
 							<?php
-							if ($rowh->OK == 1)
+							if ($rowh->SP == "LPB")
 								echo '<a 
 									type="button" 
 									class="btn btn-success btn-center">
-									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> NON STOK</i></span>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> DATA SUDAH DITARIK</i></span>
 								</a>';
 							else echo '<a 
 									type="button"
 									class="btn btn-danger btn-center" 
 								>
-									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> STOK</span>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> DATA BELUM DITARIK</span>
 								</a>';
 							?>
 						</div>
@@ -197,23 +196,24 @@ foreach ($validasi_lpb as $rowh) {
 						<tbody>
 							<?php
 							$no = 0;
-							foreach ($validasi_lpb as $row) :
+							foreach ($tarik_data as $row) :
 							?>
 								<tr>
 									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly></td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
-									<td>
+									<td><input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly></td>
+									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
+									<td><input name="RAK[]" id="RAK<?php echo $no; ?>" value="<?= $row->RAK ?>" type="text" class="form-control RAK text_input" readonly></td>
+									<!-- <td>
 										<div class='input-group'>
 											<select value="<?= $row->RAK ?>" class="js-example-responsive-kd_bhn form-control RAK" name="RAK[]" id="RAK<?php echo $no; ?>" onchange="kd_bhn(this.id)" required>
 												<option value="<?php echo $row->RAK; ?>" selected id="RAK<?php echo $no; ?>"><?php echo $row->RAK; ?></option>
 											</select>
 										</div>
-									</td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="QTY_BL[]" onkeyup="hitung()" id="QTY_BL<?php echo $no; ?>" value="<?php echo number_format($row->QTY_BL, 2, '.', ','); ?>" type="text" class="form-control QTY_BL rightJustified text-primary"></td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="SAT_BL[]" id="SAT_BL<?php echo $no; ?>" value="<?= $row->SAT_BL ?>" type="text" class="form-control SAT_BL text_input"></td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary" readonly></td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
+									</td> -->
+									<td><input name="QTY_BL[]" onkeyup="hitung()" id="QTY_BL<?php echo $no; ?>" value="<?php echo number_format($row->QTY_BL, 2, '.', ','); ?>" type="text" class="form-control QTY_BL rightJustified text-primary" readonly></td>
+									<td><input name="SAT_BL[]" id="SAT_BL<?php echo $no; ?>" value="<?= $row->SAT_BL ?>" type="text" class="form-control SAT_BL text_input" readonly></td>
+									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary" readonly></td>
+									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
 										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">

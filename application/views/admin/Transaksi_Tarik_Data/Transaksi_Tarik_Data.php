@@ -27,11 +27,11 @@
         <div class="alert alert-success alert-container" role="alert">
             <i class="fas fa-university"></i>
             <label>
-                Transaksi Barang Masuk
+                Transaksi Tarik Data Barang Masuk
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
-        <form method="post" action="<?php echo base_url('admin/Transaksi_Barang_Masuk/delete_multiple') ?>">
+        <form method="post" action="<?php echo base_url('admin/Transaksi_Tarik_Data/delete_multiple') ?>">
             <div class="btn-group" role="group" aria-label="Basic example">
             </div>
             <table id="example" class="table table-bordered table-striped table-hover table-responsive bodycontainer scrollable" style="width:100%;">
@@ -40,11 +40,10 @@
                         <th width="75px"><input type="checkbox" id="selectall" /></th>
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
-                        <th width="150px">Tanggal</th>
-                        <th width="200px">No Bukti</th>
-                        <th width="300px">Diterima Dari</th>
+                        <th width="200px">Tanggal</th>
+                        <th width="300px">No Bukti</th>
+                        <th width="400px">Diterima Dari</th>
                         <th width="150px">Dragon</th>
-                        <th width="150px">Keterangan</th>
                         <th width="150px">Status</th>
                     </tr>
                 </thead>
@@ -68,7 +67,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "<?php echo site_url('admin/Transaksi_Barang_Masuk/get_ajax_beli') ?>",
+                "url": "<?php echo site_url('admin/Transaksi_Tarik_Data/get_ajax_tarik_data') ?>",
                 "type": "POST"
             },
             "columnDefs": [{

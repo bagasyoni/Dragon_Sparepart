@@ -41,6 +41,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
+            'SP' => 'LPB',
         );
         $this->db->select('*');
         $this->db->from('beli');
@@ -94,6 +95,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
+            'SP' => 'LPB',
         );
         $this->db->from('beli');
         $this->db->where($where);
@@ -125,13 +127,17 @@ class Transaksi_Barang_Masuk extends CI_Controller
             $row[] = $beli->NAMAS;
             $row[] = $beli->DR;
             $ok = $beli->OK;
+            if($ok == 1){
+                $keterangan = 'NON STOK';
+            }else{
+                $keterangan = 'STOK';
+            }
+            $row[] = $keterangan;
             $val = $beli->VAL;
-            if($ok == 1 && $val == 1){
-                $status = 'NON STOK';
-            }if($ok == 0 && $val == 1){
-                $status = 'STOK';
-            }if($ok == 0 && $val == 0){
-                $status = 'BELUM DIVALIDASI';
+            if($val == 1){
+                $status = 'VALIDASI';
+            }else{
+                $status = 'BELUM VALIDASI';
             }
             $row[] = $status;
             $data[] = $row;
@@ -157,6 +163,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
+            'SP' => 'LPB',
         );
         $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -333,22 +340,12 @@ class Transaksi_Barang_Masuk extends CI_Controller
         redirect('admin/Transaksi_Barang_Masuk/index_Transaksi_Barang_Masuk');
     }
 
-    public function delete($id)
-    {
-    }
-
-    function delete_multiple()
-    {
-    }
-
     public function verifikasi_pin($ID)
     {
         $pin = $this->session->userdata['pin'];
         $username = $this->session->userdata['username'];
-        // $bukti = $this->input->post('NO_BUKTI');
         $datah = array(
             'VAL' => '1',
-            'OK' => '0',
             'PIN2' => $pin,
             'TTD2' => '1',
             'TTD2_USR' => $username,
@@ -360,7 +357,6 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $this->transaksi_model->update_data($where, $datah, 'beli');
         $datahd = array(
             'VAL' => '1',
-            'OK' => 'OK',
             'PIN2' => $pin,
             'TTD2' => '1',
             'TTD2_USR' => $username,
@@ -370,19 +366,32 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'ID' => "$ID"
         );
         $this->transaksi_model->update_data($whered, $datahd, 'belid');
-        $bukti = $this->db->query("SELECT NO_BUKTI FROM beli WHERE NO_ID='$ID'")->result();
-        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_BUKTI='$bukti'")->result();
-        $no_bukti = $xx[0]->BUKTIX;
-        $this->db->query("CALL spp_beliins('" . $no_bukti . "')");
-        $this->session->set_flashdata(
-            'pesan',
-            '<div class="alert alert-warning alert-dismissible fade show" role="alert"> Data Succesfully Verified.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-				</button> 
-			</div>'
-        );
-        redirect('admin/Transaksi_Barang_Masuk/index_Transaksi_Barang_Masuk');
+        $ok = $this->db->query("SELECT OK FROM beli WHERE NO_ID='$ID'")->result();
+        $ok2 = $ok[0]->OK;
+        if($ok2 == 0){
+            $bukti = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_ID='$ID'")->result();
+            $no_bukti = $bukti[0]->BUKTIX;
+            $this->db->query("CALL spp_beliins('" . $no_bukti . "')");
+            $this->session->set_flashdata(
+                'pesan',
+                '<div class="alert alert-warning alert-dismissible fade show" role="alert"> Data Succesfully Verified.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> 
+                </div>'
+            );
+            redirect('admin/Transaksi_Barang_Masuk/index_Transaksi_Barang_Masuk');
+        }else{
+            $this->session->set_flashdata(
+                'pesan',
+                '<div class="alert alert-warning alert-dismissible fade show" role="alert"> Data Succesfully Verified.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> 
+                </div>'
+            );
+            redirect('admin/Transaksi_Barang_Masuk/index_Transaksi_Barang_Masuk');
+        }
     }
 
     public function getDataAjax_bhn()
