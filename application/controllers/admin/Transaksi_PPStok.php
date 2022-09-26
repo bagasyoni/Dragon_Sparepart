@@ -42,7 +42,7 @@ class Transaksi_PPStok extends CI_Controller
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
             'LOGISTIK' => '0',
-            'TYP' => 'PPSTOK',
+            // 'TYP' => 'PPSTOK',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -334,7 +334,7 @@ class Transaksi_PPStok extends CI_Controller
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
                 'TG_SMP' => date("Y-m-d h:i a"),
-                'NO_TIKET' =>  $bukti."-".$KD_BHN[$i] ,
+                'NO_TIKET' =>  $bukti . "-" . $KD_BHN[$i],
                 'PILIH' => '0',
             );
             $this->transaksi_model->input_datad('ppd', $datad);
@@ -640,7 +640,7 @@ class Transaksi_PPStok extends CI_Controller
             $selectajax[] = array(
                 'id' => $row['KD_BHN'],
                 'text' => $row['KD_BHN'],
-                'KD_BHN' => $row['KD_BHN'] . " - " . $row['NA_BHN'] . " - " . $row['SATUAN'] . " - " . $row['QTY'] . " - " . $row['RAK']. " - " . $row['SISA'],
+                'KD_BHN' => $row['KD_BHN'] . " - " . $row['NA_BHN'] . " - " . $row['SATUAN'] . " - " . $row['QTY'] . " - " . $row['RAK'] . " - " . $row['SISA'],
                 'NA_BHN' => $row['NA_BHN'],
                 'SATUAN' => $row['SATUAN'],
                 'QTY' => $row['QTY'],

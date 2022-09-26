@@ -1,5 +1,5 @@
 <?php
-foreach ($validasi_lpb as $rowh) {
+foreach ($Validasi_LPB as $rowh) {
 };
 ?>
 
@@ -139,23 +139,42 @@ foreach ($validasi_lpb as $rowh) {
 						</div>
 						<div class="col-md-5"></div>
 						<div class="col-md-2">
-						<input <?php if ($rowh->OK != "0") echo 'checked'; ?> name="OK" id="OK" type="checkbox" value="<?= $rowh->OK ?>" class="checkbox_container OK">
 							<?php
-							if ($rowh->OK == 1)
+							if ($rowh->VAL == 0)
 								echo '<a 
 									type="button" 
-									class="btn btn-success btn-center">
-									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> NON STOK</i></span>
+									class="btn btn-danger btn-center"
+								>
+									<span style="color: black; font-weight: bold;"></i> Belum Validasi</span>
 								</a>';
 							else echo '<a 
 									type="button"
-									class="btn btn-danger btn-center" 
+									class="btn btn-success btn-center" 
 								>
-									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> STOK</span>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-check"></i> Tervalidasi</span>
 								</a>';
 							?>
 						</div>
-						<div class="col-md-2"></div>
+						<div class="col-md-2">
+							<?php
+							if ($rowh->VAL == 0)
+								echo '<a 
+								type="button" 
+								class="btn btn-warning btn-center"
+								onclick="btVerifikasi()"
+								href="#"
+							>
+							<span style="color: black; font-weight: bold;"><i class="fa fa-upload"></i> Tombol Validasi</span>
+						</a>';
+							else echo '<a 
+							hidden
+							type="label"
+							class="btn btn-success btn-center" 
+								>
+							<span style="color: black; font-weight: bold;"><i class="fa fa-check"></i> Tervalidasi</span>
+						</a>';
+							?>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -172,7 +191,36 @@ foreach ($validasi_lpb as $rowh) {
 						<div class="col-md-3">
 							<input class="form-control text_input NAMAS" id="NAMAS" name="NAMAS" type="text" value="<?php echo $rowh->NAMAS ?>" readonly>
 						</div>
-						<div class="col-md-4"></div>
+						<div class="col-md-1"></div>
+						<div class="col-md-2">
+							<?php
+							if ($rowh->VAL == 1 && $rowh->OK == 1)
+								echo '<a 
+								type="button" 
+									class="btn btn-warning btn-center"
+									>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> STOK</span>
+									</a>';
+							if ($rowh->VAL == 1 && $rowh->OK == 2)
+								echo '<a 
+									type="button"
+									class="btn btn-warning btn-center" 
+									>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> NON STOK</span>
+									</a>';
+							if ($rowh->VAL == 0 && $rowh->OK == 0)
+								echo '<a 
+									hidden
+									type="button"
+									class="btn btn-warning btn-center" 
+									>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> NON STOK</span>
+									</a>';
+							?>
+						</div>
+						<div class="col-md-1">
+							<input <?php if ($rowh->VAL == !0) echo 'hidden'; ?> class="form-control text_input PIN2" id="PIN2" name="PIN2" type="password" maxlength="6" value="" placeholder="PIN ...">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -197,12 +245,12 @@ foreach ($validasi_lpb as $rowh) {
 						<tbody>
 							<?php
 							$no = 0;
-							foreach ($validasi_lpb as $row) :
+							foreach ($Validasi_LPB as $row) :
 							?>
 								<tr>
 									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly></td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
 									<td>
 										<div class='input-group'>
 											<select value="<?= $row->RAK ?>" class="js-example-responsive-kd_bhn form-control RAK" name="RAK[]" id="RAK<?php echo $no; ?>" onchange="kd_bhn(this.id)" required>
@@ -210,10 +258,10 @@ foreach ($validasi_lpb as $rowh) {
 											</select>
 										</div>
 									</td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="QTY_BL[]" onkeyup="hitung()" id="QTY_BL<?php echo $no; ?>" value="<?php echo number_format($row->QTY_BL, 2, '.', ','); ?>" type="text" class="form-control QTY_BL rightJustified text-primary"></td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="SAT_BL[]" id="SAT_BL<?php echo $no; ?>" value="<?= $row->SAT_BL ?>" type="text" class="form-control SAT_BL text_input"></td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary" readonly></td>
-									<td><input <?php if ($rowh->OK == !0) echo 'readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="QTY_BL[]" onkeyup="hitung()" id="QTY_BL<?php echo $no; ?>" value="<?php echo number_format($row->QTY_BL, 2, '.', ','); ?>" type="text" class="form-control QTY_BL rightJustified text-primary"></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="SAT_BL[]" id="SAT_BL<?php echo $no; ?>" value="<?= $row->SAT_BL ?>" type="text" class="form-control SAT_BL text_input"></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary" readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
 										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -231,7 +279,7 @@ foreach ($validasi_lpb as $rowh) {
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
+							<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
 							<td></td>
 							<td></td>
 						</tfoot>
@@ -245,18 +293,18 @@ foreach ($validasi_lpb as $rowh) {
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Kembali</a>	
+						<button <?php if ($rowh->VAL == !0) echo 'hidden'; ?> type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Kembali</a>
 					</div>
-						<a type="text" class="btn btn-light">  </a>
-						<button class="btn btn-secondary" type="button" onclick="prev()"><i class="fa fa-angle-double-left"></i> Prev</button>
-						<button class="btn btn-secondary" type="button" onclick="next()">Next <i class="fa fa-angle-double-right"></i></button>
-					</div>
-					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
+					<a type="text" class="btn btn-light"> </a>
+					<button class="btn btn-secondary" type="button" onclick="prev()"><i class="fa fa-angle-double-left"></i> Prev</button>
+					<button class="btn btn-secondary" type="button" onclick="next()">Next <i class="fa fa-angle-double-right"></i></button>
 				</div>
+				<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 			</div>
 		</div>
-	</form>
+</div>
+</form>
 </div>
 
 <script type="text/javascript">
@@ -433,7 +481,7 @@ foreach ($validasi_lpb as $rowh) {
 	function btVerifikasi() {
 		if ($('#PIN2').val() == '<?= $this->session->userdata['pin'] ?>') {
 			if (confirm("Yakin Verifikasi?")) {
-				window.location.replace("<?php echo base_url('admin/Transaksi_Barang_Masuk/verifikasi_pin/' . $rowh->ID) ?>");
+				window.location.replace("<?php echo base_url('admin/Transaksi_Validasi_LPB/verifikasi_pin/' . $rowh->ID) ?>");
 			}
 		} else {
 			alert("PIN MU SALAH COOK");
@@ -449,7 +497,7 @@ foreach ($validasi_lpb as $rowh) {
 	function select_kd_bhn() {
 		$('.js-example-responsive-kd_bhn').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_Barang_Masuk/getDataAjax_bhn') ?>",
+				url: "<?= base_url('admin/Transaksi_Validasi_LPB/getDataAjax_bhn') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,

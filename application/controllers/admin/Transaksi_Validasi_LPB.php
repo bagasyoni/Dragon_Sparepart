@@ -20,7 +20,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
         }
         if ($this->session->userdata['menu_sparepart'] != 'beli') {
             $this->session->set_userdata('menu_sparepart', 'beli');
-            $this->session->set_userdata('kode_menu', 'T0036');
+            $this->session->set_userdata('kode_menu', 'T0003');
             $this->session->set_userdata('keyword_beli', '');
             $this->session->set_userdata('order_beli', 'NO_ID');
         }
@@ -41,8 +41,8 @@ class Transaksi_Validasi_LPB extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'VAL' => '0',
             'SP' => 'LPB',
+            'OK<>' => '1'
         );
         $this->db->select('*');
         $this->db->from('beli');
@@ -96,7 +96,6 @@ class Transaksi_Validasi_LPB extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'VAL' => '0',
             'SP' => 'LPB',
         );
         $this->db->from('beli');
@@ -104,35 +103,44 @@ class Transaksi_Validasi_LPB extends CI_Controller
         return $this->db->count_all_results();
     }
 
-    function get_ajax_validasi_lpb()
+    function get_ajax_beli()
     {
         $list = $this->get_datatables();
         $data = array();
         $no = @$_POST['start'];
-        foreach ($list as $lpb) {
-            $JASPER = "window.open('JASPER/" . $lpb->NO_ID . "','', 'width=1000','height=900');";
+        foreach ($list as $beli) {
+            $JASPER = "window.open('JASPER/" . $beli->NO_ID . "','', 'width=1000','height=900');";
             $no++;
             $row = array();
-            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $lpb->NO_ID . "'>";
+            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $beli->NO_ID . "'>";
             $row[] = '<div class="dropdown">
                         <a style="background-color: #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Validasi_LPB/update/' . $lpb->NO_ID) . '"> <i class="fa fa-edit"></i> Validasi</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Validasi_LPB/update/' . $beli->NO_ID) . '"> <i class="fa fa-edit"></i> Validasi</a>
                             </div>
                             </div>';
-                            // <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
+            // <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
             $row[] = $no . ".";
-            $row[] = date("d-m-Y", strtotime($lpb->TGL));
-            $row[] = $lpb->NO_BUKTI;
-            $row[] = $lpb->NAMAS;
-            $row[] = $lpb->DR;
-            $ok = $lpb->OK;
-            if($ok == 1){
-                $status = 'NON STOK';
-            }if($ok == 0){
-                $status = 'STOK';
+            $row[] = date("d-m-Y", strtotime($beli->TGL));
+            $row[] = $beli->NO_BUKTI;
+            $row[] = $beli->NAMAS;
+            $row[] = $beli->DR;
+            $ok = $beli->OK;
+            if ($ok == 1) {
+                $keterangan = 'STOK';
+            } elseif ($ok == 2) {
+                $keterangan = 'NON STOK';
+            } else {
+                $keterangan = '-';
+            }
+            $row[] = $keterangan;
+            $val = $beli->VAL;
+            if ($val == 1) {
+                $status = 'VALIDASI';
+            } else {
+                $status = 'BELUM VALIDASI';
             }
             $row[] = $status;
             $data[] = $row;
@@ -151,17 +159,16 @@ class Transaksi_Validasi_LPB extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
-        $this->session->set_userdata('judul', 'Transaksi Validasi LPB');
+        $this->session->set_userdata('judul', 'Transaksi Barang Masuk');
         $where = array(
             'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'VAL' => '0',
             'SP' => 'LPB',
         );
-        $data['lpb'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
+        $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_Validasi_LPB/Transaksi_Validasi_LPB', $data);
@@ -201,7 +208,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
             WHERE beli.NO_ID = $id 
             AND beli.NO_ID = belid.ID 
             ORDER BY belid.REC";
-        $data['validasi_lpb'] = $this->transaksi_model->edit_data($q1)->result();
+        $data['Validasi_LPB'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_Validasi_LPB/Transaksi_Validasi_LPB_update', $data);
@@ -218,8 +225,6 @@ class Transaksi_Validasi_LPB extends CI_Controller
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'ATK' => '0',
-            'OK' => $this->input->post('OK', TRUE),
         );
         $where = array(
             'NO_ID' => $this->input->post('ID', TRUE)
@@ -268,7 +273,6 @@ class Transaksi_Validasi_LPB extends CI_Controller
         $QTY_BL = str_replace(',', '', $this->input->post('QTY_BL', TRUE));
         $SAT_BL = $this->input->post('SAT_BL');
         $SISA = str_replace(',', '', $this->input->post('QTY', TRUE));
-        $OK = $this->input->post('OK');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -290,7 +294,6 @@ class Transaksi_Validasi_LPB extends CI_Controller
                     'SISA' => str_replace(',', '', $SISA[$URUT]),
                     'FLAG' => 'BL',
                     'FLAG2' => 'SP',
-                    'OK' => $OK[$URUT],
                 );
                 $where = array(
                     'NO_ID' => $NO_ID[$URUT]
@@ -323,7 +326,6 @@ class Transaksi_Validasi_LPB extends CI_Controller
                     'QTY_BL' => str_replace(',', '', $QTY_BL[$i]),
                     'FLAG' => 'BL',
                     'FLAG2' => 'SP',
-                    'OK' => $URUT[$i],
                 );
                 $this->transaksi_model->input_datad('belid', $datad);
             }
@@ -332,13 +334,83 @@ class Transaksi_Validasi_LPB extends CI_Controller
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
-                Data Berhasil Disimpan.
+                Data Berhasil Di Update.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button> 
             </div>'
         );
         redirect('admin/Transaksi_Validasi_LPB/index_Transaksi_Validasi_LPB');
+    }
+
+    public function verifikasi_pin($ID)
+    {
+        $pin = $this->session->userdata['pin'];
+        $username = $this->session->userdata['username'];
+        $datah = array(
+            'VAL' => '1',
+            'PIN2' => $pin,
+            'TTD2' => '1',
+            'TTD2_USR' => $username,
+            'TTD2_SMP' => date("Y-m-d h:i a"),
+            'OK' => '2',
+        );
+        $where = array(
+            'NO_ID' => "$ID"
+        );
+        $this->transaksi_model->update_data($where, $datah, 'beli');
+
+        $datahd = array(
+            'VAL' => '1',
+            'PIN2' => $pin,
+            'TTD2' => '1',
+            'TTD2_USR' => $username,
+            'TTD2_SMP' => date("Y-m-d h:i a"),
+            'OK' => '2',
+        );
+        $whered = array(
+            'ID' => "$ID"
+        );
+        $this->transaksi_model->update_data($whered, $datahd, 'belid');
+
+        // $bukti = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_ID='$ID'")->result();
+        // $no_bukti = $bukti[0]->BUKTIX;
+        // $this->db->query("CALL spp_beliins('" . $no_bukti . "')");
+        $this->session->set_flashdata(
+            'pesan',
+            '<div class="alert alert-warning alert-dismissible fade show" role="alert"> Data Succesfully Verified.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> 
+            </div>'
+        );
+        redirect('admin/Transaksi_Validasi_LPB/update/' . $ID);
+        // $ok = $this->db->query("SELECT OK FROM beli WHERE NO_ID='$ID'")->result();
+        // $ok2 = $ok[0]->OK;
+        // if($ok2 == 0){
+        //     $bukti = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_ID='$ID'")->result();
+        //     $no_bukti = $bukti[0]->BUKTIX;
+        //     $this->db->query("CALL spp_beliins('" . $no_bukti . "')");
+        //     $this->session->set_flashdata(
+        //         'pesan',
+        //         '<div class="alert alert-warning alert-dismissible fade show" role="alert"> Data Succesfully Verified.
+        //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        //                 <span aria-hidden="true">&times;</span>
+        //             </button> 
+        //         </div>'
+        //     );
+        //     redirect('admin/Transaksi_Validasi_LPB/index_Transaksi_Validasi_LPB');
+        // }else{
+        //     $this->session->set_flashdata(
+        //         'pesan',
+        //         '<div class="alert alert-warning alert-dismissible fade show" role="alert"> Data Succesfully Verified.
+        //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        //                 <span aria-hidden="true">&times;</span>
+        //             </button> 
+        //         </div>'
+        //     );
+        //     redirect('admin/Transaksi_Validasi_LPB/index_Transaksi_Validasi_LPB');
+        // }
     }
 
     public function getDataAjax_bhn()
@@ -387,7 +459,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
         include_once("phpjasperxml/class/PHPJasperXML.inc.php");
         include_once("phpjasperxml/setting.php");
         $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Barang_Masuk.jrxml");
+        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Validasi_LPB.jrxml");
         $no_id = $id;
         $query = "SELECT beli.NO_ID as ID,
             beli.NO_BUKTI AS NO_BUKTI,
@@ -459,7 +531,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID<'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND FLAG='BL' AND FLAG2='SP' ORDER BY NO_ID DESC LIMIT 1";
+        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID<'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND FLAG='BL' AND FLAG2='SP' AND OK<>'1' ORDER BY NO_ID DESC LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
@@ -478,7 +550,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID>'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND FLAG='BL' AND FLAG2='SP' ORDER BY NO_ID LIMIT 1";
+        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID>'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND FLAG='BL' AND FLAG2='SP' AND OK<>'1' ORDER BY NO_ID LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
@@ -488,6 +560,4 @@ class Transaksi_Validasi_LPB extends CI_Controller
         };
         echo json_encode($hasil);
     }
-
-    
 }

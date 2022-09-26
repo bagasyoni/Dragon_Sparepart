@@ -1,8 +1,3 @@
-<?php
-foreach ($barang_masuk as $rowh) {
-};
-?>
-
 <style>
 	#myInput {
 		background-image: url('<?php echo base_url() ?>assets/img/search-icon-blue.png');
@@ -123,9 +118,9 @@ foreach ($barang_masuk as $rowh) {
 <div class="container-fluid">
 	<br>
 	<div class="alert alert-success alert-container" role="alert">
-		<i class="fas fa-university"></i> Update <?php echo $this->session->userdata['judul']; ?>
+		<i class="fas fa-university"></i> Input <?php echo $this->session->userdata['judul']; ?>
 	</div>
-	<form id="barangmasuk" name="barangmasuk" action="<?php echo base_url('admin/Transaksi_Barang_Masuk/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="barangmasuk" name="barangmasuk" action="<?php echo base_url('admin/Transaksi_Validasi_LPB/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -134,46 +129,16 @@ foreach ($barang_masuk as $rowh) {
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input type="hidden" name="ID" id="ID" class="form-control" value="<?php echo $rowh->ID ?>">
-							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
+							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value='' readonly>
 						</div>
-						<div class="col-md-5"></div>
-						<div class="col-md-2">
-							<?php
-							if ($rowh->VAL == 0)
-								echo '<a 
-									type="button" 
-									class="btn btn-danger btn-center"
-								>
-									<span style="color: black; font-weight: bold;"></i> Belum Validasi</span>
-								</a>';
-							else echo '<a 
-									type="button"
-									class="btn btn-success btn-center" 
-								>
-									<span style="color: black; font-weight: bold;"><i class="fa fa-check"></i> Tervalidasi</span>
-								</a>';
-							?>
+						<div class="col-md-1">
+							<label class="label">No Bukti Beli </label>
 						</div>
-						<div class="col-md-2">
-							<?php
-							if ($rowh->VAL == 0)
-								echo '<a 
-								type="button" 
-								class="btn btn-warning btn-center"
-								onclick="btVerifikasi()"
-								href="#"
-							>
-							<span style="color: black; font-weight: bold;"><i class="fa fa-upload"></i> Tombol Validasi</span>
-						</a>';
-							else echo '<a 
-							hidden
-							type="label"
-							class="btn btn-success btn-center" 
-								>
-							<span style="color: black; font-weight: bold;"><i class="fa fa-check"></i> Tervalidasi</span>
-						</a>';
-							?>
+						<div class="col-md-2 input-group">
+							<input name="NO_BUKTI_BL" id="NO_BUKTI_BL" type="text" class="form-control NO_BUKTI_BL text_input" onkeypress="return tabE(this,event)" readonly>
+							<span class="input-group-btn">
+								<a class="btn default" onfocusout="hitung()" id="0" data-target="#mymodal_nobukti_bl" data-toggle="modal" href="#lupnobukti_bl"><i class="fa fa-search"></i></a>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -183,43 +148,15 @@ foreach ($barang_masuk as $rowh) {
 							<label class="label">Tgl </label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" class="form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()" readonly>
+							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
+																																						echo $_POST["TGL"];
+																																					} else echo date('d-m-Y'); ?>" onclick="select()">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Diterima Dari </label>
+							<label class="label">Ket </label>
 						</div>
 						<div class="col-md-3">
-							<input class="form-control text_input NAMAS" id="NAMAS" name="NAMAS" type="text" value="<?php echo $rowh->NAMAS ?>" readonly>
-						</div>
-						<div class="col-md-1"></div>
-						<div class="col-md-2">
-							<?php
-							if ($rowh->VAL == 1 && $rowh->OK == 1)
-								echo '<a 
-								type="button" 
-									class="btn btn-warning btn-center"
-									>
-									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> STOK</span>
-									</a>';
-							if ($rowh->VAL == 1 && $rowh->OK == 2)
-								echo '<a 
-									type="button"
-									class="btn btn-warning btn-center" 
-									>
-									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> NON STOK</span>
-									</a>';
-							if ($rowh->VAL == 0 && $rowh->OK == 0)
-								echo '<a 
-									hidden
-									type="button"
-									class="btn btn-warning btn-center" 
-									>
-									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> NON STOK</span>
-									</a>';
-							?>
-						</div>
-						<div class="col-md-1">
-							<input <?php if ($rowh->VAL == !0) echo 'hidden'; ?> class="form-control text_input PIN2" id="PIN2" name="PIN2" type="password" maxlength="6" value="" placeholder="PIN ...">
+							<input class="form-control text_input KET" id="KET" name="KET" type="text" value=''>
 						</div>
 					</div>
 				</div>
@@ -232,8 +169,8 @@ foreach ($barang_masuk as $rowh) {
 						<thead>
 							<tr>
 								<th width="50px">No</th>
-								<th width="150px">Kode</th>
-								<th width="350px">Nama</th>
+								<th width="250px">Kode</th>
+								<th width="250px">Nama</th>
 								<th width="150px">Rak</th>
 								<th width="125px">Qty Beli</th>
 								<th width="150px">Satuan Beli</th>
@@ -242,44 +179,31 @@ foreach ($barang_masuk as $rowh) {
 								<th width="50px"></th>
 							</tr>
 						</thead>
-						<tbody>
-							<?php
-							$no = 0;
-							foreach ($barang_masuk as $row) :
-							?>
-								<tr>
-									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly></td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
-									<td>
-										<div class='input-group'>
-											<select value="<?= $row->RAK ?>" class="js-example-responsive-kd_bhn form-control RAK" name="RAK[]" id="RAK<?php echo $no; ?>" onchange="kd_bhn(this.id)" required>
-												<option value="<?php echo $row->RAK; ?>" selected id="RAK<?php echo $no; ?>"><?php echo $row->RAK; ?></option>
-											</select>
-										</div>
-									</td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="QTY_BL[]" onkeyup="hitung()" id="QTY_BL<?php echo $no; ?>" value="<?php echo number_format($row->QTY_BL, 2, '.', ','); ?>" type="text" class="form-control QTY_BL rightJustified text-primary"></td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="SAT_BL[]" id="SAT_BL<?php echo $no; ?>" value="<?= $row->SAT_BL ?>" type="text" class="form-control SAT_BL text_input"></td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary" readonly></td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
-									<td>
-										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
-										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
-											<i class="fa fa-fw fa-trash-alt"></i>
-										</button>
-									</td>
-								</tr>
-								<?php $no++; ?>
-							<?php endforeach; ?>
+						<tbody id="show-data">
+							<tr>
+								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
+								<td><input name="KD_BHN[]" id="KD_BHN0" type="text" class="form-control KD_BHN text_input" readonly></td>
+								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" readonly></td>
+								<td><input name="RAK[]" id="RAK0" type="text" class="form-control RAK text_input"></td>
+								<td><input name="QTY_BL[]" onkeyup="hitung()" value="0" id="QTY_BL0" type="text" class="form-control QTY_BL rightJustified text-primary" readonly></td>
+								<td><input name="SATUAN_BL[]" id="SATUAN_BL0" type="text" class="form-control SATUAN_BL text_input" readonly></td>
+								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary"></td>
+								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
+								<td>
+									<!-- <button style="visibility: hidden;" type="hidden" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+										<i class="fa fa-fw fa-trash-alt"></i>
+									</button> -->
+								</td>
+							</tr>
 						</tbody>
 						<tfoot>
 							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
+							<td><input class="form-control TOTAL_QTY_BL rightJustified text-primary font-weight-bold" id="TOTAL_QTY_BL" name="TOTAL_QTY_BL" value="0" readonly></td>
 							<td></td>
-							<td></td>
-							<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
+							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
 							<td></td>
 							<td></td>
 						</tfoot>
@@ -288,23 +212,27 @@ foreach ($barang_masuk as $rowh) {
 			</div>
 		</div>
 		<br><br>
+		<!--tab-->
+		<!-- <div class="col-md-12">
+			<div class="form-group row">
+				<div class="col-md-1">
+					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
+				</div>
+			</div>
+		</div> -->
 		<br>
 		<div class="row">
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<button <?php if ($rowh->VAL == !0) echo 'hidden'; ?> type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Kembali</a>
+						<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
 					</div>
-					<a type="text" class="btn btn-light"> </a>
-					<button class="btn btn-secondary" type="button" onclick="prev()"><i class="fa fa-angle-double-left"></i> Prev</button>
-					<button class="btn btn-secondary" type="button" onclick="next()">Next <i class="fa fa-angle-double-right"></i></button>
+					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 				</div>
-				<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 			</div>
 		</div>
-</div>
-</form>
+	</form>
 </div>
 
 <script type="text/javascript">
@@ -322,6 +250,54 @@ foreach ($barang_masuk as $rowh) {
 	});
 </script>
 
+<!-- myModal No Bukti BL Beli-->
+<div id="mymodal_nobukti_bl" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" style="font-weight: bold; color: black;">Data Beli</h4>
+			</div>
+			<div class="modal-body">
+				<table class='table table-bordered' id='modal_bl'>
+					<thead>
+						<th>No Bukti Beli Bon</th>
+						<th>Periode</th>
+						<th>Val</th>
+						<th>DR</th>
+					</thead>
+					<tbody>
+						<?php
+						$dr = $this->session->userdata['dr'];
+						$sql = "SELECT NO_BUKTI AS NO_BUKTI_BL, 
+								PER AS PER, 
+								TTD1 AS TTD1, 
+								DR AS DR
+							FROM beli 
+							WHERE FLAG = 'BL' 
+							AND FLAG2='SP' 
+							AND DR='$dr'
+							AND TTD1=1
+							ORDER BY PER, NO_BUKTI";
+						$a = $this->db->query($sql)->result();
+						foreach ($a as $b) {
+						?>
+							<tr>
+								<td class='NBBVAL'><a href="#" class="select_nobukti_bl"><?php echo $b->NO_BUKTI_BL; ?></a></td>
+								<td class='PEBVAL text_input'><?php echo $b->PER; ?></td>
+								<td class='VABVAL text_input'><?php echo $b->TTD1; ?></td>
+								<td class='DRBVAL text_input'><?php echo $b->DR; ?></td>
+							</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 	(function() {
 		'use strict';
@@ -330,7 +306,6 @@ foreach ($barang_masuk as $rowh) {
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
-						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -344,13 +319,13 @@ foreach ($barang_masuk as $rowh) {
 		}, false);
 	})();
 	var target;
-	var idrow = <?php echo $no ?>;
+	var idrow = 1;
 
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	$(document).ready(function() {
-		$("#TOTAL_QTYPP").autoNumeric('init', {
+		$("#TOTAL_QTY_BL").autoNumeric('init', {
 			aSign: '<?php echo ''; ?>',
 			vMin: '-999999999.99'
 		});
@@ -360,7 +335,7 @@ foreach ($barang_masuk as $rowh) {
 		});
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
-			$("#QTYPP" + i.toString()).autoNumeric('init', {
+			$("#QTY_BL" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
@@ -369,6 +344,64 @@ foreach ($barang_masuk as $rowh) {
 				vMin: '-999999999.99'
 			});
 		}
+		//mymoodal no bukti beli
+		$('#mymodal_nobukti_bl').on('show.bs.modal', function(e) {
+			target = $(e.relatedTarget);
+		});
+		$('body').on('click', '.select_nobukti_bl', function() {
+			var val = $(this).parents("tr").find(".NBBVAL").text();
+			target.parents("div").find(".NO_BUKTI_BL").val(val);
+			$('#mymodal_nobukti_bl').modal('toggle');
+			var no_bukti_bl = $(this).parents("tr").find(".NBBVAL").text();
+			$.ajax({
+				type: 'get',
+				url: '<?php echo base_url('index.php/admin/Transaksi_Validasi_LPB/filter_bl'); ?>',
+				data: {
+					no_bukti_bl: no_bukti_bl
+				},
+				dataType: 'json',
+				success: function(response) {
+					// alert(response);
+					var html = '';
+					var i;
+					for (i = 0; i < response.length; i++) {
+						html += '<tr>' +
+							'<td><input name="REC[]" id=REC' + i + ' type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly value=' + (i + 1) + ' ></td>' +
+							'<td><input name="KD_BHN[]" value="' + response[i].KD_BHN + '" id=KD_BHN' + i + ' type="text" class="form-control KD_BHN text_input" readonly></td>' +
+							'<td><input name="NA_BHN[]" value="' + response[i].NA_BHN + '" id=NA_BHN' + i + ' type="text" class="form-control NA_BHN text_input" readonly></td>' +
+							'<td><input name="RAK[]" id=RAK' + i + ' type="text" class="form-control RAK text_input"></td>' +
+							'<td><input name="QTY_BL[]" onclick="select()" value="' + numberWithCommas(response[i].QTY_BL) + '" onkeyup="hitung()" id=QTY_BL' + i + ' type="text" class="form-control QTY_BL rightJustified text-primary" readonly></td>' +
+							'<td><input name="SATUAN_BL[]" id=SATUAN_BL' + i + ' type="text" class="form-control SATUAN_BL text_input" readonly></td>' +
+							'<td><input name="QTY[]" onclick="select()" value="0" onkeyup="hitung()" id=QTY' + i + ' type="text" class="form-control QTY rightJustified text-primary"></td>' +
+							'<td><input name="SATUAN[]" id=SATUAN' + i + ' type="text" class="form-control SATUAN text_input"></td>' +
+							'<td><input type="hidden" name="NO_ID[]" id=NO_ID' + i + '  class="form-control"  value="' + response[i].NO_ID + '"  >' +
+							'<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" style="visibility: hidden;" onclick=""> <i class="fa fa-fw fa-trash-alt"></i> </button></td>' +
+							'</tr>';
+					}
+					idrow = i;
+					$('#show-data').html(html);
+					jumlahdata = 100;
+					for (i = 0; i <= jumlahdata; i++) {
+						$("#QTY_BL" + i.toString()).autoNumeric('init', {
+							aSign: '<?php echo ''; ?>',
+							vMin: '-999999999.99'
+						});
+						$("#QTY" + i.toString()).autoNumeric('init', {
+							aSign: '<?php echo ''; ?>',
+							vMin: '-999999999.99'
+						});
+					}
+					$('input[type="checkbox"]').on('change', function() {
+						this.value ^= 1;
+						console.log(this.value)
+					});
+					select_kd_bhn();
+					$(".date").datepicker({
+						'dateFormat': 'dd-mm-yy',
+					})
+				}
+			});
+		});
 		$('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			idrow--;
@@ -392,16 +425,16 @@ foreach ($barang_masuk as $rowh) {
 	}
 
 	function hitung() {
-		var TOTAL_QTYPP = 0;
+		var TOTAL_QTY_BL = 0;
 		var TOTAL_QTY = 0;
 		var total_row = idrow;
 		for (i = 0; i < total_row; i++) {
 
 		};
-		$(".QTYPP").each(function() {
+		$(".QTY_BL").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
 			if (isNaN(val)) val = 0;
-			TOTAL_QTYPP += val;
+			TOTAL_QTY_BL += val;
 		});
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
@@ -409,13 +442,13 @@ foreach ($barang_masuk as $rowh) {
 			TOTAL_QTY += val;
 		});
 
-		if (isNaN(TOTAL_QTYPP)) TOTAL_QTYPP = 0;
+		if (isNaN(TOTAL_QTY_BL)) TOTAL_QTY_BL = 0;
 		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
 
-		$('#TOTAL_QTYPP').val(numberWithCommas(TOTAL_QTYPP));
+		$('#TOTAL_QTY_BL').val(numberWithCommas(TOTAL_QTY_BL));
 		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
 
-		$('#TOTAL_QTYPP').autoNumeric('update');
+		$('#TOTAL_QTY_BL').autoNumeric('update');
 		$('#TOTAL_QTY').autoNumeric('update');
 	}
 
@@ -440,15 +473,15 @@ foreach ($barang_masuk as $rowh) {
 		td2.innerHTML = kd_bhn;
 		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN' readonly>";
 		td4.innerHTML = "<input name='RAK[]' id=RAK" + idrow + " type='text' class='form-control RAK'>";
-		td5.innerHTML = "<input name='QTYPP[]' onclick='select()' onkeyup='hitung()' value='0' id=QTYPP" + idrow + " type='text' class='form-control QTYPP rightJustified text-primary'>";
-		td6.innerHTML = "<input name='SATUANPP[]' id=SATUANPP" + idrow + " type='text' class='form-control SATUANPP'>";
+		td5.innerHTML = "<input name='QTY_BL[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY_BL" + idrow + " type='text' class='form-control QTY_BL rightJustified text-primary'>";
+		td6.innerHTML = "<input name='SATUAN_BL[]' id=SATUAN_BL" + idrow + " type='text' class='form-control SATUAN_BL'>";
 		td7.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
 		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN'>";
-		td9.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + " class='form-control' value='0'>" +
+		td9.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + " class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
-			$("#QTYPP" + i.toString()).autoNumeric('init', {
+			$("#QTY_BL" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
@@ -477,16 +510,6 @@ foreach ($barang_masuk as $rowh) {
 			nomor();
 		}
 	}
-
-	function btVerifikasi() {
-		if ($('#PIN2').val() == '<?= $this->session->userdata['pin'] ?>') {
-			if (confirm("Yakin Verifikasi?")) {
-				window.location.replace("<?php echo base_url('admin/Transaksi_Barang_Masuk/verifikasi_pin/' . $rowh->ID) ?>");
-			}
-		} else {
-			alert("PIN MU SALAH COOK");
-		}
-	}
 </script>
 
 <script>
@@ -497,7 +520,7 @@ foreach ($barang_masuk as $rowh) {
 	function select_kd_bhn() {
 		$('.js-example-responsive-kd_bhn').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_Barang_Masuk/getDataAjax_bhn') ?>",
+				url: "<?= base_url('admin/Transaksi_Validasi_LPB/getDataAjax_bhn') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -518,7 +541,7 @@ foreach ($barang_masuk as $rowh) {
 				},
 				cache: true
 			},
-			placeholder: 'Pilih Rak',
+			placeholder: 'Pilih Barang',
 			minimumInputLength: 0,
 			templateResult: format_kd_bhn,
 			templateSelection: formatSelection_kd_bhn
@@ -537,62 +560,22 @@ foreach ($barang_masuk as $rowh) {
 		$container.find(".select2-result-repository__title").text(repo_kd_bhn.KD_BHN);
 		return $container;
 	}
+	var kd_bhn = '';
 	var na_bhn = '';
 	var satuan = '';
-	var rak = '';
 
 	function formatSelection_kd_bhn(repo_kd_bhn) {
+		kd_bhn = repo_kd_bhn.KD_BHN;
 		na_bhn = repo_kd_bhn.NA_BHN;
 		satuan = repo_kd_bhn.SATUAN;
-		rak = repo_kd_bhn.RAK;
 		return repo_kd_bhn.text;
 	}
 
 	function kd_bhn(x) {
 		var q = x.substring(6, 12);
+		$('#KD_BHN' + q).val(kd_bhn);
 		$('#NA_BHN' + q).val(na_bhn);
 		$('#SATUAN' + q).val(satuan);
-		$('#RAK' + q).val(rak);
 		console.log(q);
-	}
-</script>
-
-<script>
-	function prev() {
-		var ID = $('#ID').val();
-		$.ajax({
-			type: 'get',
-			url: '<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/prev'); ?>',
-			data: {
-				ID: ID
-			},
-			dataType: 'json',
-			success: function(response) {
-				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/update/'); ?>" + response[0].NO_ID);
-				// console.log('test');
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				// console.log('error');
-			}
-		});
-	}
-
-	function next() {
-		var ID = $('#ID').val();
-		$.ajax({
-			type: 'get',
-			url: '<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/next'); ?>',
-			data: {
-				ID: ID
-			},
-			dataType: 'json',
-			success: function(response) {
-				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/update/'); ?>" + response[0].NO_ID);
-				console.log(response[0].NO_ID);
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				// console.log('error');
-			}
-		});
 	}
 </script>
