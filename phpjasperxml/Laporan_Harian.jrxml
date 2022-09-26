@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan_Harian" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e9d54873-9ce9-470f-9eaf-8951cf53f673">
 	<property name="com.jaspersoft.studio.unit." value="cm"/>
 	<parameter name="PER" class="java.lang.String"/>
@@ -328,10 +328,16 @@
 				</textElement>
 				<text><![CDATA[SATUAN]]></text>
 			</staticText>
+			<line>
+				<reportElement x="10" y="-1" width="1" height="54" uuid="5dee9464-9787-4c4d-8905-2dfa07997577"/>
+			</line>
+			<line>
+				<reportElement x="600" y="0" width="1" height="53" uuid="a6c9edbc-6e24-4d91-9267-cb268a822e3a"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField>
 				<reportElement x="10" y="0" width="20" height="20" uuid="0cde358e-f416-4fea-aaa1-ac15aaf09e30"/>
 				<box>
@@ -488,15 +494,28 @@
 				</textElement>
 				<textFieldExpression><![CDATA[(($F{NO_BUKTI_MA} == "")? $F{RKE}  :$F{MA})]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="10" y="-1" width="1" height="21" uuid="d0398149-cbec-450a-afa2-b18135c01654"/>
+			</line>
+			<line>
+				<reportElement x="600" y="0" width="1" height="21" uuid="9a572d7d-51bb-4bc1-aed9-94a720a10d98"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
 		<band splitType="Stretch"/>
 	</columnFooter>
-	<pageFooter>
-		<band height="39" splitType="Stretch"/>
-	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="39" splitType="Stretch">
+			<line>
+				<reportElement x="10" y="-1" width="1" height="39" uuid="4451724b-4f80-4379-9b29-4b245b049936"/>
+			</line>
+			<line>
+				<reportElement x="600" y="0" width="1" height="39" uuid="3f39b370-ddc0-4624-b143-bd38546e0022"/>
+			</line>
+			<line>
+				<reportElement x="10" y="38" width="590" height="1" uuid="87fdd2f3-df14-43f1-8337-64189923348d"/>
+			</line>
+		</band>
 	</summary>
 </jasperReport>

@@ -192,7 +192,7 @@
 								</td>
 								<td>
 									<span class="input-group-btn">
-										<a class="btn default" onfocusout="hitung()" id="0" data-target="#modal_no_bon" data-toggle="modal" href="#no_bon" ><i class="fa fa-search"></i></a>
+										<a class="btn default modal-NO_BON" onfocusout="hitung()" id="0"><i class="fa fa-search"></i></a>
 									</span>
 								</td>
 								<!-- <td>
@@ -209,10 +209,12 @@
 								<td><input name="DEVISI[]" id="DEVISI0" type="text" class="form-control DEVISI text_input" required></td>
 								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
 								<td>
-									<input name="TGL_DIMINTA[]" id="TGL_DIMINTA0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																		} else echo date('d-m-Y'); ?>" onclick="select()">
+									<input name="TGL_DIMINTA[]" id="TGL_DIMINTA0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
+																																										} else echo date('d-m-Y'); ?>" onclick="select()">
 								</td>
 								<td>
-									<input name="SISABON[]" onkeyup="hitung()" value="0" id="SISABON0" type="text" class="form-control SISABON rightJustified text-primary" readonly></td>
+									<input name="SISABON[]" onkeyup="hitung()" value="0" id="SISABON0" type="text" class="form-control SISABON rightJustified text-primary" readonly>
+								</td>
 								<td>
 									<input name="URGENT[]" id="URGENT" type="checkbox" value="0" class="checkbox_container URGENT" unchecked>
 								</td>
@@ -288,7 +290,7 @@
 			</div>
 			<div class="modal-body">
 				<table class='table table-bordered' id='no_bon'>
-					<thead>	
+					<thead>
 						<th>No Bukti</th>
 						<th width="30px">Article</th>
 						<th width="30px">Tipe</th>
@@ -297,9 +299,9 @@
 						<th>Devisi</th>
 					</thead>
 					<tbody>
-					<?php
-						$dr= $this->session->userdata['dr'];
-						$sub= $this->session->userdata['sub'];
+						<?php
+						$dr = $this->session->userdata['dr'];
+						$sub = $this->session->userdata['sub'];
 						$sql = "SELECT bond.NO_BUKTI AS NO_BON,
 							bond.KD_BHN, 
 							bond.NA_BHN,
@@ -317,17 +319,17 @@
 						WHERE bon.NO_BUKTI=bond.NO_BUKTI AND bon.TTD2<>'' AND bon.TUJUAN='$sub' AND bon.DR='$dr' AND bond.OK=0 AND bond.QTY - bond.KIRIM <> 0
 						ORDER BY bond.NO_BUKTI";
 						$a = $this->db->query($sql)->result();
-						foreach($a as $b ) { 
-					?>
-						<tr>
-							<td class='NBBVAL'><a href="#" class="select_no_bon"><?php echo $b->NO_BON;?></a></td>
-							<td class='NABVAL text_input'><?php echo $b->NA_BHN;?></td>
-							<td class='TIBVAL text_input'><?php echo $b->TIPE;?></td>
-							<td class='QTBVAL text_input'><?php echo $b->QTY;?></td>
-							<td class='SIBVAL text_input'><?php echo $b->SISABON;?></td>
-							<td class='DEBVAL text_input'><?php echo $b->DEVISI;?></td>
-						</tr>
-					<?php } ?>
+						foreach ($a as $b) {
+						?>
+							<tr>
+								<td class='NBBVAL'><a href="#" class="select_no_bon"><?php echo $b->NO_BON; ?></a></td>
+								<td class='NABVAL text_input'><?php echo $b->NA_BHN; ?></td>
+								<td class='TIBVAL text_input'><?php echo $b->TIPE; ?></td>
+								<td class='QTBVAL text_input'><?php echo $b->QTY; ?></td>
+								<td class='SIBVAL text_input'><?php echo $b->SISABON; ?></td>
+								<td class='DEBVAL text_input'><?php echo $b->DEVISI; ?></td>
+							</tr>
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>
@@ -361,11 +363,14 @@
 	})();
 	var target;
 	var idrow = 1;
+	var x = 0;
 
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	$(document).ready(function() {
+		modalClick();
+
 		$("#TOTAL_QTY").autoNumeric('init', {
 			aSign: '<?php echo ''; ?>',
 			vMin: '-999999999.99'
@@ -381,9 +386,29 @@
 				vMin: '-999999999.99'
 			});
 		}
+
 		$('#modal_no_bon').on('show.bs.modal', function(e) {
 			target = $(e.relatedTarget);
 		});
+		$('.select_no_bon').click(function() {
+			console.log(x);
+			var val = $(this).parents("tr").find(".NBBVAL").text();
+			$("#NO_BON" + x).val(val);
+			var val = $(this).parents("tr").find(".NABVAL").text();
+			$("#NA_BHN" + x).val(val);
+			var val = $(this).parents("tr").find(".TIBVAL").text();
+			$("#TIPE" + x).val(val);
+			var val = $(this).parents("tr").find(".QTBVAL").text();
+			$("#QTY" + x).val(val);
+			var val = $(this).parents("tr").find(".SIBVAL").text();
+			$("#SISABON" + x).val(val);
+			var val = $(this).parents("tr").find(".DEBVAL").text();
+			$("#DEVISI" + x).val(val);
+			$('#modal_no_bon').modal('toggle');
+			var no_bon = $(this).parents("tr").find(".NBBVAL").text();
+		});
+
+
 		$('body').on('click', '.btn-delete', function() {
 			var r = confirm("Yakin dihapus?");
 			if (r == true) {
@@ -392,8 +417,7 @@
 					idrow--;
 					nomor();
 				}
-			} else {
-			}
+			} else {}
 		});
 		$('input[type="checkbox"]').on('change', function() {
 			this.value ^= 1;
@@ -403,6 +427,13 @@
 			'dateFormat': 'dd-mm-yy',
 		})
 	});
+
+	function modalClick() {
+		$('.modal-NO_BON').click(function() {
+			x = $(this).attr('id');
+			$('#modal_no_bon').modal('toggle');
+		});
+	}
 
 	function nomor() {
 		var i = 1;
@@ -418,15 +449,15 @@
 		for (i = 0; i < total_row; i++) {
 			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
 			var sisabon = parseFloat($('#SISABON' + i).val().replace(/,/g, ''));
-			
+
 			$('#BILANGAN' + i).val(angkaTerbilang(qty));
 
 			if (qty > sisabon) {
 				alert("Qty tidak boleh lebih besar dari Sisa Bon");
 				$('#QTY' + i).val(0);
-				console.log('TIDAK OK !!!')
+				// console.log('TIDAK OK !!!')
 			} else {
-				console.log('OK !!!')
+				// console.log('OK !!!')
 			}
 		};
 		$(".QTY").each(function() {
@@ -440,23 +471,6 @@
 		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
 
 		$('#TOTAL_QTY').autoNumeric('update');
-
-		$('body').on('click', '.select_no_bon', function() {
-			var val = $(this).parents("tr").find(".NBBVAL").text();
-			target.parents("div").find(".NO_BON").val(val);
-			var val = $(this).parents("tr").find(".NABVAL").text();
-			target.parents("div").find(".NA_BHN").val(val);
-			var val = $(this).parents("tr").find(".TIBVAL").text();
-			target.parents("div").find(".TIPE").val(val);
-			var val = $(this).parents("tr").find(".QTBVAL").text();
-			target.parents("div").find(".QTY").val(val);
-			var val = $(this).parents("tr").find(".SIBVAL").text();
-			target.parents("div").find(".SISABON").val(val);
-			var val = $(this).parents("tr").find(".DEBVAL").text();
-			target.parents("div").find(".DEVISI").val(val);
-			$('#modal_no_bon').modal('toggle');
-			var no_bon = $(this).parents("tr").find(".NBBVAL").text();
-		});
 	}
 
 	function chekbox() {
@@ -491,9 +505,9 @@
 
 		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()' required></select></div>";
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
-		
+
 		var no_bon0 = "<input name='NO_BON[]' id=NO_BON" + idrow + " maxlength='500' type='text' class='form-control NO_BON text_input' onkeypress='return tabE(this,event)' readonly>";
-		var button0 = "<span class='input-group-btn'><a class='btn default' onfocusout='hitung()' id='0' data-target='#modal_no_bon' data-toggle='modal' href='#no_bon' ><i class='fa fa-search'></i></a></span>";
+		var button0 = "<span class='input-group-btn'><a class='btn default modal-NO_BON' onfocusout='hitung()' id=" + idrow + "><i class='fa fa-search'></i></a></span>";
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
 		td2.innerHTML = no_bon0;
@@ -506,10 +520,11 @@
 		td9.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
 		td10.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input' required>";
 		td11.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
-		td12.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {} else echo date('d-m-Y'); ?>'>";
+		td12.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
+																																																		} else echo date('d-m-Y'); ?>'>";
 		td13.innerHTML = "<input name='SISABON[]' onclick='select()' onkeyup='hitung()' value='0' id=SISABON" + idrow + " type='text' class='form-control SISABON rightJustified text-primary' readonly>";
-		
-		
+
+
 		td14.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
 		td15.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
@@ -536,6 +551,7 @@
 		});
 		select_no_bon();
 		select_kd_bhn();
+		modalClick();
 	}
 
 	function hapus() {
