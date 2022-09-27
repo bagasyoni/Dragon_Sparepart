@@ -41,7 +41,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'SP' => 'LPB',
+            // 'SP' => 'LPB',
             'OK<>' => '1'
         );
         $this->db->select('*');
@@ -96,7 +96,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'SP' => 'LPB',
+            // 'SP' => 'LPB',
         );
         $this->db->from('beli');
         $this->db->where($where);
@@ -166,7 +166,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
             'SUB' => $sub,
             'FLAG' => 'BL',
             'FLAG2' => 'SP',
-            'SP' => 'LPB',
+            // 'SP' => 'LPB',
         );
         $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
