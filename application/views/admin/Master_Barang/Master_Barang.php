@@ -91,11 +91,14 @@
                         <!-- 1200px -->
                         <!-- <th width="75px"><input type="checkbox" id="selectall" /></th> -->
                         <th width="75px">Menu</th>
-                        <th width="75px">No</th>
-                        <th width="225px">Kode Barang</th>
-                        <th width="575px">Nama Barang</th>
-                        <th width="175px">Satuan</th>
-                        <th width="150px">Rak</th>
+                        <th width="25px">No</th>
+                        <th width="75px">Kode Barang</th>
+                        <th width="400px">Nama Barang</th>
+                        <th width="75px">Satuan</th>
+                        <th width="75px">Dragon</th>
+                        <th width="100px">Rak Dragon I</th>
+                        <th width="100px">Rak Dragon II</th>
+                        <th width="100px">Rak Dragon III</th>
                         <!-- <th width="100px">Aktif</th>
                         <th width="50px">Flag</th>
                         <th width="100px">Dragon</th> -->

@@ -35,7 +35,7 @@ class Master_Barang extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
         $where = array(
-            'bhnd.DR' => $dr,
+            // 'bhnd.DR' => $dr,
             'bhnd.FLAG' => 'SP',
             'bhnd.FLAG2' => 'SP',
             'bhnd.SUB' => $sub,
@@ -88,7 +88,7 @@ class Master_Barang extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
         $where = array(
-            'bhnd.DR' => $dr,
+            // 'bhnd.DR' => $dr,
             'bhnd.FLAG' => 'SP',
             'bhnd.FLAG2' => 'SP',
             'bhnd.SUB' => $sub,
@@ -136,10 +136,33 @@ class Master_Barang extends CI_Controller
             $row[] = $bhn->KD_BHN;
             $row[] = $bhn->NA_BHN;
             $row[] = $bhn->SATUAN;
-            $row[] = $bhn->RAK;
-            // $row[] = $bhn->AKTIF;
-            // $row[] = $bhn->FLAG;
-            // $row[] = $bhn->DR;
+            $dr1 = 'I';
+            $dr2 = 'II';
+            $dr3 = 'III';
+            $dragon = $bhn->DR;
+            $row[] = $dragon;
+            $rak = $bhn->RAK;
+            if($rak <> '' && $dragon == $dr1){
+                $rak_dr = $rak;
+            }elseif($rak <> '' && $dragon <> $dr1){
+                $rak_dr = '';
+            }
+            $row[] = $rak_dr;
+
+            if($rak <> '' && $dragon == $dr2){
+                $rak_dr = $rak;
+            }elseif($rak <> '' && $dragon <> $dr2){
+                $rak_dr = '';
+            }
+            $row[] = $rak_dr;
+
+            if($rak <> '' && $dragon == $dr3){
+                $rak_dr = $rak;
+            }elseif($rak <> '' && $dragon <> $dr3){
+                $rak_dr = '';
+            }
+            $row[] = $rak_dr;
+
             $data[] = $row;
         }
         $output = array(
