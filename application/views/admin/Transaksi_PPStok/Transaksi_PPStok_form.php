@@ -149,7 +149,7 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-1">
-							<label class="label">Tgl </label>
+							<label class="label">Tanggal </label>
 						</div>
 						<div class="col-md-2">
 							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
@@ -157,7 +157,7 @@
 																																					} else echo date('d-m-Y'); ?>" onclick="select()">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Ket </label>
+							<label class="label">Keterangan </label>
 						</div>
 						<div class="col-md-3">
 							<input class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value=''>
@@ -242,7 +242,6 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<!-- <td></td> -->
 						</tfoot>
 					</table>
 				</div>
@@ -385,6 +384,7 @@
 		$('#modal_kd_bhn').on('show.bs.modal', function(e) {
 			target = $(e.relatedTarget);
 		});
+		
 		$('.select_kd_bhn').click(function() {
 			console.log(x);
 			var val = $(this).parents("tr").find(".NBVAL").text();

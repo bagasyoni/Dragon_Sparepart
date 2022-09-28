@@ -152,7 +152,7 @@
 																																					} else echo date('d-m-Y'); ?>" onclick="select()">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Ket </label>
+							<label class="label">Keterangan </label>
 						</div>
 						<div class="col-md-3">
 							<input class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value=''>

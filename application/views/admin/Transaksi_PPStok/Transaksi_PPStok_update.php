@@ -159,13 +159,13 @@ foreach ($ppstok as $rowh) {
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-1">
-							<label class="label">Tgl </label>
+							<label class="label">Tanggal </label>
 						</div>
 						<div class="col-md-2">
 							<input <?php if ($rowh->TTD3 == !0) echo 'class="form-control TGL text_input" readonly'; ?> type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Ket </label>
+							<label class="label">Keterangan </label>
 						</div>
 						<div class="col-md-3">
 							<input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value="<?php echo $rowh->NOTES ?>">
@@ -276,6 +276,7 @@ foreach ($ppstok as $rowh) {
 							<tr>
 								<th width="50px">No</th>
 								<th width="100px">Kode</th>
+								<th width="50px"></th>
 								<th width="175px">Uraian</th>
 								<th width="175px">Keterangan Barang</th>
 								<th width="75px">Qty</th>
@@ -296,7 +297,15 @@ foreach ($ppstok as $rowh) {
 							?>
 								<tr>
 									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-									<td><input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly></td>
+									<td>
+										<input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" maxlength="500" type="text" class="form-control KD_BHN text_input" onkeypress="return tabE(this,event)" readonly>
+									</td>
+									<td>
+										<span class="input-group-btn">
+											<a <?php if ($rowh->TTD3 == !0) echo 'hidden'; ?> class="btn default modal-KD_BHN" onfocusout="hitung()" id="0"><i class="fa fa-search"></i></a>
+										</span>
+									</td>
+									<!-- <td><input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly></td> -->
 									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="TIPE[]" id="TIPE<?php echo $no; ?>" value="<?= $row->TIPE ?>" type="text" class="form-control TIPE text_input"></td>
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="QTY[]" onclick="select()" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
@@ -311,8 +320,7 @@ foreach ($ppstok as $rowh) {
 										<input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="SISA[]" onkeyup="hitung()" id="SISA<?php echo $no; ?>" value="<?php echo number_format($row->SISA, 2, '.', ','); ?>" type="text" class="form-control SISA rightJustified text-primary" required></td>
 									<td>
 									<td>
-										<input <?php
-												if ($row->URGENT != "0") echo 'checked'; ?> name="URGENT[]" id="URGENT<?php echo $no; ?>" type="checkbox" value="<?= $row->URGENT ?>" class="checkbox_container URGENT">
+										<input <?php if ($row->URGENT != "0") echo 'checked'; ?> <?php if ($rowh->TTD3 == !0) echo 'disabled'; ?> name="URGENT[]" id="URGENT<?php echo $no; ?>" type="checkbox" value="<?= $row->URGENT ?>" class="checkbox_container URGENT">
 									</td>
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
@@ -329,7 +337,9 @@ foreach ($ppstok as $rowh) {
 							<td></td>
 							<td></td>
 							<td></td>
+							<td></td>
 							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -344,7 +354,7 @@ foreach ($ppstok as $rowh) {
 		</div>
 		<br><br>
 		<!--tab-->
-		<div class="col-md-12">
+		<div class="col-md-12" <?php if ($rowh->TTD3 == !0) echo 'style="visibility: hidden;"'; ?>>
 			<div class="form-group row">
 				<div class="col-md-1">
 					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
@@ -352,7 +362,7 @@ foreach ($ppstok as $rowh) {
 			</div>
 		</div>
 		<br>
-		<div class="row">
+		<div class="col-md-12">
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
@@ -368,7 +378,7 @@ foreach ($ppstok as $rowh) {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#modal_beli').DataTable({
+		$('#kd_bhn').DataTable({
 			dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
 				"<'row'<'col-md-6'f><'col-md-6'l>>" + // peletakan entries, search, dan test_btn
 				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
@@ -380,6 +390,58 @@ foreach ($ppstok as $rowh) {
 		});
 	});
 </script>
+
+<div id="modal_kd_bhn" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" style="font-weight: bold; color: black;">List Barang</h4>
+			</div>
+			<div class="modal-body">
+				<table class='table table-bordered' id='kd_bhn'>
+					<thead>
+						<th>Kode</th>
+						<th width="30px">Article</th>
+						<th width="30px">Satuan</th>
+						<th>Stok</th>
+						<th>Rak</th>
+					</thead>
+					<tbody>
+						<?php
+						$per = substr($this->session->userdata['periode'], 0, -5);
+						$dr = $this->session->userdata['dr'];
+						$sub = $this->session->userdata['sub'];
+						$sql = "SELECT bhn.NO_ID, 
+							bhn.KD_BHN, 
+							bhn.NA_BHN, 
+							bhn.SATUAN, 
+							bhnd.AW$per AS QTY, 
+							bhnd.RAK, 
+							bhnd.AK$per AS STOK 
+						FROM bhn, bhnd
+						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND bhnd.DR = '$dr' AND bhnd.SUB='$sub'
+						GROUP BY bhn.KD_BHN
+						ORDER BY bhn.KD_BHN ";
+						$a = $this->db->query($sql)->result();
+						foreach ($a as $b) {
+						?>
+							<tr>
+								<td class='NBVAL'><a href="#" class="select_kd_bhn"><?php echo $b->KD_BHN; ?></a></td>
+								<td class='NAVAL text_input'><?php echo $b->NA_BHN; ?></td>
+								<td class='SAVAL text_input'><?php echo $b->SATUAN; ?></td>
+								<td class='RAVAL text_input'><?php echo $b->RAK; ?></td>
+								<td class='STVAL text_input'><?php echo $b->STOK; ?></td>
+							</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script>
 	(function() {
@@ -408,6 +470,8 @@ foreach ($ppstok as $rowh) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	$(document).ready(function() {
+		modalClick();
+
 		$("#TOTAL_QTY").autoNumeric('init', {
 			aSign: '<?php echo ''; ?>',
 			vMin: '-999999999.99'
@@ -419,6 +483,27 @@ foreach ($ppstok as $rowh) {
 				vMin: '-999999999.99'
 			});
 		}
+
+		$('#modal_kd_bhn').on('show.bs.modal', function(e) {
+			target = $(e.relatedTarget);
+		});
+		
+		$('.select_kd_bhn').click(function() {
+			console.log(x);
+			var val = $(this).parents("tr").find(".NBVAL").text();
+			$("#KD_BHN" + x).val(val);
+			var val = $(this).parents("tr").find(".NAVAL").text();
+			$("#NA_BHN" + x).val(val);
+			var val = $(this).parents("tr").find(".SAVAL").text();
+			$("#SATUAN" + x).val(val);
+			var val = $(this).parents("tr").find(".STVAL").text();
+			$("#SISA" + x).val(val);
+			var val = $(this).parents("tr").find(".RAVAL").text();
+			$("#RAK" + x).val(val);
+			$('#modal_kd_bhn').modal('toggle');
+			var kd_bhn = $(this).parents("tr").find(".NBVAL").text();
+		});
+
 		$('body').on('click', '.btn-delete', function() {
 			var r = confirm("Yakin dihapus?");
 			if (r == true) {
@@ -440,6 +525,13 @@ foreach ($ppstok as $rowh) {
 			'dateFormat': 'dd-mm-yy',
 		})
 	});
+
+	function modalClick() {
+		$('.modal-KD_BHN').click(function() {
+			x = $(this).attr('id');
+			$('#modal_kd_bhn').modal('toggle');
+		});
+	}
 
 	function nomor() {
 		var i = 1;
@@ -518,24 +610,29 @@ foreach ($ppstok as $rowh) {
 		var td11 = x.insertCell(10);
 		var td12 = x.insertCell(11);
 		var td13 = x.insertCell(12);
+		var td14 = x.insertCell(13);
 
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
+		// var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
+		// var kd_bhn = kd_bhn0;
 
-		var kd_bhn = kd_bhn0;
+		var kd_bhn0 = "<input name='KD_BHN[]' id=KD_BHN" + idrow + " maxlength='500' type='text' class='form-control KD_BHN text_input' onkeypress='return tabE(this,event)' readonly>";
+		var button0 = "<span class='input-group-btn'><a class='btn default modal-KD_BHN' onfocusout='hitung()' id=" + idrow + "><i class='fa fa-search'></i></a></span>";
+
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = kd_bhn;
-		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
-		td4.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input'>";
-		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
-		td6.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
-		td7.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
-		td8.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input'>";
-		td9.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
-		td10.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {} else echo date('d-m-Y'); ?>'>";
-		td11.innerHTML = "<input name='SISA[]' onclick='select()' onkeyup='hitung()' value='0' id=SISA" + idrow + " type='text' class='form-control SISA rightJustified text-primary' required>";
-		td12.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
-		td13.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+		td2.innerHTML = kd_bhn0;
+		td3.innerHTML = button0;
+		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
+		td5.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input'>";
+		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td7.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
+		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
+		td9.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input'>";
+		td10.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
+		td11.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {} else echo date('d-m-Y'); ?>'>";
+		td12.innerHTML = "<input name='SISA[]' onclick='select()' onkeyup='hitung()' value='0' id=SISA" + idrow + " type='text' class='form-control SISA rightJustified text-primary' required>";
+		td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
+		td14.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -555,6 +652,7 @@ foreach ($ppstok as $rowh) {
 			console.log(this.value)
 		});
 		select_kd_bhn();
+		modalClick();
 	}
 
 	function hapus() {

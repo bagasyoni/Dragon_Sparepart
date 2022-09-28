@@ -174,7 +174,7 @@ foreach ($pemesanan as $rowh) {
 							<input <?php if ($rowh->TTD3 == !0) echo 'class="form-control TGL text_input" readonly'; ?> type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Ket </label>
+							<label class="label">Keterangan </label>
 						</div>
 						<div class="col-md-3">
 							<input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value="<?php echo $rowh->NOTES ?>">
@@ -282,6 +282,7 @@ foreach ($pemesanan as $rowh) {
 							<tr>
 								<th width="50px">No</th>
 								<th width="150px">Bon</th>
+								<th width="50px"></th>
 								<th width="75px">Kode</th>
 								<th width="175px">Uraian</th>
 								<th width="175px">Ket Barang</th>
@@ -313,7 +314,15 @@ foreach ($pemesanan as $rowh) {
 										<select class="js-example-responsive-kd_bhn form-control KD_BHN text_input" name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" onchange="kd_bhn(this.id)" onfocusout="hitung()"></select>
 									</div>
 									</td> -->
-									<td><input name="NO_BON[]" id="NO_BON<?php echo $no; ?>" value="<?= $row->NO_BON ?>" type="text" class="form-control NO_BON text_input" readonly></td>
+									<td>
+										<input name="NO_BON[]" id="NO_BON<?php echo $no; ?>" value="<?= $row->NO_BON ?>" maxlength="500" type="text" class="form-control NO_BON text_input" onkeypress="return tabE(this,event)" readonly>
+									</td>
+									<td>
+									<span class="input-group-btn">
+										<a <?php if ($rowh->TTD3 == !0) echo 'hidden'; ?> class="btn default modal-NO_BON" onfocusout="hitung()" id="0"><i class="fa fa-search"></i></a>
+									</span>
+									</td>
+									<!-- <td><input name="NO_BON[]" id="NO_BON<?php echo $no; ?>" value="<?= $row->NO_BON ?>" type="text" class="form-control NO_BON text_input" readonly></td> -->
 									<td><input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly></td>
 									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="TIPE[]" id="TIPE<?php echo $no; ?>" value="<?= $row->TIPE ?>" type="text" class="form-control TIPE text_input"></td>
@@ -353,7 +362,6 @@ foreach ($pemesanan as $rowh) {
 							<td></td>
 							<td></td>
 							<td></td>
-							<!-- <td></td> -->
 							<td></td>
 						</tfoot>
 					</table>
@@ -387,7 +395,7 @@ foreach ($pemesanan as $rowh) {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#modal_beli').DataTable({
+		$('#no_bon').DataTable({
 			dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
 				"<'row'<'col-md-6'f><'col-md-6'l>>" + // peletakan entries, search, dan test_btn
 				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
@@ -399,6 +407,64 @@ foreach ($pemesanan as $rowh) {
 		});
 	});
 </script>
+
+<div id="modal_no_bon" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" style="font-weight: bold; color: black;">List Bon</h4>
+			</div>
+			<div class="modal-body">
+				<table class='table table-bordered' id='no_bon'>
+					<thead>
+						<th>No Bukti</th>
+						<th width="30px">Article</th>
+						<th width="30px">Tipe</th>
+						<th>Qty.</th>
+						<th>Sisa</th>
+						<th>Devisi</th>
+					</thead>
+					<tbody>
+						<?php
+						$dr = $this->session->userdata['dr'];
+						$sub = $this->session->userdata['sub'];
+						$sql = "SELECT bond.NO_BUKTI AS NO_BON,
+							bond.KD_BHN, 
+							bond.NA_BHN,
+							bond.TYPE,
+							bond.KET,
+							bond.NOTES AS TIPE,
+							(bond.QTY-bond.KIRIM) AS QTY,
+							(bond.QTY-bond.KIRIM) AS SISABON,
+							bond.SATUAN,
+			
+							bon.NM_BAG AS DEVISI,
+							date_format(bon.TGL ,'%d-%m-%Y') AS TGL_DIMINTA,
+							bon.SUB
+						FROM bon, bond
+						WHERE bon.NO_BUKTI=bond.NO_BUKTI AND bon.TTD2<>'' AND bon.TUJUAN='$sub' AND bon.DR='$dr' AND bond.OK=0 AND bond.QTY - bond.KIRIM <> 0
+						ORDER BY bond.NO_BUKTI";
+						$a = $this->db->query($sql)->result();
+						foreach ($a as $b) {
+						?>
+							<tr>
+								<td class='NBBVAL'><a href="#" class="select_no_bon"><?php echo $b->NO_BON; ?></a></td>
+								<td class='NABVAL text_input'><?php echo $b->NA_BHN; ?></td>
+								<td class='TIBVAL text_input'><?php echo $b->TIPE; ?></td>
+								<td class='QTBVAL text_input'><?php echo $b->QTY; ?></td>
+								<td class='SIBVAL text_input'><?php echo $b->SISABON; ?></td>
+								<td class='DEBVAL text_input'><?php echo $b->DEVISI; ?></td>
+							</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script>
 	(function() {
@@ -427,6 +493,8 @@ foreach ($pemesanan as $rowh) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	$(document).ready(function() {
+		modalClick();
+
 		$("#TOTAL_QTY").autoNumeric('init', {
 			aSign: '<?php echo ''; ?>',
 			vMin: '-999999999.99'
@@ -442,6 +510,29 @@ foreach ($pemesanan as $rowh) {
 				vMin: '-999999999.99'
 			});
 		}
+
+		$('#modal_no_bon').on('show.bs.modal', function(e) {
+			target = $(e.relatedTarget);
+		});
+
+		$('.select_no_bon').click(function() {
+			console.log(x);
+			var val = $(this).parents("tr").find(".NBBVAL").text();
+			$("#NO_BON" + x).val(val);
+			var val = $(this).parents("tr").find(".NABVAL").text();
+			$("#NA_BHN" + x).val(val);
+			var val = $(this).parents("tr").find(".TIBVAL").text();
+			$("#TIPE" + x).val(val);
+			var val = $(this).parents("tr").find(".QTBVAL").text();
+			$("#QTY" + x).val(val);
+			var val = $(this).parents("tr").find(".SIBVAL").text();
+			$("#SISABON" + x).val(val);
+			var val = $(this).parents("tr").find(".DEBVAL").text();
+			$("#DEVISI" + x).val(val);
+			$('#modal_no_bon').modal('toggle');
+			var no_bon = $(this).parents("tr").find(".NBBVAL").text();
+		});
+
 		$('body').on('click', '.btn-delete', function() {
 			var r = confirm("Yakin dihapus?");
 			if (r == true) {
@@ -463,6 +554,13 @@ foreach ($pemesanan as $rowh) {
 			'dateFormat': 'dd-mm-yy',
 		})
 	});
+
+	function modalClick() {
+		$('.modal-NO_BON').click(function() {
+			x = $(this).attr('id');
+			$('#modal_no_bon').modal('toggle');
+		});
+	}
 
 	function nomor() {
 		var i = 1;
@@ -530,29 +628,31 @@ foreach ($pemesanan as $rowh) {
 		var td12 = x.insertCell(11);
 		var td13 = x.insertCell(12);
 		var td14 = x.insertCell(13);
+		var td15 = x.insertCell(14);
 
 		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()'></select></div>";
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()'></select></div>";
 
-		var no_bon = no_bon0;
-		var kd_bhn = kd_bhn0;
+		var no_bon0 = "<input name='NO_BON[]' id=NO_BON" + idrow + " maxlength='500' type='text' class='form-control NO_BON text_input' onkeypress='return tabE(this,event)' readonly>";
+		var button0 = "<span class='input-group-btn'><a class='btn default modal-NO_BON' onfocusout='hitung()' id=" + idrow + "><i class='fa fa-search'></i></a></span>";
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = no_bon;
-		td3.innerHTML = "<input name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' readonly>";
-		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
-		td5.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input'>";
-		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
-		td7.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
-		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
-		td9.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input'>";
-		td10.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
-		td11.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
+		td2.innerHTML = no_bon0;
+		td3.innerHTML = button0;
+		td4.innerHTML = "<input name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' readonly>";
+		td5.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
+		td6.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input'>";
+		td7.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
+		td8.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
+		td9.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
+		td10.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input'>";
+		td11.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
+		td12.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
 																																																			echo $_POST["TGL_DIMINTA"];
 																																																		} else echo date('d-m-Y'); ?>'>";
-		td12.innerHTML = "<input name='SISABON[]' onclick='select()' onkeyup='hitung()' value='0' id=SISABON" + idrow + " type='text' class='form-control SISABON rightJustified text-primary' readonly>";
-		td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='0' unchecked>";
-		td14.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+		td13.innerHTML = "<input name='SISABON[]' onclick='select()' onkeyup='hitung()' value='0' id=SISABON" + idrow + " type='text' class='form-control SISABON rightJustified text-primary' readonly>";
+		td14.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='0' unchecked>";
+		td15.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -577,6 +677,7 @@ foreach ($pemesanan as $rowh) {
 		});
 		select_no_bon();
 		select_kd_bhn();
+		modalClick();
 	}
 
 	function hapus() {
