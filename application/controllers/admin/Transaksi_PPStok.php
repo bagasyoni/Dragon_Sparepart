@@ -28,7 +28,7 @@ class Transaksi_PPStok extends CI_Controller
 
     var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'NOTES', 'SUB', 'DR');
     var $column_search = array('NO_BUKTI', 'TGL', 'NOTES', 'SUB', 'DR');
-    var $order = array('NO_BUKTI' => 'asc');
+    var $order = array('NO_ID' => 'desc');
 
     private function _get_datatables_query()
     {
