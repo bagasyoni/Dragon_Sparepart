@@ -159,7 +159,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
-        $this->session->set_userdata('judul', 'Transaksi Barang Masuk');
+        $this->session->set_userdata('judul', 'Transaksi Validasi LPB');
         $where = array(
             'DR' => $dr,
             'PER' => $per,

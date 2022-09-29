@@ -85,7 +85,7 @@
         <form method="post" action="<?php echo base_url('admin/Master_Barang/delete_multiple') ?>">
             <div class="btn-group" role="group" aria-label="Basic example">
             </div>
-            <table id="example" class="table table-bordered table-striped table-hover table-responsive bodycontainer scrollable" style="width:100%;">
+            <table id="example" class="table table-bordered table-striped table-hover table-responsive bodycontainer scrollable" style="width:60%;">
                 <thead>
                     <tr>
                         <!-- 1200px -->
@@ -96,9 +96,9 @@
                         <th width="400px">Nama Barang</th>
                         <th width="75px">Satuan</th>
                         <!-- <th width="75px">Dragon</th> -->
-                        <th width="150px">Rak Dragon I</th>
-                        <th width="150px">Rak Dragon II</th>
-                        <th width="150px">Rak Dragon III</th>
+                        <th width="100px">Rak Dragon I</th>
+                        <th width="100px">Rak Dragon II</th>
+                        <th width="100px">Rak Dragon III</th>
                         <!-- <th width="100px">Aktif</th>
                         <th width="50px">Flag</th>
                         <th width="100px">Dragon</th> -->

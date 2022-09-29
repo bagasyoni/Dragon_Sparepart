@@ -136,8 +136,8 @@ class Master_Barang extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 5px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Master_Barang/update/' . $bhn->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
-                            <a class="dropdown-item" href="' . site_url('admin/Master_Barang/delete/' . $bhn->NO_ID) . '"  onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Master_Barang/update/' . $bhn->NO_ID) . '" hidden> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Master_Barang/delete/' . $bhn->NO_ID) . '" hidden  onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                         </div>
                     </div>';
             }

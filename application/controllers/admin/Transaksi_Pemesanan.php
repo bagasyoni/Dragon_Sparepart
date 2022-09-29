@@ -278,11 +278,11 @@ class Transaksi_Pemesanan extends CI_Controller
             'LOGISTIK' => '0',
             'TTD1' => '1',
             'TTD2' => '1',
-            'TTD3' => '1',
-            'TTD4' => '1',
-            'TTD5' => '1',
-            'TTD6' => '1',
-            'TTD7' => '1',
+            // 'TTD3' => '1',
+            // 'TTD4' => '1',
+            // 'TTD5' => '1',
+            // 'TTD6' => '1',
+            // 'TTD7' => '1',
             'TYP' => 'PEMESANAN',
             'SUB' => $this->session->userdata['sub'],
             'DR' => $this->session->userdata['dr'],
@@ -412,11 +412,11 @@ class Transaksi_Pemesanan extends CI_Controller
             'TYP' => 'PEMESANAN',
             'TTD1' => '1',
             'TTD2' => '1',
-            'TTD3' => '1',
-            'TTD4' => '1',
-            'TTD5' => '1',
-            'TTD6' => '1',
-            'TTD7' => '1',
+            // 'TTD3' => '1',
+            // 'TTD4' => '1',
+            // 'TTD5' => '1',
+            // 'TTD6' => '1',
+            // 'TTD7' => '1',
             'SUB' => $this->session->userdata['sub'],
             'DR' => $this->session->userdata['dr'],
             'PER' => $this->session->userdata['periode'],
@@ -677,38 +677,6 @@ class Transaksi_Pemesanan extends CI_Controller
                 'SISABON' => $row['SISABON'],
                 'DEVISI' => $row['DEVISI'],
                 'TGL_DIMINTA' => $row['TGL_DIMINTA'],
-            );
-        }
-        $select['total_count'] =  $results->NUM_ROWS();
-        $select['items'] = $selectajax;
-        $this->output->set_content_type('application/json')->set_output(json_encode($select));
-    }
-
-    public function getDataAjax_bhn()
-    {
-        $dr = $this->session->userdata['dr'];
-        $sub = $this->session->userdata['sub'];
-        $search = $this->input->post('search');
-        $page = ((int)$this->input->post('page'));
-        if ($page == 0) {
-            $xa = 0;
-        } else {
-            $xa = ($page - 1) * 10;
-        }
-        $perPage = 10;
-        $results = $this->db->query("SELECT bhn.NO_ID, bhn.KD_BHN, bhn.NA_BHN, bhn.SATUAN
-            FROM bhn, bhnd
-            WHERE bhn.SUB='$sub' AND bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%')
-            GROUP BY bhn.KD_BHN
-            ORDER BY bhn.KD_BHN LIMIT $xa,$perPage");
-        $selectajax = array();
-        foreach ($results->RESULT_ARRAY() as $row) {
-            $selectajax[] = array(
-                'id' => $row['KD_BHN'],
-                'text' => $row['KD_BHN'],
-                'KD_BHN' => $row['KD_BHN'] . " - " . $row['NA_BHN'] . " - " . $row['SATUAN'],
-                'NA_BHN' => $row['NA_BHN'],
-                'SATUAN' => $row['SATUAN'],
             );
         }
         $select['total_count'] =  $results->NUM_ROWS();

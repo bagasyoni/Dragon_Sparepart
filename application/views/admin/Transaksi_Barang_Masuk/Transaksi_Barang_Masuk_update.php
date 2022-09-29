@@ -277,9 +277,9 @@ foreach ($barang_masuk as $rowh) {
 							<td></td>
 							<td></td>
 							<td></td>
-							<td></td>
-							<td></td>
 							<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
+							<td></td>
+							<td></td>
 							<td></td>
 							<td></td>
 						</tfoot>
