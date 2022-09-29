@@ -251,7 +251,7 @@ foreach ($barang_masuk as $rowh) {
 									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
 									<td>
 										<div class='input-group'>
-											<select value="<?= $row->KD_BHN ?>" class="js-example-responsive-kd_bhn form-control KD_BHN" name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" onchange="kd_bhn(this.id)" required>
+											<select <?php if ($rowh->VAL == !0) echo 'disabled'; ?> value="<?= $row->KD_BHN ?>" class="js-example-responsive-kd_bhn form-control KD_BHN" name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" onchange="kd_bhn(this.id)" required>
 												<option value="<?php echo $row->KD_BHN; ?>" selected id="KD_BHN<?php echo $no; ?>"><?php echo $row->KD_BHN; ?></option>
 											</select>
 										</div>

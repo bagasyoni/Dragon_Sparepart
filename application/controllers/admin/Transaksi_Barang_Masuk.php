@@ -172,7 +172,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
             // $data['barang_masuk'] = $this->transaksi_model->edit_data($q1)->result();
             $this->load->view('templates_admin/header');
             $this->load->view('templates_admin/navbar');
-            $this->load->view('admin/Transaksi_Barang_Masuk/index_Transaksi_Barang_Masuk', $data);
+            $this->load->view('admin/Transaksi_Barang_Masuk/Transaksi_Barang_Masuk', $data);
             $this->load->view('templates_admin/footer');
         // $id = $this->db->query("SELECT MIN(NO_ID) AS ID FROM beli WHERE FLAG='BL' AND FLAG2='SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND OK<>'2'")->result();
         // $q1 = $id[0]->ID;
