@@ -209,16 +209,13 @@ foreach ($bahan as $rowh) {
 			<div class="col-md-12">
 				<div class="form-group row">
 					<div class="col-md-1">
-						<label class="label">Rak</label>
+						<label class="label">Kode Rak</label>
 					</div>
 					<!-- if ($rowh->PKP == "1") echo 'checked '; ?> -->
 					<div class="col-md-2 ">
-						<input <?php
-								if ($rowh->DR != "I") echo 'hidden'; ?> type="text" id="RAK1" name="RAK1" class="form-control text_input RAK1" value="<?= $rowh->RAK1 ?>" required>
-						<input <?php
-								if ($rowh->DR != "II") echo 'hidden'; ?> type="text" id="RAK2" name="RAK2" class="form-control text_input RAK2" value="<?= $rowh->RAK2 ?>" required>
-						<input <?php
-								if ($rowh->DR != "III") echo 'hidden'; ?> type="text" id="RAK3" name="RAK3" class="form-control text_input RAK3" value="<?= $rowh->RAK3 ?>" required>
+						<input <?php if ($rowh->DR != "I") echo 'readonly'; ?> type="text" id="RAK1" name="RAK1" class="form-control text_input RAK1" placeholder="Dragon I" value="<?= $rowh->RAK_DR1 ?>" required><br>
+						<input <?php if ($rowh->DR != "II") echo 'readonly'; ?> type="text" id="RAK2" name="RAK2" class="form-control text_input RAK2" placeholder="Dragon II" value="<?= $rowh->RAK_DR2 ?>" required><br>
+						<input <?php if ($rowh->DR != "III") echo 'readonly'; ?> type="text" id="RAK3" name="RAK3" class="form-control text_input RAK3" placeholder="Dragon III" value="<?= $rowh->RAK_DR3 ?>" required>
 					</div>
 				</div>
 			</div>
