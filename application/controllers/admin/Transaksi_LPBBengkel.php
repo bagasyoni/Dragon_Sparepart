@@ -24,7 +24,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
 
     var $column_order = array(null, null, null, 'TGL', 'NO_BUKTI', 'TGL', 'NAMAS', 'TTD2');
     var $column_search = array('TGL', 'NO_BUKTI', 'TGL', 'NAMAS', 'TTD2');
-    var $order = array('NO_BUKTI' => 'asc');
+    var $order = array('NO_ID' => 'desc');
 
     private function _get_datatables_query() {
         $dr = $this->session->userdata['dr'];
