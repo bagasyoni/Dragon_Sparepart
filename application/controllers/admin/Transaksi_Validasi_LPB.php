@@ -531,7 +531,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID<'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND FLAG='BL' AND FLAG2='SP' AND OK<>'1' ORDER BY NO_ID DESC LIMIT 1";
+        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID<'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND OK<>'1' ORDER BY NO_BUKTI ASC LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
@@ -550,7 +550,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID>'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND FLAG='BL' AND FLAG2='SP' AND OK<>'1' ORDER BY NO_ID LIMIT 1";
+        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID>'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND OK<>'1' ORDER BY NO_BUKTI ASC LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
