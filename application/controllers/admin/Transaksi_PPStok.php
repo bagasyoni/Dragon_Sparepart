@@ -770,4 +770,36 @@ class Transaksi_PPStok extends CI_Controller
         ob_end_clean();
         $PHPJasperXML->outpage("I");
     }
+
+    function prev()
+    {
+        $ID = $this->input->get('ID');
+        $dr = $this->session->userdata['dr'];
+        $per = $this->session->userdata['periode'];
+        $sub = $this->session->userdata['sub'];
+        $q1 = "SELECT NO_ID FROM pp WHERE NO_ID<'$ID' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND LOGISTIK='0' ORDER BY NO_BUKTI ASC LIMIT 1";
+        $q2 = $this->db->query($q1);
+        if ($q2->num_rows() > 0) {
+            foreach ($q2->result() as $row) {
+                $hasil[] = $row;
+            }
+        };
+        echo json_encode($hasil);
+    }
+
+    function next()
+    {
+        $ID = $this->input->get('ID');
+        $dr = $this->session->userdata['dr'];
+        $per = $this->session->userdata['periode'];
+        $sub = $this->session->userdata['sub'];
+        $q1 = "SELECT NO_ID FROM pp WHERE NO_ID>'$ID' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND LOGISTIK='0' ORDER BY NO_BUKTI ASC LIMIT 1";
+        $q2 = $this->db->query($q1);
+        if ($q2->num_rows() > 0) {
+            foreach ($q2->result() as $row) {
+                $hasil[] = $row;
+            }
+        };
+        echo json_encode($hasil);
+    }
 }

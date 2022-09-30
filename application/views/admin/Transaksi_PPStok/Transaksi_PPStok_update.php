@@ -369,8 +369,11 @@ foreach ($ppstok as $rowh) {
 						<button type="submit" onclick="chekbox()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
 						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
 					</div>
-					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
+					<a type="text" class="btn btn-light"> </a>
+					<button class="btn btn-secondary" type="button" onclick="prev()"><i class="fa fa-angle-double-left"></i> Prev</button>
+					<button class="btn btn-secondary" type="button" onclick="next()">Next <i class="fa fa-angle-double-right"></i></button>
 				</div>
+				<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 			</div>
 		</div>
 	</form>
@@ -735,5 +738,45 @@ foreach ($ppstok as $rowh) {
 		$('#SATUAN' + qq).val(satuan);
 		$('#QTY' + qq).val(qty);
 		$('#SISA' + qq).val(sisa);
+	}
+</script>
+
+<script>
+	function prev() {
+		var ID = $('#ID').val();
+		$.ajax({
+			type: 'get',
+			url: '<?php echo base_url('index.php/admin/Transaksi_PPStok/prev'); ?>',
+			data: {
+				ID: ID
+			},
+			dataType: 'json',
+			success: function(response) {
+				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_PPStok/update/'); ?>" + response[0].NO_ID);
+				// console.log('test');
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				// console.log('error');
+			}
+		});
+	}
+
+	function next() {
+		var ID = $('#ID').val();
+		$.ajax({
+			type: 'get',
+			url: '<?php echo base_url('index.php/admin/Transaksi_Validasi_LPB/next'); ?>',
+			data: {
+				ID: ID
+			},
+			dataType: 'json',
+			success: function(response) {
+				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_Validasi_LPB/update/'); ?>" + response[0].NO_ID);
+				console.log(response[0].NO_ID);
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				// console.log('error');
+			}
+		});
 	}
 </script>
