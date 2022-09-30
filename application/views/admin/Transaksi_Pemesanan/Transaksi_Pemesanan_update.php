@@ -507,14 +507,15 @@ foreach ($pemesanan as $rowh) {
 					<thead>
 						<th>Kode Barang</th>
 						<th width="30px">Nama Barang</th>
+						<th width="30px">Satuan</th>
 					</thead>
 					<tbody>
 						<?php
 						$dr = $this->session->userdata['dr'];
 						$sub = $this->session->userdata['sub'];
 						$sql = "SELECT bhn.KD_BHN, 
-							bhn.NA_BHN
-							
+							bhn.NA_BHN,
+							bhn.SATUAN
 						FROM bhn, bhnd
 						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhn.SUB='$sub' AND bhn.FLAG='SP' AND bhn.FLAG2='SP' AND bhnd.DR='$dr'
 						ORDER BY bhn.KD_BHN";
@@ -524,6 +525,7 @@ foreach ($pemesanan as $rowh) {
 							<tr>
 								<td class='KDBVAL'><a href="#" class="select_kd_bhn"><?php echo $b->KD_BHN; ?></a></td>
 								<td class='NABVAL text_input'><?php echo $b->NA_BHN; ?></td>
+								<td class='SATVAL text_input'><?php echo $b->SATUAN; ?></td>
 							</tr>
 						<?php } ?>
 					</tbody>
@@ -611,6 +613,8 @@ foreach ($pemesanan as $rowh) {
 			console.log(x);
 			var val = $(this).parents("tr").find(".KDBVAL").text();
 			$("#KD_BHN" + x).val(val);
+			var val = $(this).parents("tr").find(".SATVAL").text();
+			$("#SATUAN" + x).val(val);
 			$('#modal_kd_bhn').modal('toggle');
 			var kd_bhn = $(this).parents("tr").find(".KDBVAL").text();
 		});
@@ -663,13 +667,13 @@ foreach ($pemesanan as $rowh) {
 			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
 			var sisabon = parseFloat($('#SISABON' + i).val().replace(/,/g, ''));
 
-			if (qty > sisabon) {
-				alert("Qty tidak boleh lebih besar dari Sisa Bon");
-				$('#QTY' + i).val(0);
-				console.log('TIDAK OK !!!')
-			} else {
-				console.log('OK !!!')
-			}
+			// if (qty > sisabon) {
+			// 	alert("Qty tidak boleh lebih besar dari Sisa Bon");
+			// 	$('#QTY' + i).val(0);
+			// 	console.log('TIDAK OK !!!')
+			// } else {
+			// 	console.log('OK !!!')
+			// }
 			$('#BILANGAN' + i).val(angkaTerbilang(qty));
 			// console.log(angkaTerbilang('Terbilang :'+qty));
 		};

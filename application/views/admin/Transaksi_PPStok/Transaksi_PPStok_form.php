@@ -208,7 +208,7 @@
 								<td><input name="TIPE[]" id="TIPE0" type="text" class="form-control TIPE text_input" required></td>
 								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="BILANGAN[]" id="BILANGAN0" type="text" class="form-control BILANGAN text_input" readonly></td>
-								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input" readonly></td>
+								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
 								<td><input name="DEVISI[]" id="DEVISI0" type="text" class="form-control DEVISI text_input" required></td>
 								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
 								<td>
@@ -451,13 +451,13 @@
 
 			$('#BILANGAN' + i).val(angkaTerbilang(qty));
 
-			if (qty > sisa) {
-				alert("Qty tidak boleh lebih besar dari Sisa");
-				$('#QTY' + i).val(0);
-				console.log('TIDAK OK !!!')
-			} else {
-				console.log('OK !!!')
-			}
+			// if (qty > sisa) {
+			// 	alert("Qty tidak boleh lebih besar dari Sisa");
+			// 	$('#QTY' + i).val(0);
+			// 	console.log('TIDAK OK !!!')
+			// } else {
+			// 	console.log('OK !!!')
+			// }
 		};
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
@@ -519,7 +519,7 @@
 		td5.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input' required>";
 		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td7.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
-		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
+		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
 		td9.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input' required>";
 		td10.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
 		td11.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
