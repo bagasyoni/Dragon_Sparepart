@@ -160,65 +160,65 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $this->session->set_userdata('judul', 'Transaksi Barang Masuk');
-        $where = array(
-            'DR' => $dr,
-            'PER' => $per,
-            'SUB' => $sub,
-            'FLAG' => 'BL',
-            'FLAG2' => 'SP',
-         // 'SP' => 'LPB',
-        );
-            $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
-            // $data['barang_masuk'] = $this->transaksi_model->edit_data($q1)->result();
-            $this->load->view('templates_admin/header');
-            $this->load->view('templates_admin/navbar');
-            $this->load->view('admin/Transaksi_Barang_Masuk/Transaksi_Barang_Masuk', $data);
-            $this->load->view('templates_admin/footer');
-        // $id = $this->db->query("SELECT MIN(NO_ID) AS ID FROM beli WHERE FLAG='BL' AND FLAG2='SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND OK<>'2'")->result();
-        // $q1 = $id[0]->ID;
-        // if($q1 <> ''){
-        //     $q1 = "SELECT beli.NO_ID as ID,
-        //             beli.NO_BUKTI,
-        //             beli.NAMAS,
-        //             beli.TGL,
-        //             beli.PIN2,
-        //             beli.TOTAL_QTY,
-        //             beli.VAL,
-        //             beli.TTD1,
-        //             beli.TTD2,
-        //             beli.TTD3,
-        //             beli.TTD4,
-        //             beli.TTD5,
-        //             beli.TTD6,
-        //             beli.OK,
-
-        //             belid.NO_ID,
-        //             belid.REC,
-        //             belid.OK,
-        //             belid.KD_BHN,
-        //             belid.NA_BHN,
-        //             belid.RAK,
-        //             belid.SISA AS QTY,
-        //             belid.SATUAN,
-        //             belid.SAT_BL,
-        //             belid.QTY,
-        //             belid.QTY_BL,
-        //             belid.VAL
-        //         FROM beli, belid 
-        //         WHERE beli.NO_ID = '$q1'
-        //         AND beli.NO_ID = belid.ID 
-        //         ORDER BY belid.REC";
-        //     // $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
-        //     $data['barang_masuk'] = $this->transaksi_model->edit_data($q1)->result();
+        // $where = array(
+        //     'DR' => $dr,
+        //     'PER' => $per,
+        //     'SUB' => $sub,
+        //     'FLAG' => 'BL',
+        //     'FLAG2' => 'SP',
+        //  // 'SP' => 'LPB',
+        // );
+        //     $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
+        //     // $data['barang_masuk'] = $this->transaksi_model->edit_data($q1)->result();
         //     $this->load->view('templates_admin/header');
         //     $this->load->view('templates_admin/navbar');
-        //     $this->load->view('admin/Transaksi_Barang_Masuk/Transaksi_Barang_Masuk_update', $data);
+        //     $this->load->view('admin/Transaksi_Barang_Masuk/Transaksi_Barang_Masuk', $data);
         //     $this->load->view('templates_admin/footer');
-        // }else{
-        //     echo "<script>alert('There are no data to display for this periode !!!!!!!!!');
-        //     window.location.href='../dashboard';
-        //     </script>";
-        // }
+        $id = $this->db->query("SELECT MIN(NO_ID) AS ID FROM beli WHERE FLAG='BL' AND FLAG2='SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND OK<>'2'")->result();
+        $q1 = $id[0]->ID;
+        if($q1 <> ''){
+            $q1 = "SELECT beli.NO_ID as ID,
+                    beli.NO_BUKTI,
+                    beli.NAMAS,
+                    beli.TGL,
+                    beli.PIN2,
+                    beli.TOTAL_QTY,
+                    beli.VAL,
+                    beli.TTD1,
+                    beli.TTD2,
+                    beli.TTD3,
+                    beli.TTD4,
+                    beli.TTD5,
+                    beli.TTD6,
+                    beli.OK,
+
+                    belid.NO_ID,
+                    belid.REC,
+                    belid.OK,
+                    belid.KD_BHN,
+                    belid.NA_BHN,
+                    belid.RAK,
+                    belid.SISA AS QTY,
+                    belid.SATUAN,
+                    belid.SAT_BL,
+                    belid.QTY,
+                    belid.QTY_BL,
+                    belid.VAL
+                FROM beli, belid 
+                WHERE beli.NO_ID = '$q1'
+                AND beli.NO_ID = belid.ID 
+                ORDER BY belid.REC";
+            // $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
+            $data['barang_masuk'] = $this->transaksi_model->edit_data($q1)->result();
+            $this->load->view('templates_admin/header');
+            $this->load->view('templates_admin/navbar');
+            $this->load->view('admin/Transaksi_Barang_Masuk/Transaksi_Barang_Masuk_update', $data);
+            $this->load->view('templates_admin/footer');
+        }else{
+            echo "<script>alert('There are no data to display for this periode !!!!!!!!!');
+            window.location.href='../dashboard';
+            </script>";
+        }
     }
 
     public function update($id)
