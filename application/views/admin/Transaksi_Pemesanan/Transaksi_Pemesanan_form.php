@@ -451,10 +451,10 @@
 			});
 		}
 
-		$('#modal_no_bon').on('show.bs.modal', function(e) {
-			target = $(e.relatedTarget);
-		});
-		$('.select_no_bon').click(function() {
+		// $('#modal_no_bon').on('show.bs.modal', function(e) {
+		// 	target = $(e.relatedTarget);
+		// });
+		$('body').on('click', '.select_no_bon', function() {
 			console.log(x);
 			var val = $(this).parents("tr").find(".NBBVAL").text();
 			$("#NO_BON" + x).val(val);
@@ -475,7 +475,7 @@
 		$('#modal_kd_bhn').on('show.bs.modal', function(e) {
 			target = $(e.relatedTarget);
 		});
-		$('.select_kd_bhn').click(function() {
+		$('body').on('click', '.select_kd_bhn', function() {
 			console.log(x);
 			var val = $(this).parents("tr").find(".KDBVAL").text();
 			$("#KD_BHN" + x).val(val);
