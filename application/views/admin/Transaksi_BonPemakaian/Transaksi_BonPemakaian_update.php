@@ -165,14 +165,14 @@ foreach ($bonpemakaian as $rowh) {
 							<tr>
 								<th width="50px">No</th>
 								<th width="75px">Rak</th>
-								<th width="75px">Kode</th>
+								<th width="1px"></th>
 								<th width="250px">Uraian</th>
 								<th width="75px">Qty</th>
 								<th width="100px">Satuan</th>
-								<th width="125px">Kode Golongan</th>
 								<th width="150px">Keterangan 1</th>
 								<th width="125px">Keterangan 2</th>
 								<th width="175px">Grup</th>
+								<th width="1px"></th>
 								<th width="50px"></th>
 							</tr>
 						</thead>
@@ -190,10 +190,11 @@ foreach ($bonpemakaian as $rowh) {
 											</select>
 										</div>
 									</td>
-									<td><input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input"></td>
+									<td><input type='hidden' name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input"></td>
 									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
 									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
+									<td><input name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
 									<td>
 										<div class="input-group">
 											<select class="js-example-responsive-sp_mesin form-control KET2 text_input" name="KET2[]" id="KET2<?php echo $no; ?>" onchange="kd_gol(this.id)" required>
@@ -201,9 +202,8 @@ foreach ($bonpemakaian as $rowh) {
 											</select>
 										</div>
 									</td>
-									<td><input name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
-									<td><input name="NA_GOL[]" id="NA_GOL<?php echo $no; ?>" value="<?= $row->NA_GOL ?>" type="text" class="form-control NA_GOL text_input" readonly></td>
 									<td><input name="GRUP[]" id="GRUP<?php echo $no; ?>" value="<?= $row->GRUP ?>" type="text" class="form-control GRUP text_input" readonly></td>
+									<td><input type='hidden' name="KD_GOL[]" id="KD_GOL<?php echo $no; ?>" value="<?= $row->NA_GOL ?>" type="text" class="form-control KD_GOL text_input" readonly></td>
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
 										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -379,20 +379,20 @@ foreach ($bonpemakaian as $rowh) {
 
 		var rak = rak0;
 
-		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET20" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()' required></select></div>";
+		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET20" + idrow + " onchange='na_gol(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_gol = kd_gol0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
 		td2.innerHTML = rak;
-		td3.innerHTML = "<input name='KD_BHN[]' id=KD_BHN0" + idrow + " type='text' class='form-control KD_BHN text_input'>";
+		td3.innerHTML = "<input type='hidden' name='KD_BHN[]' id=KD_BHN0" + idrow + " type='text' class='form-control KD_BHN text_input'>";
 		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
 		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
-		td7.innerHTML = kd_gol;
-		td8.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
-		td9.innerHTML = "<input name='NA_GOL[]' id=NA_GOL0" + idrow + " type='text' class='form-control NA_GOL text_input' readonly>";
-		td10.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
+		td7.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
+		td8.innerHTML = kd_gol;
+		td9.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
+		td10.innerHTML = "<input type='hidden' name='KD_GOL[]' id=KD_GOL0" + idrow + " type='text' class='form-control KD_GOL text_input' readonly>";
 		td11.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
@@ -468,36 +468,36 @@ foreach ($bonpemakaian as $rowh) {
 			},
 			placeholder: 'Pilih Keterangan',
 			minimumInputLength: 0,
-			templateResult: format_kd_gol,
-			templateSelection: formatSelection_kd_gol
+			templateResult: format_na_gol,
+			templateSelection: formatSelection_na_gol
 		});
 	}
 
-	function format_kd_gol(repo_kd_gol) {
-		if (repo_kd_gol.loading) {
-			return repo_kd_gol.text;
+	function format_na_gol(repo_na_gol) {
+		if (repo_na_gol.loading) {
+			return repo_na_gol.text;
 		}
 		var $container = $(
 			"<div class='select2-result-repository clearfix text_input'>" +
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_kd_gol.KD_GOL);
+		$container.find(".select2-result-repository__title").text(repo_na_gol.NA_GOL);
 		return $container;
 	}
-	var na_gol = '';
+	var kd_gol = '';
 	var grup = '';
 
-	function formatSelection_kd_gol(repo_kd_gol) {
-		na_gol = repo_kd_gol.NA_GOL;
-		grup = repo_kd_gol.GRUP;
-		return repo_kd_gol.text;
+	function formatSelection_na_gol(repo_na_gol) {
+		grup = repo_na_gol.GRUP;
+		kd_gol = repo_na_gol.KD_GOL;
+		return repo_na_gol.text;
 	}
 
-	function kd_gol(x) {
+	function na_gol(x) {
 		var q = x.substring(4, 12);
-		$('#NA_GOL' + q).val(na_gol);
 		$('#GRUP' + q).val(grup);
+		$('#KD_GOL' + q).val(kd_gol);
 		
 		console.log(q);
 	}
@@ -545,10 +545,12 @@ foreach ($bonpemakaian as $rowh) {
 		$container.find(".select2-result-repository__title").text(repo_rak.RAK);
 		return $container;
 	}
+	var kd_bhn = '';
 	var na_bhn = '';
 	var satuan = '';
 
 	function formatSelection_rak(repo_rak) {
+		kd_bhn = repo_rak.KD_BHN;
 		na_bhn = repo_rak.NA_BHN;
 		satuan = repo_rak.SATUAN;
 		return repo_rak.text;
@@ -556,6 +558,7 @@ foreach ($bonpemakaian as $rowh) {
 
 	function rak(x) {
 		var q = x.substring(3, 12);
+		$('#KD_BHN' + q).val(kd_bhn);
 		$('#NA_BHN' + q).val(na_bhn);
 		$('#SATUAN' + q).val(satuan);
 		console.log(q);
