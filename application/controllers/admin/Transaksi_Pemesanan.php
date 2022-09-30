@@ -336,7 +336,7 @@ class Transaksi_Pemesanan extends CI_Controller
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
                 'TG_SMP' => date("Y-m-d h:i a"),
-                'NO_TIKET' => $bukti."_".$KD_BHN[$i],
+                'NO_TIKET' => $bukti . "_" . $KD_BHN[$i],
             );
             $this->transaksi_model->input_datad('ppd', $datad);
             $i++;
