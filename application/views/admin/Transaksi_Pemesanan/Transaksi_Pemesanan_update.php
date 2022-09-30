@@ -319,17 +319,17 @@ foreach ($pemesanan as $rowh) {
 										<input name="NO_BON[]" id="NO_BON<?php echo $no; ?>" value="<?= $row->NO_BON ?>" maxlength="500" type="text" class="form-control NO_BON text_input" onkeypress="return tabE(this,event)" readonly>
 									</td>
 									<td>
-									<span class="input-group-btn">
-										<a <?php if ($rowh->TTD3 == !0) echo 'hidden'; ?> class="btn default modal-NO_BON" onfocusout="hitung()" id="0"><i class="fa fa-search"></i></a>
-									</span>
+										<span class="input-group-btn">
+											<a <?php if ($rowh->TTD3 == !0) echo 'hidden'; ?> class="btn default modal-NO_BON" onfocusout="hitung()" id="0"><i class="fa fa-search"></i></a>
+										</span>
 									</td>
 									<td>
 										<input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" maxlength="500" type="text" class="form-control KD_BHN text_input" onkeypress="return tabE(this,event)" readonly>
 									</td>
 									<td>
-									<span class="input-group-btn">
-										<a <?php if ($rowh->TTD3 == !0) echo 'hidden'; ?> class="btn default modal-KD_BHN" onfocusout="hitung()" id="0"><i class="fa fa-search"></i></a>
-									</span>
+										<span class="input-group-btn">
+											<a <?php if ($rowh->TTD3 == !0) echo 'hidden'; ?> class="btn default modal-KD_BHN" onfocusout="hitung()" id="0"><i class="fa fa-search"></i></a>
+										</span>
 									</td>
 									<!-- <td><input name="NO_BON[]" id="NO_BON<?php echo $no; ?>" value="<?= $row->NO_BON ?>" type="text" class="form-control NO_BON text_input" readonly></td> -->
 									<!-- <td><input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input" readonly></td> -->
@@ -344,7 +344,8 @@ foreach ($pemesanan as $rowh) {
 										<input <?php if ($rowh->TTD3 == !0) echo 'class="form-control TGL_DIMINTA text_input" readonly'; ?> name="TGL_DIMINTA[]" id="TGL_DIMINTA<?php echo $no; ?>" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($row->TGL_DIMINTA, TRUE)); ?>" onclick="select()">
 									</td>
 									<td>
-										<input name="SISABON[]" onkeyup="hitung()" id="SISABON<?php echo $no; ?>" value="<?php echo number_format($row->SISABON, 2, '.', ','); ?>" type="text" class="form-control SISABON rightJustified text-primary"></td>
+										<input name="SISABON[]" onkeyup="hitung()" id="SISABON<?php echo $no; ?>" value="<?php echo number_format($row->SISABON, 2, '.', ','); ?>" type="text" class="form-control SISABON rightJustified text-primary">
+									</td>
 									<td>
 										<input <?php
 												if ($row->URGENT != "0") echo 'checked'; ?> name="URGENT[]" id="URGENT<?php echo $no; ?>" type="checkbox" value="<?= $row->URGENT ?>" class="checkbox_container URGENT">
@@ -581,7 +582,7 @@ foreach ($pemesanan as $rowh) {
 			target = $(e.relatedTarget);
 		});
 
-		$('.select_no_bon').click(function() {
+		$('body').on('click', '.select_no_bon', function() {
 			console.log(x);
 			var val = $(this).parents("tr").find(".NBBVAL").text();
 			$("#NO_BON" + x).val(val);
@@ -602,7 +603,8 @@ foreach ($pemesanan as $rowh) {
 		$('#modal_kd_bhn').on('show.bs.modal', function(e) {
 			target = $(e.relatedTarget);
 		});
-		$('.select_kd_bhn').click(function() {
+		// $('.select_kd_bhn').click(function() {
+		$('body').on('click', '.select_kd_bhn', function() {
 			console.log(x);
 			var val = $(this).parents("tr").find(".KDBVAL").text();
 			$("#KD_BHN" + x).val(val);

@@ -316,7 +316,8 @@ foreach ($ppstok as $rowh) {
 										<input <?php if ($rowh->TTD3 == !0) echo 'class="form-control TGL_DIMINTA text_input" readonly'; ?> name="TGL_DIMINTA[]" id="TGL_DIMINTA<?php echo $no; ?>" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($row->TGL_DIMINTA, TRUE)); ?>" onclick="select()">
 									</td>
 									<td>
-										<input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="SISA[]" onkeyup="hitung()" id="SISA<?php echo $no; ?>" value="<?php echo number_format($row->SISA, 2, '.', ','); ?>" type="text" class="form-control SISA rightJustified text-primary" required></td>
+										<input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="SISA[]" onkeyup="hitung()" id="SISA<?php echo $no; ?>" value="<?php echo number_format($row->SISA, 2, '.', ','); ?>" type="text" class="form-control SISA rightJustified text-primary" required>
+									</td>
 									</td>
 									<td>
 										<input <?php if ($row->URGENT != "0") echo 'checked'; ?> <?php if ($rowh->TTD3 == !0) echo 'disabled'; ?> name="URGENT[]" id="URGENT<?php echo $no; ?>" type="checkbox" value="<?= $row->URGENT ?>" class="checkbox_container URGENT">
@@ -486,8 +487,9 @@ foreach ($ppstok as $rowh) {
 		$('#modal_kd_bhn').on('show.bs.modal', function(e) {
 			target = $(e.relatedTarget);
 		});
-		
-		$('.select_kd_bhn').click(function() {
+
+		// $('.select_kd_bhn').click(function() {
+		$('body').on('click', '.select_kd_bhn', function() {
 			console.log(x);
 			var val = $(this).parents("tr").find(".NBVAL").text();
 			$("#KD_BHN" + x).val(val);
@@ -555,7 +557,7 @@ foreach ($ppstok as $rowh) {
 		for (i = 0; i < total_row; i++) {
 			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
 			var sisa = parseFloat($('#SISA' + i).val().replace(/,/g, ''));
-			
+
 			$('#BILANGAN' + i).val(angkaTerbilang(qty));
 			if (qty > sisa) {
 				alert("Qty tidak boleh lebih besar dari Sisa");
@@ -595,63 +597,65 @@ foreach ($ppstok as $rowh) {
 
 	function tambah() {
 
-	var x = document.getElementById('datatable').insertRow(idrow + 1);
-	var td1 = x.insertCell(0);
-	var td2 = x.insertCell(1);
-	var td3 = x.insertCell(2);
-	var td4 = x.insertCell(3);
-	var td5 = x.insertCell(4);
-	var td6 = x.insertCell(5);
-	var td7 = x.insertCell(6);
-	var td8 = x.insertCell(7);
-	var td9 = x.insertCell(8);
-	var td10 = x.insertCell(9);
-	var td11 = x.insertCell(10);
-	var td12 = x.insertCell(11);
-	var td13 = x.insertCell(12);
-	var td14 = x.insertCell(13);
+		var x = document.getElementById('datatable').insertRow(idrow + 1);
+		var td1 = x.insertCell(0);
+		var td2 = x.insertCell(1);
+		var td3 = x.insertCell(2);
+		var td4 = x.insertCell(3);
+		var td5 = x.insertCell(4);
+		var td6 = x.insertCell(5);
+		var td7 = x.insertCell(6);
+		var td8 = x.insertCell(7);
+		var td9 = x.insertCell(8);
+		var td10 = x.insertCell(9);
+		var td11 = x.insertCell(10);
+		var td12 = x.insertCell(11);
+		var td13 = x.insertCell(12);
+		var td14 = x.insertCell(13);
 
-	// var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
+		// var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
-	// var kd_bhn = kd_bhn0;
+		// var kd_bhn = kd_bhn0;
 
-	var kd_bhn0 = "<input name='KD_BHN[]' id=KD_BHN" + idrow + " maxlength='500' type='text' class='form-control KD_BHN text_input' onkeypress='return tabE(this,event)' readonly>";
-	var button0 = "<span class='input-group-btn'><a class='btn default modal-KD_BHN' onfocusout='hitung()' id=" + idrow + "><i class='fa fa-search'></i></a></span>";
+		var kd_bhn0 = "<input name='KD_BHN[]' id=KD_BHN" + idrow + " maxlength='500' type='text' class='form-control KD_BHN text_input' onkeypress='return tabE(this,event)' readonly>";
+		var button0 = "<span class='input-group-btn'><a class='btn default modal-KD_BHN' onfocusout='hitung()' id=" + idrow + "><i class='fa fa-search'></i></a></span>";
 
-	td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-	td2.innerHTML = kd_bhn0;
-	td3.innerHTML = button0;
-	td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input'>";
-	td5.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input' required>";
-	td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
-	td7.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
-	td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
-	td9.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input' required>";
-	td10.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
-	td11.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {echo $_POST["TGLSG"];} else echo date('d-m-Y'); ?>'>";
-	td12.innerHTML = "<input name='SISA[]' onclick='select()' onkeyup='hitung()' value='0' id=SISA" + idrow + " type='text' class='form-control SISA rightJustified text-primary' required>";
-	td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
-	td14.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
-		" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
-	jumlahdata = 100;
-	for (i = 0; i <= jumlahdata; i++) {
-		$("#QTY" + i.toString()).autoNumeric('init', {
-			aSign: '<?php echo ''; ?>',
-			vMin: '-999999999.99'
+		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
+		td2.innerHTML = kd_bhn0;
+		td3.innerHTML = button0;
+		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input'>";
+		td5.innerHTML = "<input name='TIPE[]' id=TIPE" + idrow + " type='text' class='form-control TIPE text_input' required>";
+		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
+		td7.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
+		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
+		td9.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input' required>";
+		td10.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
+		td11.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
+																																																			echo $_POST["TGLSG"];
+																																																		} else echo date('d-m-Y'); ?>'>";
+		td12.innerHTML = "<input name='SISA[]' onclick='select()' onkeyup='hitung()' value='0' id=SISA" + idrow + " type='text' class='form-control SISA rightJustified text-primary' required>";
+		td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
+		td14.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
+		jumlahdata = 100;
+		for (i = 0; i <= jumlahdata; i++) {
+			$("#QTY" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+		}
+		idrow++;
+		nomor();
+		$(".ronly").on('keydown paste', function(e) {
+			e.preventDefault();
+			e.currentTarget.blur();
 		});
-	}
-	idrow++;
-	nomor();
-	$(".ronly").on('keydown paste', function(e) {
-		e.preventDefault();
-		e.currentTarget.blur();
-	});
-	$('input[type="checkbox"]').on('change', function() {
-		this.value ^= 1;
-		console.log(this.value)
-	});
-	select_kd_bhn();
-	modalClick();
+		$('input[type="checkbox"]').on('change', function() {
+			this.value ^= 1;
+			console.log(this.value)
+		});
+		select_kd_bhn();
+		modalClick();
 	}
 
 	function hapus() {

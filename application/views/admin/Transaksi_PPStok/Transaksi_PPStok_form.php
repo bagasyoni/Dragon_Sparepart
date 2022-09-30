@@ -212,10 +212,13 @@
 								<td><input name="DEVISI[]" id="DEVISI0" type="text" class="form-control DEVISI text_input" required></td>
 								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
 								<td>
-									<input name="TGL_DIMINTA[]" id="TGL_DIMINTA0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {echo $_POST["TGL_DIMINTA"];} else echo date('d-m-Y'); ?>" onclick="select()">
+									<input name="TGL_DIMINTA[]" id="TGL_DIMINTA0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
+																																											echo $_POST["TGL_DIMINTA"];
+																																										} else echo date('d-m-Y'); ?>" onclick="select()">
 								</td>
 								<td>
-									<input name="SISA[]" onclick="select()" onkeyup="hitung()" value="0" id="SISA0" type="text" class="form-control SISA rightJustified text-primary"></td>
+									<input name="SISA[]" onclick="select()" onkeyup="hitung()" value="0" id="SISA0" type="text" class="form-control SISA rightJustified text-primary">
+								</td>
 								</td>
 								<td>
 									<input name="URGENT[]" id="URGENT" type="checkbox" value="0" class="checkbox_container URGENT" unchecked>
@@ -384,8 +387,9 @@
 		$('#modal_kd_bhn').on('show.bs.modal', function(e) {
 			target = $(e.relatedTarget);
 		});
-		
-		$('.select_kd_bhn').click(function() {
+
+		// $('.select_kd_bhn').click(function() {
+		$('body').on('click', '.select_kd_bhn', function() {
 			console.log(x);
 			var val = $(this).parents("tr").find(".NBVAL").text();
 			$("#KD_BHN" + x).val(val);
@@ -518,7 +522,9 @@
 		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
 		td9.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input' required>";
 		td10.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
-		td11.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {echo $_POST["TGLSG"];} else echo date('d-m-Y'); ?>'>";
+		td11.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
+																																																			echo $_POST["TGLSG"];
+																																																		} else echo date('d-m-Y'); ?>'>";
 		td12.innerHTML = "<input name='SISA[]' onclick='select()' onkeyup='hitung()' value='0' id=SISA" + idrow + " type='text' class='form-control SISA rightJustified text-primary' required>";
 		td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container URGENT' value='0' unchecked>";
 		td14.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
