@@ -221,8 +221,7 @@ class Laporan extends CI_Controller
 			ob_end_clean();
 			$PHPJasperXML->outpage("I");
 		} else {
-			$data = array(
-			);
+			$data = array();
 			$data['triwulan'] = $this->laporan_model->tampil_data_triwulan()->result();
 			$this->load->view('templates_admin/header');
 			$this->load->view('templates_admin/navbar');
@@ -247,19 +246,19 @@ class Laporan extends CI_Controller
 			include('phpjasperxml/class/PHPJasperXML.inc.php');
 			include('phpjasperxml/setting.php');
 			$PHPJasperXML = new \PHPJasperXML();
-			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Triwulan.jrxml");
+			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Triwulan_inventaris.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$jenis_1 = $this->input->post('JENIS_1');
 			$query = "SELECT
-				'-' AS KODE,
+				inventaris.KD_BAGIAN,
 				inventaris.NAMA,
 				inventaris.NA_BAGIAN,
-			
 				inventarisd.JENIS,
 				inventarisd.MERK,
 				inventarisd.SATUAN,
 				inventarisd.QTY,
-				inventarisd.KET
+				inventarisd.KET,
+				DATE(NOW()) as TGL
 			FROM
 				inventaris,
 				inventarisd
@@ -269,22 +268,27 @@ class Laporan extends CI_Controller
 				inventaris.FLAG = 'INV'
 			AND
 				inventarisd.JENIS <> ' '
-			AND
-				inventarisd.JENIS = '$jenis_1'
 			ORDER BY
 				inventarisd.NO_BUKTI,
 				inventarisd.JENIS";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
-					"JENIS_1" => $row1["JENIS_1"],
+					"KODE" => $row1["KD_BAGIAN"],
+					"NAMA" => $row1["NAMA"],
+					"TGL" => date("Y-m-d", strtotime($row1["TGL"])),
+					"JENIS" => $row1["JENIS"],
+					"MERK" => $row1["MERK"],
+					"SATUAN" => $row1["SATUAN"],
+					"QTY" => $row1["QTY"],
+					"KET" => $row1["KET"],
+					"BAGIAN" => $row1["NA_BAGIAN"],
 				));
 			}
 			ob_end_clean();
 			$PHPJasperXML->outpage("I");
 		} else {
-			$data = array(
-			);
+			$data = array();
 			$data['barang_per_ruangan'] = $this->laporan_model->tampil_data_barang_per_ruangan()->result();
 			$this->load->view('templates_admin/header');
 			$this->load->view('templates_admin/navbar');
@@ -584,7 +588,7 @@ class Laporan extends CI_Controller
 			$rak_1 = $this->input->post('RAK_1');
 			$per_1 = $this->input->post('PER_1');
 			if ($per_1 == '') {
-				$per_1 = $this->session->userdata['periode']; 
+				$per_1 = $this->session->userdata['periode'];
 			} else {
 				$per_1 = $this->input->post('PER_1');
 			}
@@ -754,17 +758,17 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Harian.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
-		$tgl_1 = $this->input->post('TGL_1');
-		$sub = $this->session->userdata['sub'];
-		$per = $this->session->userdata['periode'];
-		if ($tgl_1 == '') {
-			$bulan = Date('m');
-		} else {
-			$bulan = date("m", strtotime($tgl_1));
-		}
-		$tahun = substr($this->input->post('TGL_1'), -4);
-		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-		$query = "SELECT TGL, RAK, NA_BHN, SATUAN, AW, NO_BUKTI_MA, MA, NO_BUKTI_KE, KE, NO_BUKTI_RKE, RKE,(MA-KE) T_AK,(MA+RKE) T_RAK,(AW+MA) T_MA,(AW-KE) T_KE, (MA+RKE) T_RKE
+			$tgl_1 = $this->input->post('TGL_1');
+			$sub = $this->session->userdata['sub'];
+			$per = $this->session->userdata['periode'];
+			if ($tgl_1 == '') {
+				$bulan = Date('m');
+			} else {
+				$bulan = date("m", strtotime($tgl_1));
+			}
+			$tahun = substr($this->input->post('TGL_1'), -4);
+			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
+			$query = "SELECT TGL, RAK, NA_BHN, SATUAN, AW, NO_BUKTI_MA, MA, NO_BUKTI_KE, KE, NO_BUKTI_RKE, RKE,(MA-KE) T_AK,(MA+RKE) T_RAK,(AW+MA) T_MA,(AW-KE) T_KE, (MA+RKE) T_RKE
 		FROM (
 			SELECT '$tgl_1' AS TGL,
 				bhnd.RAK AS RAK,
@@ -916,17 +920,17 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Harian_ATK.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
-		$tgl_1 = $this->input->post('TGL_1');
-		$sub = $this->session->userdata['sub'];
-		$per = $this->session->userdata['periode'];
-		if ($tgl_1 == '') {
-			$bulan = Date('m');
-		} else {
-			$bulan = date("m", strtotime($tgl_1));
-		}
-		$tahun = substr($this->input->post('TGL_1'), -4);
-		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-		$query = "SELECT TGL, RAK, NA_BHN, SATUAN, AW, NO_BUKTI_MA, MA, NO_BUKTI_KE, KE, NO_BUKTI_RKE, RKE, AK
+			$tgl_1 = $this->input->post('TGL_1');
+			$sub = $this->session->userdata['sub'];
+			$per = $this->session->userdata['periode'];
+			if ($tgl_1 == '') {
+				$bulan = Date('m');
+			} else {
+				$bulan = date("m", strtotime($tgl_1));
+			}
+			$tahun = substr($this->input->post('TGL_1'), -4);
+			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
+			$query = "SELECT TGL, RAK, NA_BHN, SATUAN, AW, NO_BUKTI_MA, MA, NO_BUKTI_KE, KE, NO_BUKTI_RKE, RKE, AK
 				FROM (
 					SELECT '$tgl_1' AS TGL,
 						'$per' AS PER,
@@ -1513,7 +1517,7 @@ class Laporan extends CI_Controller
 			$per = $this->session->userdata['periode'];
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 			$hari_1 = substr($this->input->post('TGL_1'), 0.2);
-			$bulan = substr(date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE))),5,2);
+			$bulan = substr(date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE))), 5, 2);
 			$tahun = substr($this->input->post('TGL_1'), 6, 4);
 			$query = "SELECT bhnd.RAK, 
 				bhnd.KD_BHN,
@@ -1609,7 +1613,7 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
-			$bulan = substr(date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE))),5,2);
+			$bulan = substr(date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE))), 5, 2);
 			$tahun = substr($this->input->post('TGL_1'), -4);
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 			$masa = $this->input->post('MASA');
@@ -1707,12 +1711,12 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Global_Inventaris.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
-		$jenis_1 = $this->input->post('JENIS_1');
-		$filter_jenis = " ";
-		if ($this->input->post('JENIS_1', TRUE) != '') {
-			$filter_jenis = "AND inventarisd.JENIS = '$jenis_1'";
-		}
-		$query = "SELECT inventaris.NO_BUKTI AS NO_BUKTI,
+			$jenis_1 = $this->input->post('JENIS_1');
+			$filter_jenis = " ";
+			if ($this->input->post('JENIS_1', TRUE) != '') {
+				$filter_jenis = "AND inventarisd.JENIS = '$jenis_1'";
+			}
+			$query = "SELECT inventaris.NO_BUKTI AS NO_BUKTI,
 				inventaris.NA_BAGIAN AS NA_BAGIAN,
 				inventarisd.JENIS AS JENIS,
 				inventarisd.MERK AS MERK,
@@ -1828,7 +1832,7 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Sparepart_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$tgl_1 = date("Y-m-d");
-			$bulan = substr(date("Y-m-d"),5,2);
+			$bulan = substr(date("Y-m-d"), 5, 2);
 			$tahun = substr($this->input->post('PER'), -4);
 			$tahun_1 = $this->input->post('PER');
 			$query = "SELECT bhnd.KD_BHN,
@@ -1928,7 +1932,7 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Inventaris_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$tgl_1 = date("Y-m-d");
-			$bulan = substr(date("Y-m-d"),5,2);
+			$bulan = substr(date("Y-m-d"), 5, 2);
 			$tahun = substr($this->input->post('PER'), -4);
 			$tahun_1 = $this->input->post('PER');
 			$query = "SELECT bhnd.KD_BHN,
@@ -2027,7 +2031,7 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_ATK_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$tgl_1 = date("Y-m-d");
-			$bulan = substr(date("Y-m-d"),5,2);
+			$bulan = substr(date("Y-m-d"), 5, 2);
 			$tahun = substr($this->input->post('PER'), -4);
 			$tahun_1 = $this->input->post('PER');
 			$query = "SELECT bhnd.KD_BHN,
@@ -2126,7 +2130,7 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Stok_Umum_IA.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$tgl_1 = date("Y-m-d");
-			$bulan = substr(date("Y-m-d"),5,2);
+			$bulan = substr(date("Y-m-d"), 5, 2);
 			$tahun = substr($this->input->post('PER'), -4);
 			$tahun_1 = $this->input->post('PER');
 			$query = "SELECT bhnd.KD_BHN,
@@ -2411,7 +2415,7 @@ class Laporan extends CI_Controller
 			$this->load->view('templates_admin/footer_report');
 		}
 	}
-	
+
 	public function index_LapLPB()
 	{
 		if (isset($_POST["print"])) {
@@ -3875,6 +3879,6 @@ class Laporan extends CI_Controller
 	}
 
 	//////		BATAS AJAX GLOBAL		/////
-	
+
 
 }

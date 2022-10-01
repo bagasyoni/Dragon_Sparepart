@@ -30,14 +30,14 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Calibri"/>
 				</textElement>
-				<textFieldExpression><![CDATA["RUANGAN :"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["RUANGAN"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="14" y="60" width="66" height="20" uuid="709cf2f8-957d-4f94-9598-7ed68be86041"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Calibri"/>
 				</textElement>
-				<textFieldExpression><![CDATA["NO :"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["NO"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="242" y="57" width="80" height="20" uuid="da3af045-e283-4cd4-addd-95ca5fa4e774"/>
@@ -51,14 +51,14 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Calibri"/>
 				</textElement>
-				<textFieldExpression><![CDATA["NAMA : "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["NAMA"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="370" y="60" width="66" height="20" uuid="7ff81ace-6746-40ae-af3b-fbf8b6008a87"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Calibri"/>
 				</textElement>
-				<textFieldExpression><![CDATA["TANGGAL :"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["TANGGAL"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="80" y="40" width="140" height="20" uuid="b9bad173-ba8d-4943-8672-526e5054d28f"/>
@@ -96,7 +96,7 @@
 	<columnHeader>
 		<band height="45" splitType="Stretch">
 			<textField>
-				<reportElement x="10" y="5" width="66" height="40" uuid="6097ab9b-f512-4b03-b660-1d733915ddb5"/>
+				<reportElement x="10" y="5" width="30" height="40" uuid="6097ab9b-f512-4b03-b660-1d733915ddb5"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -109,7 +109,7 @@
 				<textFieldExpression><![CDATA["NO :"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="76" y="5" width="74" height="40" uuid="efe0f002-9ab6-48d1-b820-5c2230a4c6ec"/>
+				<reportElement x="40" y="5" width="140" height="40" uuid="efe0f002-9ab6-48d1-b820-5c2230a4c6ec"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -122,7 +122,7 @@
 				<textFieldExpression><![CDATA["JENIS BARANG"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="150" y="5" width="210" height="40" uuid="357ecced-696c-4c50-816d-dedf0b47c99d"/>
+				<reportElement x="180" y="5" width="180" height="40" uuid="357ecced-696c-4c50-816d-dedf0b47c99d"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -294,14 +294,14 @@
 				<textFieldExpression><![CDATA["M"]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="10" y="2" width="580" height="1" uuid="ac9da5a6-9431-4888-b4cb-dbf60ab7f718"/>
+				<reportElement x="10" y="3" width="580" height="1" uuid="ac9da5a6-9431-4888-b4cb-dbf60ab7f718"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="26" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<textField>
-				<reportElement x="10" y="0" width="66" height="20" uuid="cdacdfee-fbb4-4520-8e8d-9de4e7eaf452"/>
+				<reportElement x="10" y="0" width="30" height="20" uuid="cdacdfee-fbb4-4520-8e8d-9de4e7eaf452"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -314,7 +314,7 @@
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="76" y="0" width="74" height="20" uuid="ba026d12-3a00-41f2-888e-c71b2bb91609"/>
+				<reportElement x="40" y="0" width="140" height="20" uuid="ba026d12-3a00-41f2-888e-c71b2bb91609"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -327,7 +327,7 @@
 				<textFieldExpression><![CDATA[$F{JENIS}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="150" y="0" width="210" height="20" uuid="ef67d787-799d-4d24-b75e-2b0f71c58248"/>
+				<reportElement x="180" y="0" width="180" height="20" uuid="ef67d787-799d-4d24-b75e-2b0f71c58248"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -485,6 +485,9 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SATUAN}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="10" y="20" width="580" height="1" uuid="58744a3a-d41c-4497-99cd-8f0b90fb471b"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
