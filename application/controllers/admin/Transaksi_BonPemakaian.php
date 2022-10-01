@@ -217,7 +217,16 @@ class Transaksi_BonPemakaian extends CI_Controller
         }
         // PP / NOMER / DR / BULAN / TAHUN / SP
         // $bukti = 'PK' . '/' . $urut . '/' . $romawi . '/' . $tahun . '/' . $sub;
-        $bukti = $this->input->post('NO_BUKTI', TRUE);
+        $no = $this->input->post('NO_BUKTI', TRUE);
+        $ht = strlen($no);
+        if ($ht <= 3) {
+            $bukti = $no . '/' . $bulan . '/' . $tahun . '/BB';
+        } else {
+            $bukti = $this->input->post('NO_BUKTI', TRUE);
+        }
+        // var_dump($bukti);
+        // die;
+
         $datah = array(
             'NO_BUKTI' => $bukti,
             'NOTES' => $this->input->post('NOTES', TRUE),
@@ -234,7 +243,14 @@ class Transaksi_BonPemakaian extends CI_Controller
         );
         $this->transaksi_model->input_datah('pakai', $datah);
         $ID = $this->db->query("SELECT NO_ID AS no_id FROM pakai WHERE NO_BUKTI = '$bukti' AND SUB = '$sub' GROUP BY NO_BUKTI")->result();
-        $NO_BUKTI = $this->input->post('NO_BUKTI');
+        $no = $this->input->post('NO_BUKTI', TRUE);
+        $ht = strlen($no);
+        if ($ht <= 3) {
+            $NO_BUKTI = $no . '/' . $bulan . '/' . $tahun . '/BB';
+        } else {
+            $NO_BUKTI = $this->input->post('NO_BUKTI', TRUE);
+        }
+        // $NO_BUKTI = $no . '/' . $bulan . '/' . $tahun . '/BB';
         $REC = $this->input->post('REC');
         $KD_BHN = $this->input->post('KD_BHN');
         $RAK = $this->input->post('RAK');
