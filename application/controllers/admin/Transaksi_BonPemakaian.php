@@ -253,6 +253,7 @@ class Transaksi_BonPemakaian extends CI_Controller
                 'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
                 'REC' => $REC[$i],
                 'KD_BHN' => $KD_BHN[$i],
+                // 'KD_BHN' => '',
                 'RAK' => $RAK[$i],
                 'NA_BHN' => $NA_BHN[$i],
                 'QTY' => str_replace(',', '', $QTY[$i]),
@@ -260,7 +261,8 @@ class Transaksi_BonPemakaian extends CI_Controller
                 'KET1' => $KET1[$i],
                 'KET2' => $KET2[$i] ?? "-",
                 'GRUP' => $GRUP[$i],
-                'NA_GOL' => $NA_GOL[$i],
+                // 'NA_GOL' => $NA_GOL[$i],
+                'NA_GOL' => $KET2[$i],
                 'FLAG' => 'PK',
                 'FLAG2' => 'SP',
                 'ATK' => '0',
@@ -395,7 +397,8 @@ class Transaksi_BonPemakaian extends CI_Controller
                     'KET1' => $KET1[$URUT],
                     'KET2' => $KET2[$URUT],
                     'GRUP' => $GRUP[$URUT],
-                    'NA_GOL' => $NA_GOL[$URUT],
+                    // 'NA_GOL' => $NA_GOL[$URUT],
+                    'NA_GOL' => $KET2[$URUT],
                     'FLAG' => 'PK',
                     'FLAG2' => 'SP',
                     'ATK' => '0',
@@ -433,7 +436,8 @@ class Transaksi_BonPemakaian extends CI_Controller
                     'KET1' => $KET1[$i],
                     'KET2' => $KET2[$i],
                     'GRUP' => $GRUP[$i],
-                    'NA_GOL' => $NA_GOL[$i],
+                    'NA_GOL' => $KET2[$i],
+                    // 'NA_GOL' => $NA_GOL[$i],
                     'FLAG' => 'PK',
                     'FLAG2' => 'SP',
                     'ATK' => '0',
@@ -539,9 +543,10 @@ class Transaksi_BonPemakaian extends CI_Controller
         $selectajax = array();
         foreach ($results->RESULT_ARRAY() as $row) {
             $selectajax[] = array(
-                'id' => $row['KD_GOL'],
-                'text' => $row['KD_GOL'],
+                'id' => $row['NA_GOL'],
+                'text' => $row['NA_GOL'],
                 'KD_GOL' => $row['KD_GOL'] . " - " . $row['NA_GOL'] . " - " . $row['GRUP'],
+                // 'KD_GOL' => $row['KD_GOL'],
                 'NA_GOL' => $row['NA_GOL'],
                 'GRUP' => $row['GRUP'],
             );
@@ -636,6 +641,28 @@ class Transaksi_BonPemakaian extends CI_Controller
         $sub = $this->session->userdata['sub'];
 
         $q1 = " SELECT NO_ID FROM pakai WHERE NO_ID>'$ID' AND FLAG = 'PK' AND FLAG2 = 'SP' AND PER='$per' AND ATK = '0' AND DR = '$dr' AND SUB = '$sub' ORDER BY NO_ID LIMIT 1";
+
+        $q2 = $this->db->query($q1);
+        if ($q2->num_rows() > 0) {
+            foreach ($q2->result() as $row) {
+                $hasil[] = $row;
+            }
+        };
+        echo json_encode($hasil);
+    }
+
+    function isiRAK()
+    {
+        $VAL = $this->input->post('VAL');
+
+        $dr = $this->session->userdata['dr'];
+        $sub = $this->session->userdata['sub'];
+
+        $q1 = "SELECT bhn.NA_BHN, bhn.SATUAN, bhnd.RAK, bhnd.KD_BHN
+            FROM bhn, bhnd
+            WHERE bhnd.RAK='$VAL' AND bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND bhnd.DR='$dr' AND bhnd.SUB='$sub' AND bhnd.RAK <> '' 
+            GROUP BY bhn.KD_BHN
+            ORDER BY bhn.KD_BHN";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {

@@ -562,13 +562,13 @@ foreach ($ppstok as $rowh) {
 			var sisa = parseFloat($('#SISA' + i).val().replace(/,/g, ''));
 
 			$('#BILANGAN' + i).val(angkaTerbilang(qty));
-			if (qty > sisa) {
-				alert("Qty tidak boleh lebih besar dari Sisa");
-				$('#QTY' + i).val(0);
-				console.log('TIDAK OK !!!')
-			} else {
-				console.log('OK !!!')
-			}
+			// if (qty > sisa) {
+			// 	alert("Qty tidak boleh lebih besar dari Sisa");
+			// 	$('#QTY' + i).val(0);
+			// 	console.log('TIDAK OK !!!')
+			// } else {
+			// 	console.log('OK !!!')
+			// }
 		};
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
