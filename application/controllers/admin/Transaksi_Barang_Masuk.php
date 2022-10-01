@@ -312,8 +312,8 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 belid.RAK,
                 belid.SISA AS QTY,
                 belid.SATUAN,
-                belid.SAT_BL,
                 belid.QTY,
+                belid.SAT_BL,
                 belid.QTY_BL,
                 belid.VAL
             FROM beli, belid 
@@ -366,8 +366,8 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 belid.RAK,
                 belid.SISA AS QTY,
                 belid.SATUAN,
-                belid.SAT_BL,
                 belid.QTY,
+                belid.SAT_BL,
                 belid.QTY_BL,
                 belid.VAL
             FROM beli, belid 
