@@ -10,40 +10,101 @@
 		border: 1px solid #ddd;
 		margin-bottom: 12px;
 	}
+
 	#myTable {
 		border-collapse: collapse;
 		width: 100%;
 		border: 1px solid #ddd;
 	}
+
 	#myTable th,
-	#myTable td { text-align: left; padding: 5px; }
-	#myTable tr { border-bottom: 1px solid #ddd; }
+	#myTable td {
+		text-align: left;
+		padding: 5px;
+	}
+
+	#myTable tr {
+		border-bottom: 1px solid #ddd;
+	}
+
 	#myTable tr.header,
-	#myTable tr:hover { background-color: #f1f1f1; }
-	input[type=text]:focus { width: 100%; }
-	table {	table-layout: fixed; }
-	table th {color: black; text-align: center;}
-	table td { overflow: hidden; }
-	.label {color: black; font-weight: bold;}
-	.rightJustified { text-align: right; }
-	.total { font-weight: bold; color: blue; }
-	.form-control {font-size: small;}
+	#myTable tr:hover {
+		background-color: #f1f1f1;
+	}
+
+	input[type=text]:focus {
+		width: 100%;
+	}
+
+	table {
+		table-layout: fixed;
+	}
+
+	table th {
+		color: black;
+		text-align: center;
+	}
+
+	table td {
+		overflow: hidden;
+	}
+
+	.label {
+		color: black;
+		font-weight: bold;
+	}
+
+	.rightJustified {
+		text-align: right;
+	}
+
+	.total {
+		font-weight: bold;
+		color: blue;
+	}
+
+	.form-control {
+		font-size: small;
+	}
+
 	.bodycontainer {
 		/* width: 1000px; */
 		max-height: 500px;
 		margin: 0;
 		overflow-y: auto;
 	}
+
 	#datatable td {
 		padding: 2px !important;
 		vertical-align: middle;
 	}
-	.alert-container { background-color: #00b386; color: black; font-weight: bolder;}
-	.table-scrollable {	margin: 0; padding: 0; }
-	.modal-bodys { max-height: 250px; overflow-y: auto; }
-	.select2-dropdown {	width: 500px !important; }
+
+	.alert-container {
+		background-color: #00b386;
+		color: black;
+		font-weight: bolder;
+	}
+
+	.table-scrollable {
+		margin: 0;
+		padding: 0;
+	}
+
+	.modal-bodys {
+		max-height: 250px;
+		overflow-y: auto;
+	}
+
+	.select2-dropdown {
+		width: 500px !important;
+	}
+
 	/* .container { text-align: center; vertical-align: middle;} */
-	.checkbox_container {width: 25px; height: 25px;}
+	.checkbox_container {
+		width: 25px;
+		height: 25px;
+	}
+
 	td input[type="checkbox"] {
 		float: left;
 		margin: 0 auto;
@@ -81,15 +142,9 @@
 							<label class="label">Tgl </label>
 						</div>
 						<div class="col-md-3">
-							<input 
-								type="text" 
-								class="date form-control TGL" 
-								id="TGL" 
-								name="TGL" 
-								data-date-format="dd-mm-yyyy" 
-								value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["TGL"]; } else echo date('d-m-Y'); ?>" 
-								onclick="select()" 
-							>
+							<input type="text" class="date form-control TGL" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
+																																			echo $_POST["TGL"];
+																																		} else echo date('d-m-Y'); ?>" onclick="select()">
 						</div>
 					</div>
 				</div>
@@ -152,7 +207,7 @@
 						</tfoot>
 					</table>
 				</div>
-            </div>
+			</div>
 		</div>
 		<br><br>
 		<!--tab-->
@@ -168,8 +223,8 @@
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<button type="submit"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>										
-							<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
+						<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
 					</div>
 					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 				</div>
@@ -181,18 +236,17 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#modal_bagian').DataTable({
-			dom: 
-				"<'row'<'col-md-6'><'col-md-6'>>" + // 
+			dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
 				"<'row'<'col-md-6'f><'col-md-6'l>>" + // peletakan entries, search, dan test_btn
 				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
-			buttons: [ 'copy', 'csv', 'excel', 'pdf', 'print' ],
+			buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
 			order: true,
 		});
-		$('.modal-footer').on('click', '#close', function() {			 
-			$('input[type=search]').val('').keyup();  // this line and next one clear the search dialog
+		$('.modal-footer').on('click', '#close', function() {
+			$('input[type=search]').val('').keyup(); // this line and next one clear the search dialog
 		});
 	});
-</script> 
+</script>
 
 <script>
 	(function() {
@@ -217,24 +271,34 @@
 	})();
 	var target;
 	var idrow = 1;
+
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	$(document).ready(function() {
-		$("#TOTAL_QTY").autoNumeric('init', {aSign: '<?php echo ''; ?>',vMin: '-999999999.99'});
+		$("#TOTAL_QTY").autoNumeric('init', {
+			aSign: '<?php echo ''; ?>',
+			vMin: '-999999999.99'
+		});
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
-			$("#QTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#SISA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#QTY" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+			$("#SISA" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
 		}
 		$('body').on('click', '.btn-delete', function() {
 			var val = $(this).parents("tr").remove();
 			idrow--;
 			nomor();
 		});
-		$('input[type="checkbox"]').on('change', function(){
+		$('input[type="checkbox"]').on('change', function() {
 			this.value ^= 1;
-			console.log( this.value )
+			console.log(this.value)
 		});
 		$(".date").datepicker({
 			'dateFormat': 'dd-mm-yy',
@@ -263,17 +327,17 @@
 			// } else {
 			// 	console.log('OK !!!')
 			// }
-			
-		$('#BILANGAN' + i).val(angkaTerbilang(qty));
-		// console.log(angkaTerbilang('Terbilang :'+qty));
+
+			$('#BILANGAN' + i).val(angkaTerbilang(qty));
+			// console.log(angkaTerbilang('Terbilang :'+qty));
 		};
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
-			if(isNaN(val)) val = 0;
-			TOTAL_QTY+=val;
+			if (isNaN(val)) val = 0;
+			TOTAL_QTY += val;
 		});
 
-		if(isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
+		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
 
 		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
 
@@ -294,7 +358,7 @@
 		var td9 = x.insertCell(8);
 		var td10 = x.insertCell(9);
 		var td11 = x.insertCell(10);
-		
+
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
 		var kd_bhn = kd_bhn0;
@@ -313,8 +377,14 @@
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
-			$("#QTY" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
-			$("#SISA" + i.toString()).autoNumeric('init', {aSign: '<?php echo ''; ?>', vMin: '-999999999.99'});
+			$("#QTY" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+			$("#SISA" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
 		}
 		idrow++;
 		nomor();
@@ -322,9 +392,9 @@
 			e.preventDefault();
 			e.currentTarget.blur();
 		});
-		$('input[type="checkbox"]').on('change', function(){
+		$('input[type="checkbox"]').on('change', function() {
 			this.value ^= 1;
-			console.log( this.value )
+			console.log(this.value)
 		});
 		select_kd_bhn();
 	}
@@ -336,7 +406,6 @@
 			nomor();
 		}
 	}
-
 </script>
 
 <script>
@@ -402,5 +471,4 @@
 		$('#SATUAN' + q).val(satuan);
 		console.log(q);
 	}
-
 </script>

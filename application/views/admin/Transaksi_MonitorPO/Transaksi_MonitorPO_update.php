@@ -271,7 +271,7 @@ foreach ($monitor_po as $rowh) {
 									<td><input name="KET[]" id="KET<?php echo $no; ?>" value="<?= $row->KET ?>" type="text" class="form-control KET text_input" readonly></td>
 									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
 									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary" readonly></td>
-									<td>	
+									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
 										<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 											<i class="fa fa-fw fa-trash-alt"></i>
@@ -308,7 +308,7 @@ foreach ($monitor_po as $rowh) {
 				<div class="col-md-1">
 					<label class="label">No PP </label>
 				</div>
-				<div class="col-md-3">							
+				<div class="col-md-3">
 					<input class="form-control text_input NO_PP text_input" id="NO_PP" name="NO_PP" type="text" value="<?php echo $rowh->NO_PP ?>" required readonly>
 				</div>
 			</div>
@@ -318,9 +318,12 @@ foreach ($monitor_po as $rowh) {
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<!-- <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button> -->
+						<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> OK</button>
 						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-primary">Kembali</a>
 					</div>
+					<a type="text" class="btn btn-light"> </a>
+					<button class="btn btn-secondary" type="button" onclick="prev()"><i class="fa fa-angle-double-left"></i> Prev</button>
+					<button class="btn btn-secondary" type="button" onclick="next()">Next <i class="fa fa-angle-double-right"></i></button>
 					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 				</div>
 			</div>
@@ -352,24 +355,24 @@ foreach ($monitor_po as $rowh) {
 			</div>
 			<div class="modal-body">
 				<table class='table table-bordered' id='modal_kodes'>
-					<thead>	
+					<thead>
 						<th>Kode Supplier</th>
 						<th>Nama Supplier</th>
 					</thead>
 					<tbody>
-					<?php
+						<?php
 						$sql = "SELECT KODES AS KODES, 
 								NAMAS AS NAMAS
 							FROM sup
 							ORDER BY KODES";
 						$a = $this->db->query($sql)->result();
-						foreach($a as $b ) { 
-					?>
-						<tr>
-							<td class='KDVAL'><a href="#" class="select_kodes"><?php echo $b->KODES;?></a></td>
-							<td class='NAVAL text_input'><?php echo $b->NAMAS;?></td>
-						</tr>
-					<?php } ?>
+						foreach ($a as $b) {
+						?>
+							<tr>
+								<td class='KDVAL'><a href="#" class="select_kodes"><?php echo $b->KODES; ?></a></td>
+								<td class='NAVAL text_input'><?php echo $b->NAMAS; ?></td>
+							</tr>
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>
@@ -432,7 +435,7 @@ foreach ($monitor_po as $rowh) {
 			}
 		});
 		//mymoodal kodes
-		$('#mymodal_kodes').on('show.bs.modal', function (e) {
+		$('#mymodal_kodes').on('show.bs.modal', function(e) {
 			target = $(e.relatedTarget);
 		});
 		$('body').on('click', '.select_kodes', function() {
