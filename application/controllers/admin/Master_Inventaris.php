@@ -154,6 +154,15 @@ class Master_Inventaris extends CI_Controller
 
     public function input()
     {
+        $per = $this->session->userdata['periode'];
+        $dr = $this->session->userdata['dr'];
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM inventaris WHERE FLAG='INV' AND PER='$per' AND DR='$dr'")->result();
+        $nom = array_column($nomer, 'NO_BUKTI');
+        $value11 = substr($nom[0], 4, 7);
+        $value22 = STRVAL($value11) . 1;
+        $urut = str_pad($value22, 3, "0", STR_PAD_LEFT);
+        $bukti = 'INV' . '/' . $urut . '/' . $per . '/' . 'DR' . $dr;
+        $this->session->set_userdata('bukti', $bukti);
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Master_Inventaris/Master_Inventaris_form');

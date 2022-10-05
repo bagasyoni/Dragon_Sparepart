@@ -128,13 +128,13 @@
 						<div class="col-md-1">
 							<label class="label">No Bukti </label>
 						</div>
-						<div class="col-md-3">
-							<input class="form-control text_input NO_BUKTI text_input" id="NO_BUKTI" name="NO_BUKTI" type="text" value='' readonly>
+						<div class="col-md-2">
+							<input class="form-control text_input NO_BUKTI text_input" id="NO_BUKTI" name="NO_BUKTI" type="text" placeholder="<?php echo $this->session->userdata['bukti']; ?>" readonly>
 						</div>
-						<div class="col-md-1">
-							<label class="label">Tgl </label>
+						<div class="col-md-1" hidden>
+							<label class="label">Tanggal </label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2" hidden>
 							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
 																																						echo $_POST["TGL"];
 																																					} else echo date('d-m-Y'); ?>" onclick="select()">
@@ -146,13 +146,13 @@
 						<div class="col-md-1">
 							<label class="label">Bagian </label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<select class="js-example-responsive-na_bagian form-control text_input NA_BAGIAN" name="NA_BAGIAN" id="NA_BAGIAN" onchange="na_bagian(this.id)" required></select>
 						</div>
 						<div class="col-md-1">
 							<label class="label">Nama </label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<input class="form-control text_input NAMA text_input" id="NAMA" name="NAMA" type="text" value='' readonly>
 						</div>
 					</div>
@@ -168,26 +168,27 @@
 								<th width="50px">No</th>
 								<th width="150px">Jenis</th>
 								<th width="200px">Merk / Model / Type</th>
-								<th width="100px">Qty</th>
-								<th width="100px">Satuan</th>
-								<th width="100px">Ket </th>
-								<th width="100px">Tgl Masuk </th>
-								<th width="100px">Tgl Keluar </th>
-								<th width="100px">Tgl Mutasi </th>
+								<th width="75px">Satuan</th>
+								<th width="50px">Qty</th>
+								<th width="175px">Keterangan </th>
+								<th width="100px">Tanggal Masuk </th>
+								<th width="100px">Tanggal Keluar </th>
+								<th width="100px">Tanggal Mutasi </th>
 								<th width="50px"></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-								<td>
+								<!-- <td>
 									<div class='input-group'>
 										<select class="js-example-responsive-jenis form-control JENIS0 text_input" name="JENIS[]" id="JENIS0" onchange="jenis(this.id)" onfocusout="hitung()" required></select>
 									</div>
-								</td>
+								</td> -->
+								<td><input name="JENIS[]" id="JENIS0" type="text" class="form-control JENIS text_input"></td>
 								<td><input name="MERK[]" id="MERK0" type="text" class="form-control MERK text_input"></td>
-								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary"></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
+								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary"></td>
 								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
 								<td>
 									<input name="TGL_MA[]" id="TGL_MA0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
@@ -215,8 +216,8 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
 							<td></td>
+							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -372,10 +373,11 @@
 		var jenis = jenis0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = jenis;
+		// td2.innerHTML = jenis;
+		td2.innerHTML = "<input name='JENIS[]' id=JENIS0" + idrow + " type='text' class='form-control JENIS text_input'>";
 		td3.innerHTML = "<input name='MERK[]' id=MERK0" + idrow + " type='text' class='form-control MERK text_input'>";
-		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
-		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input'>";
+		td4.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input'>";
+		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
 		td6.innerHTML = "<input name='KET[]' id=KET0" + idrow + " type='text' class='form-control KET text_input'>";
 		td7.innerHTML = "<input name='TGL_MA[]' ocnlick='select()' id=TGL_MA" + idrow + " type='text' class='date form-control TGL_MA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
 																																															echo $_POST["TGL_MA"];

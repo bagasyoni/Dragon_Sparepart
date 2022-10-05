@@ -85,14 +85,14 @@
 						<div class="col-md-1">
 							<label class="label">Cetakan </label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<input type="hidden" id="NO_ID" name="NO_ID" class="form-control" value="<?= $NO_ID ?>">
 							<input class="form-control text_input CETAK" id="CETAK" name="CETAK" type="text" value="<?= $CETAK ?>">
 						</div>
                         <div class="col-md-1">
 							<label class="label">Kode </label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<input class="form-control text_input KODE" id="KODE" name="KODE" type="text" value="<?= $KODE ?>">
 						</div>
 					</div>
@@ -102,13 +102,13 @@
 						<div class="col-md-1">
 							<label class="label">Nama </label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<input class="form-control text_input NAMA" id="NAMA" name="NAMA" type="text" value="<?= $NAMA ?>">
 						</div>
 						<div class="col-md-1">
 							<label class="label">Nomor </label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<input class="form-control text_input NO_URUT" id="NO_URUT" name="NO_URUT" type="text" value="<?= $NO_URUT ?>">
 						</div>
 					</div>
@@ -218,7 +218,7 @@
 		<div class="col-md-12">
 			<div class="form-group row">
 				<div class="col-md-1">
-					<label class="label">Ket 1</label>
+					<label class="label">Keterangan 1</label>
 				</div>
 				<div class="col-md-3">
 					<input class="form-control KET1 text_input" id="KET1" name="KET1" value="<?= $KET1 ?>">
@@ -235,7 +235,7 @@
 		<div class="col-md-12">
 			<div class="form-group row">
 				<div class="col-md-1">
-					<label class="label">Ket 2</label>
+					<label class="label">Keterangan 2</label>
 				</div>
 				<div class="col-md-3">
 					<input class="form-control KET2 text_input" id="KET2" name="KET2" value="<?= $KET2 ?>">
@@ -245,7 +245,7 @@
 		<div class="col-md-12">
 			<div class="form-group row">
 				<div class="col-md-1">
-					<label class="label">Ket 3</label>
+					<label class="label">Keterangan 3</label>
 				</div>
 				<div class="col-md-3">
 					<input class="form-control KET3 text_input" id="KET3" name="KET3" value="<?= $KET3 ?>">

@@ -133,14 +133,14 @@ foreach ($inventaris as $rowh) {
 						<div class="col-md-1">
 							<label class="label">No Bukti </label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<input type="hidden" name="ID" class="form-control" value="<?php echo $rowh->ID ?>">
 							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
 						</div>
-						<div class="col-md-1">
-							<label class="label">Tgl </label>
+						<div class="col-md-1" hidden>
+							<label class="label">Tanggal </label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2" hidden>
 							<input type="text" class="form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()" readonly>
 						</div>
 					</div>
@@ -150,13 +150,13 @@ foreach ($inventaris as $rowh) {
 						<div class="col-md-1">
 							<label class="label">Bagian </label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<input class="form-control text_input NA_BAGIAN" id="NA_BAGIAN" name="NA_BAGIAN" type="text" value="<?php echo $rowh->NA_BAGIAN ?>" readonly>
 						</div>
 						<div class="col-md-1">
 							<label class="label">Nama </label>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<input class="form-control text_input NAMA text_input" id="NAMA" name="NAMA" type="text" value="<?php echo $rowh->NAMA ?>" readonly>
 						</div>
 					</div>
@@ -172,12 +172,12 @@ foreach ($inventaris as $rowh) {
 								<th width="50px">No</th>
 								<th width="150px">Jenis</th>
 								<th width="200px">Merk / Model / Type</th>
-								<th width="100px">Qty</th>
-								<th width="100px">Satuan</th>
-								<th width="100px">Ket </th>
-								<th width="100px">Tgl Masuk </th>
-								<th width="100px">Tgl Keluar </th>
-								<th width="100px">Tgl Mutasi </th>
+								<th width="75px">Satuan</th>
+								<th width="50px">Qty</th>
+								<th width="175px">Keterangan</th>
+								<th width="100px">Tanggal Masuk </th>
+								<th width="100px">Tanggal Keluar </th>
+								<th width="100px">Tanggal Mutasi </th>
 								<th width="50px"></th>
 							</tr>
 						</thead>
@@ -190,8 +190,8 @@ foreach ($inventaris as $rowh) {
 									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
 									<td><input name="JENIS[]" id="JENIS<?php echo $no; ?>" value="<?= $row->JENIS ?>" type="text" class="form-control JENIS text_input" readonly></td>
 									<td><input name="MERK[]" id="MERK<?php echo $no; ?>" value="<?= $row->MERK ?>" type="text" class="form-control MERK text_input"></td>
-									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"></td>
+									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input name="KET[]" id="KET<?php echo $no; ?>" value="<?= $row->KET ?>" type="text" class="form-control KET text_input"></td>
 									<td>
 										<input name="TGL_MA[]" id="TGL_MA<?php echo $no; ?>" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($row->TGL_MA, TRUE)); ?>" onclick="select()">
@@ -216,8 +216,8 @@ foreach ($inventaris as $rowh) {
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
 							<td></td>
+							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -372,10 +372,11 @@ foreach ($inventaris as $rowh) {
 		var jenis = jenis0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = jenis;
+		// td2.innerHTML = jenis;
+		td2.innerHTML = "<input name='JENIS[]' id=JENIS0" + idrow + " type='text' class='form-control JENIS text_input'>";
 		td3.innerHTML = "<input name='MERK[]' id=MERK0" + idrow + " type='text' class='form-control MERK text_input'>";
-		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
-		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input'>";
+		td4.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input'>";
+		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
 		td6.innerHTML = "<input name='KET[]' id=KET0" + idrow + " type='text' class='form-control KET text_input'>";
 		td7.innerHTML = "<input name='TGL_MA[]' ocnlick='select()' id=TGL_MA" + idrow + " type='text' class='date form-control TGL_MA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
 																																															echo $_POST["TGL_MA"];
