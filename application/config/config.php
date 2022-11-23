@@ -29,9 +29,9 @@ date_default_timezone_set('Asia/Jakarta');
 // $config['base_url'] = 'http://192.168.0.2/tunjungsari-akunting/';
 // $config['base_url'] = 'http://26.162.163.235/Dragon_Sparepart_Baru/';
 // $config['base_url'] = 'http://localhost/Dragon_Sparepart_Baru/';
-$config['base_url'] = 'http://26.162.162.191/Dragon_Sparepart/'; //benar
 // $config['base_url'] = 'https://dharmaguna.my.id/Sparepart/';
 // $config['base_url'] = 'http://172.152.1.5/Dragon_Sparepart/';
+$config['base_url'] = 'http://26.162.162.191/Dragon_Sparepart/'; //benar
 /*
 |--------------------------------------------------------------------------
 | Index File
