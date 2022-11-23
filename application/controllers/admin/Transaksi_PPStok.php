@@ -291,6 +291,7 @@ class Transaksi_PPStok extends CI_Controller
             'TG_SMP' => date("Y-m-d h:i a")
         );
         $this->transaksi_model->input_datah('pp', $datah);
+        
         $ID = $this->db->query("SELECT MAX(NO_ID) AS NO_ID FROM pp WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
         $REC = $this->input->post('REC');
         $KD_BHN = $this->input->post('KD_BHN');

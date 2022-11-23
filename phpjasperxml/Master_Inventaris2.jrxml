@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Master_Inventaris" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="2" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Master_Inventaris" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="2" isSummaryWithPageHeaderAndFooter="true" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="145"/>
 	<property name="ireport.y" value="0"/>
@@ -173,7 +173,7 @@
 		<band height="23">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
-				<reportElement x="49" y="2" width="111" height="18" uuid="61db95c1-66a4-4e50-8283-39883a8430dc">
+				<reportElement x="49" y="2" width="151" height="18" uuid="61db95c1-66a4-4e50-8283-39883a8430dc">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -206,7 +206,7 @@
 				<textFieldExpression><![CDATA["NO"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="2" width="210" height="18" uuid="6a943ebb-c5e1-482d-bb2f-f5d8ee422013">
+				<reportElement x="200" y="2" width="170" height="18" uuid="6a943ebb-c5e1-482d-bb2f-f5d8ee422013">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box padding="0">
@@ -275,13 +275,13 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="9" isBold="false" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{KET}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="-1" width="210" height="18" uuid="ec3d4da5-b3bf-4317-8380-a3dbe2fc6f8f">
+				<reportElement x="200" y="-1" width="170" height="18" uuid="ec3d4da5-b3bf-4317-8380-a3dbe2fc6f8f">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box padding="0">
@@ -329,7 +329,7 @@
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="49" y="-1" width="111" height="18" uuid="f6f1f2b7-32fb-44c9-9d15-9d3b9758981e">
+				<reportElement x="49" y="-1" width="151" height="18" uuid="f6f1f2b7-32fb-44c9-9d15-9d3b9758981e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -340,15 +340,22 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="9" isBold="false" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{JENIS}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="2">
+			<line>
+				<reportElement x="19" y="-3" width="561" height="1" uuid="05b9bab8-a357-4ddb-9300-40b7d2b8d043"/>
+			</line>
+		</band>
+	</columnFooter>
 	<summary>
-		<band height="137">
+		<band height="175">
 			<rectangle>
 				<reportElement x="19" y="9" width="130" height="76" uuid="92f52ea1-12a2-4508-a07d-4c6dce5eec50"/>
 			</rectangle>
@@ -428,6 +435,9 @@
 				</textElement>
 				<text><![CDATA[TERIMA KASIH ATAS TERHATIANNYA DALAMA MERAWAT-MENGAMANKAN DAN TIDAK MENTELANTARKAN BARANG -  BARANG TERSEBUT DEMI KEPENTINGAN BERSAMA]]></text>
 			</staticText>
+			<line>
+				<reportElement x="19" y="-18" width="561" height="1" uuid="7b2e047d-36b4-4b57-97db-1ececec245c2"/>
+			</line>
 		</band>
 	</summary>
 </jasperReport>
