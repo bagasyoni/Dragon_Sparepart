@@ -538,7 +538,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $perPage = 10;
         $results = $this->db->query("SELECT bhnd.NO_ID, bhnd.KD_BHN, bhnd.NA_BHN, bhn.SATUAN, bhnd.RAK
             FROM bhn, bhnd
-            WHERE bhn.KD_BHN = bhnd.KD_BHN AND bhnd.DR = '$dr' AND bhnd.FLAG = 'SP' AND (bhnd.KD_BHN LIKE '%$search%' OR bhnd.NA_BHN LIKE '%$search%' OR bhn.SATUAN LIKE '%$search%' OR bhnd.RAK LIKE '%$search%')
+            WHERE bhn.KD_BHN = bhnd.KD_BHN AND bhnd.DR = '$dr' AND bhnd.FLAG = 'SP' AND bhnd.sub='SP' AND (bhnd.KD_BHN LIKE '%$search%' OR bhnd.NA_BHN LIKE '%$search%' OR bhn.SATUAN LIKE '%$search%' OR bhnd.RAK LIKE '%$search%')
             ORDER BY bhn.KD_BHN LIMIT $xa,$perPage");
         $selectajax = array();
         foreach ($results->RESULT_ARRAY() as $row) {
@@ -643,7 +643,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID<'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND OK<>'2' ORDER BY NO_BUKTI ASC LIMIT 1";
+        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID<'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND OK<>'2' ORDER BY NO_ID DESC LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
@@ -662,7 +662,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID>'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND OK<>'2' ORDER BY NO_BUKTI ASC LIMIT 1";
+        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID>'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND OK<>'2' ORDER BY NO_ID ASC LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
