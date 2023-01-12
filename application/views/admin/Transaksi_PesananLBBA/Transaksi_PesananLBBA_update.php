@@ -134,7 +134,7 @@
 	<div class="alert alert-success alert-container" role="alert">
 		<i class="fas fa-university"></i> Update Pesanan LBBA
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananLBBA/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananLBBA/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" enctype="multipart/form-data" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -152,8 +152,19 @@
 						<div class="col-md-1">
 							<label class="label">DR </label>
 						</div>
-						<div class="col-md-1">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" value="<?= $DEVISI ?>">
+						<div class="col-md-2">
+							<select class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" <?php if ($VAL == !0) echo 'disabled'; ?>>
+								<option value=""></option>
+								<option <?php echo ($this->session->userdata['dr']=='RND1')?'':'hidden';?> <?php echo ($DEVISI=='RD1')?'selected':'';?> value="RD1">PUMA</option>
+								<option <?php echo ($this->session->userdata['dr']=='RND1')?'':'hidden';?> <?php echo ($DEVISI=='RD2')?'selected':'';?> value="RD2">CANVAS</option>
+								<option <?php echo ($this->session->userdata['dr']=='RND3')?'':'hidden';?> <?php echo ($DEVISI=='RD7')?'selected':'';?> value="RD7">INJECT DR3</option>
+								<option <?php echo ($this->session->userdata['dr']=='RND4')?'':'hidden';?> <?php echo ($DEVISI=='RD5')?'selected':'';?> value="RD5">CEMENTING</option>
+								<option <?php echo ($this->session->userdata['dr']=='RND4')?'':'hidden';?> <?php echo ($DEVISI=='RD8')?'selected':'';?> value="RD8">INJECT DR4</option>
+								<option <?php echo ($this->session->userdata['dr']=='RNDAB')?'':'hidden';?> <?php echo ($DEVISI=='RD3')?'selected':'';?> value="RD3">AIR BLOW</option>
+								<option <?php echo ($this->session->userdata['dr']=='RNDAB')?'':'hidden';?> <?php echo ($DEVISI=='RD4')?'selected':'';?> value="RD4">PHYLON</option>
+								<option <?php echo ($this->session->userdata['dr']=='RNDVC')?'':'hidden';?> <?php echo ($DEVISI=='RD6')?'selected':'';?>  value="RD6">VULCANIZED</option>
+							</select>
+							<!-- <input  class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" value=""> -->
 						</div>
 						<div class="col-md-2"></div>
 						<div class="col-md-2">
@@ -189,10 +200,20 @@
 							<label class="label">Pesan </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input PESAN" id="PESAN" name="PESAN" value="<?= $PESAN ?>" type="text">
+							<select class="form-control text_input PESAN" id="PESAN" name="PESAN" type="text" <?php if ($VAL == !0) echo 'disabled'; ?>>
+								<option value=""></option>
+								<option <?php echo ($PESAN=='BARU')?'selected':'';?> value="BARU">BARU</option>
+								<option <?php echo ($PESAN=='PERBAIKAN')?'selected':'';?> value="PERBAIKAN">PERBAIKAN</option>
+							</select>
+							<!-- <input  class="form-control text_input PESAN" id="PESAN" name="PESAN" value="" type="text"> -->
 						</div>
 						<div class="col-md-2">
-							<input  <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input JO" id="JO" name="JO" value="<?= $JO ?>" type="text">
+							<select class="form-control text_input JO" id="JO" name="JO" type="text" <?php if ($VAL == !0) echo 'disabled'; ?>>
+								<option value=""></option>
+								<option <?php echo ($JO=='MRL')?'selected':'';?> value="MRL">MRL</option>
+								<option <?php echo ($JO=='MRE')?'selected':'';?> value="MRE">MRE</option>
+							</select>
+							<!-- <input class="form-control text_input JO" id="JO" name="JO" value="" type="text"> -->
 						</div>
 					</div>
 				</div>
@@ -210,7 +231,12 @@
 							<label class="label">Flag </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input FLAG3" id="FLAG3" name="FLAG3" type="text" value="<?= $FLAG3 ?>">
+							<select class="form-control text_input FLAG3" id="FLAG3" name="FLAG3" type="text" <?php if ($VAL == !0) echo 'disabled'; ?>>
+								<option value=""></option>
+								<option <?php echo ($FLAG3=='CNC')?'selected':'';?> value="CNC">CNC</option>
+								<option <?php echo ($FLAG3=='PBL')?'selected':'';?> value="PBL">PBL</option>
+							</select>
+							<!-- <input class="form-control text_input FLAG3" id="FLAG3" name="FLAG3" type="text" value=""> -->
 						</div>
 					</div>
 				</div>
@@ -228,8 +254,9 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<img src="../gambar/<?php $GAMBAR1 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<img src="<?= base_url('gambar/'.$GAMBAR1)  ?>" style="width: 120px;float: left;margin-bottom: 5px;">
 						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<input type="text" name="G1" id="G1" value="<?=$GAMBAR1?>" hidden>
 						</div>
 					</div>
 				</div>

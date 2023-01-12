@@ -125,7 +125,7 @@
 	<div class="alert alert-success alert-container" role="alert">
 		<i class="fas fa-university"></i> Input Pesanan LBBA
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananLBBA/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananLBBA/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" enctype="multipart/form-data" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -134,7 +134,7 @@
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" placeholder='<?php echo $this->session->userdata['bukti']; ?>' readonly>
+							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value='<?php echo $this->session->userdata['bukti']; ?>' readonly>
 						</div>
 						<div class="col-md-2">
 							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
@@ -142,8 +142,44 @@
 						<div class="col-md-1">
 							<label class="label">DR </label>
 						</div>
-						<div class="col-md-1">
-							<input class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text">
+						<div class="col-md-2">
+							<select class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text">
+								<?php if ($this->session->userdata['dr']=='RND1'){ // lutfi ayu //DR1
+								echo '
+								<option value=""></option>
+								<option value="RD1">PUMA</option>
+								<option value="RD2">CANVAS</option>
+								';
+								}
+								else if ($this->session->userdata['dr']=='RND3') { //prayit indri //DR3
+								echo '
+								<option value=""></option>
+								<option value="RD7">INJECT DR3</option>
+								';
+								}
+								else if ($this->session->userdata['dr']=='RND4') { // mulyadi muklisun //DR2
+								echo '
+								<option value=""></option>
+								<option value="RD5">CEMENTING</option>
+								<option value="RD8">INJECT DR4</option>
+								';
+								}
+								else if ($this->session->userdata['dr']=='RNDAB') { // toni ardhia  //DR2
+								echo '
+								<option value=""></option>
+								<option value="RD3">AIR BLOW</option>
+								<option value="RD4">PHYLON</option>
+								';
+								}
+								else if ($this->session->userdata['dr']=='RNDVC') { // yudi yona //DR2
+								echo '
+								<option value=""></option>
+								<option value="RD6">VULCANIZED</option>
+								';
+								}
+								?>
+							</select>
+							<!-- <input class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text"> -->
 						</div>
 					</div>
 				</div>
@@ -161,10 +197,20 @@
 							<label class="label">Pesan </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input PESAN" id="PESAN" name="PESAN" type="text">
+							<select class="form-control text_input PESAN" id="PESAN" name="PESAN" type="text">
+								<option value=""></option>
+								<option value="BARU">BARU</option>
+								<option value="PERBAIKAN">PERBAIKAN</option>
+							</select>
+							<!-- <input class="form-control text_input PESAN" id="PESAN" name="PESAN" type="text"> -->
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input JO" id="JO" name="JO" type="text">
+							<select class="form-control text_input JO" id="JO" name="JO" type="text">
+								<option value=""></option>
+								<option value="MRL">MRL</option>
+								<option value="MRE">MRE</option>
+							</select>
+							<!-- <input class="form-control text_input JO" id="JO" name="JO" type="text"> -->
 						</div>
 					</div>
 				</div>
@@ -182,7 +228,12 @@
 							<label class="label">Flag </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input FLAG3" id="FLAG3" name="FLAG3" type="text">
+							<select class="form-control text_input FLAG3" id="FLAG3" name="FLAG3" type="text">
+								<option value=""></option>
+								<option value="CNC">CNC</option>
+								<option value="PBL">PBL</option>
+							</select>
+							<!-- <input class="form-control text_input FLAG3" id="FLAG3" name="FLAG3" type="text"> -->
 						</div>
 					</div>
 				</div>

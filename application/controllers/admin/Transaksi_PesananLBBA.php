@@ -6,6 +6,7 @@ class Transaksi_PesananLBBA extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        $this->load->helper(array('form', 'url'));
         if (!isset($this->session->userdata['username'])) {
             $this->session->set_flashdata(
                 'pesan',
@@ -37,7 +38,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         $where = array(
             'PER' => $per,
             'DR' => $dr,
-            'FLAG' => 'PBL',
+            'FLAG' => 'PP',
             'SUB' => 'MB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_LBBA',
@@ -90,7 +91,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         $where = array(
             'PER' => $per,
             'DR' => $dr,
-            'FLAG' => 'PBL',
+            'FLAG' => 'PP',
             'SUB' => 'MB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_LBBA',
@@ -150,7 +151,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         $where = array(
             'PER' => $per,
             'DR' => $dr,
-            'FLAG' => 'PBL',
+            'FLAG' => 'PP',
             'SUB' => 'MB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_LBBA',
@@ -167,84 +168,9 @@ class Transaksi_PesananLBBA extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE SUB='MB' AND PER='$per' AND FLAG='PP' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 3, 7);
-        $value22 = STRVAL($value11) . 1;
-        $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
-        $tahun = substr($this->session->userdata['periode'], -4);
-        if (substr($this->session->userdata['periode'], 0, 2) == 1) {
-            $romawi = 'I';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 2) {
-            $romawi = 'II';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 3) {
-            $romawi = 'III';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 4) {
-            $romawi = 'IV';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 5) {
-            $romawi = 'V';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 6) {
-            $romawi = 'VI';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 7) {
-            $romawi = 'VII';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 8) {
-            $romawi = 'VIII';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 9) {
-            $romawi = 'IX';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 10) {
-            $romawi = 'X';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 11) {
-            $romawi = 'XI';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 12) {
-            $romawi = 'XII';
-        }
-        // PP / NOMER / DR / BULAN / TAHUN / CNC
-        $bukti = 'PP' . '/' . $urut . '/' . "LB" . '/' . $dr . '/' . $romawi . '/' . $tahun;
-        $this->session->set_userdata('bukti', $bukti);
-        $this->load->view('templates_admin/header');
-        $this->load->view('templates_admin/navbar');
-        $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form');
-        $this->load->view('templates_admin/footer');
-    }
-
-    public function input_aksi()
-    {
-
-        $config['upload_path']          = './gambar/';
-		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-		$config['max_size']             = 1000;
-		$config['max_width']            = 3024;
-		$config['max_height']           = 3680;
-        $new_name = time().$_FILES['name'];
-        $config['file_name']            = $new_name; 
-
-        $this->load->library('upload', $config);
-
-        if ( ! $this->upload->do_upload('GAMBAR1')){
-			$error = array('error' => $this->upload->display_errors());
-			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form', $error);
-		}else{
-			$data = array('upload_data' => $this->upload->data());
-			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
-		}
-
-        $per = $this->session->userdata['periode'];
-        $dr = $this->session->userdata['dr'];
-        $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND DR='$dr' AND FLAG='PP' AND FLAG2='SP'")->result();
-        $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 3, 7);
+        $value11 = substr($nom[0], 3, 4);
         $value22 = STRVAL($value11) + 1;
         $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
         $tahun = substr($this->session->userdata['periode'], -4);
@@ -284,10 +210,42 @@ class Transaksi_PesananLBBA extends CI_Controller
         if (substr($this->session->userdata['periode'], 0, 2) == 12) {
             $romawi = 'XII';
         }
-        // PP / NOMER / DR / BULAN / TAHUN / RND
-        $bukti = 'PP' . '/' . $urut . '/' . "LB" . '/' . $dr . '/' . $romawi . '/' . $tahun;
+        // PP / NOMER / DR / BULAN / TAHUN / CNC
+        // $bukti = 'PP' . '/' . $urut . '/' . "LB" . '/' . $dr . '/' . $romawi . '/' . $tahun;
+        $bukti = 'PP' . '/' . $urut . '/' . $dr . '/' . "MB" .  '/' . $romawi . '/' . $tahun;
+        $this->session->set_userdata('bukti', $bukti);
+        $this->load->view('templates_admin/header');
+        $this->load->view('templates_admin/navbar');
+        $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form');
+        $this->load->view('templates_admin/footer');
+    }
+
+    public function input_aksi()
+    {
+
+        $config['upload_path']          = './gambar/';
+		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+		$config['max_size']             = 1000;
+		$config['max_width']            = 3024;
+		$config['max_height']           = 3680;
+        $new_name = 'IMG'.time().$_FILES['name'];
+        $config['file_name']            = $new_name; 
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('GAMBAR1')){
+			$error = array('error' => $this->upload->display_errors());
+			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form', $error);
+		}else{
+			$data = array('upload_data' => $this->upload->data());
+			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
+		}
+
+        $per = $this->session->userdata['periode'];
+        $dr = $this->session->userdata['dr'];
+        $sub = $this->session->userdata['sub'];
         $datah = array(
-            'NO_BUKTI' => $bukti,
+            'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
             'DEVISI' => $this->input->post('DEVISI', TRUE),
@@ -295,8 +253,8 @@ class Transaksi_PesananLBBA extends CI_Controller
             'PESAN' => $this->input->post('PESAN', TRUE),
             'JO' => $this->input->post('JO', TRUE),
             'FLAG3' => $this->input->post('FLAG3', TRUE),
-            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
-            'FLAG' => 'PBL',
+            'GAMBAR1' => $this->upload->data('file_name'),
+            'FLAG' => 'PP',
             'FLAG2' => 'SP',
             'TYP' => 'RND_LBBA',
             'SUB' => 'MB',
@@ -344,23 +302,26 @@ class Transaksi_PesananLBBA extends CI_Controller
 
     public function update_aksi()
     {
-
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
 		$config['max_size']             = 1000;
 		$config['max_width']            = 3024;
 		$config['max_height']           = 3680;
-        $new_name = time().$_FILES['name'];
+        $new_name = 'IMG'.time().$_FILES['name'];
         $config['file_name']            = $new_name; 
 
         $this->load->library('upload', $config);
 
         if ( ! $this->upload->do_upload('GAMBAR1')){
 			$error = array('error' => $this->upload->display_errors());
+            $GAMBAR1 = $this->input->post('G1', TRUE);
 			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form', $error);
 		}else{
-			$data = array('upload_data' => $this->upload->data());
-			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
+            $G1 = $this->input->post('G1', TRUE);
+            unlink(FCPATH."gambar/".$G1);
+            $data = array('upload_data' => $this->upload->data());
+            $GAMBAR1 = $this->upload->data('file_name');
+			// $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
 		}
 
         $NO_ID = $this->input->post('NO_ID');
@@ -373,7 +334,7 @@ class Transaksi_PesananLBBA extends CI_Controller
             'PESAN' => $this->input->post('PESAN', TRUE),
             'JO' => $this->input->post('JO', TRUE),
             'FLAG3' => $this->input->post('FLAG3', TRUE),
-            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
+            'GAMBAR1' => $GAMBAR1,
         );
         $where = array(
             'NO_ID' => $NO_ID

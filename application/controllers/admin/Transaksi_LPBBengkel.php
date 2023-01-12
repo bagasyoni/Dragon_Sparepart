@@ -494,7 +494,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
         $perPage = 10;
         $results = $this->db->query("SELECT bhn.NO_ID AS NO_ID, bhn.KD_BHN AS KD_BHN, bhn.NA_BHN AS NA_BHN, bhn.SATUAN AS SATUAN, bhnd.RAK AS RAK
             FROM bhn, bhnd
-            WHERE bhn.KD_BHN = bhnd.KD_BHN AND bhn.DR = '$dr' AND bhn.FLAG = 'SP' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%' OR bhn.SATUAN LIKE '%$search%')
+            WHERE bhn.KD_BHN = bhnd.KD_BHN AND bhn.DR = '$dr' AND bhn.FLAG = 'SP' AND bhnd.sub='SP' AND (bhn.KD_BHN LIKE '%$search%' OR bhn.NA_BHN LIKE '%$search%' OR bhn.SATUAN LIKE '%$search%' OR bhnd.RAK LIKE '%$search%')
             GROUP BY bhnd.KD_BHN 
             ORDER BY bhn.KD_BHN LIMIT $xa,$perPage");
         $selectajax = array();
@@ -502,7 +502,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
             $selectajax[] = array(
                 'id' => $row['KD_BHN'],
                 'text' => $row['KD_BHN'],
-                'KD_BHN' => $row['KD_BHN'] . " - " . $row['NA_BHN'] . " - " . $row['SATUAN'],
+                'KD_BHN' => $row['KD_BHN'] . " - " . $row['NA_BHN'] . " - " . $row['RAK'],
                 'NA_BHN' => $row['NA_BHN'],
                 'SATUAN' => $row['SATUAN'],
                 'RAK' => $row['RAK'],
