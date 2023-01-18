@@ -222,7 +222,6 @@ class Transaksi_PesananLBBA extends CI_Controller
 
     public function input_aksi()
     {
-
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
 		$config['max_size']             = 1000;
@@ -244,6 +243,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
+        $bukti = $this->input->post('NO_BUKTI', TRUE);
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
@@ -264,6 +264,61 @@ class Transaksi_PesananLBBA extends CI_Controller
             'TG_SMP' => date("Y-m-d h:i a")
         );
         $this->transaksi_model->input_datah('pp', $datah);
+        $ID = $this->db->query("SELECT MAX(NO_ID) AS NO_ID FROM pp WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
+        $REC = $this->input->post('REC');
+        $NA_BHN = $this->input->post('NA_BHN');
+        $KD_BHN = $this->input->post('KD_BHN');
+        $WARNA = $this->input->post('WARNA');
+        $SERI = $this->input->post('SERI');
+        $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
+        $SATUAN = $this->input->post('SATUAN');
+        $KET = $this->input->post('KET');
+        $KET = $this->input->post('KET');
+        $TGL_DIMINTAX = date("Y-m-d", strtotime($this->input->post('TGL_DIMINTAX', TRUE)));
+        $i = 0;
+        foreach ($REC as $a) {
+            $config['upload_path']          = './gambar/';
+            $config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+            $config['max_size']             = 1000;
+            $config['max_width']            = 3024;
+            $config['max_height']           = 3680;
+            $new_name = 'IMG'.$bukti.$REC[$i];
+            $config['file_name']            = $new_name; 
+
+            $this->load->library('upload', $config);
+
+            if ( ! $this->upload->do_upload('GAMBAR1X'.$i)){
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form', $error);
+            }else{
+                $data = array('upload_data' => $this->upload->data());
+                $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
+            }
+
+            $datad = array(
+                'ID' => $ID[0]->NO_ID,
+                'NO_BUKTI' => $bukti,
+                'REC' => $REC[$i],
+                'NA_BHN' => $NA_BHN[$i],
+                'KD_BHN' => $KD_BHN[$i],
+                'WARNA' => $WARNA[$i],
+                'SERI' => $SERI[$i],
+                'QTY' => str_replace(',', '', $QTY[$i]),
+                'SATUAN' => $SATUAN[$i],
+                'KET' => $KET[$i],
+                'GAMBAR1' => $this->upload->data('file_name'),
+                'TGL_DIMINTA' => $TGL_DIMINTAX[$i],
+                'FLAG' => 'PP',
+                'SUB' => 'MB',
+                'TYP' => 'RND_LBBA',
+                'DR' => $this->session->userdata['dr'],
+                'PER' => $this->session->userdata['periode'],
+                'USRNM' => $this->session->userdata['username'],
+                'TG_SMP' => date("Y-m-d h:i a")
+            );
+            $this->transaksi_model->input_datad('ppd', $datad);
+            $i++;
+        }
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 

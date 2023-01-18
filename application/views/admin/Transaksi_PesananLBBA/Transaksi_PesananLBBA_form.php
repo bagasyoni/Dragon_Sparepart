@@ -220,7 +220,7 @@
 							<label class="label">Tanggal Diminta </label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+							<input type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {echo $_POST["TGL"];} else echo date('d-m-Y'); ?>" onclick="select()">
 						</div>
 						<div class="col-md-2">
 						</div>
@@ -261,7 +261,69 @@
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="table-responsive scrollable">
+					<table id="datatable" class="table table-hoverx table-stripedx table-borderedx table-condensed table-scrollable">
+						<thead>
+							<tr>
+								<th width="40px">No</th>
+								<th width="150px">Komponen</th>
+								<th width="100px">Kode Bahan</th>
+								<th width="100px">Tgl Minta</th>
+								<th width="150px">Warna</th>
+								<th width="120px">Serian</th>
+								<th width="75px">Qty</th>
+								<th width="75px">Satuan</th>
+								<th width="175px">Keterangan</th>
+								<th width="175px">Gambar</th>
+								<th width="50px"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
+								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" required></td>
+								<td><input name="KD_BHN[]" id="KD_BHN0" type="text" class="form-control KD_BHN text_input" required></td>
+								<td><input type="text" class="date form-control TGL_DIMINTAX text_input" id="TGL_DIMINTAX0" name="TGL_DIMINTAX[]" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {echo $_POST["TGL"];} else echo date('d-m-Y'); ?>" onclick="select()">
+								<td><input name="WARNA[]" id="WARNA0" type="text" class="form-control WARNA text_input"></td>
+								<td><input name="SERI[]" id="SERI0" type="text" class="form-control SERI text_input"></td>
+								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
+								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
+								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
+								<td><input type="file" name="GAMBAR1X0" id="GAMBAR1X0" accept="image/png, image/jpeg, image/jpg, image/bmp"></td>
+								<td>
+									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+										<i class="fa fa-fw fa-trash-alt"></i>
+									</button> -->
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
 		<br><br>
+		<div class="col-md-12">
+			<div class="form-group row">
+				<div class="col-md-1">
+					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
+				</div>
+			</div>
+		</div>
+		<br>
 		<div class="row">
 			<div class="col-xs-9">
 				<div class="wells">
@@ -375,7 +437,7 @@
 		$('#TOTAL').autoNumeric('update');
 	}
 
-	 	function tambah() {
+	function tambah() {
 
 		var x = document.getElementById('datatable').insertRow(idrow + 1);
 		var td1 = x.insertCell(0);
@@ -383,6 +445,12 @@
 		var td3 = x.insertCell(2);
 		var td4 = x.insertCell(3);
 		var td5 = x.insertCell(4);
+		var td6 = x.insertCell(5);
+		var td7 = x.insertCell(6);
+		var td8 = x.insertCell(7);
+		var td9 = x.insertCell(8);
+		var td10 = x.insertCell(9);
+		var td11 = x.insertCell(10);
 
 		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()' required></select></div>";
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
@@ -391,10 +459,16 @@
 		var kd_bhn = kd_bhn0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = "<input name='SIZE[]' id=SIZE" + idrow + " type='text' class='form-control SIZE text_input' required>";
-		td3.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' required>";
-		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
-		td5.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+		td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' required>";
+		td3.innerHTML = "<input name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' required>";
+		td4.innerHTML = "<input type='text' class='date form-control TGL_DIMINTA text_input' id='TGL_DIMINTAX" + idrow + "' name='TGL_DIMINTAX[]' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {echo $_POST["TGL"];} else echo date('d-m-Y'); ?>' onclick='select()'>";
+		td5.innerHTML = "<input name='WARNA[]' id=WARNA" + idrow + " type='text' class='form-control WARNA text_input' required>";
+		td6.innerHTML = "<input name='SERI[]' id=SERI" + idrow + " type='text' class='form-control SERI text_input'>";
+		td7.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
+		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
+		td9.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
+		td10.innerHTML = "<input type='file' name=GAMBAR1X" + idrow + " id=GAMBAR1X" + idrow + " accept='image/png, image/jpeg, image/jpg, image/bmp'>";
+		td11.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -421,6 +495,9 @@
 			this.value ^= 1;
 			console.log(this.value)
 		});
+		$(".date").datepicker({
+			'dateFormat': 'dd-mm-yy',
+		})
 		select_no_bon();
 		select_kd_bhn();
 	}
