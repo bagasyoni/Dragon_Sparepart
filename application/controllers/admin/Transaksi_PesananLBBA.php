@@ -222,15 +222,17 @@ class Transaksi_PesananLBBA extends CI_Controller
 
     public function input_aksi()
     {
+        $bukti = $this->input->post('NO_BUKTI', TRUE);
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
 		$config['max_size']             = 1000;
 		$config['max_width']            = 3024;
 		$config['max_height']           = 3680;
-        $new_name = 'IMG'.time().$_FILES['name'];
+        $new_name = 'IMG'.$bukti;
         $config['file_name']            = $new_name; 
 
         $this->load->library('upload', $config);
+        $this->upload->initialize($config);
 
         if ( ! $this->upload->do_upload('GAMBAR1')){
 			$error = array('error' => $this->upload->display_errors());
@@ -243,7 +245,6 @@ class Transaksi_PesananLBBA extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
-        $bukti = $this->input->post('NO_BUKTI', TRUE);
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
@@ -277,15 +278,16 @@ class Transaksi_PesananLBBA extends CI_Controller
         $TGL_DIMINTAX = date("Y-m-d", strtotime($this->input->post('TGL_DIMINTAX', TRUE)));
         $i = 0;
         foreach ($REC as $a) {
-            $config['upload_path']          = './gambar/';
-            $config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-            $config['max_size']             = 1000;
-            $config['max_width']            = 3024;
-            $config['max_height']           = 3680;
-            $new_name = 'IMG'.$bukti.$REC[$i];
-            $config['file_name']            = $new_name; 
+            $configx['upload_path']          = './gambar/';
+            $configx['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+            $configx['max_size']             = 1000;
+            $configx['max_width']            = 3024;
+            $configx['max_height']           = 3680;
+            $new_name = 'IMGD'.$bukti.'-'.$REC[$i];
+            $configx['file_name']            = $new_name; 
 
-            $this->load->library('upload', $config);
+            $this->load->library('upload', $configx);
+            $this->upload->initialize($configx);
 
             if ( ! $this->upload->do_upload('GAMBAR1X'.$i)){
                 $error = array('error' => $this->upload->display_errors());
@@ -578,7 +580,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         include_once("phpjasperxml/class/PHPJasperXML.inc.php");
         include_once("phpjasperxml/setting.php");
         $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_PPStok.jrxml");
+        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_MELLBBA.jrxml");
         $no_id = $id;
         $query = "SELECT pp.no_id as ID,
                 pp.no_sp AS MODEL,
