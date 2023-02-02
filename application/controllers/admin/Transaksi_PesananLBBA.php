@@ -107,7 +107,8 @@ class Transaksi_PesananLBBA extends CI_Controller
         $data = array();
         $no = @$_POST['start'];
         foreach ($list as $pp) {
-            $JASPER = "window.open('JASPER/" . $pp->NO_ID . "','', 'width=1000','height=900');";
+            // $JASPER = "window.open('JASPER/" . $pp->NO_ID . "','', 'width=1000','height=900');";
+            // <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
             $no++;
             $row = array();
             $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $pp->NO_ID . "'>";
@@ -119,7 +120,7 @@ class Transaksi_PesananLBBA extends CI_Controller
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananLBBA/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananLBBA/validasi/' . $pp->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananLBBA/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
-                            <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
+                            <a name="NO_ID" class="dropdown-item" href="#" data-toggle="modal" data-target="#melbbaModal";"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
