@@ -47,6 +47,7 @@ class Auth extends CI_Controller
             $cek = $this->login_model->cek_login($user, $pass);
             if ($cek->num_rows() > 0) {
                 foreach ($cek->result() as $ck) {
+                    
                     $sess_data['id'] = $ck->NO_ID;
                     // set data font dari model
                     $font       = $this->font_model->get_font($sess_data['id']);
@@ -56,6 +57,7 @@ class Auth extends CI_Controller
                     $sess_data['font'] = $font;
                     $sess_data['id_font'] = $id_font;
                     $sess_data['size_font'] = $size_font;
+					$sess_data['kd_gd'] = $ck->KD_GD;
                     $sess_data['username'] = $ck->USERNAME;
                     $sess_data['level'] = $ck->AKSES;
                     $sess_data['super_admin'] = $ck->SUPER_ADMIN;
@@ -67,6 +69,7 @@ class Auth extends CI_Controller
                     $sess_data['judul'] = '';
                     $sess_data['menu_sparepart'] = '';
                     $this->session->set_userdata($sess_data);
+                
                 }
                 if ($sess_data['level'] != '') {
                     redirect('admin/dashboard');
@@ -102,4 +105,24 @@ class Auth extends CI_Controller
         $this->session->sess_destroy();
         redirect('admin/auth');
     }
+
+    public function fetch()
+	{
+		$level =  $this->session->userdata['kd_gd'];
+		if($level == 'SP1') 
+		{
+			$total = 0;
+			if(array_key_exists('dr', $this->session->userdata))
+			{
+				$dr = $this->session->userdata['dr'];
+				$sub = $this->session->userdata['sub'];
+
+				$total = count($this->db->query("selecT * from bon where DR = '$dr' and OK = 0 and TTD2 = ''")->result());
+
+				if($total) { 
+					echo '<iframe src="' . base_url('assets/sirine.mp3') . '" allow="autoplay" id="audio" style="display: none"></iframe>';
+				} 
+			} 
+		 }
+	}
 }

@@ -24,6 +24,7 @@ class Login_model extends CI_Model {
                     $sess_data ['password'] = $ck->PASSWORD;
                     $sess_data ['level'] = $ck->AKSES;
                     $sess_data ['periode'] = $periode;
+					$sess_data ['kd_gd'] = $ck->KD_GD;
                     // session sparepart
                     $sess_data ['super_admin'] = $ck->SUPER_ADMIN;
                     $sess_data ['dr'] = $ck->DR;

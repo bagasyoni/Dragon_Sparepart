@@ -118,7 +118,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Barang_Masuk/update/' . $beli->NO_ID) . '"> <i class="fa fa-edit"></i> Validasi</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Barang_Masuk/update/' . $beli->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             </div>
                             </div>';
             // <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>

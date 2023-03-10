@@ -260,7 +260,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         $KET1 = $this->input->post('KET1');
         $KET2 = $this->input->post('KET2');
         $GRUP = $this->input->post('GRUP');
-        $NA_GOL = $this->input->post('NA_GOL');
+        $NA_GOL = str_replace(NULL,'-', $this->input->post('NA_GOL'));
         $i = 0;
         foreach ($REC as $a) {
             $datad = array(

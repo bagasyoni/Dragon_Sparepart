@@ -362,7 +362,7 @@
 
 		var rak = rak0;
 
-		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET2" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()' required></select></div>";
+		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET2" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()'></select></div>";
 
 		var kd_gol = kd_gol0;
 
