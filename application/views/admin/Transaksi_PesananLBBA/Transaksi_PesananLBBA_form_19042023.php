@@ -251,18 +251,18 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<input onchange="loadFile(event)" type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
-						 <img style="display:none;width:150px;height:150px;" id="GAMBAR1PREVIEW" src="#"  />
-						 <script>
-						  var loadFile = function(event) {
+						<input type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<img style="display:none;width:150px;height:150px;" id="GAMBAR1PREVIEW" src="#"  />
+						<script>
+							var loadFile = function(event) {
 							var output = document.getElementById('GAMBAR1PREVIEW');
 							output.src = URL.createObjectURL(event.target.files[0]);
 							output.onload = function() {
-							  URL.revokeObjectURL(output.src) // free memory
+								URL.revokeObjectURL(output.src) // free memory
 							}
 							
 							$("#GAMBAR1PREVIEW").show();
-						  };
+							};
 						</script>
 						</div>
 					</div>
@@ -303,28 +303,21 @@
 								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
 								<td><input name="KET[]" id="KET0" type="text" class="form-control KET text_input"></td>
-								<td><input class="GAMBAR1X0" type="file" name="GAMBAR1X0" id="GAMBAR1X0" accept="image/png, image/jpeg, image/jpg, image/bmp">
+								<td><input type="file" name="GAMBAR1X0" id="GAMBAR1X0" accept="image/png, image/jpeg, image/jpg, image/bmp">
 								<img class="GAMBAR1PREVIEW2" src="#" style="display:none;width:150px;height:150px;" />
-								 <script>
-								
-								 $("body").on("change", ".GAMBAR1X0", function(event)
-								 {
-									
-									var output = $(this).parents("tr").find(".GAMBAR1PREVIEW2");
-									
-									output.attr("src", URL.createObjectURL(event.target.files[0]));
-									
-									output.onload = function() {
-									  URL.revokeObjectURL(output.src) // free memory
-									}
-									output.show();
-								  });
+								<script>
+									$("body").on("change", ".GAMBAR1X0", function(event)
+									{
+										var output = $(this).parents("tr").find(".GAMBAR1PREVIEW2");
+										
+										output.attr("src", URL.createObjectURL(event.target.files[0]));
+										
+										output.onload = function() {
+											URL.revokeObjectURL(output.src) // free memory
+										}
+										output.show();
+									});
 								</script>
-								</td>
-								<td>
-									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
-										<i class="fa fa-fw fa-trash-alt"></i>
-									</button> -->
 								</td>
 							</tr>
 						</tbody>

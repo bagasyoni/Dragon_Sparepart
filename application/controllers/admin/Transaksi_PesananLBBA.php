@@ -120,7 +120,22 @@ class Transaksi_PesananLBBA extends CI_Controller
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananLBBA/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananLBBA/validasi/' . $pp->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananLBBA/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
-                            <a name="NO_ID" class="dropdown-item" href="#" data-toggle="modal" data-target="#melbbaModal";"><i class="fa fa-print"></i> Print</a>
+                            <a name="NO_ID" data-ttd1 = "' . $pp->TTD1_USR . '" 
+							data-ttd1d = "' . $pp->TTD1_SMP . '"
+							data-ttd2 = "' . $pp->TTD2_USR . '" 
+							data-ttd2d = "' . $pp->TTD2_SMP . '"
+							data-ttd3 = "' . $pp->TTD3_USR . '" 
+							data-ttd3d = "' . $pp->TTD3_SMP . '"
+							data-ttd4 = "' . $pp->TTD4_USR . '" 
+							data-ttd4d = "' . $pp->TTD4_SMP . '"
+							data-ttd5 = "' . $pp->TTD5_USR . '" 
+							data-ttd5d = "' . $pp->TTD5_SMP . '"
+							data-ttd6 = "' . $pp->TTD6_USR . '" 
+							data-ttd6d = "' . $pp->TTD6_SMP . '"
+							data-ttd7 = "' . $pp->TTD7_USR . '" 
+							data-ttd7d = "' . $pp->TTD7_SMP . '"
+							data-id = "' . $pp->NO_ID . '" 
+							data-no="' . $pp->NO_BUKTI . '" class="dropdown-item" href="#" data-toggle="modal" data-target="#melbbaModal";"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
@@ -132,8 +147,12 @@ class Transaksi_PesananLBBA extends CI_Controller
             $row[] = $pp->PESAN;
             $row[] = $pp->JO;
             $row[] = $pp->FLAG3;
-            $row[] = $pp->GAMBAR1;
-            $row[] = $pp->VAL;
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/$pp->GAMBAR1' width='auto' height='120'>";
+            if($pp->VAL==1){
+                $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
+            }else{
+                $row[] = "<button type='button' class='btn btn-block btn-danger' fdprocessedid='fbns9l'>Belum Validasi</button>";
+            }
             $data[] = $row;
         }
         $output = array(
