@@ -196,11 +196,26 @@
 				</div>
 				<div class="col-md-12">
 					<div class="form-group row">
-						<div class="col-md-1">
-							<label class="label">Gambar </label>
+						<div class="col-md-4">
+							<label class="label">Gambar Cetakan Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
 						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
 						<div class="col-md-2">
-						<input type="file" name="GAMBAR" id="GAMBAR" accept="image/png, image/jpeg, image/jpg, image/gif">
+						<input onchange="loadFile(event)" type="file" name="GAMBAR" id="GAMBAR" accept="image/png, image/jpeg, image/jpg, image/gif">
+						<img style="display:none;width:150px;height:150px;" id="GAMBAR1PREVIEW" src="#"  />
+						<script>
+							var loadFile = function(event) {
+								var output = document.getElementById('GAMBAR1PREVIEW');
+								output.src = URL.createObjectURL(event.target.files[0]);
+								output.onload = function() {
+									URL.revokeObjectURL(output.src) // free memory
+								}
+								$("#GAMBAR1PREVIEW").show();
+							};
+						</script>
 						</div>
 					</div>
 				</div>
