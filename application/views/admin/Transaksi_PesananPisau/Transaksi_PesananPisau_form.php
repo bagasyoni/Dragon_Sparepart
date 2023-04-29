@@ -249,7 +249,20 @@
 								<td>
 									<input name="TGL_DIMINTA_D[]" id="TGL_DIMINTA_D0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																		} else echo date('d-m-Y'); ?>" onclick="select()">
 								</td>
-								<td><input name="GAMBAR1[]" id="GAMBAR10" type="file" accept="image/png, image/jpeg, image/jpg, image/gif"></td>
+								<td><input class="GAMBAR1X0" name="GAMBAR1X[]" id="GAMBAR1X0" type="file" accept="image/png, image/jpeg, image/jpg, image/gif">
+									<img class="GAMBAR1PREVIEW2" src="#" style="display:none;width:150px;height:150px;" />
+									<script>
+									$("body").on("change", ".GAMBAR1X0", function(event)
+									{
+										var output = $(this).parents("tr").find(".GAMBAR1PREVIEW2");
+										output.attr("src", URL.createObjectURL(event.target.files[0]));
+										output.onload = function() {
+										URL.revokeObjectURL(output.src) // free memory
+										}
+										output.show();
+									});
+									</script>
+								</td>
 								<td>
 									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
@@ -430,7 +443,7 @@
 		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' required>";
 		td6.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
 		td7.innerHTML = "<input name='TGL_DIMINTA_D[]' ocnlick='select()' id=TGL_DIMINTA_D" + idrow + " type='text' class='date form-control TGL_DIMINTA_D text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {} else echo date('d-m-Y'); ?>'>";
-		td8.innerHTML = "<input name='GAMBAR1[]' id=GAMBAR1" + idrow + " type='file' accept='image/png, image/jpeg, image/jpg, image/gif'>";
+		td8.innerHTML = "<input class='GAMBAR1X0' name='GAMBAR1X[]' id=GAMBAR1X" + idrow + " type='file' accept='image/png, image/jpeg, image/jpg, image/gif'><img class='GAMBAR1PREVIEW2' src='#' style='display:none;width:150px;height:150px;' />";
 		td9.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
