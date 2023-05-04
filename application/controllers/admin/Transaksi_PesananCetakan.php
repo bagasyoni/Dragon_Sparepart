@@ -133,7 +133,13 @@ class Transaksi_PesananCetakan extends CI_Controller
             $row[] = $pp->JENIS;
             $row[] = $pp->FLAG;
             $row[] = $pp->TUJUAN;
-            $row[] = $pp->GAMBAR1;
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/$pp->GAMBAR1' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/$pp->GAMBAR2' width='auto' height='120'>";
+            if($pp->VAL==1){
+                $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
+            }else{
+                $row[] = "<button type='button' class='btn btn-block btn-danger' fdprocessedid='fbns9l'>Belum Validasi</button>";
+            }
             $data[] = $row;
         }
         $output = array(
@@ -153,6 +159,7 @@ class Transaksi_PesananCetakan extends CI_Controller
             'PER' => $per,
             'DR' => $dr,
             'SUB' => 'CI',
+            'FLAG' => 'LOKAL',
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_CETAK',

@@ -104,6 +104,8 @@
                         <th width="75px">Flag</th>
                         <th width="200px">Tujuan</th>
                         <th width="200px">Gambar</th>
+                        <th width="200px">Sepatu</th>
+                        <th width="100px">Status</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -155,6 +155,7 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             'PER' => $per,
             'DR' => $dr,
             'SUB' => 'CI',
+            'FLAG' => 'IMPORT',
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
             // 'FLAG3' => 'IMPORT',
