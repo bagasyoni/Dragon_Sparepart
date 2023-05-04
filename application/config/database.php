@@ -75,12 +75,12 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	// 'hostname' => '26.162.162.191:3309',
-	'hostname' => 'localhost:3309',
+	'hostname' => 'localhost:3306',
 	'username' => 'root',
-	'password' => '123456',
-	'database' => 'db_intidragon',
-	// 'port' => '3306',
+	// 'password' => '123456',
+	'password' => '',
+	'database' => 'dragon_fixed_test',
+	'port' => '3306',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
