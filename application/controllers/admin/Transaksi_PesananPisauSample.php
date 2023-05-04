@@ -104,7 +104,26 @@ class Transaksi_PesananPisauSample extends CI_Controller
         $data = array();
         $no = @$_POST['start'];
         foreach ($list as $pp) {
-            $JASPER = "window.open('JASPER/" . $pp->NO_ID . "','', 'width=1000','height=900');";
+            // $JASPER = "window.open('JASPER/" . $pp->NO_ID . "','', 'width=1000','height=900');";
+            // $no++;
+            // $row = array();
+            // $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $pp->NO_ID . "'>";
+            // $row[] = '<div class="dropdown">
+            //             <a style="background-color: #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            //                 <i class="fa fa-bars icon" style="font-size: 13px;"></i>
+            //             </a>
+            //             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            //                 <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananPisauSample/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+            //                 <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananPisauSample/validasi/' . $pp->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
+            //                 <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananPisauSample/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
+            //                 <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
+            //             </div>
+            //         </div>';
+            if($pp->TTD7 == 0){
+                $hidden = '';
+            }else{
+                $hidden = 'hidden';
+            }
             $no++;
             $row = array();
             $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $pp->NO_ID . "'>";
@@ -113,18 +132,42 @@ class Transaksi_PesananPisauSample extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananPisauSample/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a '.$hidden.' class="dropdown-item" href="' . site_url('admin/Transaksi_PesananPisauSample/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananPisauSample/validasi/' . $pp->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananPisauSample/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
-                            <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
+                            <a name="NO_ID" data-ttd1 = "' . $pp->TTD1_USR . '" 
+							data-ttd1d = "' . $pp->TTD1_SMP . '"
+							data-ttd2 = "' . $pp->TTD2_USR . '" 
+							data-ttd2d = "' . $pp->TTD2_SMP . '"
+							data-ttd3 = "' . $pp->TTD3_USR . '" 
+							data-ttd3d = "' . $pp->TTD3_SMP . '"
+							data-ttd4 = "' . $pp->TTD4_USR . '" 
+							data-ttd4d = "' . $pp->TTD4_SMP . '"
+							data-ttd5 = "' . $pp->TTD5_USR . '" 
+							data-ttd5d = "' . $pp->TTD5_SMP . '"
+							data-ttd6 = "' . $pp->TTD6_USR . '" 
+							data-ttd6d = "' . $pp->TTD6_SMP . '"
+							data-ttd7 = "' . $pp->TTD7_USR . '" 
+							data-ttd7d = "' . $pp->TTD7_SMP . '"
+							data-id = "' . $pp->NO_ID . '" 
+							data-no="' . $pp->NO_BUKTI . '" class="dropdown-item" href="#" data-toggle="modal" data-target="#pisausampleModal";"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
             $row[] = date("d-m-Y", strtotime($pp->TGL));
+            $row[] = date("d-m-Y", strtotime($pp->TGL_DIMINTA));
+            $row[] = $pp->DEVISI;
             $row[] = $pp->ARTICLE;
+            $row[] = $pp->TS;
             $row[] = $pp->PESAN;
-            $row[] = $pp->GAMBAR1;
+            $row[] = $pp->TUJUAN;
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/$pp->GAMBAR1' width='auto' height='120'>";
+            if($pp->VAL==1){
+                $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
+            }else{
+                $row[] = "<button type='button' class='btn btn-block btn-danger' fdprocessedid='fbns9l'>Belum Validasi</button>";
+            }
             $data[] = $row;
         }
         $output = array(
@@ -221,11 +264,16 @@ class Transaksi_PesananPisauSample extends CI_Controller
 
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-        $na_gambar1                     = '-SPT-'; 
-        $gambar                         = $number;
-        $config['file_name']            = $sub.$na_gambar1.$tgl.'-'.$gambar;
+        // $config['max_size']             = 1000;
+		// $config['max_width']            = 3024;
+		// $config['max_height']           = 3680;
+        // $config['width']            = 1000;
+		// $config['height']           = 800;
+        $new_name = 'IMG'.$bukti;
+        $config['file_name']            = $new_name; 
 
         $this->load->library('upload', $config);
+        $this->upload->initialize($config);
 
         if ( ! $this->upload->do_upload('GAMBAR1')){
 			$error = array('error' => $this->upload->display_errors());

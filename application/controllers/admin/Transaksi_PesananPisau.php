@@ -258,13 +258,16 @@ class Transaksi_PesananPisau extends CI_Controller
     {
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-		$config['max_size']             = 1000;
-		$config['max_width']            = 3024;
-		$config['max_height']           = 3680;
-        $new_name = time().$_FILES['name'];
+		// $config['max_size']             = 1000;
+		// $config['max_width']            = 3024;
+		// $config['max_height']           = 3680;
+        // $config['width']            = 1000;
+		// $config['height']           = 800;
+        $new_name = 'IMG'.$bukti;
         $config['file_name']            = $new_name; 
 
         $this->load->library('upload', $config);
+        $this->upload->initialize($config);
 
         if ( ! $this->upload->do_upload('GAMBAR1')){
 			$error = array('error' => $this->upload->display_errors());
