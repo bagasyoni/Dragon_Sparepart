@@ -26,8 +26,8 @@ class Transaksi_PesananPisau extends CI_Controller
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'KET');
-    var $column_search = array('NO_BUKTI', 'TGL', 'KET');
+    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'TGLM', 'SUB','KET');
+    var $column_search = array('NO_BUKTI', 'TGL', 'TGLM', 'SUB', 'KET');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query()

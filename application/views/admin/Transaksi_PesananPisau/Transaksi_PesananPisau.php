@@ -94,6 +94,8 @@
                         <th width="75px">No</th>
                         <th width="225px">No Bukti</th>
                         <th width="100px">Tanggal</th>
+                        <th width="100px">Tanggal Diminta</th>
+                        <th width="100px">Divisi</th>
                         <th width="225px">Article</th>
                         <th width="225px">Pesan</th>
                         <th width="225px">Gambar</th>
