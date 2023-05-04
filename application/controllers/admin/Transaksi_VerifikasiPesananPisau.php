@@ -117,7 +117,9 @@ class Transaksi_VerifikasiPesananPisau extends CI_Controller
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
             $row[] = date("d-m-Y", strtotime($pp->TGL));
+            $row[] = $pp->DEVISI;
             $row[] = $pp->KET;
+            $row[] = $pp->TS;
             $row[] = $pp->PESAN;
             $row[] = $pp->GAMBAR;
             $data[] = $row;

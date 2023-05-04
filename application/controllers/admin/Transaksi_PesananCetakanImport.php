@@ -136,6 +136,13 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             $row[] = $pp->PROSES;
             $row[] = $pp->FLAG;
             $row[] = "<img src='/Dragon_Sparepart/gambar/$pp->GAMBAR1' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart/gambar/$pp->GAMBAR2' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart/gambar/$pp->GAMBAR3' width='auto' height='120'>";
+            if($pp->VAL==1){
+                $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
+            }else{
+                $row[] = "<button type='button' class='btn btn-block btn-danger' fdprocessedid='fbns9l'>Belum Validasi</button>";
+            }
             $data[] = $row;
         }
         $output = array(
@@ -233,12 +240,17 @@ class Transaksi_PesananCetakanImport extends CI_Controller
 
         $config['upload_path']          = './gambar/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-        $na_gambar1                     = '-CTK-'; 
-        $na_gambar2                     = '-SPT-';
-        $gambar                         = $number;
-        $config['file_name']            = $sub.$na_gambar1.$tgl.'-'.$gambar;
+        // $na_gambar1                     = '-CTK-'; 
+        // $na_gambar2                     = '-SPT-';
+        // $gambar                         = $number;
+        // $config['file_name']            = $sub.$na_gambar1.$tgl.'-'.$gambar;
+
+        // $this->load->library('upload', $config);
+        $new_name = 'IMG'.$bukti;
+        $config['file_name']            = $new_name; 
 
         $this->load->library('upload', $config);
+        $this->upload->initialize($config);
 
         if ( ! $this->upload->do_upload('GAMBAR1') && ! $this->upload->do_upload('GAMBAR2') && ! $this->upload->do_upload('GAMBAR3')){
 			$error = array('error' => $this->upload->display_errors());
