@@ -136,6 +136,13 @@ class Transaksi_PesananCetakanImport extends CI_Controller
             $row[] = $pp->PROSES;
             $row[] = $pp->FLAG;
             $row[] = "<img src='/Dragon_Sparepart/gambar/$pp->GAMBAR1' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart/gambar/$pp->GAMBAR2' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart/gambar/$pp->GAMBAR3' width='auto' height='120'>";
+            if($pp->VAL==1){
+                $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
+            }else{
+                $row[] = "<button type='button' class='btn btn-block btn-danger' fdprocessedid='fbns9l'>Belum Validasi</button>";
+            }
             $data[] = $row;
         }
         $output = array(

@@ -103,7 +103,10 @@
                         <th width="200px">M Lasting</th>
                         <th width="200px">Proses</th>
                         <th width="75px">Flag</th>
-                        <th width="200px">Gambar</th>
+                        <th width="200px">Gambar 1</th>
+                        <th width="200px">Gambar 2</th>
+                        <th width="200px">Gambar 3</th>
+                        <th width="75px">Status</th>
                     </tr>
                 </thead>
                 <tbody>
