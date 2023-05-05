@@ -124,9 +124,10 @@ class Transaksi_BonPemakaian extends CI_Controller
             $row[] = $no . ".";
             $row[] = $pakai->NO_BUKTI;
             $row[] = date("d-m-Y", strtotime($pakai->TGL));
-            $row[] = $pakai->NOTES;
-            $row[] = $pakai->SUB;
+            $row[] = $pakai->USRNM;
             $row[] = $pakai->DR;
+            $row[] = $pakai->TUJUAN;
+            $row[] = $pakai->TG_SMP;
             $data[] = $row;
         }
         $output = array(

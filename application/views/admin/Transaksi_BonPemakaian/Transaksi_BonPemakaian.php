@@ -79,7 +79,7 @@
         <div class="alert alert-success alert-container" role="alert">
             <i class="fas fa-university"></i>
             <label>
-                Transaksi Bon Pemakaian
+                Data Bon
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
@@ -94,9 +94,10 @@
                         <th width="75px">No</th>
                         <th width="275px">No Bukti</th>
                         <th width="200px">Tgl</th>
-                        <th width="250px">Notes</th>
-                        <th width="170px">SP</th>
-                        <th width="75px">Dragon</th>
+                        <th width="250px">User</th>
+                        <th width="170px">DR</th>
+                        <th width="75px">Tujuan</th>
+                        <th width="200px">Tgl Simpan</th>
                     </tr>
                 </thead>
                 <tbody>

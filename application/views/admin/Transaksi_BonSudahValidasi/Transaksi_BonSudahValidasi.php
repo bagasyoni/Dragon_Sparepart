@@ -79,7 +79,7 @@
         <div class="alert alert-success alert-container" role="alert">
             <i class="fas fa-university"></i>
             <label>
-                Transaksi Pesanan LBBA
+                History Verifikasi
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
@@ -94,14 +94,10 @@
                         <th width="75px">No</th>
                         <th width="325px">No Bukti</th>
                         <th width="275px">Tanggal</th>
-                        <th width="275px">Tanggal Diminta</th>
-                        <th width="100px">Devisi</th>
-                        <th width="225px">Ket</th>
-                        <th width="200px">Pesan</th>
                         <th width="200px">Tujuan</th>
-                        <th width="200px">Flag</th>
-                        <th width="200px">Gambar</th>
-                        <th width="200px">Status</th>
+                        <th width="200px">Pemesan</th>
+                        <th width="200px">DR</th>
+                        <th width="200px">Verifikasi Sparepart</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -129,17 +129,7 @@
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NO_BUKTI text_input" id="NO_BUKTI" name="NO_BUKTI" type="text" value='' required>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-1">
-							<label class="label">Notes </label>
-						</div>
-						<div class="col-md-2">
-							<input class="form-control text_input NOTES text_input" id="NOTES" name="NOTES" type="text" value=''>
+							<input class="form-control text_input NO_BUKTI text_input" id="NO_BUKTI" name="NO_BUKTI" type="text" value='' readonly>
 						</div>
 						<div class="col-md-1">
 							<label class="label">Tgl </label>
@@ -148,6 +138,42 @@
 							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
 																																						echo $_POST["TGL"];
 																																					} else echo date('d-m-Y'); ?>" onclick="select()">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-1">
+							<label class="label">DR</label>
+						</div>
+						<div class="col-md-1 ">
+							<select class="form-control DR text_input" name="DR" id="DR" style="width: 100%;">
+								<option value="I" selected>1</option>
+								<option value="II">2</option>
+								<option value="III">3</option>
+							</select>
+						</div>
+						<div class="col-md-1">
+							<label class="label"></label>
+						</div>
+						<div class="col-md-1">
+							<label class="label">Tujaun</label>
+						</div>
+						<div class="col-md-2">
+							<select class="form-control TUJUAN text_input" name="TUJUAN" id="TUJUAN" style="width: 100%;">
+								<option value="" selected></option>
+								<option value="UM">UM</option>
+								<option value="SP">SP</option>
+								<option value="INV">INV</option>
+								<option value="ATK">ATK</option>
+								<option value="RND">RND</option>
+							</select>
+						</div>
+						<div class="col-md-1">
+							<label class="label">Notes </label>
+						</div>
+						<div class="col-md-2">
+							<input class="form-control text_input NOTES text_input" id="NOTES" name="NOTES" type="text" value=''>
 						</div>
 					</div>
 				</div>

@@ -146,18 +146,10 @@ class Transaksi_BonSudahValidasi extends CI_Controller
             $row[] = $no . ".";
             $row[] = $pp->NO_BUKTI;
             $row[] = date("d-m-Y", strtotime($pp->TGL));
-            $row[] = date("d-m-Y", strtotime($pp->TGL_DIMINTA));
-            $row[] = $pp->DEVISI;
-            $row[] = $pp->ARTICLE;
-            $row[] = $pp->PESAN;
-            $row[] = $pp->JO;
-            $row[] = $pp->FLAG3;
-            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/$pp->GAMBAR1' width='auto' height='120'>";
-            if($pp->VAL==1){
-                $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
-            }else{
-                $row[] = "<button type='button' class='btn btn-block btn-danger' fdprocessedid='fbns9l'>Belum Validasi</button>";
-            }
+            $row[] = $pp->TUJUAN;
+            $row[] = $pp->USRNM;
+            $row[] = $pp->DR;
+            $row[] = $pp->TTD2_SMP;
             $data[] = $row;
         }
         $output = array(
