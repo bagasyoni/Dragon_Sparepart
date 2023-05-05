@@ -187,14 +187,14 @@
 							<tr>
 								<th width="50px">No</th>
 								<!-- <th width="75px">Rak</th> -->
-								<th width="75px">Rak</th>
-								<th width="250px">Uraian</th>
-								<th width="75px">Qty</th>
-								<th width="100px">Satuan</th>
+								<th width="250px">Nama Barang</th>
+								<th width="250px">Ket Barang</th>
+								<th width="250px">Qty</th>
+								<th width="250px">Keterangan</th>
 								<!-- <th width="125px">Kode Golongan</th> -->
-								<th width="150px">Keterangan 1</th>
-								<th width="125px">Keterangan 2</th>
-								<th width="175px">Grup</th>
+								<th width="250px">Diterima Sparepart</th>
+								<!-- <th width="125px">Keterangan 2</th>
+								<th width="175px">Grup</th> -->
 								<th width="50px"></th>
 							</tr>
 						</thead>
@@ -204,17 +204,16 @@
 								<!-- <td>
 									<select class="js-example-responsive-rak form-control RAK0 text_input" name="RAK[]" id="RAK0" onchange="rak(this.id)" onfocusout="hitung()" required></select>
 								</td> -->
-								<td><input name="RAK[]" id="RAK0" type="text" class="form-control RAK text_input"></td>
-								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" readonly></td>
-								<td hidden><input name="KD_BHN[]" id="KD_BHN0" type="text" class="form-control KD_BHN text_input" readonly></td>
-								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
-								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
+								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" required></td>
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1 text_input"></td>
+								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
+								<td><input name="KET2[]" id="KET20" type="text" class="form-control KET2 text_input"></td>
+								<!-- <td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td> -->
 								<td>
-									<select class="js-example-responsive-sp_mesin form-control KET20 text_input" name="KET2[]" id="KET20" onchange="kd_gol(this.id)" onfocusout="hitung()"></select>
+								<input name="SP[]" id="SP0" type="checkbox" value="0" class="checkbox_container SP" unchecked onclick="return false">
 								</td>
 								<!-- <td hidden><input name="NA_GOL[]" id="NA_GOL0" type="text" class="form-control NA_GOL text_input" readonly></td> -->
-								<td><input name="GRUP[]" id="GRUP0" type="text" class="form-control GRUP text_input" readonly></td>
+								<!-- <td><input name="GRUP[]" id="GRUP0" type="text" class="form-control GRUP text_input" readonly></td> -->
 								<td>
 									<!-- <button type="hidden" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
