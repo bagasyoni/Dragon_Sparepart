@@ -75,12 +75,12 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost:3309',
+	'hostname' => 'localhost:3306',
 	'username' => 'root',
-	'password' => '123456',
-	// 'password' => '',
-	'database' => 'db_intidragon',
-	'port' => '3309',
+	// 'password' => '123456',
+	'password' => '',
+	'database' => 'dragon_fixed_test',
+	'port' => '3306',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -94,7 +94,6 @@ $db['default'] = array(
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),
-	'save_queries' => TRUE
 );
 
 // $db['default'] = array(
