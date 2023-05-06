@@ -167,10 +167,11 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'FLAG' => 'PK',
-            'SUB' => 'MB',
-            // 'FLAG2' => 'SP',
+            // 'SUB' => 'MB',
+            'FLAG2' => 'SP',
+            'TTD1_SMP' => '',
             // 'TYP' => 'RND_LBBA',
         );
         $data['pakai'] = $this->transaksi_model->tampil_data($where, 'pakai', 'NO_ID')->result();
