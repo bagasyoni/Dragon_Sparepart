@@ -224,7 +224,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "<?php echo site_url('admin/Transaksi_PesananLBBA/get_ajax_pp') ?>",
+                "url": "<?php echo site_url('admin/Transaksi_BonBelumValidasi/get_ajax_pakai') ?>",
                 "type": "POST"
             },
             "columnDefs": [{

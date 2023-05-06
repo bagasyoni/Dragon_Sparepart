@@ -19,8 +19,8 @@ class Transaksi_BonBelumValidasi extends CI_Controller
             );
             redirect('admin/auth');
         }
-        if ($this->session->userdata['menu_sparepart'] != 'pp') {
-            $this->session->set_userdata('menu_sparepart', 'pp');
+        if ($this->session->userdata['menu_sparepart'] != 'pakai') {
+            $this->session->set_userdata('menu_sparepart', 'pakai');
             $this->session->set_userdata('kode_menu', 'T0034');
             $this->session->set_userdata('keyword_pp', '');
             $this->session->set_userdata('order_pp', 'NO_ID');
@@ -38,13 +38,13 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $where = array(
             'PER' => $per,
             'DR' => $dr,
-            'FLAG' => 'PP',
+            'FLAG' => 'PK',
             'SUB' => 'MB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_LBBA',
         );
         $this->db->select('*');
-        $this->db->from('pp');
+        $this->db->from('pakai');
         $this->db->where($where);
         $i = 0;
         foreach ($this->column_search as $item) {
@@ -91,65 +91,65 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $where = array(
             'PER' => $per,
             'DR' => $dr,
-            'FLAG' => 'PP',
+            'FLAG' => 'PK',
             'SUB' => 'MB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_LBBA',
         );
-        $this->db->from('pp');
+        $this->db->from('pakai');
         $this->db->where($where);
         return $this->db->count_all_results();
     }
 
-    function get_ajax_pp()
+    function get_ajax_pakai()
     {
         $list = $this->get_datatables();
         $data = array();
         $no = @$_POST['start'];
-        foreach ($list as $pp) {
-            // $JASPER = "window.open('JASPER/" . $pp->NO_ID . "','', 'width=1000','height=900');";
+        foreach ($list as $pakai) {
+            // $JASPER = "window.open('JASPER/" . $pakai->NO_ID . "','', 'width=1000','height=900');";
             // <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
-            if($pp->TTD7 == 0){
+            if($pakai->TTD7 == 0){
                 $hidden = '';
             }else{
                 $hidden = 'hidden';
             }
             $no++;
             $row = array();
-            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $pp->NO_ID . "'>";
+            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $pakai->NO_ID . "'>";
             $row[] = '<div class="dropdown">
                         <a style="background-color: #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a '.$hidden.' class="dropdown-item" href="' . site_url('admin/Transaksi_BonBelumValidasi/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonBelumValidasi/validasi/' . $pp->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonBelumValidasi/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
-                            <a name="NO_ID" data-ttd1 = "' . $pp->TTD1_USR . '" 
-							data-ttd1d = "' . $pp->TTD1_SMP . '"
-							data-ttd2 = "' . $pp->TTD2_USR . '" 
-							data-ttd2d = "' . $pp->TTD2_SMP . '"
-							data-ttd3 = "' . $pp->TTD3_USR . '" 
-							data-ttd3d = "' . $pp->TTD3_SMP . '"
-							data-ttd4 = "' . $pp->TTD4_USR . '" 
-							data-ttd4d = "' . $pp->TTD4_SMP . '"
-							data-ttd5 = "' . $pp->TTD5_USR . '" 
-							data-ttd5d = "' . $pp->TTD5_SMP . '"
-							data-ttd6 = "' . $pp->TTD6_USR . '" 
-							data-ttd6d = "' . $pp->TTD6_SMP . '"
-							data-ttd7 = "' . $pp->TTD7_USR . '" 
-							data-ttd7d = "' . $pp->TTD7_SMP . '"
-							data-id = "' . $pp->NO_ID . '" 
-							data-no="' . $pp->NO_BUKTI . '" class="dropdown-item" href="#" data-toggle="modal" data-target="#melbbaModal";"><i class="fa fa-print"></i> Print</a>
+                            <a '.$hidden.' class="dropdown-item" href="' . site_url('admin/Transaksi_BonBelumValidasi/update/' . $pakai->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonBelumValidasi/validasi/' . $pakai->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonBelumValidasi/delete/' . $pakai->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
+                            <a name="NO_ID" data-ttd1 = "' . $pakai->TTD1_USR . '" 
+							data-ttd1d = "' . $pakai->TTD1_SMP . '"
+							data-ttd2 = "' . $pakai->TTD2_USR . '" 
+							data-ttd2d = "' . $pakai->TTD2_SMP . '"
+							data-ttd3 = "' . $pakai->TTD3_USR . '" 
+							data-ttd3d = "' . $pakai->TTD3_SMP . '"
+							data-ttd4 = "' . $pakai->TTD4_USR . '" 
+							data-ttd4d = "' . $pakai->TTD4_SMP . '"
+							data-ttd5 = "' . $pakai->TTD5_USR . '" 
+							data-ttd5d = "' . $pakai->TTD5_SMP . '"
+							data-ttd6 = "' . $pakai->TTD6_USR . '" 
+							data-ttd6d = "' . $pakai->TTD6_SMP . '"
+							data-ttd7 = "' . $pakai->TTD7_USR . '" 
+							data-ttd7d = "' . $pakai->TTD7_SMP . '"
+							data-id = "' . $pakai->NO_ID . '" 
+							data-no="' . $pakai->NO_BUKTI . '" class="dropdown-item" href="#" data-toggle="modal" data-target="#melbbaModal";"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
-            $row[] = $pp->NO_BUKTI;
-            $row[] = date("d-m-Y", strtotime($pp->TGL));
-            $row[] = $pp->TUJUAN;
-            $row[] = $pp->USRNM;
-            $row[] = $pp->DR;
-            $row[] = $pp->TTD1_SMP;
+            $row[] = $pakai->NO_BUKTI;
+            $row[] = date("d-m-Y", strtotime($pakai->TGL));
+            $row[] = $pakai->TUJUAN;
+            $row[] = $pakai->USRNM;
+            $row[] = $pakai->DR;
+            $row[] = $pakai->TTD1_SMP;
             $data[] = $row;
         }
         $output = array(
@@ -168,12 +168,12 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $where = array(
             'PER' => $per,
             'DR' => $dr,
-            'FLAG' => 'PP',
+            'FLAG' => 'PK',
             'SUB' => 'MB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_LBBA',
         );
-        $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
+        $data['pakai'] = $this->transaksi_model->tampil_data($where, 'pakai', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_BonBelumValidasi/Transaksi_BonBelumValidasi', $data);
@@ -185,7 +185,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT COALESCE(MAX(NO_BUKTI), 0) as NO_BUKTI FROM pp WHERE SUB='MB' AND PER='$per' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $nomer = $this->db->query("SELECT COALESCE(MAX(NO_BUKTI), 0) as NO_BUKTI FROM pakai WHERE SUB='MB' AND PER='$per' AND FLAG='PK' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         if($nom[0]=='0'){
             $value11 = 0;
@@ -231,9 +231,9 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         if (substr($this->session->userdata['periode'], 0, 2) == 12) {
             $romawi = 'XII';
         }
-        // PP / NOMER / DR / BULAN / TAHUN / CNC
-        // $bukti = 'PP' . '/' . $urut . '/' . "LB" . '/' . $dr . '/' . $romawi . '/' . $tahun;
-        $bukti = 'PP' . '/' . $urut . '/' . $dr . '/' . "MB" .  '/' . $romawi . '/' . $tahun;
+        // PK / NOMER / DR / BULAN / TAHUN / CNC
+        // $bukti = 'PK' . '/' . $urut . '/' . "LB" . '/' . $dr . '/' . $romawi . '/' . $tahun;
+        $bukti = 'PK' . '/' . $urut . '/' . $dr . '/' . "MB" .  '/' . $romawi . '/' . $tahun;
         $this->session->set_userdata('bukti', $bukti);
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
@@ -332,7 +332,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
             'JO' => $this->input->post('JO', TRUE),
             'FLAG3' => $this->input->post('FLAG3', TRUE),
             'GAMBAR1' => $this->upload->data('file_name'),
-            'FLAG' => 'PP',
+            'FLAG' => 'PK',
             'FLAG2' => 'SP',
             'TYP' => 'RND_MELBBA',
             'SUB' => 'MB',
@@ -341,8 +341,8 @@ class Transaksi_BonBelumValidasi extends CI_Controller
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
         );
-        $this->transaksi_model->input_datah('pp', $datah);
-        $ID = $this->db->query("SELECT MAX(NO_ID) AS NO_ID FROM pp WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
+        $this->transaksi_model->input_datah('pakai', $datah);
+        $ID = $this->db->query("SELECT MAX(NO_ID) AS NO_ID FROM pakai WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
         $REC = $this->input->post('REC');
         $NA_BHN = $this->input->post('NA_BHN');
         $KD_BHN = $this->input->post('KD_BHN');
@@ -391,7 +391,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
                 'KET' => $KET[$i],
                 'GAMBAR1' => $this->upload->data('file_name'),
                 'TGL_DIMINTA' => $TGL_DIMINTAX[$i],
-                'FLAG' => 'PP',
+                'FLAG' => 'PK',
                 'SUB' => 'MB',
                 'TYP' => 'RND_LBBA',
                 'DR' => $this->session->userdata['dr'],
@@ -399,7 +399,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
                 'USRNM' => $this->session->userdata['username'],
                 'TG_SMP' => date("Y-m-d h:i a")
             );
-            $this->transaksi_model->input_datad('ppd', $datad);
+            $this->transaksi_model->input_datad('pakaid', $datad);
             $i++;
             // die;
 
@@ -419,12 +419,12 @@ class Transaksi_BonBelumValidasi extends CI_Controller
     public function update($NO_ID)
     {
         // $where = array('NO_ID' => $NO_ID);
-        // $ambildata = $this->master_model->edit_data($where, 'pp');
+        // $ambildata = $this->master_model->edit_data($where, 'pakai');
         $q1 ="SELECT a.NO_ID, a.NO_BUKTI, a.TGL, a.TGL_DIMINTA, a.DEVISI, a.ARTICLE, a.PESAN, 
                 a.JO, a.FLAG3, a.GAMBAR1, a.VAL, a.TOTAL_QTY, b.GAMBAR1 AS GDETAIL, b.REC, b.NA_BHN, 
                 b.KD_BHN, b.WARNA, b.SERI, b.QTY, b.SATUAN, DATE_FORMAT(b.TGL_DIMINTA, '%d-%m-%Y') AS TGL_DIMINTAD, b.KET AS KET,
                 b.NO_ID AS NO_IDX
-                FROM pp a,ppd b WHERE a.NO_ID = '$NO_ID' AND a.NO_BUKTI = b.NO_BUKTI";
+                FROM pakai a,pakaid b WHERE a.NO_ID = '$NO_ID' AND a.NO_BUKTI = b.NO_BUKTI";
         // $r = $query->row_array();
         // $data = [
         //     'NO_ID' => $r['NO_ID'],
@@ -496,30 +496,30 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $where = array(
             'NO_ID' => $NO_ID
         );
-        $this->transaksi_model->update_data($where, $datah, 'pp');
+        $this->transaksi_model->update_data($where, $datah, 'pakai');
 ##############UPDATE
         $id = $NO_ID;
-        $q1 = "SELECT pp.NO_ID as ID,
-                pp.NO_BUKTI AS NO_BUKTI,
-                pp.TGL AS TGL,
-                pp.ARTICLE AS ARTICLE,
-                pp.TOTAL_QTY AS TOTAL_QTY,
-                pp.TYP AS TYP,
-                pp.VAL AS VAL,
+        $q1 = "SELECT pakai.NO_ID as ID,
+                pakai.NO_BUKTI AS NO_BUKTI,
+                pakai.TGL AS TGL,
+                pakai.ARTICLE AS ARTICLE,
+                pakai.TOTAL_QTY AS TOTAL_QTY,
+                pakai.TYP AS TYP,
+                pakai.VAL AS VAL,
 
-                ppd.NO_ID AS NO_ID,
-                ppd.REC AS REC,
-                ppd.NA_BHN AS NA_BHN,
-                ppd.WARNA AS WARNA,
-                ppd.SERI AS SERI,
-                ppd.QTY AS QTY,
-                ppd.SATUAN AS SATUAN,
-                ppd.KET AS KET,
-                ppd.TYP AS TYP
-            FROM pp,ppd 
-            WHERE pp.NO_ID=$id 
-            AND pp.NO_ID=ppd.ID 
-            ORDER BY ppd.REC";
+                pakaid.NO_ID AS NO_ID,
+                pakaid.REC AS REC,
+                pakaid.NA_BHN AS NA_BHN,
+                pakaid.WARNA AS WARNA,
+                pakaid.SERI AS SERI,
+                pakaid.QTY AS QTY,
+                pakaid.SATUAN AS SATUAN,
+                pakaid.KET AS KET,
+                pakaid.TYP AS TYP
+            FROM pakai,pakaid 
+            WHERE pakai.NO_ID=$id 
+            AND pakai.NO_ID=pakaid.ID 
+            ORDER BY pakaid.REC";
         $data = $this->transaksi_model->edit_data($q1)->result();
         $NO_IDX = $this->input->post('NO_IDX');
         $REC = $this->input->post('REC');
@@ -572,7 +572,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
                     'SATUAN' => $SATUAN[$URUT],
                     'KET' => $KET[$URUT],
                     'GAMBAR1' => $DGAMBAR
-                    // 'FLAG' => 'PP',
+                    // 'FLAG' => 'PK',
                     // 'SUB' => 'MB',
                     // 'TYP' => 'RND_MELBBA',
                     // 'DR' => $this->session->userdata['dr'],
@@ -583,12 +583,12 @@ class Transaksi_BonBelumValidasi extends CI_Controller
                 $where = array(
                     'NO_ID' => $NO_IDX[$URUT]
                 );
-                $this->transaksi_model->update_data($where, $datad, 'ppd');
+                $this->transaksi_model->update_data($where, $datad, 'pakaid');
             } else {
                 $where = array(
                     'NO_ID' => $ID[$i]
                 );
-                $this->transaksi_model->hapus_data($where, 'ppd');
+                $this->transaksi_model->hapus_data($where, 'pakaid');
             }
             $i++;
         }
@@ -627,7 +627,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
                     'SATUAN' => $SATUAN[$i],
                     'KET' => $KET[$i],
                     'GAMBAR1' => $this->upload->data('file_name'),
-                    'FLAG' => 'PP',
+                    'FLAG' => 'PK',
                     'SUB' => 'MB',
                     'TYP' => 'RND_MELBBA',
                     'DR' => $this->session->userdata['dr'],
@@ -635,7 +635,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
                 );
-                $this->transaksi_model->input_datad('ppd', $datad);
+                $this->transaksi_model->input_datad('pakaid', $datad);
             }
             $i++;
         }
@@ -654,7 +654,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
     public function validasi($NO_ID)
     {
         $where = array('NO_ID' => $NO_ID);
-        $ambildata = $this->master_model->edit_data($where, 'pp');
+        $ambildata = $this->master_model->edit_data($where, 'pakai');
         $r = $ambildata->row_array();
         $data = [
             'NO_ID' => $r['NO_ID'],
@@ -712,7 +712,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $where = array(
             'NO_ID' => $NO_ID
         );
-        $this->transaksi_model->update_data($where, $datah, 'pp');
+        $this->transaksi_model->update_data($where, $datah, 'pakai');
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
@@ -728,7 +728,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
     public function delete($NO_ID)
     {
         $where = array('NO_ID' => $NO_ID);
-        $this->transaksi_model->hapus_data($where, 'pp');
+        $this->transaksi_model->hapus_data($where, 'pakai');
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
@@ -743,7 +743,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
 
     function delete_multiple()
     {
-        $this->transaksi_model->remove_checked('pp');
+        $this->transaksi_model->remove_checked('pakai');
         redirect('admin/Transaksi_BonBelumValidasi/index_Transaksi_BonBelumValidasi');
     }
 
@@ -824,7 +824,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $PHPJasperXML = new \PHPJasperXML();
         $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_MELLBBA.jrxml");
         $no_id = $id;
-        $query = "SELECT a.GAMBAR1 AS GHEAD, b.GAMBAR1 AS GDETAIL FROM pp a,ppd b WHERE a.NO_ID = '$no_id' AND a.NO_BUKTI = b.NO_BUKTI";
+        $query = "SELECT a.GAMBAR1 AS GHEAD, b.GAMBAR1 AS GDETAIL FROM pakai a,pakaid b WHERE a.NO_ID = '$no_id' AND a.NO_BUKTI = b.NO_BUKTI";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);
