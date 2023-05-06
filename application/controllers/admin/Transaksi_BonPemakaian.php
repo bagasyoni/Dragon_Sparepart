@@ -204,7 +204,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         $no = $this->input->post('NO_BUKTI', TRUE);
         $REC = $this->input->post('REC');
         $NA_BHN = $this->input->post('NA_BHN');
-        $TUJUAN = $this->input->post('TUJUAN');
+        // $TUJUAN = $this->input->post('TUJUAN');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $KET1 = $this->input->post('KET1');
         $KET2 = $this->input->post('KET2');
@@ -225,7 +225,7 @@ class Transaksi_BonPemakaian extends CI_Controller
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
                 'DR' => $this->session->userdata['dr'],
-                'TUJUAN' => $TUJUAN[$i],
+                // 'TUJUAN' => $TUJUAN[$i],
                 'TG_SMP' => date("Y-m-d h:i a")
             );
             $this->transaksi_model->input_datad('pakaid', $datad);
@@ -253,6 +253,8 @@ class Transaksi_BonPemakaian extends CI_Controller
                 pakai.NOTES AS NOTES,
                 pakai.TGL AS TGL,
                 pakai.TOTAL_QTY AS TOTAL_QTY,
+                pakai.TUJUAN AS TUJUAN,
+                pakai.DR AS DR,
 
                 pakaid.NO_ID AS NO_ID,
                 pakaid.REC AS REC,
@@ -301,6 +303,8 @@ class Transaksi_BonPemakaian extends CI_Controller
                 pakai.NOTES AS NOTES,
                 pakai.TGL AS TGL,
                 pakai.TOTAL_QTY AS TOTAL_QTY,
+                pakai.TUJUAN AS TUJUAN,
+                pakai.DR AS DR,
 
                 pakaid.NO_ID AS NO_ID,
                 pakaid.REC AS REC,
