@@ -259,7 +259,7 @@ foreach ($rnd as $rowh) {
 				<div class="col-md-12">	
 					<div class="form-group row">
 						<div class="col-md-2">
-						<img src="<?= base_url('gambar/'.$rowh->GAMBAR1)  ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<img src="<?= base_url('gambar/melbba/'.$rowh->GAMBAR1)  ?>" style="width: 120px;float: left;margin-bottom: 5px;">
 						<input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						<input type="text" name="G1" id="G1" value="<?=$rowh->GAMBAR1?>" hidden>
 						</div>
@@ -306,7 +306,7 @@ foreach ($rnd as $rowh) {
 									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="QTY[]" onclick="select()" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"></td>
 									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="KET[]" id="KET<?php echo $no; ?>" value="<?= $row->KET ?>" type="text" class="form-control KET text_input"></td>
-									<td><img src="<?= base_url('gambar/'.$row->GDETAIL)  ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+									<td><img src="<?= base_url('gambar/melbba/'.$row->GDETAIL)  ?>" style="width: 120px;float: left;margin-bottom: 5px;">
 										<input type="text" name="G2<?php echo $no; ?>" id="G2<?php echo $no; ?>" value="<?=$row->GDETAIL?>" hidden></td>
 									<td><input type="file" name="GAMBAR1X<?php echo $no; ?>" id="GAMBAR1X<?php echo $no; ?>" accept="image/png, image/jpeg, image/jpg, image/bmp"></td>
 									<td>
@@ -420,6 +420,7 @@ foreach ($rnd as $rowh) {
 		$(".date").datepicker({
 			'dateFormat': 'dd-mm-yy',
 		})
+		hitung();
 	});
 
 	function nomor() {

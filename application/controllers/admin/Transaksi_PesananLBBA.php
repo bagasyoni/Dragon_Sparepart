@@ -152,7 +152,7 @@ class Transaksi_PesananLBBA extends CI_Controller
             $row[] = $pp->PESAN;
             $row[] = $pp->JO;
             $row[] = $pp->FLAG3;
-            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/$pp->GAMBAR1' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/melbba/$pp->GAMBAR1' width='auto' height='120'>";
             if($pp->VAL==1){
                 $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
             }else{
@@ -251,8 +251,8 @@ class Transaksi_PesananLBBA extends CI_Controller
 
     public function resizeImage($filename)
     {
-        $source_path = './gambar/' . $filename;
-        $target_path = './gambar/thumbnail/';
+        $source_path = './gambar/melbba/' . $filename;
+        $target_path = './gambar/melbba/thumbnail/';
         $config_manip = array(
             'image_library' => 'gd2',
             'source_image' => $source_path,
@@ -276,8 +276,8 @@ class Transaksi_PesananLBBA extends CI_Controller
 
     public function resizeImaged($filename)
     {
-        $source_path = './gambar/' . $filename;
-        $target_path = './gambar/thumbnail/';
+        $source_path = './gambar/melbba/' . $filename;
+        $target_path = './gambar/melbba/thumbnail/';
         $config_manip = array(
             'image_library' => 'gd2',
             'source_image' => $source_path,
@@ -304,7 +304,7 @@ class Transaksi_PesananLBBA extends CI_Controller
     public function input_aksi()
     {
         $bukti = $this->input->post('NO_BUKTI', TRUE);
-        $config['upload_path']          = './gambar/';
+        $config['upload_path']          = './gambar/melbba/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
 		// $config['max_size']             = 1000;
 		// $config['max_width']            = 3024;
@@ -363,7 +363,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         $TGL_DIMINTAX = date("Y-m-d", strtotime($this->input->post('TGL_DIMINTAX', TRUE)));
         $i = 0;
         foreach ($REC as $a) {
-            $configx['upload_path']          = './gambar/';
+            $configx['upload_path']          = './gambar/melbba/';
             $configx['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
             // $configx['max_size']             = 1000;
             // $configx['max_width']            = 3024;
@@ -466,7 +466,7 @@ class Transaksi_PesananLBBA extends CI_Controller
     public function update_aksi()
     {
         $bukti = $this->input->post('NO_BUKTI', TRUE);
-        $config['upload_path']          = './gambar/';
+        $config['upload_path']          = './gambar/melbba/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
 		$config['max_size']             = 1000;
 		$config['max_width']            = 3024;
@@ -483,7 +483,7 @@ class Transaksi_PesananLBBA extends CI_Controller
 			$this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form', $error);
 		}else{
             $G1 = $this->input->post('G1', TRUE);
-            unlink(FCPATH."gambar/".$G1);
+            unlink(FCPATH."gambar/melbba/".$G1);
             $data = array('upload_data' => $this->upload->data());
             $GAMBAR1 = $this->upload->data('file_name');
 			// $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
@@ -546,7 +546,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         while ($i < $jum) {
             if (in_array($ID[$i], $NO_IDX)) {
                 $URUT = array_search($ID[$i], $NO_IDX);
-                    $configx['upload_path']          = './gambar/';
+                    $configx['upload_path']          = './gambar/melbba/';
                     $configx['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
                     $configx['max_size']             = 1000;
                     $configx['max_width']            = 3024;
@@ -563,7 +563,7 @@ class Transaksi_PesananLBBA extends CI_Controller
                         $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form', $error);
                     }else{
                         $G2 = $this->input->post('G2'.$URUT, TRUE);
-                        unlink(FCPATH."gambar/".$G2);
+                        unlink(FCPATH."gambar/melbba/".$G2);
                         $data = array('upload_data' => $this->upload->data());
                         $DGAMBAR = $this->upload->data('file_name');
                         // $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
@@ -603,7 +603,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         $i = 0;
         while ($i < $jumy) {
             if ($NO_IDX[$i] == "0") {
-                    $configz['upload_path']          = './gambar/';
+                    $configz['upload_path']          = './gambar/melbba/';
                     $configz['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
                     $configz['max_size']             = 1000;
                     $configz['max_width']            = 3024;
