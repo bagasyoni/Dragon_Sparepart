@@ -171,7 +171,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
             'FLAG' => 'PK',
             // 'SUB' => 'MB',
             'FLAG2' => 'SP',
-            // 'TTD1_SMP' => '',
+            'TTD1' => '0',
             // 'TYP' => 'RND_LBBA',
         );
         $data['pakai'] = $this->transaksi_model->tampil_data($where, 'pakai', 'NO_ID')->result();
