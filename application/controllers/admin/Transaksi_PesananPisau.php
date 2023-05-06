@@ -254,9 +254,37 @@ class Transaksi_PesananPisau extends CI_Controller
         $this->load->view('templates_admin/footer');
     }
 
+    public function resizeImaged($filename)
+    {
+        $source_path = './gambar/pesananpisau/' . $filename;
+        $target_path = './gambar/pesananpisau/thumbnail/';
+        $config_manip = array(
+            'image_library' => 'gd2',
+            'source_image' => $source_path,
+            'new_image' => $target_path,
+            'maintain_ratio' => TRUE,
+            'create_thumb' => TRUE,
+            'thumb_marker' => '_thumb',
+            'width' => 150,
+            'height' => 150
+        );
+
+
+        $this->load->library('image_lib', $config_manip);
+        $this->image_lib->initialize($config_manip);
+        // if (!$this->image_lib->resize()) {
+        //     echo $this->image_lib->display_errors();
+        // }
+
+
+        $this->image_lib->resize();
+        $this->image_lib->clear();
+    }
+
+
     public function input_aksi()
     {
-        $config['upload_path']          = './gambar/';
+        $config['upload_path']          = './gambar/pesananpisau/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
 		// $config['max_size']             = 1000;
 		// $config['max_width']            = 3024;
@@ -274,6 +302,7 @@ class Transaksi_PesananPisau extends CI_Controller
 			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
 		}else{
 			$data = array('upload_data' => $this->upload->data());
+            $this->resizeImaged($data['upload_data']['file_name']);
 			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau', $data);
 		}
 
