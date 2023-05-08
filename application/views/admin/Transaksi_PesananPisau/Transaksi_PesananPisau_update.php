@@ -239,7 +239,9 @@ foreach ($rnd as $rowh) {
 							<label class="label">Gambar </label>
 						</div>
 						<div class="col-md-2">
+						<img src="<?= base_url('gambar/pesananpisau/'.$rowh->GAMBAR)  ?>" style="width: 120px;float: left;margin-bottom: 5px;">
 						<input <?php if ($rowh->VAL == !0) echo 'class="form-control GAMBAR text_input" readonly'; ?> type="file" name="GAMBAR" id="GAMBAR" accept="image/png, image/jpeg, image/jpg, image/gif" value="<?php echo $rowh->GAMBAR ?>">
+						<input type="text" name="G1" id="G1" value="<?=$rowh->GAMBAR?>" hidden>
 						</div>
 					</div>
 				</div>
@@ -259,6 +261,7 @@ foreach ($rnd as $rowh) {
 								<th width="75px">Satuan</th>
 								<th width="175px">Keterangan</th>
 								<th width="75px">Tanggal Diminta</th>
+								<th width="70px"></th>
 								<th width="175px">Gambar</th>
 								<th width="50px"></th>
 							</tr>
@@ -275,10 +278,11 @@ foreach ($rnd as $rowh) {
 									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control QTY text_input" readonly'; ?> name="QTY[]" onclick="select()" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control SATUAN text_input" readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"></td>
 									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control KET text_input" readonly'; ?> name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
-									<td>
-									<input <?php if ($rowh->VAL == !0) echo 'class="form-control TGL_DIMINTA_D text_input" readonly'; ?> type="text" class="date form-control TGL_DIMINTA_D text_input" id="TGL_DIMINTA_D" name="TGL_DIMINTA_D" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL_DIMINTA_D, TRUE)); ?>" onclick="select()">
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control TGL_DIMINTA_D text_input" readonly'; ?> type="text" class="date form-control TGL_DIMINTA_D text_input" id="TGL_DIMINTA_D" name="TGL_DIMINTA_D" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL_DIMINTA_D, TRUE)); ?>" onclick="select()">
 									</td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control GAMBAR1 text_input" readonly'; ?> name="GAMBAR1[]" id="GAMBAR1<?php echo $no; ?>" value="<?= $row->GAMBAR1 ?>" type="file"></td>
+									<td><img src="<?= base_url('gambar/pesananpisau/'.$row->GAMBAR1)  ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+										<input type="text" name="G2<?php echo $no; ?>" id="G2<?php echo $no; ?>" value="<?=$row->GAMBAR1?>" hidden></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control GAMBAR1X text_input" readonly'; ?> name="GAMBAR1X[]" id="GAMBAR1X<?php echo $no; ?>" value="<?= $row->GAMBAR1 ?>" type="file"></td>
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
 										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">

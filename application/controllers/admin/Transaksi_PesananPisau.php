@@ -343,7 +343,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SATUAN = $this->input->post('SATUAN');
         $KET1 = $this->input->post('KET1');
-        $TGL_DIMINTA_D = $this->input->post('TGL_DIMINTA');
+        $TGL_DIMINTA_D = $this->input->post('TGL_DIMINTA_D');
         $GAMBAR1 = "IMG".$this->upload->data('file_name');
         $i = 0;
         foreach ($REC as $a) {
@@ -416,7 +416,7 @@ class Transaksi_PesananPisau extends CI_Controller
                 pp.JO AS JO,
                 pp.TGL_DIMINTA AS TGL_DIMINTA_H,
                 pp.TS AS TS,
-                pp.GAMBAR1 AS GAMBAR,
+                pp.GAMBAR AS GAMBAR,
                 pp.TOTAL_QTY AS TOTAL_QTY,
                 pp.VAL AS VAL,
                 
@@ -426,7 +426,7 @@ class Transaksi_PesananPisau extends CI_Controller
                 ppd.SIZE AS SIZE,
                 ppd.QTY AS QTY,
                 ppd.SATUAN AS SATUAN,
-                IF(ppd.TGL_DIMINTA='0000-00-00','2001-01-01','ppd.TGL_DIMINTA') AS TGL_DIMINTA_D,
+                IF(ppd.TGL_DIMINTA='0000-00-00','2001-01-01',ppd.TGL_DIMINTA) AS TGL_DIMINTA_D,
                 ppd.KET1 AS KET1,
                 ppd.GAMBAR1 AS GAMBAR1
             FROM pp,ppd 
@@ -442,6 +442,30 @@ class Transaksi_PesananPisau extends CI_Controller
 
     public function update_aksi()
     {
+        $bukti = $this->input->post('NO_BUKTI', TRUE);
+        $config['upload_path']          = './gambar/pesananpisau/';
+		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+		$config['max_size']             = 1000;
+		$config['max_width']            = 3024;
+		$config['max_height']           = 3680;
+        $new_name = 'IMG'.$bukti;
+        $config['file_name']            = $new_name; 
+
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+
+        if ( ! $this->upload->do_upload('GAMBAR')){
+			$error = array('error' => $this->upload->display_errors());
+            $GAMBAR1 = $this->input->post('G1', TRUE);
+			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
+		}else{
+            $G1 = $this->input->post('G1', TRUE);
+            unlink(FCPATH."gambar/melbba/".$G1);
+            $data = array('upload_data' => $this->upload->data());
+            $GAMBAR1 = $this->upload->data('file_name');
+			// $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
+		}
+
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
@@ -451,7 +475,7 @@ class Transaksi_PesananPisau extends CI_Controller
             'JO' => $this->input->post('JO', TRUE),
             'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA_H', TRUE))),
             'TS' => $this->input->post('TS', TRUE),
-            'GAMBAR' => $this->input->post('GAMBAR', TRUE),
+            'GAMBAR' => $GAMBAR1,
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => '',
             'FLAG2' => 'SP',
@@ -509,6 +533,28 @@ class Transaksi_PesananPisau extends CI_Controller
         while ($i < $jum) {
             if (in_array($ID[$i], $NO_ID)) {
                 $URUT = array_search($ID[$i], $NO_ID);
+                    $configx['upload_path']          = './gambar/pesananpisau/';
+                    $configx['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+                    $configx['max_size']             = 1000;
+                    $configx['max_width']            = 3024;
+                    $configx['max_height']           = 3680;
+                    $new_name = 'IMGD'.$bukti.'-'.$REC[$URUT];
+                    $configx['file_name']            = $new_name; 
+
+                    $this->load->library('upload', $configx);
+                    $this->upload->initialize($configx);
+
+                    if ( ! $this->upload->do_upload('GAMBAR1X'.$URUT)){
+                        $error = array('error' => $this->upload->display_errors());
+                        $DGAMBAR = $this->input->post('G2'.$URUT, TRUE);
+                        $this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
+                    }else{
+                        $G2 = $this->input->post('G2'.$URUT, TRUE);
+                        unlink(FCPATH."gambar/pesananpisau/".$G2);
+                        $data = array('upload_data' => $this->upload->data());
+                        $DGAMBAR = $this->upload->data('file_name');
+                        // $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
+                    }
                 $datad = array(
                     'NO_BUKTI' => $this->input->post('NO_BUKTI'),
                     'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
@@ -519,7 +565,7 @@ class Transaksi_PesananPisau extends CI_Controller
                     'SATUAN' => $SATUAN[$URUT],
                     'KET1' => $KET1[$URUT],
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$URUT])),
-                    'GAMBAR1' => $GAMBAR1[$URUT],
+                    'GAMBAR1' => $DGAMBAR,
                     'FLAG' => '',
                     'FLAG2' => 'SP',
                     'TYP' => 'RND_PISAU',
@@ -544,6 +590,24 @@ class Transaksi_PesananPisau extends CI_Controller
         $i = 0;
         while ($i < $jumy) {
             if ($NO_ID[$i] == "0") {
+                    $configz['upload_path']          = './gambar/pesananpisau/';
+                    $configz['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+                    $configz['max_size']             = 1000;
+                    $configz['max_width']            = 3024;
+                    $configz['max_height']           = 3680;
+                    $new_name = 'IMGD'.$bukti.'-'.$REC[$i];
+                    $configz['file_name']            = $new_name; 
+
+                    $this->load->library('upload', $configz);
+                    $this->upload->initialize($configz);
+
+                    if ( ! $this->upload->do_upload('GAMBAR1X'.$i)){
+                        $error = array('error' => $this->upload->display_errors());
+                        $this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
+                    }else{
+                        $data = array('upload_data' => $this->upload->data());
+                        $this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau', $data);
+                    }
                 $datad = array(
                     'ID' => $this->input->post('ID', TRUE),
                     'NO_BUKTI' => $this->input->post('NO_BUKTI'),
@@ -555,7 +619,7 @@ class Transaksi_PesananPisau extends CI_Controller
                     'SATUAN' => $SATUAN[$i],
                     'KET1' => $KET1[$i],
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$i])),
-                    'GAMBAR1' => $GAMBAR1[$i],
+                    'GAMBAR1' => $this->upload->data('file_name'),
                     'FLAG' => 'PP',
                     'FLAG2' => 'SP',
                     'TYP' => 'RND_PISAU',
