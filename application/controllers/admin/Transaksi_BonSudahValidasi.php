@@ -37,10 +37,11 @@ class Transaksi_BonSudahValidasi extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'FLAG' => 'PK',
-            'SUB' => 'MB',
-            // 'FLAG2' => 'SP',
+            // 'SUB' => 'MB',
+            'FLAG2' => 'SP',
+            'TTD1' => '1',
             // 'TYP' => 'RND_LBBA',
         );
         $this->db->select('*');
@@ -90,10 +91,11 @@ class Transaksi_BonSudahValidasi extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'FLAG' => 'PK',
-            'SUB' => 'MB',
-            // 'FLAG2' => 'SP',
+            // 'SUB' => 'MB',
+            'FLAG2' => 'SP',
+            'TTD1' => '1',
             // 'TYP' => 'RND_LBBA',
         );
         $this->db->from('pakai');
@@ -109,11 +111,11 @@ class Transaksi_BonSudahValidasi extends CI_Controller
         foreach ($list as $pakai) {
             // $JASPER = "window.open('JASPER/" . $pakai->NO_ID . "','', 'width=1000','height=900');";
             // <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
-            if($pakai->TTD7 == 0){
-                $hidden = '';
-            }else{
-                $hidden = 'hidden';
-            }
+            // if($pakai->TTD7 == 0){
+            //     $hidden = '';
+            // }else{
+            //     $hidden = 'hidden';
+            // }
             $no++;
             $row = array();
             $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $pakai->NO_ID . "'>";
@@ -122,25 +124,9 @@ class Transaksi_BonSudahValidasi extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a '.$hidden.' class="dropdown-item" href="' . site_url('admin/Transaksi_BonSudahValidasi/update/' . $pakai->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonSudahValidasi/update/' . $pakai->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonSudahValidasi/validasi/' . $pakai->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonSudahValidasi/delete/' . $pakai->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
-                            <a name="NO_ID" data-ttd1 = "' . $pakai->TTD1_USR . '" 
-							data-ttd1d = "' . $pakai->TTD1_SMP . '"
-							data-ttd2 = "' . $pakai->TTD2_USR . '" 
-							data-ttd2d = "' . $pakai->TTD2_SMP . '"
-							data-ttd3 = "' . $pakai->TTD3_USR . '" 
-							data-ttd3d = "' . $pakai->TTD3_SMP . '"
-							data-ttd4 = "' . $pakai->TTD4_USR . '" 
-							data-ttd4d = "' . $pakai->TTD4_SMP . '"
-							data-ttd5 = "' . $pakai->TTD5_USR . '" 
-							data-ttd5d = "' . $pakai->TTD5_SMP . '"
-							data-ttd6 = "' . $pakai->TTD6_USR . '" 
-							data-ttd6d = "' . $pakai->TTD6_SMP . '"
-							data-ttd7 = "' . $pakai->TTD7_USR . '" 
-							data-ttd7d = "' . $pakai->TTD7_SMP . '"
-							data-id = "' . $pakai->NO_ID . '" 
-							data-no="' . $pakai->NO_BUKTI . '" class="dropdown-item" href="#" data-toggle="modal" data-target="#melbbaModal";"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
@@ -167,10 +153,11 @@ class Transaksi_BonSudahValidasi extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'FLAG' => 'PK',
-            'SUB' => 'MB',
-            // 'FLAG2' => 'SP',
+            // 'SUB' => 'MB',
+            'FLAG2' => 'SP',
+            'TTD1' => '1',
             // 'TYP' => 'RND_LBBA',
         );
         $data['pakai'] = $this->transaksi_model->tampil_data($where, 'pakai', 'NO_ID')->result();
