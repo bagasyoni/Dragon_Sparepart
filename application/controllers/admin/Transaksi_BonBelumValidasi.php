@@ -407,11 +407,17 @@ class Transaksi_BonBelumValidasi extends CI_Controller
     {
         // $where = array('NO_ID' => $NO_ID);
         // $ambildata = $this->master_model->edit_data($where, 'pakai');
-        $q1 ="SELECT a.NO_ID, a.NO_BUKTI, a.TGL, a.TGL_DIMINTA, a.DEVISI, a.ARTICLE, a.PESAN, 
-                a.JO, a.FLAG3, a.GAMBAR1, a.VAL, a.TOTAL_QTY, b.GAMBAR1 AS GDETAIL, b.REC, b.NA_BHN, 
-                b.KD_BHN, b.WARNA, b.SERI, b.QTY, b.SATUAN, DATE_FORMAT(b.TGL_DIMINTA, '%d-%m-%Y') AS TGL_DIMINTAD, b.KET AS KET,
-                b.NO_ID AS NO_IDX
-                FROM pakai a,pakaid b WHERE a.NO_ID = '$NO_ID' AND a.NO_BUKTI = b.NO_BUKTI";
+        // $q1 ="SELECT a.NO_ID, a.NO_BUKTI, a.TGL, a.TGL_DIMINTA, a.DEVISI, a.ARTICLE, a.PESAN, 
+        //         a.JO, a.FLAG3, a.GAMBAR1, a.VAL, a.TOTAL_QTY, b.GAMBAR1 AS GDETAIL, b.REC, b.NA_BHN, 
+        //         b.KD_BHN, b.WARNA, b.SERI, b.QTY, b.SATUAN, DATE_FORMAT(b.TGL_DIMINTA, '%d-%m-%Y') AS TGL_DIMINTAD, b.KET AS KET,
+        //         b.NO_ID AS NO_IDX
+        //         FROM pakai a,pakaid b WHERE a.NO_ID = '$NO_ID' AND a.NO_BUKTI = b.NO_BUKTI";
+        $q1 ="SELECT a.NO_ID, a.NO_BUKTI, a.DR, DATE_FORMAT(a.TGL, '%d-%m-%Y') AS TGL, a.DR, a.TUJUAN, a.NOTES, b.NA_BHN, b.KET1, b.QTY, b.KET2, b.SP
+                FROM pakai a, pakaid b
+                WHERE a.NO_ID=$NO_ID
+                -- AND a.NO_BUKTI = b.NO_BUKTI;
+                AND a.NO_ID=b.ID 
+                ORDER BY b.REC";
         // $r = $query->row_array();
         // $data = [
         //     'NO_ID' => $r['NO_ID'],
@@ -471,14 +477,24 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $NO_ID = $this->input->post('NO_ID');
         $datah = array(
             // 'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
+            // 'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
+            // 'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
+            // 'DEVISI' => $this->input->post('DEVISI', TRUE),
+            // 'ARTICLE' => $this->input->post('ARTICLE', TRUE),
+            // 'PESAN' => $this->input->post('PESAN', TRUE),
+            // 'JO' => $this->input->post('JO', TRUE),
+            // 'FLAG3' => $this->input->post('FLAG3', TRUE),
+            // 'GAMBAR1' => $GAMBAR1,
+            'NOTES' => $this->input->post('NOTES', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
-            'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA', TRUE))),
-            'DEVISI' => $this->input->post('DEVISI', TRUE),
-            'ARTICLE' => $this->input->post('ARTICLE', TRUE),
-            'PESAN' => $this->input->post('PESAN', TRUE),
-            'JO' => $this->input->post('JO', TRUE),
-            'FLAG3' => $this->input->post('FLAG3', TRUE),
-            'GAMBAR1' => $GAMBAR1,
+            'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
+            'FLAG' => 'PK',
+            'FLAG2' => 'SP',
+            'TUJUAN' => $this->input->post('TUJUAN', TRUE),
+            'DR' => $this->input->post('DR', TRUE),
+            'PER' => $this->session->userdata['periode'],
+            'USRNM' => $this->session->userdata['username'],
+            'TG_SMP' => date("Y-m-d h:i a")
         );
         $where = array(
             'NO_ID' => $NO_ID
@@ -486,38 +502,46 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $this->transaksi_model->update_data($where, $datah, 'pakai');
 ##############UPDATE
         $id = $NO_ID;
-        $q1 = "SELECT pakai.NO_ID as ID,
-                pakai.NO_BUKTI AS NO_BUKTI,
-                pakai.TGL AS TGL,
-                pakai.ARTICLE AS ARTICLE,
-                pakai.TOTAL_QTY AS TOTAL_QTY,
-                pakai.TYP AS TYP,
-                pakai.VAL AS VAL,
+        // $q1 = "SELECT pakai.NO_ID as ID,
+        //         pakai.NO_BUKTI AS NO_BUKTI,
+        //         pakai.TGL AS TGL,
+        //         pakai.ARTICLE AS ARTICLE,
+        //         pakai.TOTAL_QTY AS TOTAL_QTY,
+        //         pakai.TYP AS TYP,
+        //         pakai.VAL AS VAL,
 
-                pakaid.NO_ID AS NO_ID,
-                pakaid.REC AS REC,
-                pakaid.NA_BHN AS NA_BHN,
-                pakaid.WARNA AS WARNA,
-                pakaid.SERI AS SERI,
-                pakaid.QTY AS QTY,
-                pakaid.SATUAN AS SATUAN,
-                pakaid.KET AS KET,
-                pakaid.TYP AS TYP
-            FROM pakai,pakaid 
-            WHERE pakai.NO_ID=$id 
-            AND pakai.NO_ID=pakaid.ID 
-            ORDER BY pakaid.REC";
+        //         pakaid.NO_ID AS NO_ID,
+        //         pakaid.REC AS REC,
+        //         pakaid.NA_BHN AS NA_BHN,
+        //         pakaid.WARNA AS WARNA,
+        //         pakaid.SERI AS SERI,
+        //         pakaid.QTY AS QTY,
+        //         pakaid.SATUAN AS SATUAN,
+        //         pakaid.KET AS KET,
+        //         pakaid.TYP AS TYP
+        //     FROM pakai,pakaid 
+        //     WHERE pakai.NO_ID=$id 
+        //     AND pakai.NO_ID=pakaid.ID 
+        //     ORDER BY pakaid.REC";
+        $q1 = "SELECT a.NO_ID, a.NO_BUKTI, a.DR, DATE_FORMAT(a.TGL, '%d-%m-%Y') AS TGL, a.DR, a.TUJUAN, a.NOTES, b.NA_BHN, b.KET1, b.QTY, b.KET2, b.SP
+               FROM pakai a, pakaid b
+               WHERE a.NO_ID=$NO_ID
+            -- AND a.NO_BUKTI = b.NO_BUKTI;
+               AND a.NO_ID=b.ID 
+               ORDER BY b.REC";
         $data = $this->transaksi_model->edit_data($q1)->result();
         $NO_IDX = $this->input->post('NO_IDX');
         $REC = $this->input->post('REC');
         $NA_BHN = $this->input->post('NA_BHN');
-        $KD_BHN = $this->input->post('KD_BHN');
-        $WARNA = $this->input->post('WARNA');
-        $SERI = $this->input->post('SERI');
+        // $KD_BHN = $this->input->post('KD_BHN');
+        // $WARNA = $this->input->post('WARNA');
+        // $SERI = $this->input->post('SERI');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
-        $SATUAN = $this->input->post('SATUAN');
-        $KET = $this->input->post('KET');
-        $TGL_DIMINTAX = date("Y-m-d", strtotime($this->input->post('TGL_DIMINTAX', TRUE)));
+        // $SATUAN = $this->input->post('SATUAN');
+        $KET1 = $this->input->post('KET1');
+        $KET2 = $this->input->post('KET2');
+        $SP = $this->input->post('SP');
+        // $TGL_DIMINTAX = date("Y-m-d", strtotime($this->input->post('TGL_DIMINTAX', TRUE)));
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_IDX);
@@ -549,16 +573,18 @@ class Transaksi_BonBelumValidasi extends CI_Controller
                     }
 
                 $datad = array(
-                    'TGL_DIMINTA' =>  $TGL_DIMINTAX[$URUT],
+                    // 'TGL_DIMINTA' =>  $TGL_DIMINTAX[$URUT],
                     'REC' => $REC[$URUT],
                     'NA_BHN' => $NA_BHN[$URUT],
-                    'KD_BHN' => $KD_BHN[$URUT],
-                    'WARNA' => $WARNA[$URUT],
-                    'SERI' => $SERI[$URUT],
+                    // 'KD_BHN' => $KD_BHN[$URUT],
+                    // 'WARNA' => $WARNA[$URUT],
+                    // 'SERI' => $SERI[$URUT],
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
-                    'SATUAN' => $SATUAN[$URUT],
-                    'KET' => $KET[$URUT],
-                    'GAMBAR1' => $DGAMBAR
+                    // 'SATUAN' => $SATUAN[$URUT],
+                    'KET1' => $KET1[$URUT],
+                    'KET2' => $KET2[$URUT],
+                    'SP' => $SP[$URUT],
+                    // 'GAMBAR1' => $DGAMBAR
                     // 'FLAG' => 'PK',
                     // 'SUB' => 'MB',
                     // 'TYP' => 'RND_MELBBA',

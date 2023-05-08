@@ -248,25 +248,12 @@ class Transaksi_BonPemakaian extends CI_Controller
 
     public function update($id)
     {
-        $q1 = "SELECT pakai.NO_ID as ID,
-                pakai.NO_BUKTI AS NO_BUKTI,
-                pakai.NOTES AS NOTES,
-                pakai.TGL AS TGL,
-                pakai.TOTAL_QTY AS TOTAL_QTY,
-                pakai.TUJUAN AS TUJUAN,
-                pakai.DR AS DR,
-
-                pakaid.NO_ID AS NO_ID,
-                pakaid.REC AS REC,
-                pakaid.NA_BHN AS NA_BHN,
-                pakaid.QTY AS QTY,
-                pakaid.SATUAN AS SATUAN,
-                pakaid.KET1 AS KET1,
-                pakaid.KET2 AS KET2
-            FROM pakai,pakaid 
-            WHERE pakai.NO_ID=$id 
-            AND pakai.NO_ID=pakaid.ID 
-            ORDER BY pakaid.REC";
+        $q1 = "SELECT a.NO_BUKTI, a.DR, DATE_FORMAT(a.TGL, '%d-%m-%Y') AS TGL, a.DR, a.TUJUAN, a.NOTES, b.NA_BHN, b.KET1, b.QTY, b.KET2, b.SP
+        FROM pakai a, pakaid b
+        WHERE pakai.NO_ID=$id
+        -- AND a.NO_BUKTI = b.NO_BUKTI;
+        AND a.NO_ID=b.ID 
+        ORDER BY b.REC";
         $data['bonpemakaian'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
