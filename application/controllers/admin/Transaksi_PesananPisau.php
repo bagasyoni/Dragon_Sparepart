@@ -162,7 +162,7 @@ class Transaksi_PesananPisau extends CI_Controller
             $row[] = $pp->TS;
             $row[] = $pp->PESAN;
             $row[] = $pp->TUJUAN;
-            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/$pp->GAMBAR1' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesananpisau/$pp->GAMBAR' width='auto' height='60'>";
             if($pp->VAL==1){
                 $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
             }else{
@@ -203,10 +203,14 @@ class Transaksi_PesananPisau extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='1R&' AND FLAG='' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 3, 7);
-        $value22 = STRVAL($value11) . 1;
+        if($nom[0]==NULL){
+            $value11 = 0;
+        }else{
+            $value11 = substr($nom[0], 3, 4);
+        }
+        $value22 = STRVAL($value11) + 1;
         $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
         $tahun = substr($this->session->userdata['periode'], -4);
         if (substr($this->session->userdata['periode'], 0, 2) == 1) {
@@ -284,6 +288,7 @@ class Transaksi_PesananPisau extends CI_Controller
 
     public function input_aksi()
     {
+        $bukti = $this->input->post('NO_BUKTI', TRUE);
         $config['upload_path']          = './gambar/pesananpisau/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
 		// $config['max_size']             = 1000;
@@ -297,7 +302,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $this->load->library('upload', $config);
         $this->upload->initialize($config);
 
-        if ( ! $this->upload->do_upload('GAMBAR1')){
+        if ( ! $this->upload->do_upload('GAMBAR')){
 			$error = array('error' => $this->upload->display_errors());
 			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
 		}else{
@@ -309,50 +314,6 @@ class Transaksi_PesananPisau extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
-        $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 3, 7);
-        $value22 = STRVAL($value11) + 1;
-        $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
-        $tahun = substr($this->session->userdata['periode'], -4);
-        if (substr($this->session->userdata['periode'], 0, 2) == 1) {
-            $romawi = 'I';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 2) {
-            $romawi = 'II';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 3) {
-            $romawi = 'III';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 4) {
-            $romawi = 'IV';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 5) {
-            $romawi = 'V';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 6) {
-            $romawi = 'VI';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 7) {
-            $romawi = 'VII';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 8) {
-            $romawi = 'VIII';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 9) {
-            $romawi = 'IX';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 10) {
-            $romawi = 'X';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 11) {
-            $romawi = 'XI';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 12) {
-            $romawi = 'XII';
-        }
-        // PP / NOMER / DR / BULAN / TAHUN / RND
-        $bukti = 'PP' . '/' . $urut . '/' . $dr . '/' . "PS" . '/' . $romawi . '/' . $tahun;
         $datah = array(
             'NO_BUKTI' => $bukti,
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
@@ -362,7 +323,7 @@ class Transaksi_PesananPisau extends CI_Controller
             'JO' => $this->input->post('JO', TRUE),
             'TGL_DIMINTA' => date("Y-m-d", strtotime($this->input->post('TGL_DIMINTA_H', TRUE))),
             'TS' => $this->input->post('TS', TRUE),
-            'GAMBAR' => "IMG".$this->upload->data('file_name'),
+            'GAMBAR' => $this->upload->data('file_name'),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => '',
             'FLAG2' => 'SP',
@@ -375,26 +336,6 @@ class Transaksi_PesananPisau extends CI_Controller
         );
         
         $this->transaksi_model->input_datah('pp', $datah);
-
-        $config['upload_path']          = './gambar/';
-		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-		$config['max_size']             = 1000;
-		$config['max_width']            = 3024;
-		$config['max_height']           = 3680;
-        $new_name = time().$_FILES['name'];
-        $config['file_name']                 = $new_name; 
-
-
-        $this->load->library('upload', $config);
-
-        if ( ! $this->upload->do_upload('GAMBAR1')){
-			$error = array('error' => $this->upload->display_errors());
-			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
-		}else{
-			$data = array('upload_data' => $this->upload->data());
-			$this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau', $data);
-		}
-
         $ID = $this->db->query("SELECT MAX(NO_ID) AS NO_ID FROM pp WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
         $REC = $this->input->post('REC');
         $NA_BHN = $this->input->post('NA_BHN');
@@ -406,6 +347,28 @@ class Transaksi_PesananPisau extends CI_Controller
         $GAMBAR1 = "IMG".$this->upload->data('file_name');
         $i = 0;
         foreach ($REC as $a) {
+            $configx['upload_path']          = './gambar/pesananpisau/';
+            $configx['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+            // $configx['max_size']             = 1000;
+            // $configx['max_width']            = 3024;
+            // $configx['max_height']           = 3680;
+            // $config['width']            = 1000;
+		    // $config['height']           = 800;
+            $new_name = 'IMGD'.$bukti.'-'.$REC[$i];
+            $configx['file_name']            = $new_name; 
+
+            $this->load->library('upload', $configx);
+            $this->upload->initialize($configx);
+            if ( ! $this->upload->do_upload('GAMBAR1X'.$i)){
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau_form', $error);
+            }else{
+                $data = array('upload_data' => $this->upload->data());
+                // var_dump($data['upload_data']['file_name']);
+                $this->resizeImaged($data['upload_data']['file_name']);
+                $this->load->view('admin/Transaksi_PesananPisau/Transaksi_PesananPisau', $data);
+            }
+
             $datad = array(
                 'ID' => $ID[0]->NO_ID,
                 'NO_BUKTI' => $bukti,
@@ -416,7 +379,7 @@ class Transaksi_PesananPisau extends CI_Controller
                 'SATUAN' => $SATUAN[$i],
                 'KET1' => $KET1[$i],
                 'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$i])),
-                'GAMBAR1' => $GAMBAR1,
+                'GAMBAR1' => $this->upload->data('file_name'),
                 'FLAG' => '',
                 'FLAG2' => 'SP',
                 'TYP' => 'RND_PISAU',
