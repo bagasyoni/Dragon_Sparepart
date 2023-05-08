@@ -113,7 +113,7 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="pisauaModal" tabindex="-1" role="dialog" aria-labelledby="periodeLabel" aria-hidden="true">
+<div class="modal fade" id="pisauModal" tabindex="-1" role="dialog" aria-labelledby="periodeLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document" style="max-width: 550px">
         <div class="modal-content">
             <div class="modal-header">
@@ -135,13 +135,10 @@
 							<div id="sp3"></div>
 						</div>
                     </div>
-                    
-
-                   
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-				 <button id="btnPrint" data-dismiss="modal" class="btn btn-primary ">Cetak</button>
+				<button id="btnPrint" data-dismiss="modal" class="btn btn-primary ">Cetak</button>
             </div>
             </form>
         </div>
