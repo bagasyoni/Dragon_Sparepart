@@ -162,7 +162,7 @@ class Transaksi_PesananPisau extends CI_Controller
             $row[] = $pp->TS;
             $row[] = $pp->PESAN;
             $row[] = $pp->TUJUAN;
-            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/$pp->GAMBAR1' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesananpisau/$pp->GAMBAR' width='auto' height='60'>";
             if($pp->VAL==1){
                 $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
             }else{
@@ -205,7 +205,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $sub = $this->session->userdata['sub'];
         $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='1R&' AND FLAG='' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
-        if($nom[0]=='0'){
+        if($nom[0]==NULL){
             $value11 = 0;
         }else{
             $value11 = substr($nom[0], 3, 4);

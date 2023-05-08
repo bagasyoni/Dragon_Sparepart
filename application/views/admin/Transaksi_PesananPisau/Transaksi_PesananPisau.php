@@ -98,10 +98,10 @@
                         <th width="100px">Divisi</th>
                         <th width="225px">Ket</th>
                         <th width="100px">TS</th>
-                        <th width="225px">Pesan</th>
+                        <th width="100px">Pesan</th>
                         <th width="100px">Tujuan</th>
                         <th width="225px">Gambar</th>
-                        <th width="100px">Status</th>
+                        <th width="160px">Status</th>
                     </tr>
                 </thead>
                 <tbody>
