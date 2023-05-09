@@ -250,7 +250,7 @@ class Transaksi_PesananPisauSample extends CI_Controller
             $romawi = 'XII';
         }
         // PP / NOMER / DR / BULAN / TAHUN / CNC
-        $bukti = 'PP' . '/' . $urut . '/' . $dr . '/' . "PS" . '/' . $romawi . '/' . $tahun;
+        $bukti = 'PP' . '/' . $urut . '/' . $dr . '/' . "PSS" . '/' . $romawi . '/' . $tahun;
         $this->session->set_userdata('bukti', $bukti);
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
