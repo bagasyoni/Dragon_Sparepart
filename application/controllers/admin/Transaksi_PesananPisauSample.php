@@ -183,7 +183,7 @@ class Transaksi_PesananPisauSample extends CI_Controller
     {
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
-        $this->session->set_userdata('judul', 'Transaksi Pesanan Pisau');
+        $this->session->set_userdata('judul', 'Transaksi Pesanan Pisau Sample');
         $where = array(
             'DR' => $dr,
             'PER' => $per,
