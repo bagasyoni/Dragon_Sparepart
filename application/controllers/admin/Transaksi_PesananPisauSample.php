@@ -37,7 +37,7 @@ class Transaksi_PesananPisauSample extends CI_Controller
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SUB' => '1R&',
+            'SUB' => '1RPS',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_PISAU_SAMPLE',
         );
@@ -89,7 +89,7 @@ class Transaksi_PesananPisauSample extends CI_Controller
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SUB' => '1R&',
+            'SUB' => '1R&S',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_PISAU_SAMPLE',
         );
@@ -187,7 +187,7 @@ class Transaksi_PesananPisauSample extends CI_Controller
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SUB' => '1R&',
+            'SUB' => '1R&S',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_PISAU_SAMPLE',
         );
