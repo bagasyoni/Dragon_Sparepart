@@ -83,7 +83,7 @@
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
-        <form method="post" action="<?php echo base_url('admin/Transaksi_VerifikasiPesananPisau/delete_multiple') ?>">
+        <form method="post" action="<?php echo base_url('admin/Transaksi_PesananPisauSample/delete_multiple') ?>">
             <div class="btn-group" role="group" aria-label="Basic example">
             </div>
             <table id="example" class="table table-bordered table-striped table-hover table-responsive bodycontainer scrollable" style="width:100%;">
@@ -98,10 +98,10 @@
                         <th width="100px">Divisi</th>
                         <th width="225px">Ket</th>
                         <th width="100px">TS</th>
-                        <th width="100px">Pesan</th>
+                        <th width="225px">Pesan</th>
                         <th width="100px">Tujuan</th>
                         <th width="225px">Gambar</th>
-                        <th width="160px">Status</th>
+                        <th width="100px">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -113,7 +113,7 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="pisausampleModal" tabindex="-1" role="dialog" aria-labelledby="periodeLabel" aria-hidden="true">
+<div class="modal fade" id="pisauaModal" tabindex="-1" role="dialog" aria-labelledby="periodeLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document" style="max-width: 550px">
         <div class="modal-content">
             <div class="modal-header">
@@ -135,10 +135,13 @@
 							<div id="sp3"></div>
 						</div>
                     </div>
+                    
+
+                   
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-				<button id="btnPrint" data-dismiss="modal" class="btn btn-primary ">Cetak</button>
+				 <button id="btnPrint" data-dismiss="modal" class="btn btn-primary ">Cetak</button>
             </div>
             </form>
         </div>
@@ -146,8 +149,8 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#pisausampleModal').on('show.bs.modal', function (event) {
+        $(document).ready(function() {
+        $('#pisauModal').on('show.bs.modal', function (event) {
 			var a = event.relatedTarget;
 			var no = $(a).data("no");
 			$("#sp1").text(no);
@@ -214,7 +217,6 @@
 			$("#sp3").html(hist);
 			console.log(event.relatedTarget);
 		});
-
         $('#example').DataTable({
             dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
                 "<'row'<'col-md-2'l><'col-md-6 test_btn'><'col-md-4'f>>" + // peletakan entries, search, dan test_btn
