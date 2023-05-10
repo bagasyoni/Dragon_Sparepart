@@ -134,7 +134,7 @@ class Transaksi_PesananCetakan extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a '.$hidden.' class="dropdown-item" href="' . site_url('aadmin/Transaksi_PesananCetakan/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a '.$hidden.' class="dropdown-item" href="' . site_url('admin/Transaksi_PesananCetakan/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananCetakan/validasi/' . $pp->NO_ID) . '"> <i class="fa fa-check"></i> Validasi</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_PesananCetakan/delete/' . $pp->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                             <a name="NO_ID" data-ttd1 = "' . $pp->TTD1_USR . '" 
@@ -413,21 +413,52 @@ class Transaksi_PesananCetakan extends CI_Controller
 		// $config['max_size']             = 1000;
 		// $config['max_width']            = 3024;
 		// $config['max_height']           = 3680;
-        $new_name = 'IMG'.$bukti;
-        $config['file_name']            = $new_name; 
+        $new_name1 = 'IMG'.$bukti.'-1';
+        $config['file_name']            = $new_name1; 
 
         $this->load->library('upload', $config);
+        $this->upload->initialize($config);
 
-        if ( ! $this->upload->do_upload('GAMBAR1') && ! $this->upload->do_upload('GAMBAR2') && ! $this->upload->do_upload('GAMBAR3') ){
+        if ( ! $this->upload->do_upload('GAMBAR1')){
 			$error = array('error' => $this->upload->display_errors());
+            $GAMBAR1 = $this->input->post('G1', TRUE);
 			$this->load->view('admin/Transaksi_PesananCetakan/Transaksi_PesananCetakan_form', $error);
 		}else{
             $G1 = $this->input->post('G1', TRUE);
-            unlink(FCPATH."gambar/melbba/".$G1);
+            unlink(FCPATH."gambar/pesanancetakan/".$G1);
+            unlink(FCPATH."gambar/pesanancetakan/thumbnail/".$G1);
 			$data = array('upload_data' => $this->upload->data());
             $GAMBAR1 = $this->upload->data('file_name');
+            $this->resizeImaged($data['upload_data']['file_name']);
 			// $this->load->view('admin/Transaksi_PesananCetakan/Transaksi_PesananCetakan', $data);
 		}
+##########################################################################################################endregion
+        $configx['upload_path']          = './gambar/pesanancetakan/';
+        $configx['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+        // $configx['max_size']             = 1000;
+        // $configx['max_width']            = 3024;
+        // $configx['max_height']           = 3680;
+        // $config['width']            = 1000;
+        // $config['height']           = 800;
+        $new_name2 = 'IMG'.$bukti.'-2';
+        $configx['file_name']            = $new_name2; 
+
+        $this->load->library('upload', $configx);
+        $this->upload->initialize($configx);
+
+        if ( ! $this->upload->do_upload('GAMBAR2')){
+            $error = array('error' => $this->upload->display_errors());
+            $GAMBAR2 = $this->input->post('G2', TRUE);
+            $this->load->view('admin/Transaksi_PesananCetakan/Transaksi_PesananCetakan_form', $error);
+        }else{
+            $G2 = $this->input->post('G2', TRUE);
+            unlink(FCPATH."gambar/pesanancetakan/".$G2);
+            unlink(FCPATH."gambar/pesanancetakan/thumbnail/".$G2);
+            $data = array('upload_data' => $this->upload->data());
+            $GAMBAR2 = $this->upload->data('file_name');
+            $this->resizeImaged($data['upload_data']['file_name']);
+            // $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
+        }
 
         $NO_ID = $this->input->post('NO_ID');
         $datah = array(
@@ -444,8 +475,8 @@ class Transaksi_PesananCetakan extends CI_Controller
             'JENIS' => $this->input->post('JENIS', TRUE),
             'FLAG' => $this->input->post('FLAG', TRUE),
             'PROSES' => $this->input->post('PROSES', TRUE),
-            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
-            'GAMBAR2' => "IMG".$this->upload->data('file_name'),
+            'GAMBAR1' =>  $GAMBAR1,
+            'GAMBAR2' => $GAMBAR2,
         );
         $where = array(
             'NO_ID' => $NO_ID
