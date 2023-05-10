@@ -90,7 +90,7 @@ class Transaksi_PesananCetakan extends CI_Controller
         $where = array(
             'PER' => $per,
             'DR' => $dr,
-            'SUB' => 'CI',
+            'SUB' => 'CT',
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_CETAK',
@@ -167,8 +167,8 @@ class Transaksi_PesananCetakan extends CI_Controller
             $row[] = $pp->JENIS;
             $row[] = $pp->FLAG;
             $row[] = $pp->TUJUAN;
-            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/$pp->GAMBAR1' width='auto' height='120'>";
-            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/$pp->GAMBAR2' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesanancetakan/$pp->GAMBAR1' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesanancetakan/$pp->GAMBAR2' width='auto' height='120'>";
             if($pp->VAL==1){
                 $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
             }else{
@@ -192,8 +192,8 @@ class Transaksi_PesananCetakan extends CI_Controller
         $where = array(
             'PER' => $per,
             'DR' => $dr,
-            'SUB' => 'CI',
-            'FLAG' => 'LOKAL',
+            'SUB' => 'CT',
+            // 'FLAG' => 'LOKAL',
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_CETAK',
@@ -210,10 +210,14 @@ class Transaksi_PesananCetakan extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='CT'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 3, 7);
-        $value22 = STRVAL($value11) . 1;
+        if($nom[0]==NULL){
+            $value11 = 0;
+        }else{
+            $value11 = substr($nom[0], 3, 4);
+        }
+        $value22 = STRVAL($value11) + 1;
         $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
         $tahun = substr($this->session->userdata['periode'], -4);
         if (substr($this->session->userdata['periode'], 0, 2) == 1) {
@@ -261,73 +265,77 @@ class Transaksi_PesananCetakan extends CI_Controller
         $this->load->view('templates_admin/footer');
     }
 
+    public function resizeImaged($filename)
+    {
+        $source_path = './gambar/pesanancetakan/' . $filename;
+        $target_path = './gambar/pesanancetakan/thumbnail/';
+        $config_manip = array(
+            'image_library' => 'gd2',
+            'source_image' => $source_path,
+            'new_image' => $target_path,
+            'maintain_ratio' => TRUE,
+            'create_thumb' => TRUE,
+            'thumb_marker' => '_thumb',
+            'width' => 150,
+            'height' => 150
+        );
+
+
+        $this->load->library('image_lib', $config_manip);
+        $this->image_lib->initialize($config_manip);
+
+
+        $this->image_lib->resize();
+        $this->image_lib->clear();
+    }
+
     public function input_aksi()
     {
-        $config['upload_path']          = './gambar/';
+        $bukti = $this->input->post('NO_BUKTI', TRUE);
+        $config['upload_path']          = './gambar/pesanancetakan/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-		$config['max_size']             = 1000;
-		$config['max_width']            = 3024;
-		$config['max_height']           = 3680;
-        $new_name = time().$_FILES['name'];
-        $config['file_name']            = $new_name; 
+		// $config['max_size']             = 1000;
+		// $config['max_width']            = 3024;
+		// $config['max_height']           = 3680;
+        $new_name1 = 'IMG'.$bukti.'-1';
+        $config['file_name']            = $new_name1; 
 
         $this->load->library('upload', $config);
+        $this->upload->initialize($config);
 
-        if ( ! $this->upload->do_upload('GAMBAR1') && ! $this->upload->do_upload('GAMBAR2')){
+        if ( ! $this->upload->do_upload('GAMBAR1')){
 			$error = array('error' => $this->upload->display_errors());
 			$this->load->view('admin/Transaksi_PesananCetakan/Transaksi_PesananCetakan_form', $error);
 		}else{
 			$data = array('upload_data' => $this->upload->data());
+            $gambar1 = $this->upload->data('file_name');
+            $this->resizeImaged($data['upload_data']['file_name']);
 			$this->load->view('admin/Transaksi_PesananCetakan/Transaksi_PesananCetakan', $data);
 		}
+#########################################################################################################
+        $configx['upload_path']          = './gambar/pesanancetakan/';
+        $configx['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
+        // $configx['max_size']             = 1000;
+        // $configx['max_width']            = 3024;
+        // $configx['max_height']           = 3680;
+        // $config['width']            = 1000;
+        // $config['height']           = 800;
+        $new_name2 = 'IMG'.$bukti.'-2';
+        $configx['file_name']            = $new_name2; 
 
-        $per = $this->session->userdata['periode'];
-        $dr = $this->session->userdata['dr'];
-        $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND DR='$dr' AND FLAG='PP' AND FLAG2='SP'")->result();
-        $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 3, 7);
-        $value22 = STRVAL($value11) + 1;
-        $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
-        $tahun = substr($this->session->userdata['periode'], -4);
-        if (substr($this->session->userdata['periode'], 0, 2) == 1) {
-            $romawi = 'I';
+        $this->load->library('upload', $configx);
+        $this->upload->initialize($configx);
+
+        if ( ! $this->upload->do_upload('GAMBAR2')){
+            $error = array('error' => $this->upload->display_errors());
+            $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA_form', $error);
+        }else{
+            $data = array('upload_data' => $this->upload->data());
+            $gambar2 = $this->upload->data('file_name');
+            $this->resizeImaged($data['upload_data']['file_name']);
+            $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
         }
-        if (substr($this->session->userdata['periode'], 0, 2) == 2) {
-            $romawi = 'II';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 3) {
-            $romawi = 'III';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 4) {
-            $romawi = 'IV';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 5) {
-            $romawi = 'V';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 6) {
-            $romawi = 'VI';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 7) {
-            $romawi = 'VII';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 8) {
-            $romawi = 'VIII';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 9) {
-            $romawi = 'IX';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 10) {
-            $romawi = 'X';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 11) {
-            $romawi = 'XI';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 12) {
-            $romawi = 'XII';
-        }
-        // PP / NOMER / DR / BULAN / TAHUN / RND
-        $bukti = 'PP' . '/' . $urut . '/' . "CT" . '/' . $dr . '/' . $romawi . '/' . $tahun;
+
         $datah = array(
             'NO_BUKTI' => $bukti,
             'ARTICLE' => $this->input->post('ARTICLE', TRUE),
@@ -342,13 +350,13 @@ class Transaksi_PesananCetakan extends CI_Controller
             'JENIS' => $this->input->post('JENIS', TRUE),
             'FLAG' => $this->input->post('FLAG', TRUE),
             'PROSES' => $this->input->post('PROSES', TRUE),
-            'GAMBAR1' => "IMG".$this->upload->data('file_name'),
-            'GAMBAR2' => "IMG".$this->upload->data('file_name'),
-            'FLAG' => 'LOKAL',
+            'GAMBAR1' => $gambar1,
+            'GAMBAR2' => $gambar2,
+            // 'FLAG' => 'LOKAL',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_CETAK',
             'DR' => $this->session->userdata['dr'],
-            'SUB' => 'CI',
+            'SUB' => 'CT',
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -399,12 +407,13 @@ class Transaksi_PesananCetakan extends CI_Controller
 
     public function update_aksi()
     {
-        $config['upload_path']          = './gambar/';
+        $bukti = $this->input->post('NO_BUKTI', TRUE);
+        $config['upload_path']          = './gambar/pesanancetakan/';
 		$config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
-		$config['max_size']             = 1000;
-		$config['max_width']            = 3024;
-		$config['max_height']           = 3680;
-        $new_name = time().$_FILES['name'];
+		// $config['max_size']             = 1000;
+		// $config['max_width']            = 3024;
+		// $config['max_height']           = 3680;
+        $new_name = 'IMG'.$bukti;
         $config['file_name']            = $new_name; 
 
         $this->load->library('upload', $config);
@@ -413,8 +422,11 @@ class Transaksi_PesananCetakan extends CI_Controller
 			$error = array('error' => $this->upload->display_errors());
 			$this->load->view('admin/Transaksi_PesananCetakan/Transaksi_PesananCetakan_form', $error);
 		}else{
+            $G1 = $this->input->post('G1', TRUE);
+            unlink(FCPATH."gambar/melbba/".$G1);
 			$data = array('upload_data' => $this->upload->data());
-			$this->load->view('admin/Transaksi_PesananCetakan/Transaksi_PesananCetakan', $data);
+            $GAMBAR1 = $this->upload->data('file_name');
+			// $this->load->view('admin/Transaksi_PesananCetakan/Transaksi_PesananCetakan', $data);
 		}
 
         $NO_ID = $this->input->post('NO_ID');

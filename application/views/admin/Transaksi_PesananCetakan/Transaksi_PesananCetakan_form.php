@@ -125,7 +125,7 @@
 	<div class="alert alert-success alert-container" role="alert">
 		<i class="fas fa-university"></i> Input Pesanan Cetakan
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakan/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakan/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" enctype="multipart/form-data" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -134,7 +134,7 @@
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" placeholder='<?php echo $this->session->userdata['bukti']; ?>' readonly>
+							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value='<?php echo $this->session->userdata['bukti']; ?>' readonly>
 						</div>
 						<div class="col-md-2">
 							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
@@ -255,7 +255,19 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<input type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<input onchange="loadFile(event)" type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
+							<img style="display:none;width:150px;height:150px;" id="GAMBAR1PREVIEW" src="#"  />
+							<script>
+							var loadFile = function(event) {
+								var output = document.getElementById('GAMBAR1PREVIEW');
+								output.src = URL.createObjectURL(event.target.files[0]);
+								output.onload = function() {
+								URL.revokeObjectURL(output.src) // free memory
+								}
+								
+								$("#GAMBAR1PREVIEW").show();
+							};
+							</script>
 						</div>
 					</div>
 				</div>
@@ -273,7 +285,19 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<input type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<input onchange="loadFile2(event)" type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<img style="display:none;width:150px;height:150px;" id="GAMBAR2PREVIEW" src="#"  />
+							<script>
+								var loadFile2 = function(event) {
+									var output = document.getElementById('GAMBAR2PREVIEW');
+									output.src = URL.createObjectURL(event.target.files[0]);
+									output.onload = function() {
+									URL.revokeObjectURL(output.src) // free memory
+									}
+									
+									$("#GAMBAR2PREVIEW").show();
+								};
+							</script>
 						</div>
 					</div>
 				</div>
