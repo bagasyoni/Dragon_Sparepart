@@ -35,10 +35,11 @@ class Transaksi_VerifikasiPesananPisau extends CI_Controller
         $per = $this->session->userdata['periode'];
         $where = array(
             'PER' => $per,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'SUB' => '1R&',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -86,10 +87,11 @@ class Transaksi_VerifikasiPesananPisau extends CI_Controller
         $per = $this->session->userdata['periode'];
         $where = array(
             'PER' => $per,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'SUB' => '1R&',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $this->db->from('pp');
         $this->db->where($where);
@@ -121,7 +123,7 @@ class Transaksi_VerifikasiPesananPisau extends CI_Controller
             $row[] = $pp->KET;
             $row[] = $pp->TS;
             $row[] = $pp->PESAN;
-            $row[] = $pp->GAMBAR;
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesananpisau/$pp->GAMBAR' width='auto' height='120'>";
             $data[] = $row;
         }
         $output = array(
@@ -139,10 +141,11 @@ class Transaksi_VerifikasiPesananPisau extends CI_Controller
         $this->session->set_userdata('judul', 'Transaksi Verifikasi Pesanan Pisau');
         $where = array(
             'PER' => $per,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'SUB' => '1R&',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -173,6 +176,15 @@ class Transaksi_VerifikasiPesananPisau extends CI_Controller
     {
         $this->transaksi_model->remove_checked('pp', 'ppd');
         redirect('admin/Transaksi_PesananPisau/index_Transaksi_VerifikasiPesananPisau');
+    }
+
+    function validasi()
+    {
+        $delete = $this->input->post('check');
+        for ($i = 0; $i < count($delete); $i++) {
+            $this->db->query("UPDATE pp SET VAL=1 where no_id=$delete[$i]");
+        }
+        redirect('admin/Transaksi_VerifikasiPesananPisau/Transaksi_VerifikasiPesananPisau');
     }
 
     public function getDataAjax_bhn()
