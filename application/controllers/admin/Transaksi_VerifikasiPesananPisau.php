@@ -188,6 +188,7 @@ class Transaksi_VerifikasiPesananPisau extends CI_Controller
         redirect('admin/Transaksi_VerifikasiPesananPisau/Transaksi_VerifikasiPesananPisau');
     }
 
+    
     public function getDataAjax_bhn()
     {
         $dr = $this->session->userdata['dr'];
