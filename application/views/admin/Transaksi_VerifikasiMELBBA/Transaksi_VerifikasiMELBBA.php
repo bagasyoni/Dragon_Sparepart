@@ -79,11 +79,11 @@
         <div class="alert alert-success alert-container" role="alert">
             <i class="fas fa-university"></i>
             <label>
-                Transaksi Verifkikasi Pesanan Pisau
+                Transaksi Verifkikasi Pesanan MELBBA
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
-        <form method="post" action="<?php echo base_url('admin/Transaksi_VerifikasiPesananPisau/delete_multiple') ?>">
+        <form method="post" action="<?php echo base_url('admin/Transaksi_VerifikasiMELBBA/Validasi') ?>">
             <div class="btn-group" role="group" aria-label="Basic example">
             </div>
             <table id="example" class="table table-bordered table-striped table-hover table-responsive bodycontainer scrollable" style="width:100%;">
@@ -121,7 +121,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "<?php echo site_url('admin/Transaksi_VerifikasiPesananPisau/get_ajax_pp') ?>",
+                "url": "<?php echo site_url('admin/Transaksi_VerifikasiMELBBA/get_ajax_pp') ?>",
                 "type": "POST"
             },
             "columnDefs": [{

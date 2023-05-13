@@ -32,13 +32,16 @@ class Transaksi_VerifikasiMELBBA extends CI_Controller
 
     private function _get_datatables_query()
     {
+        $dr= $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $where = array(
             'PER' => $per,
+            'DR' => $dr,
             'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'SUB' => 'MB',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -83,13 +86,16 @@ class Transaksi_VerifikasiMELBBA extends CI_Controller
 
     function count_all()
     {
+        $dr= $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $where = array(
             'PER' => $per,
+            'DR' => $dr,
             'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'SUB' => 'MB',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $this->db->from('pp');
         $this->db->where($where);
@@ -111,6 +117,7 @@ class Transaksi_VerifikasiMELBBA extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_VerifikasiMELBBA/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
@@ -121,7 +128,7 @@ class Transaksi_VerifikasiMELBBA extends CI_Controller
             $row[] = $pp->KET;
             $row[] = $pp->TS;
             $row[] = $pp->PESAN;
-            $row[] = $pp->GAMBAR;
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/melbba/$pp->GAMBAR1' width='auto' height='60'>";
             $data[] = $row;
         }
         $output = array(
@@ -135,14 +142,17 @@ class Transaksi_VerifikasiMELBBA extends CI_Controller
 
     public function index_Transaksi_VerifikasiMELBBA()
     {
+        $dr= $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
-        $this->session->set_userdata('judul', 'Transaksi Verifikasi Pesanan Pisau');
+        $this->session->set_userdata('judul', 'Transaksi Verifikasi Pesanan MELBBA');
         $where = array(
             'PER' => $per,
+            'DR' => $dr,
             'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'SUB' => 'MB',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -313,5 +323,30 @@ class Transaksi_VerifikasiMELBBA extends CI_Controller
         }
         ob_end_clean();
         $PHPJasperXML->outpage("I");
+    }
+
+    function validasi()
+    {
+        $delete = $this->input->post('check');
+        for ($i = 0; $i < count($delete); $i++) {
+            $this->db->query("UPDATE pp SET VAL=1 where no_id=$delete[$i]");
+        }
+        redirect('admin/Transaksi_VerifikasiMELBBA/index_Transaksi_VerifikasiMELBBA');
+    }
+
+    public function update($NO_ID)
+    {
+        
+        $q1 ="SELECT a.NO_ID, a.NO_BUKTI, a.TGL, a.TGL_DIMINTA, a.DEVISI, a.ARTICLE, a.PESAN, 
+                a.JO, a.FLAG3, a.GAMBAR1, a.VAL, a.TOTAL_QTY, b.GAMBAR1 AS GDETAIL, b.REC, b.NA_BHN, 
+                b.KD_BHN, b.WARNA, b.SERI, b.QTY, b.SATUAN, DATE_FORMAT(b.TGL_DIMINTA, '%d-%m-%Y') AS TGL_DIMINTAD, b.KET AS KET,
+                b.NO_ID AS NO_IDX
+                FROM pp a,ppd b WHERE a.NO_ID = '$NO_ID' AND a.NO_BUKTI = b.NO_BUKTI";
+
+        $data['rnd'] = $this->transaksi_model->edit_data($q1)->result();
+        $this->load->view('templates_admin/header');
+        $this->load->view('templates_admin/navbar');
+        $this->load->view('admin/Transaksi_VerifikasiMELBBA/Transaksi_VerifikasiMELBBA_update', $data);
+        $this->load->view('templates_admin/footer');
     }
 }
