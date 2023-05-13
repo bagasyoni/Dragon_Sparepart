@@ -83,7 +83,7 @@
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
-        <form method="post" action="<?php echo base_url('admin/Transaksi_VerifikasiPesananPisau/delete_multiple') ?>">
+        <form method="post" action="<?php echo base_url('admin/Transaksi_VerifikasiCetakan/Validasi') ?>">
             <div class="btn-group" role="group" aria-label="Basic example">
             </div>
             <table id="example" class="table table-bordered table-striped table-hover table-responsive bodycontainer scrollable" style="width:100%;">
@@ -97,8 +97,8 @@
                         <th width="100px">Divisi</th>
                         <th width="100px">Ket</th>
                         <th width="100px">TS</th>
-                        <th width="225px">Pesan</th>
-                        <th width="225px">Gambar</th>
+                        <th width="225px">Gambar 1</th>
+                        <th width="225px">Gambar 2</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -121,7 +121,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "<?php echo site_url('admin/Transaksi_VerifikasiPesananPisau/get_ajax_pp') ?>",
+                "url": "<?php echo site_url('admin/Transaksi_VerifikasiCetakan/get_ajax_pp') ?>",
                 "type": "POST"
             },
             "columnDefs": [{
