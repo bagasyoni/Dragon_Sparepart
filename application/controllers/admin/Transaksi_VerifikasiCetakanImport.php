@@ -33,12 +33,16 @@ class Transaksi_VerifikasiCetakanImport extends CI_Controller
     private function _get_datatables_query()
     {
         $per = $this->session->userdata['periode'];
+        $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'DR' => $dr,
+            'SUB' => 'CI',
+            // 'PER' => $per,
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -84,12 +88,16 @@ class Transaksi_VerifikasiCetakanImport extends CI_Controller
     function count_all()
     {
         $per = $this->session->userdata['periode'];
+        $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'DR' => $dr,
+            'SUB' => 'CI',
+            // 'PER' => $per,
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $this->db->from('pp');
         $this->db->where($where);
@@ -111,6 +119,7 @@ class Transaksi_VerifikasiCetakanImport extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_VerifikasiCetakanImport/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
@@ -120,8 +129,8 @@ class Transaksi_VerifikasiCetakanImport extends CI_Controller
             $row[] = $pp->DEVISI;
             $row[] = $pp->KET;
             $row[] = $pp->TS;
-            $row[] = $pp->PESAN;
-            $row[] = $pp->GAMBAR;
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesanancetakanimport/$pp->GAMBAR1' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesanancetakanimport/$pp->GAMBAR2' width='auto' height='120'>";
             $data[] = $row;
         }
         $output = array(
@@ -136,13 +145,17 @@ class Transaksi_VerifikasiCetakanImport extends CI_Controller
     public function index_Transaksi_VerifikasiCetakanImport()
     {
         $per = $this->session->userdata['periode'];
-        $this->session->set_userdata('judul', 'Transaksi Verifikasi Pesanan Pisau');
+        $dr= $this->session->userdata['dr'];
+        $this->session->set_userdata('judul', 'Transaksi Verifikasi Cetak Import');
         $where = array(
             'PER' => $per,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'DR' => $dr,
+            'SUB' => 'CI',
+            // 'PER' => $per,
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -313,5 +326,47 @@ class Transaksi_VerifikasiCetakanImport extends CI_Controller
         }
         ob_end_clean();
         $PHPJasperXML->outpage("I");
+    }
+
+    function validasi()
+    {
+        $delete = $this->input->post('check');
+        for ($i = 0; $i < count($delete); $i++) {
+            $this->db->query("UPDATE pp SET VAL=1 where no_id=$delete[$i]");
+        }
+        redirect('admin/Transaksi_VerifikasiCetakanImport/Transaksi_VerifikasiCetakanImport');
+    }
+
+    public function update($NO_ID)
+    {
+        $where = array('NO_ID' => $NO_ID);
+        $ambildata = $this->master_model->edit_data($where, 'pp');
+        $r = $ambildata->row_array();
+        $data = [
+            'NO_ID' => $r['NO_ID'],
+            'NO_BUKTI' => $r['NO_BUKTI'],
+            'ARTICLE' => $r['ARTICLE'],
+            'TGL' => $r['TGL'],
+            'NOTES' => $r['NOTES'],
+            'M_LASTING' => $r['M_LASTING'],
+            'TGL_DIMINTA' => $r['TGL_DIMINTA'],
+            'DEVISI' => $r['DEVISI'],
+            'TUJUAN' => $r['TUJUAN'],
+            'TIPE' => $r['TIPE'],
+            'TIPE_CETAK' => $r['TIPE_CETAK'],
+            'JENIS' => $r['JENIS'],
+            'FLAG' => $r['FLAG'],
+            'PROSES' => $r['PROSES'],
+            'GAMBAR1' => $r['GAMBAR1'],
+            'GAMBAR2' => $r['GAMBAR2'],
+            'GAMBAR3' => $r['GAMBAR3'],
+            'VAL' => $r['VAL'],
+            'JUMLAH' => $r['JUMLAH'],
+            'SIZE' => $r['SIZE'],
+        ];
+        $this->load->view('templates_admin/header');
+        $this->load->view('templates_admin/navbar');
+        $this->load->view('admin/Transaksi_VerifikasiCetakanImport/Transaksi_VerifikasiCetakanImport_update', $data);
+        $this->load->view('templates_admin/footer');
     }
 }

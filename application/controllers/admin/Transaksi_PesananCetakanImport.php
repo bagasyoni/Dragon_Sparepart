@@ -398,7 +398,7 @@ class Transaksi_PesananCetakanImport extends CI_Controller
                 </button> 
             </div>'
         );
-        redirect('admin/Transaksi_PesananCetakanImport/Transaksi_PesananCetakanImport');
+        redirect('admin/Transaksi_PesananCetakanImport/Index_Transaksi_PesananCetakanImport');
     }
 
     public function update($NO_ID)
