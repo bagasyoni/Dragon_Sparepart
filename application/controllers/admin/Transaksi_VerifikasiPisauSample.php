@@ -32,13 +32,16 @@ class Transaksi_VerifikasiPisauSample extends CI_Controller
 
     private function _get_datatables_query()
     {
+        $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $where = array(
+            'DR' => $dr,
             'PER' => $per,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'SUB' => 'PSL',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $this->db->select('*');
         $this->db->from('pp');
@@ -83,13 +86,16 @@ class Transaksi_VerifikasiPisauSample extends CI_Controller
 
     function count_all()
     {
+        $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $where = array(
+            'DR' => $dr,
             'PER' => $per,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'SUB' => 'PSL',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $this->db->from('pp');
         $this->db->where($where);
@@ -111,6 +117,7 @@ class Transaksi_VerifikasiPisauSample extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_VerifikasiPisauSample/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
@@ -121,7 +128,7 @@ class Transaksi_VerifikasiPisauSample extends CI_Controller
             $row[] = $pp->KET;
             $row[] = $pp->TS;
             $row[] = $pp->PESAN;
-            $row[] = $pp->GAMBAR;
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesananpisausample/$pp->GAMBAR' width='auto' height='120'>";
             $data[] = $row;
         }
         $output = array(
@@ -135,14 +142,17 @@ class Transaksi_VerifikasiPisauSample extends CI_Controller
 
     public function index_Transaksi_VerifikasiPisauSample()
     {
+        $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
-        $this->session->set_userdata('judul', 'Transaksi Verifikasi Pesanan Pisau');
+        $this->session->set_userdata('judul', 'Transaksi Verifikasi Pesanan Pisau Sample');
         $where = array(
+            'DR' => $dr,
             'PER' => $per,
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'SUB' => 'PSL',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
             'VAL' => '0',
-            'TYP' => 'RND_PISAU',
+            // 'TYP' => 'RND_PISAU',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -169,10 +179,54 @@ class Transaksi_VerifikasiPisauSample extends CI_Controller
         redirect('admin/Transaksi_VerifikasiPisauSample/index_Transaksi_VerifikasiPisauSample');
     }
 
-    function delete_multiple()
+    // function delete_multiple()
+    // {
+    //     $this->transaksi_model->remove_checked('pp', 'ppd');
+    //     redirect('admin/Transaksi_PesananPisau/index_Transaksi_VerifikasiPisauSample');
+    // }
+
+    public function update($id)
     {
-        $this->transaksi_model->remove_checked('pp', 'ppd');
-        redirect('admin/Transaksi_PesananPisau/index_Transaksi_VerifikasiPisauSample');
+        $q1 = "SELECT pp.NO_ID as ID,
+                pp.NO_BUKTI AS NO_BUKTI,
+                pp.TGL AS TGL,
+                pp.DEVISI AS DEVISI,
+                pp.ARTICLE AS ARTICLE,
+                pp.PESAN AS PESAN,
+                pp.JO AS JO,
+                pp.TGL_DIMINTA AS TGL_DIMINTA_H,
+                pp.TS AS TS,
+                pp.GAMBAR AS GAMBAR,
+                pp.TOTAL_QTY AS TOTAL_QTY,
+                pp.VAL AS VAL,
+                
+                ppd.NO_ID AS NO_ID,
+                ppd.REC AS REC,
+                ppd.NA_BHN AS NA_BHN,
+                ppd.SIZE AS SIZE,
+                ppd.QTY AS QTY,
+                ppd.SATUAN AS SATUAN,
+                IF(ppd.TGL_DIMINTA='0000-00-00','2001-01-01',ppd.TGL_DIMINTA) AS TGL_DIMINTA_D,
+                ppd.KET1 AS KET1,
+                ppd.GAMBAR1 AS GAMBAR1
+            FROM pp,ppd 
+            WHERE pp.NO_ID=$id 
+            AND pp.NO_ID=ppd.ID 
+            ORDER BY ppd.REC";
+        $data['rnd'] = $this->transaksi_model->edit_data($q1)->result();
+        $this->load->view('templates_admin/header');
+        $this->load->view('templates_admin/navbar');
+        $this->load->view('admin/Transaksi_VerifikasiPisauSample/Transaksi_VerifikasiPisauSample_update', $data);
+        $this->load->view('templates_admin/footer');
+    }
+
+    function validasi()
+    {
+        $delete = $this->input->post('check');
+        for ($i = 0; $i < count($delete); $i++) {
+            $this->db->query("UPDATE pp SET VAL=1 where no_id=$delete[$i]");
+        }
+        redirect('admin/Transaksi_VerifikasiPisauSample/index_Transaksi_VerifikasiPisauSample');
     }
 
     public function getDataAjax_bhn()
