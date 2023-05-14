@@ -366,7 +366,7 @@ foreach ($ppstok as $rowh) {
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<button type="submit" onclick="chekbox()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+						<button <?php if ($rowh->TTD3 == !0) echo 'style="visibility: hidden;"'; ?>  type="submit" onclick="chekbox()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
 						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
 					</div>
 					<a type="text" class="btn btn-light"> </a>
