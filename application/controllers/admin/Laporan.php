@@ -1623,53 +1623,70 @@ class Laporan extends CI_Controller
 			$tahun = substr($this->input->post('TGL_1'), -4);
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 			$masa = $this->input->post('MASA');
-			$query = "SELECT bhnd.RAK, 
-				bhnd.KD_BHN,
-				bhnd.NA_BHN, 
-				bhn.SATUAN,
-				bhnd.AK$bulan AS AK, 
-				DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) as HARI,
-				CASE 
-					WHEN 
-						DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 720 
-					THEN '> 24 Bulan'
-					WHEN 
-						DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 630 
-					THEN '> 21 Bulan'
-					WHEN 
-						DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 540 
-					THEN '> 18 Bulan'
-					WHEN 
-						DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 450 
-					THEN '> 15 Bulan'
-					WHEN 
-						DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 360
-					THEN '> 12 Bulan'
-					WHEN 
-						DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 270
-					THEN '> 9 Bulan'
-					WHEN 
-						DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 180 
-					THEN '> 6 Bulan'
-					WHEN 
-						DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 90 
-					THEN '> 3 Bulan'
-					WHEN 
-						DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 30 
-						THEN '> 1 Bulan'
-					WHEN 
-						DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) < 30 
-					THEN '< 1 Bulan'
-				END AS KET
-			FROM bhn, bhnd
-			WHERE bhn.KD_BHN = bhnd.KD_BHN
-			AND bhnd.DR='$dr'
-			AND bhnd.FLAG='SP'
-			AND bhnd.TG_BL < '$tgl_1'
-			AND bhnd.TG_PK < '$tgl_1'
-			AND bhnd.YER = '$tahun'
-			GROUP BY bhnd.KD_BHN
-			ORDER BY bhnd.KD_BHN";
+			$KD = $this->input->post('KD');
+			$LD = $this->input->post('LD');
+
+			$kondisi = "";
+			if($KD != "" && $LD == ""){
+				$kondisi = "WHERE X.TG_USIA < ('$tgl_1' + INTERVAL '$KD' MONTH) AND X.TG_USIA > '$tgl_1'";
+			}elseif($KD == "" && $LD != ""){
+				$kondisi = "WHERE X.TG_USIA > ('$tgl_1' - INTERVAL '$LD' MONTH) AND X.TG_USIA < '$tgl_1'";
+			}elseif($KD != "" && $LD != ""){
+				$kondisi = "WHERE X.TG_USIA > ('$tgl_1' - INTERVAL '$LD' MONTH) AND X.TG_USIA < ('$tgl_1' + INTERVAL '$KD' MONTH)";
+			}else{
+				$kondisi = "";
+			}
+
+			$query = "SELECT X.* FROM (
+						SELECT bhnd.RAK, 
+							'2022-05-31' AS TGL_PILIH,
+							bhnd.RAK, 
+							bhnd.KD_BHN,
+							bhnd.NA_BHN, 
+							bhn.SATUAN,
+							bhnd.AK$bulan AS AK, 
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) as HARI,
+							CASE 
+								WHEN 
+									DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 720 
+								THEN '> 24 Bulan'
+								WHEN 
+									DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 630 
+								THEN '> 21 Bulan'
+								WHEN 
+									DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 540 
+								THEN '> 18 Bulan'
+								WHEN 
+									DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 450 
+								THEN '> 15 Bulan'
+								WHEN 
+									DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 360
+								THEN '> 12 Bulan'
+								WHEN 
+									DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 270
+								THEN '> 9 Bulan'
+								WHEN 
+									DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 180 
+								THEN '> 6 Bulan'
+								WHEN 
+									DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 90 
+								THEN '> 3 Bulan'
+								WHEN 
+									DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 30 
+									THEN '> 1 Bulan'
+								WHEN 
+									DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) < 30 
+								THEN '< 1 Bulan'
+							END AS KET
+						FROM bhn, bhnd
+						WHERE bhn.KD_BHN = bhnd.KD_BHN
+						AND bhnd.DR='$dr'
+						AND bhnd.FLAG='SP'
+						AND bhnd.TG_BL < '$tgl_1'
+						AND bhnd.TG_PK < '$tgl_1'
+						AND bhnd.YER = '$tahun'
+						GROUP BY bhnd.KD_BHN
+						ORDER BY bhnd.KD_BHN) X $kondisi";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -1689,6 +1706,8 @@ class Laporan extends CI_Controller
 			$data = array(
 				'TGL_1' => set_value('TGL_1'),
 				'MASA' => set_value('MASA'),
+				'KD' => set_value('KD'),
+				'LD' => set_value('LD'),
 			);
 			$data['usia'] = $this->laporan_model->tampil_data_usia()->result();
 			$this->load->view('templates_admin/header');
