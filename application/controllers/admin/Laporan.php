@@ -1369,6 +1369,11 @@ class Laporan extends CI_Controller
 			$per = $this->session->userdata['periode'];
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 			$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
+			$kunci = $this->input->post('KUNCI', TRUE);
+			$katakunci = "";
+			if($kunci != ""){
+				$katakunci = "AND pakai.NOTES LIKE '%$kunci%'";
+			}
 			$query = "SELECT pakai.NOTES AS NOTES,
 						pakaid.TGL AS TGL,
 						pakaid.NO_BUKTI AS NO_BUKTI,
@@ -1388,6 +1393,7 @@ class Laporan extends CI_Controller
 					-- AND pakai.PER = '$per'
 					AND pakai.FLAG = 'PK'
 					AND pakai.FLAG2 = 'SP'
+					$katakunci
 					ORDER BY pakaid.TGL";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -1408,7 +1414,7 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->outpage("I");
 		} else {
 			$data = array(
-				'KD_BHN_1' => set_value('KD_BHN_1'),
+				'KUNCI' => set_value('KUNCI'),
 				'TGL_1' => set_value('TGL_1'),
 				'TGL_2' => set_value('TGL_2'),
 			);

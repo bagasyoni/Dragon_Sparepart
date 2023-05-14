@@ -50,6 +50,15 @@
                     <div class="col-sm-1"></div>
                 </div>
                 <div class="form-group row">
+                    <div class="col-md-1">
+                        <label class="label">Kata Kunci </label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" id="KUNCI" name="KUNCI" class="form-control KUNCI" placeholder="Kata Kunci ..." value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["KUNCI"]; } else echo ""; ?>">
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                <div class="form-group row">
                     <div class="col-sm-1 nopadding">
 						<button class="btn btn-md btn-secondary" id="tampilkan" name="tampilkan"> Tampilkan </button>
 					</div>

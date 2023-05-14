@@ -520,6 +520,11 @@ class Laporan_model extends CI_Model
 		$per = $this->session->userdata['periode'];
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
+		$kunci = $this->input->post('KUNCI', TRUE);
+		$katakunci = "";
+		if($kunci != ""){
+			$katakunci = "AND pakai.NOTES LIKE '%$kunci%'";
+		}
 		$q1 = "SELECT pakai.NOTES AS NOTES,
 				pakaid.TGL AS TGL,
 				pakaid.NO_BUKTI AS NO_BUKTI,
@@ -541,6 +546,7 @@ class Laporan_model extends CI_Model
 			AND pakai.ATK = 0
 			AND pakai.FLAG = 'PK'
 			AND pakai.FLAG2 = 'SP'
+			$katakunci
 			ORDER BY pakaid.TGL";
 		return $this->db->query($q1);
 	}
