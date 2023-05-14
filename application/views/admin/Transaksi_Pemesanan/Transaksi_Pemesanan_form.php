@@ -545,6 +545,8 @@
 			$("#KD_BHN" + x).val(val);
 			var val = $(this).parents("tr").find(".SATVAL").text();
 			$("#SATUAN" + x).val(val);
+			var val = $(this).parents("tr").find(".NABVAL").text();
+			$("#NA_BHN" + x).val(val);
 			$('#modal_kd_bhn').modal('toggle');
 			var kd_bhn = $(this).parents("tr").find(".KDBVAL").text();
 		});
