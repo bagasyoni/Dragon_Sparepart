@@ -78,6 +78,7 @@ $db['default'] = array(
 	'hostname' => 'localhost:3306',
 	'username' => 'root',
 	// 'password' => '123456',
+	// 'tupila yeaaa',
 	'password' => '',
 	'database' => 'dragon_fixed_test',
 	'port' => '3306',
