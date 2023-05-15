@@ -41,7 +41,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
             'FLAG' => 'PK',
             // 'SUB' => 'MB',
             'FLAG2' => 'SP',
-            'TTD1' => '0',
+            'OK' => '0',
             // 'TYP' => 'RND_LBBA',
         );
         $this->db->select('*');
@@ -95,7 +95,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
             'FLAG' => 'PK',
             // 'SUB' => 'MB',
             'FLAG2' => 'SP',
-            'TTD1' => '0',
+            'OK' => '0',
             // 'TYP' => 'RND_LBBA',
         );
         $this->db->from('pakai');
@@ -157,7 +157,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
             'FLAG' => 'PK',
             // 'SUB' => 'MB',
             'FLAG2' => 'SP',
-            'TTD1' => '0',
+            'OK' => '0',
             // 'TYP' => 'RND_LBBA',
         );
         $data['pakai'] = $this->transaksi_model->tampil_data($where, 'pakai', 'NO_ID')->result();
