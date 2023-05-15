@@ -36,16 +36,16 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr= $this->session->userdata['dr'];
         $where = array(
-            'PER' => $per,
+            // 'PER' => $per,
             // 'DR' => $dr,
-            'FLAG' => 'PK',
+            'FLAG' => '0',
             // 'SUB' => 'MB',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
             'OK' => '0',
             // 'TYP' => 'RND_LBBA',
         );
         $this->db->select('*');
-        $this->db->from('pakai');
+        $this->db->from('bon');
         $this->db->where($where);
         $i = 0;
         foreach ($this->column_search as $item) {
@@ -90,15 +90,15 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr= $this->session->userdata['dr'];
         $where = array(
-            'PER' => $per,
+            // 'PER' => $per,
             // 'DR' => $dr,
-            'FLAG' => 'PK',
+            'FLAG' => '0',
             // 'SUB' => 'MB',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
             'OK' => '0',
             // 'TYP' => 'RND_LBBA',
         );
-        $this->db->from('pakai');
+        $this->db->from('bon');
         $this->db->where($where);
         return $this->db->count_all_results();
     }
@@ -152,15 +152,15 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr= $this->session->userdata['dr'];
         $where = array(
-            'PER' => $per,
+            // 'PER' => $per,
             // 'DR' => $dr,
-            'FLAG' => 'PK',
+            'FLAG' => '0',
             // 'SUB' => 'MB',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
             'OK' => '0',
             // 'TYP' => 'RND_LBBA',
         );
-        $data['pakai'] = $this->transaksi_model->tampil_data($where, 'pakai', 'NO_ID')->result();
+        $data['pakai'] = $this->transaksi_model->tampil_data($where, 'bon', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_BonBelumValidasi/Transaksi_BonBelumValidasi', $data);
