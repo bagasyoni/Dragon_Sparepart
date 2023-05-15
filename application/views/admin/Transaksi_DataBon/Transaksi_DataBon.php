@@ -79,11 +79,11 @@
         <div class="alert alert-success alert-container" role="alert">
             <i class="fas fa-university"></i>
             <label>
-                Transaksi Bon Pemakaian
+                Data Bon
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
-        <form method="post" action="<?php echo base_url('admin/Transaksi_BonPemakaian/delete_multiple') ?>">
+        <form method="post" action="<?php echo base_url('admin/Transaksi_DataBon/delete_multiple') ?>">
             <div class="btn-group" role="group" aria-label="Basic example">
             </div>
             <table id="example" class="table table-bordered table-striped table-hover table-responsive bodycontainer scrollable" style="width:100%;">
@@ -94,9 +94,10 @@
                         <th width="75px">No</th>
                         <th width="275px">No Bukti</th>
                         <th width="200px">Tgl</th>
-                        <th width="250px">Notes</th>
-                        <th width="170px">SP</th>
-                        <th width="75px">Dragon</th>
+                        <th width="250px">User</th>
+                        <th width="170px">DR</th>
+                        <th width="75px">Tujuan</th>
+                        <th width="200px">Tgl Simpan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -119,7 +120,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "<?php echo site_url('admin/Transaksi_BonPemakaian/get_ajax_pakai') ?>",
+                "url": "<?php echo site_url('admin/Transaksi_DataBon/get_ajax_bon') ?>",
                 "type": "POST"
             },
             "columnDefs": [{

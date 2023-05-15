@@ -123,9 +123,9 @@ foreach ($bonpemakaian as $rowh) {
 <div class="container-fluid">
 	<br>
 	<div class="alert alert-success alert-container" role="alert">
-		<i class="fas fa-university"></i> Update <?php echo $this->session->userdata['judul']; ?>
+		<i class="fas fa-university"></i> Input <?php echo $this->session->userdata['judul']; ?>
 	</div>
-	<form id="bonpemakaian" name="bonpemakaian" action="<?php echo base_url('admin/Transaksi_BonPemakaian/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="bonpemakaian" name="bonpemakaian" action="<?php echo base_url('admin/Transaksi_DataBon/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -137,21 +137,47 @@ foreach ($bonpemakaian as $rowh) {
 							<input type="hidden" name="ID" id="ID" class="form-control" value="<?php echo $rowh->ID ?>">
 							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
 						</div>
+						<div class="col-md-1">
+							<label class="label">Tgl </label>
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()">
+						</div>
 					</div>
 				</div>
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-1">
+							<label class="label">DR</label>
+						</div>
+						<div class="col-md-1 ">
+							<select class="form-control DR text_input" name="DR" id="DR" style="width: 100%;">
+								<option <?php echo ($rowh->DR=='I')?'selected':'';?> value="I" selected>1</option>
+								<option <?php echo ($rowh->DR=='II')?'selected':'';?>value="II">2</option>
+								<option <?php echo ($rowh->DR=='III')?'selected':'';?>value="III">3</option>
+							</select>
+						</div>
+						<div class="col-md-1">
+							<label class="label"></label>
+						</div>
+						<div class="col-md-1">
+							<label class="label">Tujaun</label>
+						</div>
+						<div class="col-md-2">
+							<select class="form-control TUJUAN text_input" name="TUJUAN" id="TUJUAN" style="width: 100%;">
+								<option <?php echo ($rowh->TUJUAN=='')?'selected':'';?> value="" selected></option>
+								<option <?php echo ($rowh->TUJUAN=='UM')?'selected':'';?> value="UM">UM</option>
+								<option <?php echo ($rowh->TUJUAN=='SP')?'selected':'';?> value="SP">SP</option>
+								<option <?php echo ($rowh->TUJUAN=='INV')?'selected':'';?> value="INV">INV</option>
+								<option <?php echo ($rowh->TUJUAN=='ATK')?'selected':'';?> value="ATK">ATK</option>
+								<option <?php echo ($rowh->TUJUAN=='RND')?'selected':'';?> value="RND">RND</option>
+							</select>
+						</div>
+						<div class="col-md-1">
 							<label class="label">Notes </label>
 						</div>
 						<div class="col-md-3">
 							<input class="form-control text_input NOTES text_input" id="NOTES" name="NOTES" type="text" value="<?php echo $rowh->NOTES ?>">
-						</div>
-						<div class="col-md-1">
-							<label class="label">Tgl </label>
-						</div>
-						<div class="col-md-3">
-							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()">
 						</div>
 					</div>
 				</div>
@@ -164,55 +190,48 @@ foreach ($bonpemakaian as $rowh) {
 						<thead>
 							<tr>
 								<th width="50px">No</th>
-								<!-- <th width="75px">Kode</th> -->
-								<th width="75px">Rak</th>
-								<th width="250px">Uraian</th>
-								<th width="75px">Qty</th>
-								<th width="100px">Satuan</th>
+								<!-- <th width="75px">Rak</th> -->
+								<th width="250px">Nama Barang</th>
+								<th width="250px">Ket Barang</th>
+								<th width="250px">Qty</th>
+								<th width="250px">Satuan</th>
+								<th width="250px">Keterangan</th>
 								<!-- <th width="125px">Kode Golongan</th> -->
-								<th width="150px">Keterangan 1</th>
-								<th width="125px">Keterangan 2</th>
-								<th width="175px">Grup</th>
+								<th width="250px">Diterima Sparepart</th>
+								<!-- <th width="125px">Keterangan 2</th>
+								<th width="175px">Grup</th> -->
 								<th width="50px"></th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php
-							$no = 0;
-							foreach ($bonpemakaian as $row) :
-							?>
-								<tr>
+								$no = 0;
+								foreach ($bonpemakaian as $row) :
+								?>
+									<tr>
 									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-									<!-- <td>
-										<div class="input-group">
-											<select class="js-example-responsive-rak form-control RAK text_input" name="RAK[]" id="RAK<?php echo $no; ?>" onchange="rak(this.id)" required>
-												<option value="<?php echo $row->RAK; ?>" selected id="RAK<?php echo $no; ?>"><?php echo $row->RAK; ?></option>
-											</select>
-										</div>
-									</td> -->
-									<td><input name="RAK[]" id="RAK<?php echo $no; ?>" value="<?= $row->RAK ?>" type="text" class="form-control RAK text_input"></td>
-									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
-									<td hidden><input name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input"></td>
-									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
-									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"></td>
-									<td><input name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
-									<td>
-										<div class="input-group">
-											<select class="js-example-responsive-sp_mesin form-control KET2 text_input" name="KET2[]" id="KET2<?php echo $no; ?>" onchange="kd_gol(this.id)" required>
-												<option value="<?php echo $row->KET2; ?>" selected id="KET2<?php echo $no; ?>"><?php echo $row->KET2; ?></option>
-											</select>
-										</div>
-									</td>
-									<!-- <td><input name="NA_GOL[]" id="NA_GOL<?php echo $no; ?>" value="<?= $row->NA_GOL ?>" type="text" class="form-control NA_GOL text_input" readonly></td> -->
-									<td><input name="GRUP[]" id="GRUP<?php echo $no; ?>" value="<?= $row->GRUP ?>" type="text" class="form-control GRUP text_input" readonly></td>
-									<td>
+										<!-- <td>
+											<select class="js-example-responsive-rak form-control RAK0 text_input" name="RAK[]" id="RAK0" onchange="rak(this.id)" onfocusout="hitung()" required></select>
+										</td> -->
+										<td><input name="NA_BHN[]" id="NA_BHN <?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
+										<td><input name="KET1[]" id="KET1 <?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
+										<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
+										<td><input name="SATUAN[]" id="SATUAN <?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"></td>
+										<td><input name="KET2[]" id="KET2 <?php echo $no; ?>" value="<?= $row->KET2 ?>" type="text" class="form-control KET2 text_input"></td>
+										<!-- <td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td> -->
+										<td>
+										<input name="SP[]" id="SP <?php echo $no; ?>" <?php echo ($rowh->SP=='')?'':'checked';?> value="<?= $row->SP ?>" type="checkbox" class="checkbox_container SP" unchecked onclick="return false">
+										</td>
+										<!-- <td hidden><input name="NA_GOL[]" id="NA_GOL0" type="text" class="form-control NA_GOL text_input" readonly></td> -->
+										<!-- <td><input name="GRUP[]" id="GRUP0" type="text" class="form-control GRUP text_input" readonly></td> -->
+										<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
-										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
-											<i class="fa fa-fw fa-trash-alt"></i>
-										</button>
-									</td>
-								</tr>
-								<?php $no++; ?>
+											<button type="hidden" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+												<i class="fa fa-fw fa-trash-alt"></i>
+											</button>
+										</td>
+									</tr>
+									<?php $no++; ?>
 							<?php endforeach; ?>
 						</tbody>
 						<tfoot>
@@ -248,10 +267,6 @@ foreach ($bonpemakaian as $rowh) {
 					<div class="btn-group cxx">
 						<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
 						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
-						<a type="text" class="btn btn-light"> </a>
-						<button class="btn btn-secondary" type="button" onclick="prev()">
-							<< PREV</button>
-								<button class="btn btn-secondary" type="button" onclick="next()">NEXT >></button>
 					</div>
 					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
 				</div>
@@ -283,6 +298,7 @@ foreach ($bonpemakaian as $rowh) {
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
+						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -296,7 +312,7 @@ foreach ($bonpemakaian as $rowh) {
 		}, false);
 	})();
 	var target;
-	var idrow = <?php echo $no ?>;
+	var idrow = 1;
 
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -376,29 +392,32 @@ foreach ($bonpemakaian as $rowh) {
 		var td6 = x.insertCell(5);
 		var td7 = x.insertCell(6);
 		var td8 = x.insertCell(7);
-		var td9 = x.insertCell(8);
+		// var td9 = x.insertCell(8);
 		// var td10 = x.insertCell(9);
 		// var td11 = x.insertCell(10);
 
-		var rak0 = "<div class='input-group'><select class='js-example-responsive-rak form-control RAK0 text_input' name='RAK[]' id=RAK0" + idrow + " onchange='rak(this.id)' onfocusout='hitung()' required></select></div>";
+		// var rak0 = "<div class='input-group'><select class='js-example-responsive-rak form-control RAK0 text_input' name='RAK[]' id=RAK0" + idrow + " onchange='rak(this.id)' onfocusout='hitung()' required></select></div>";
 
-		var rak = rak0;
+		// var rak = rak0;
 
-		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET2" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()' required></select></div>";
+		// var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET2" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()'></select></div>";
 
-		var kd_gol = kd_gol0;
+		// var kd_gol = kd_gol0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
 		// td2.innerHTML = rak;
-		td2.innerHTML = "<input name='RAK[]' id=RAK" + idrow + " type='text' class='form-control RAK text_input'>";
-		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly> <input hidden name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' readonly>";
+		td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input'>";
+		td3.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
+		// td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly> <input hidden name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' readonly>";
 		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' >";
-		// td9.innerHTML = "<input name='NA_GOL[]' id=NA_GOL0" + idrow + " type='text' class='form-control NA_GOL text_input' readonly>";
-		td6.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
-		td7.innerHTML = kd_gol;
-		td8.innerHTML = "<input name='GRUP[]' id=GRUP" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
-		td9.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
+		td6.innerHTML = "<input name='KET2[]' id=KET2" + idrow + " type='text' class='form-control KET2 text_input'>";
+		// td6.innerHTML = "<input name='NA_GOL[]' id=NA_GOL" + idrow + " type='text' class='form-control NA_GOL text_input' readonly hidden>";
+		// td6.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
+		// td7.innerHTML = kd_gol;
+		// td8.innerHTML = "<input name='GRUP[]' id=GRUP" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
+		td7.innerHTML = "<input name='SP[]' id='SP0' type='checkbox' value='0' class='checkbox_container SP' unchecked onclick='return false'>";
+		td8.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -420,24 +439,13 @@ foreach ($bonpemakaian as $rowh) {
 		select_rak();
 		isiRAK();
 		select_sp_mesin();
-	}
+		}
 
 	function hapus() {
 		if (idrow > 1) {
 			var x = document.getElementById('datatable').deleteRow(idrow);
 			idrow--;
 			nomor();
-		}
-	}
-
-	function btVerifikasi() {
-		if ($('#PIN').val() == '<?= $this->session->userdata['pin'] ?>') {
-			if (confirm("Yakin Posting?")) {
-				// document.getElementById("transaksipemesanan").submit();
-				window.location.replace("<?php echo base_url('admin/Transaksi_Barang_Masuk/verifikasi_ttd1/' . $rowh->NO_BUKTI) ?>");
-			}
-		} else {
-			alert("Verifikasi Gagal!");
 		}
 	}
 </script>
@@ -451,7 +459,7 @@ foreach ($bonpemakaian as $rowh) {
 	function select_sp_mesin() {
 		$('.js-example-responsive-sp_mesin').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_BonPemakaian/getDataAjax_sp_mesin') ?>",
+				url: "<?= base_url('admin/Transaksi_DataBon/getDataAjax_sp_mesin') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -496,6 +504,7 @@ foreach ($bonpemakaian as $rowh) {
 
 	function formatSelection_kd_gol(repo_kd_gol) {
 		na_gol = repo_kd_gol.NA_GOL;
+		// ket2 = repo_kd_gol.NA_GOL;
 		grup = repo_kd_gol.GRUP;
 		return repo_kd_gol.text;
 	}
@@ -511,7 +520,7 @@ foreach ($bonpemakaian as $rowh) {
 	function select_rak() {
 		$('.js-example-responsive-rak').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_BonPemakaian/getDataAjax_bhn') ?>",
+				url: "<?= base_url('admin/Transaksi_DataBon/getDataAjax_bhn') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -576,7 +585,7 @@ foreach ($bonpemakaian as $rowh) {
 			console.log(VAL);
 			$.ajax({
 				type: 'POST',
-				url: '<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/isiRAK'); ?>',
+				url: '<?php echo base_url('index.php/admin/Transaksi_DataBon/isiRAK'); ?>',
 				data: {
 					VAL: VAL
 				},

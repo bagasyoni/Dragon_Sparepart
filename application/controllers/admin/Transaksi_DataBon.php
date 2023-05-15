@@ -1,6 +1,6 @@
 <?php
 
-class Transaksi_BonPemakaian extends CI_Controller
+class Transaksi_DataBon extends CI_Controller
 {
 
     function __construct()
@@ -18,8 +18,8 @@ class Transaksi_BonPemakaian extends CI_Controller
             );
             redirect('admin/auth');
         }
-        if ($this->session->userdata['menu_sparepart'] != 'pakai') {
-            $this->session->set_userdata('menu_sparepart', 'pakai');
+        if ($this->session->userdata['menu_sparepart'] != 'bon') {
+            $this->session->set_userdata('menu_sparepart', 'bon');
             $this->session->set_userdata('kode_menu', 'T0005');
             $this->session->set_userdata('keyword_pakai', '');
             $this->session->set_userdata('order_pakai', 'NO_ID');
@@ -36,15 +36,14 @@ class Transaksi_BonPemakaian extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => $sub,
-            'FLAG' => 'PK',
-            'FLAG2' => 'SP',
-            'ATK' => '0'
+            // 'SUB' => $sub,
+            'FLAG' => '0',
+            // 'FLAG2' => 'SP'
         );
         $this->db->select('*');
-        $this->db->from('pakai');
+        $this->db->from('bon');
         $this->db->where($where);
         $i = 0;
         foreach ($this->column_search as $item) {
@@ -90,43 +89,44 @@ class Transaksi_BonPemakaian extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => $sub,
-            'FLAG' => 'PK',
-            'FLAG2' => 'SP',
-            'ATK' => '0'
+            // 'SUB' => $sub,
+            'FLAG' => '0',
+            // 'FLAG2' => 'SP',
+            // 'ATK' => '0'
         );
-        $this->db->from('pakai');
+        $this->db->from('bon');
         $this->db->where($where);
         return $this->db->count_all_results();
     }
 
-    function get_ajax_pakai()
+    function get_ajax_bon()
     {
         $list = $this->get_datatables();
         $data = array();
         $no = @$_POST['start'];
-        foreach ($list as $pakai) {
-            $JASPER = "window.open('JASPER/" . $pakai->NO_ID . "','', 'width=1000','height=900');";
+        foreach ($list as $bon) {
+            $JASPER = "window.open('JASPER/" . $bon->NO_ID . "','', 'width=1000','height=900');";
             $no++;
             $row = array();
-            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $pakai->NO_ID . "'>";
+            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $bon->NO_ID . "'>";
             $row[] = '<div class="dropdown">
                         <a style="background-color: #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonPemakaian/update/' . $pakai->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_BonPemakaian/delete/' . $pakai->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_DataBon/update/' . $bon->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_DataBon/delete/' . $bon->NO_ID) . '" onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
-            $row[] = $pakai->NO_BUKTI;
-            $row[] = date("d-m-Y", strtotime($pakai->TGL));
-            $row[] = $pakai->NOTES;
-            $row[] = $pakai->SUB;
-            $row[] = $pakai->DR;
+            $row[] = $bon->NO_BUKTI;
+            $row[] = date("d-m-Y", strtotime($bon->TGL));
+            $row[] = $bon->USRNM;
+            $row[] = $bon->DR;
+            $row[] = $bon->TUJUAN;
+            $row[] = $bon->TG_SMP;
             $data[] = $row;
         }
         $output = array(
@@ -138,24 +138,24 @@ class Transaksi_BonPemakaian extends CI_Controller
         echo json_encode($output);
     }
 
-    public function index_Transaksi_BonPemakaian()
+    public function index_Transaksi_DataBon()
     {
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $this->session->set_userdata('judul', 'Transaksi Bon Pemakaian');
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => $sub,
-            'FLAG' => 'PK',
-            'FLAG2' => 'SP',
-            'ATK' => '0'
+            // 'SUB' => $sub,
+            'FLAG' => '0',
+            // 'FLAG2' => 'SP',
+            // 'ATK' => '0'
         );
-        $data['pakai'] = $this->transaksi_model->tampil_data($where, 'pakai', 'NO_ID')->result();
+        $data['bon'] = $this->transaksi_model->tampil_data($where, 'bon', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
-        $this->load->view('admin/Transaksi_BonPemakaian/Transaksi_BonPemakaian', $data);
+        $this->load->view('admin/Transaksi_DataBon/Transaksi_DataBon', $data);
         $this->load->view('templates_admin/footer');
     }
 
@@ -163,7 +163,7 @@ class Transaksi_BonPemakaian extends CI_Controller
     {
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
-        $this->load->view('admin/Transaksi_BonPemakaian/Transaksi_BonPemakaian_form');
+        $this->load->view('admin/Transaksi_DataBon/Transaksi_DataBon_form');
         $this->load->view('templates_admin/footer');
     }
 
@@ -172,126 +172,68 @@ class Transaksi_BonPemakaian extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pakai WHERE FLAG='PK' AND FLAG2='SP' AND PER='$per' AND SUB='$sub' AND DR='$dr'")->result();
+        $nomer = $this->db->query("SELECT COALESCE(MAX(NO_BUKTI), 0) as NO_BUKTI FROM bon WHERE PER='$per'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 3, 7);
+        if($nom[0]=='0'){
+            $value11 = 0;
+        }else{
+            $value11 = substr($nom[0], -6);
+        }
         $value22 = STRVAL($value11) + 1;
-        $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
-        $tahun = substr($this->session->userdata['periode'], -4);
-        $bulan = substr($this->session->userdata['periode'], 0, 2);
-        if (substr($this->session->userdata['periode'], 0, 2) == 1) {
-            $romawi = 'I';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 2) {
-            $romawi = 'II';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 3) {
-            $romawi = 'III';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 4) {
-            $romawi = 'IV';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 5) {
-            $romawi = 'V';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 6) {
-            $romawi = 'VI';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 7) {
-            $romawi = 'VII';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 8) {
-            $romawi = 'VIII';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 9) {
-            $romawi = 'IX';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 10) {
-            $romawi = 'X';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 11) {
-            $romawi = 'XI';
-        }
-        if (substr($this->session->userdata['periode'], 0, 2) == 12) {
-            $romawi = 'XII';
-        }
-        // PP / NOMER / DR / BULAN / TAHUN / SP
-        // $bukti = 'PK' . '/' . $urut . '/' . $romawi . '/' . $tahun . '/' . $sub;
-        $no = $this->input->post('NO_BUKTI', TRUE);
-        $ht = strlen($no);
-        if ($ht <= 3) {
-            $bukti = $no . '/' . $bulan . '/' . $tahun . '/BB';
-        } else {
-            $bukti = $this->input->post('NO_BUKTI', TRUE);
-        }
-        // var_dump($bukti);
-        // die;
+        $urut = str_pad($value22, 6, "0", STR_PAD_LEFT);
+        $tahun = substr($this->session->userdata['periode'], -2);
+        $bulan = substr($this->session->userdata['periode'], 0,2);
+        $NO_BUKTI = 'BON' . '-' . $tahun . $bulan . $urut;
+        $this->session->set_userdata('bukti', $bukti);
 
         $datah = array(
-            'NO_BUKTI' => $bukti,
+            'NO_BUKTI' => $NO_BUKTI,
             'NOTES' => $this->input->post('NOTES', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
-            'FLAG' => 'PK',
-            'FLAG2' => 'SP',
-            'ATK' => '0',
-            'SUB' => $this->session->userdata['sub'],
-            'DR' => $this->session->userdata['dr'],
+            // 'FLAG' => 'PK',
+            // 'FLAG2' => 'SP',
+            'TUJUAN' => $this->input->post('TUJUAN', TRUE),
+            'DR' => $this->input->post('DR', TRUE),
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
         );
-        $this->transaksi_model->input_datah('pakai', $datah);
-        $ID = $this->db->query("SELECT NO_ID AS no_id FROM pakai WHERE NO_BUKTI = '$bukti' AND SUB = '$sub' GROUP BY NO_BUKTI")->result();
+        $this->transaksi_model->input_datah('bon', $datah);
+        $ID = $this->db->query("SELECT NO_ID AS no_id FROM bon WHERE NO_BUKTI = '$NO_BUKTI' GROUP BY NO_BUKTI")->result();
         $no = $this->input->post('NO_BUKTI', TRUE);
-        $ht = strlen($no);
-        if ($ht <= 3) {
-            $NO_BUKTI = $no . '/' . $bulan . '/' . $tahun . '/BB';
-        } else {
-            $NO_BUKTI = $this->input->post('NO_BUKTI', TRUE);
-        }
-        // $NO_BUKTI = $no . '/' . $bulan . '/' . $tahun . '/BB';
         $REC = $this->input->post('REC');
-        $KD_BHN = $this->input->post('KD_BHN');
-        $RAK = $this->input->post('RAK');
         $NA_BHN = $this->input->post('NA_BHN');
-        $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SATUAN = $this->input->post('SATUAN');
+        // $TUJUAN = $this->input->post('TUJUAN');
+        $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $KET1 = $this->input->post('KET1');
         $KET2 = $this->input->post('KET2');
-        $GRUP = $this->input->post('GRUP');
-        $NA_GOL = $this->input->post('NA_GOL');
+        $SP = $this->input->post('SP');
         $i = 0;
         foreach ($REC as $a) {
             $datad = array(
                 'ID' => $ID[0]->no_id,
                 'NO_BUKTI' => $NO_BUKTI,
-                'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
+                'TGLD' => date("Y-m-d", strtotime($this->input->post('TGLD', TRUE))),
                 'REC' => $REC[$i],
-                'KD_BHN' => $KD_BHN[$i],
-                // 'KD_BHN' => '',
-                'RAK' => $RAK[$i],
                 'NA_BHN' => $NA_BHN[$i],
-                'QTY' => str_replace(',', '', $QTY[$i]),
                 'SATUAN' => $SATUAN[$i],
+                'QTY' => str_replace(',', '', $QTY[$i]),
                 'KET1' => $KET1[$i],
                 'KET2' => $KET2[$i] ?? "-",
-                'GRUP' => $GRUP[$i],
-                // 'NA_GOL' => $NA_GOL[$i],
-                'NA_GOL' => $KET2[$i],
-                'FLAG' => 'PK',
-                'FLAG2' => 'SP',
-                'ATK' => '0',
+                // 'FLAG' => 'PK',
+                // 'FLAG2' => 'SP',
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
                 'DR' => $this->session->userdata['dr'],
-                'SUB' => $this->session->userdata['sub'],
+                // 'TUJUAN' => $TUJUAN[$i],
                 'TG_SMP' => date("Y-m-d h:i a")
             );
-            $this->transaksi_model->input_datad('pakaid', $datad);
+            $this->transaksi_model->input_datad('bond', $datad);
             $i++;
         }
-        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM pakai WHERE NO_BUKTI='$bukti'")->result();
+        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM bon WHERE NO_BUKTI='$bukti'")->result();
         $no_bukti = $xx[0]->BUKTIX;
         $this->db->query("CALL spp_pakaiins('" . $no_bukti . "')");
         $this->session->set_flashdata(
@@ -303,36 +245,22 @@ class Transaksi_BonPemakaian extends CI_Controller
                 </button> 
             </div>'
         );
-        redirect('admin/Transaksi_BonPemakaian/index_Transaksi_BonPemakaian');
+        redirect('admin/Transaksi_DataBon/index_Transaksi_DataBon');
     }
 
     public function update($id)
     {
-        $q1 = "SELECT pakai.NO_ID as ID,
-                pakai.NO_BUKTI AS NO_BUKTI,
-                pakai.NOTES AS NOTES,
-                pakai.TGL AS TGL,
-                pakai.TOTAL_QTY AS TOTAL_QTY,
-
-                pakaid.NO_ID AS NO_ID,
-                pakaid.REC AS REC,
-                pakaid.KD_BHN AS KD_BHN,
-                pakaid.RAK AS RAK,
-                pakaid.NA_BHN AS NA_BHN,
-                pakaid.QTY AS QTY,
-                pakaid.SATUAN AS SATUAN,
-                pakaid.KET1 AS KET1,
-                pakaid.KET2 AS KET2,
-                pakaid.GRUP AS GRUP,
-                pakaid.NA_GOL AS NA_GOL
-            FROM pakai,pakaid 
-            WHERE pakai.NO_ID=$id 
-            AND pakai.NO_ID=pakaid.ID 
-            ORDER BY pakaid.REC";
+        $q1 = "SELECT a.NO_ID AS ID, a.NO_BUKTI, a.DR, DATE_FORMAT(a.TGL, '%d-%m-%Y') AS TGL, 
+            a.DR, a.TUJUAN, a.NOTES, a.TOTAL_QTY,  a.TTD2 AS SP, b.REC, b.NO_ID,b.NA_BHN, b.KET1, b.QTY, b.KET2, b.SATUAN
+        FROM bon a, bond b
+        WHERE a.NO_ID=$id
+        -- AND a.NO_BUKTI = b.NO_BUKTI;
+        AND a.NO_ID=b.ID 
+        ORDER BY b.REC";
         $data['bonpemakaian'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
-        $this->load->view('admin/Transaksi_BonPemakaian/Transaksi_BonPemakaian_update', $data);
+        $this->load->view('admin/Transaksi_DataBon/Transaksi_DataBon_update', $data);
         $this->load->view('templates_admin/footer');
     }
 
@@ -344,11 +272,10 @@ class Transaksi_BonPemakaian extends CI_Controller
             'NOTES' => $this->input->post('NOTES', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
-            'FLAG' => 'PK',
-            'FLAG2' => 'SP',
-            'ATK' => '0',
+            // 'FLAG' => 'PK',
+            // 'FLAG2' => 'SP',
             'PER' => $this->session->userdata['periode'],
-            'SUB' => $this->session->userdata['sub'],
+            'TUJUAN' => $this->input->post('TUJUAN', TRUE),
             'DR' => $this->session->userdata['dr'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -356,44 +283,29 @@ class Transaksi_BonPemakaian extends CI_Controller
         $where = array(
             'NO_ID' => $this->input->post('ID', TRUE)
         );
-        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM pakai WHERE NO_BUKTI='$bukti'")->result();
+        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM bon WHERE NO_BUKTI='$bukti'")->result();
         $no_bukti = $xx[0]->BUKTIX;
         $this->db->query("CALL spp_pakaidel('" . $no_bukti . "')");
-        $this->transaksi_model->update_data($where, $datah, 'pakai');
+        $this->transaksi_model->update_data($where, $datah, 'bon');
         $id = $this->input->post('ID', TRUE);
-        $q1 = "SELECT pakai.NO_ID as ID,
-                pakai.NO_BUKTI AS NO_BUKTI,
-                pakai.NOTES AS NOTES,
-                pakai.TGL AS TGL,
-                pakai.TOTAL_QTY AS TOTAL_QTY,
+        $q1 = "SELECT a.NO_ID AS ID, a.NO_BUKTI, a.DR, DATE_FORMAT(a.TGL, '%d-%m-%Y') AS TGL, 
+                a.DR, a.TUJUAN, a.NOTES, a.TOTAL_QTY,  a.TTD2 AS SP, b.REC, b.NA_BHN, b.KET1, 
+                b.NO_ID, b.QTY, b.KET2, b.SATUAN
+                FROM bon a, bond b
+                WHERE a.NO_ID=$id
+                -- AND a.NO_BUKTI = b.NO_BUKTI;
+                AND a.NO_ID=b.ID 
+                ORDER BY b.REC";
 
-                pakaid.NO_ID AS NO_ID,
-                pakaid.REC AS REC,
-                pakaid.KD_BHN AS KD_BHN,
-                pakaid.RAK AS RAK,
-                pakaid.NA_BHN AS NA_BHN,
-                pakaid.QTY AS QTY,
-                pakaid.SATUAN AS SATUAN,
-                pakaid.KET1 AS KET1,
-                pakaid.KET2 AS KET2,
-                pakaid.GRUP AS GRUP,
-                pakaid.NA_GOL AS NA_GOL
-            FROM pakai,pakaid 
-            WHERE pakai.NO_ID=$id 
-            AND pakai.NO_ID=pakaid.ID 
-            ORDER BY pakaid.REC";
         $data = $this->transaksi_model->edit_data($q1)->result();
         $NO_ID = $this->input->post('NO_ID');
         $REC = $this->input->post('REC');
-        $KD_BHN = $this->input->post('KD_BHN');
-        $RAK = $this->input->post('RAK');
         $NA_BHN = $this->input->post('NA_BHN');
+        $TUJUAN = $this->input->post('TUJUAN');
         $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
         $SATUAN = $this->input->post('SATUAN');
         $KET1 = $this->input->post('KET1');
         $KET2 = $this->input->post('KET2');
-        $GRUP = $this->input->post('GRUP');
-        $NA_GOL = $this->input->post('NA_GOL');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
         $jumy = count($NO_ID);
@@ -403,36 +315,31 @@ class Transaksi_BonPemakaian extends CI_Controller
                 $URUT = array_search($ID[$i], $NO_ID);
                 $datad = array(
                     'NO_BUKTI' => $this->input->post('NO_BUKTI'),
-                    'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
+                    'TGLD' => date("Y-m-d", strtotime($this->input->post('TGLD', TRUE))),
                     'REC' => $REC[$URUT],
-                    'KD_BHN' => $KD_BHN[$URUT],
-                    'RAK' => $RAK[$URUT],
                     'NA_BHN' => $NA_BHN[$URUT],
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
                     'SATUAN' => $SATUAN[$URUT],
                     'KET1' => $KET1[$URUT],
                     'KET2' => $KET2[$URUT],
-                    'GRUP' => $GRUP[$URUT],
-                    // 'NA_GOL' => $NA_GOL[$URUT],
-                    'NA_GOL' => $KET2[$URUT],
-                    'FLAG' => 'PK',
-                    'FLAG2' => 'SP',
-                    'ATK' => '0',
+                    // 'NA_GOL' => $KET2[$URUT],
+                    // 'FLAG' => 'PK',
+                    // 'FLAG2' => 'SP',
                     'PER' => $this->session->userdata['periode'],
                     'DR' => $this->session->userdata['dr'],
-                    'SUB' => $this->session->userdata['sub'],
+                    // 'TUJUAN' => $TUJUAN[$URUT],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
                 );
                 $where = array(
                     'NO_ID' => $NO_ID[$URUT]
                 );
-                $this->transaksi_model->update_data($where, $datad, 'pakaid');
+                $this->transaksi_model->update_data($where, $datad, 'bond');
             } else {
                 $where = array(
                     'NO_ID' => $ID[$i]
                 );
-                $this->transaksi_model->hapus_data($where, 'pakaid');
+                $this->transaksi_model->hapus_data($where, 'bond');
             }
             $i++;
         }
@@ -442,32 +349,26 @@ class Transaksi_BonPemakaian extends CI_Controller
                 $datad = array(
                     'ID' => $this->input->post('ID', TRUE),
                     'NO_BUKTI' => $this->input->post('NO_BUKTI'),
-                    'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
+                    'TGLD' => date("Y-m-d", strtotime($this->input->post('TGLD', TRUE))),
                     'REC' => $REC[$i],
-                    'KD_BHN' => $KD_BHN[$i],
-                    'RAK' => $RAK[$i],
                     'NA_BHN' => $NA_BHN[$i],
                     'QTY' => str_replace(',', '', $QTY[$i]),
                     'SATUAN' => $SATUAN[$i],
                     'KET1' => $KET1[$i],
                     'KET2' => $KET2[$i],
-                    'GRUP' => $GRUP[$i],
-                    'NA_GOL' => $KET2[$i],
-                    // 'NA_GOL' => $NA_GOL[$i],
-                    'FLAG' => 'PK',
-                    'FLAG2' => 'SP',
-                    'ATK' => '0',
+                    // 'FLAG' => 'PK',
+                    // 'FLAG2' => 'SP',
                     'PER' => $this->session->userdata['periode'],
                     'DR' => $this->session->userdata['dr'],
-                    'SUB' => $this->session->userdata['sub'],
+                    // 'TUJUAN' => $TUJUAN[$i],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
                 );
-                $this->transaksi_model->input_datad('pakaid', $datad);
+                $this->transaksi_model->input_datad('bond', $datad);
             }
             $i++;
         }
-        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM pakai WHERE NO_BUKTI='$bukti'")->result();
+        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM bon WHERE NO_BUKTI='$bukti'")->result();
         $no_bukti = $xx[0]->BUKTIX;
         $this->db->query("CALL spp_pakaiins('" . $no_bukti . "')");
         $this->session->set_flashdata(
@@ -479,17 +380,17 @@ class Transaksi_BonPemakaian extends CI_Controller
                 </button> 
             </div>'
         );
-        redirect('admin/Transaksi_BonPemakaian/index_Transaksi_BonPemakaian');
+        redirect('admin/Transaksi_DataBon/index_Transaksi_DataBon');
     }
 
     public function delete($id)
     {
-        $data = $this->db->query("SELECT NO_BUKTI FROM pakai WHERE NO_ID='$id'")->result();
+        $data = $this->db->query("SELECT NO_BUKTI FROM bon WHERE NO_ID='$id'")->result();
         $this->db->query("CALL spp_pakaidel('" . $data[0]->NO_BUKTI . "')");
         $where = array('NO_ID' => $id);
-        $this->transaksi_model->hapus_data($where, 'pakai');
+        $this->transaksi_model->hapus_data($where, 'bon');
         $where = array('ID' => $id);
-        $this->transaksi_model->hapus_data($where, 'pakaid');
+        $this->transaksi_model->hapus_data($where, 'bond');
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
@@ -499,13 +400,13 @@ class Transaksi_BonPemakaian extends CI_Controller
                 </button> 
             </div>'
         );
-        redirect('admin/Transaksi_BonPemakaian/index_Transaksi_BonPemakaian');
+        redirect('admin/Transaksi_DataBon/index_Transaksi_DataBon');
     }
 
     function delete_multiple()
     {
-        $this->transaksi_model->remove_checked('pakai', 'pakaid');
-        redirect('admin/Transaksi_BonPemakaian/index_Transaksi_BonPemakaian');
+        $this->transaksi_model->remove_checked('bon', 'bond');
+        redirect('admin/Transaksi_DataBon/index_Transaksi_DataBon');
     }
 
     public function getDataAjax_bhn()
@@ -563,7 +464,7 @@ class Transaksi_BonPemakaian extends CI_Controller
                 'text' => $row['NA_GOL'],
                 'KD_GOL' => $row['KD_GOL'] . " - " . $row['NA_GOL'] . " - " . $row['GRUP'],
                 // 'KD_GOL' => $row['KD_GOL'],
-                'NA_GOL' => $row['NA_GOL'],
+                // 'NA_GOL' => $row['NA_GOL'],
                 'GRUP' => $row['GRUP'],
             );
         }
@@ -587,31 +488,31 @@ class Transaksi_BonPemakaian extends CI_Controller
         include_once("phpjasperxml/class/PHPJasperXML.inc.php");
         include_once("phpjasperxml/setting.php");
         $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_BonPemakaian.jrxml");
+        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_DataBon.jrxml");
         $no_id = $id;
-        $query = "SELECT pakai.no_id as ID,
-                pakai.no_sp AS MODEL,
-                pakai.perke AS PERKE,
-                pakai.tgl_sp AS TGL_SP,
-                pakai.nodo AS NODO,
-                pakai.tgldo AS TGLDO,
-                pakai.tlusin AS TLUSIN,
-                pakai.tpair AS TPAIR,
+        $query = "SELECT bon.no_id as ID,
+                bon.no_sp AS MODEL,
+                bon.perke AS PERKE,
+                bon.tgl_sp AS TGL_SP,
+                bon.nodo AS NODO,
+                bon.tgldo AS TGLDO,
+                bon.tlusin AS TLUSIN,
+                bon.tpair AS TPAIR,
 
-                pakaid.no_id AS NO_ID,
-                pakaid.rec AS REC,
-                CONCAT(pakaid.article,' - ',pakaid.warna) AS ARTICLE,
-                pakaid.size AS SIZE,
-                pakaid.golong AS GOLONG,
-                pakaid.sisa AS SISA,
-                pakaid.lusin AS LUSIN,
-                pakaid.pair AS PAIR,
-                CONCAT(pakaid.kodecus,' - ',pakaid.nama) AS KODECUS,
-                pakaid.kota AS KOTA
-            FROM pakai,pakaid 
-            WHERE pakai.no_id=$id 
-            AND pakai.no_id=pakaid.id 
-            ORDER BY pakaid.rec";
+                bond.no_id AS NO_ID,
+                bond.rec AS REC,
+                CONCAT(bond.article,' - ',bond.warna) AS ARTICLE,
+                bond.size AS SIZE,
+                bond.golong AS GOLONG,
+                bond.sisa AS SISA,
+                bond.lusin AS LUSIN,
+                bond.pair AS PAIR,
+                CONCAT(bond.kodecus,' - ',bond.nama) AS KODECUS,
+                bond.kota AS KOTA
+            FROM bon,bond 
+            WHERE bon.no_id=$id 
+            AND bon.no_id=bond.id 
+            ORDER BY bond.rec";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);
@@ -638,7 +539,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM pakai WHERE NO_ID<'$ID' AND FLAG = 'PK' AND FLAG2 = 'SP' AND PER='$per' AND ATK = '0' AND DR = '$dr' AND SUB = '$sub' ORDER BY NO_ID DESC LIMIT 1";
+        $q1 = " SELECT NO_ID FROM bon WHERE NO_ID<'$ID' AND PER='$per' AND DR = '$dr' AND SUB = '$sub' ORDER BY NO_ID DESC LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
@@ -656,7 +557,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM pakai WHERE NO_ID>'$ID' AND FLAG = 'PK' AND FLAG2 = 'SP' AND PER='$per' AND ATK = '0' AND DR = '$dr' AND SUB = '$sub' ORDER BY NO_ID LIMIT 1";
+        $q1 = " SELECT NO_ID FROM bon WHERE NO_ID>'$ID' AND PER='$per' AND DR = '$dr' AND SUB = '$sub' ORDER BY NO_ID LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
