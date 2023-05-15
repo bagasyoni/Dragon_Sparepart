@@ -250,7 +250,7 @@ class Transaksi_BonPemakaian extends CI_Controller
     {
         $q1 = "SELECT a.NO_BUKTI, a.DR, DATE_FORMAT(a.TGL, '%d-%m-%Y') AS TGL, a.DR, a.TUJUAN, a.NOTES, b.NA_BHN, b.KET1, b.QTY, b.KET2, b.SP
         FROM pakai a, pakaid b
-        WHERE a.NO_ID=$id
+        WHERE pakai.NO_ID=$id
         -- AND a.NO_BUKTI = b.NO_BUKTI;
         AND a.NO_ID=b.ID 
         ORDER BY b.REC";
