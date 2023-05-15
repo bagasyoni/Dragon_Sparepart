@@ -403,45 +403,16 @@ class Transaksi_BonBelumValidasi extends CI_Controller
         redirect('admin/Transaksi_BonBelumValidasi/index_Transaksi_BonBelumValidasi');
     }
 
-    public function update($NO_ID)
+    public function update($id)
     {
-        // $where = array('NO_ID' => $NO_ID);
-        // $ambildata = $this->master_model->edit_data($where, 'pakai');
-        // $q1 ="SELECT a.NO_ID, a.NO_BUKTI, a.TGL, a.TGL_DIMINTA, a.DEVISI, a.ARTICLE, a.PESAN, 
-        //         a.JO, a.FLAG3, a.GAMBAR1, a.VAL, a.TOTAL_QTY, b.GAMBAR1 AS GDETAIL, b.REC, b.NA_BHN, 
-        //         b.KD_BHN, b.WARNA, b.SERI, b.QTY, b.SATUAN, DATE_FORMAT(b.TGL_DIMINTA, '%d-%m-%Y') AS TGL_DIMINTAD, b.KET AS KET,
-        //         b.NO_ID AS NO_IDX
-        //         FROM pakai a,pakaid b WHERE a.NO_ID = '$NO_ID' AND a.NO_BUKTI = b.NO_BUKTI";
-        $q1 ="SELECT a.NO_ID, a.NO_BUKTI, a.DR, DATE_FORMAT(a.TGL, '%d-%m-%Y') AS TGL, a.DR, a.TUJUAN, a.NOTES, b.NA_BHN, b.KET1, b.QTY, b.KET2, b.SP
-                FROM pakai a, pakaid b
-                WHERE a.NO_ID=$NO_ID
-                -- AND a.NO_BUKTI = b.NO_BUKTI;
-                AND a.NO_ID=b.ID 
-                ORDER BY b.REC";
-        // $r = $query->row_array();
-        // $data = [
-        //     'NO_ID' => $r['NO_ID'],
-        //     'NO_BUKTI' => $r['NO_BUKTI'],
-        //     'TGL' => $r['TGL'],
-        //     'TGL_DIMINTA' => $r['TGL_DIMINTA'],
-        //     'DEVISI' => $r['DEVISI'],
-        //     'ARTICLE' => $r['ARTICLE'],
-        //     'PESAN' => $r['PESAN'],
-        //     'JO' => $r['JO'],
-        //     'FLAG3' => $r['FLAG3'],
-        //     'GAMBAR1' => $r['GAMBAR1'],
-        //     'VAL' => $r['VAL'],
-        //     'GDETAIL' => $r['GDETAIL'],
-        //     'REC' => $r['REC'],
-        //     'NA_BHN' => $r['NA_BHN'],
-        //     'KD_BHN' => $r['KD_BHN'],
-        //     'WARNA' => $r['WARNA'],
-        //     'SERI' => $r['SERI'],
-        //     'QTY' => $r['QTY'],
-        //     'SATUAN' => $r['SATUAN'],
-        //     'TGL_DIMINTAD' => $r['TGL_DIMINTAD'],
-        // ];
-        $data['rnd'] = $this->transaksi_model->edit_data($q1)->result();
+        $q1 = "SELECT a.NO_ID AS ID, a.NO_BUKTI, a.DR, DATE_FORMAT(a.TGL, '%d-%m-%Y') AS TGL, 
+            a.DR, a.TUJUAN, a.NOTES, a.TOTAL_QTY,  a.TTD2 AS SP, b.REC, b.NO_ID,b.NA_BHN, b.KET1, b.QTY, b.KET2, b.SATUAN
+        FROM bon a, bond b
+        WHERE a.NO_ID=$id
+        -- AND a.NO_BUKTI = b.NO_BUKTI;
+        AND a.NO_ID=b.ID 
+        ORDER BY b.REC";
+        $data['bonpemakaian'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_BonBelumValidasi/Transaksi_BonBelumValidasi_update', $data);
