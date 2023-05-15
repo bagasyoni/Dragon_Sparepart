@@ -125,7 +125,7 @@
 	<div class="alert alert-success alert-container" role="alert">
 		<i class="fas fa-university"></i> Input Pesanan Cetakan Import
 	</div>
-	<?php echo form_open_multipart('admin/Transaksi_PesananCetakanImport/input_aksi'); ?>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakanImport/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" enctype="multipart/form-data" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -134,7 +134,7 @@
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" placeholder='<?php echo $this->session->userdata['bukti']; ?>' readonly>
+							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value='<?php echo $this->session->userdata['bukti']; ?>' readonly>
 						</div>
 						<div class="col-md-2">
 							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
@@ -163,6 +163,21 @@
 						<div class="col-md-2">
 							<input class="form-control text_input SIZE" id="SIZE" name="SIZE" type="text">
 						</div>
+						<!-- <div class="col-md-1">
+							<label class="label">Tujuan </label>
+						</div>
+						<div class="col-md-2">
+							<select class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text">
+								<option value="CNC">CNC</option>
+								<option value="PBL">PBL</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<select class="form-control text_input TIPE" id="TIPE" name="TIPE" type="text">
+								<option value="MRL">MRL</option>
+								<option value="MRE">MRE</option>
+							</select>
+						</div> -->
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -212,6 +227,16 @@
 								<option value="MATRAS">MATRAS</option>
 							</select>
 						</div>
+						<!-- <div class="col-md-1">
+							<label class="label">Jenis </label>
+						</div>
+						<div class="col-md-2">
+							<select class="form-control text_input JENIS" id="JENIS" name="JENIS" type="text">
+								<option value="Sample">Sample</option>
+								<option value="Seri">Seri</option>
+								<option value="Reparasi">Reparasi</option>
+							</select>
+						</div> -->
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -222,6 +247,23 @@
 						<div class="col-md-2">
 							<input type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
 						</div>
+						<div class="col-md-2">
+						</div>
+						<!-- <div class="col-md-1">
+							<label class="label">Flag </label>
+						</div>
+						<div class="col-md-2">
+							<select class="form-control text_input FLAG" id="FLAG" name="FLAG" type="text">
+								<option value="LOKAL">LOKAL</option>
+								<option value="IMPORT">IMPORT</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<select class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text">
+								<option value="CETAKAN">CETAKAN</option>
+								<option value="MATRAS">MATRAS</option>
+							</select>
+						</div> -->
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -238,7 +280,19 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<input type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<input onchange="loadFile(event)" type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
+							<img style="display:none;width:150px;height:150px;" id="GAMBAR1PREVIEW" src="#"  />
+							<script>
+							var loadFile = function(event) {
+								var output = document.getElementById('GAMBAR1PREVIEW');
+								output.src = URL.createObjectURL(event.target.files[0]);
+								output.onload = function() {
+								URL.revokeObjectURL(output.src) // free memory
+								}
+								
+								$("#GAMBAR1PREVIEW").show();
+							};
+							</script>
 						</div>
 					</div>
 				</div>
@@ -256,7 +310,19 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<input type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<input onchange="loadFile2(event)" type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<img style="display:none;width:150px;height:150px;" id="GAMBAR2PREVIEW" src="#"  />
+							<script>
+								var loadFile2 = function(event) {
+									var output = document.getElementById('GAMBAR2PREVIEW');
+									output.src = URL.createObjectURL(event.target.files[0]);
+									output.onload = function() {
+									URL.revokeObjectURL(output.src) // free memory
+									}
+									
+									$("#GAMBAR2PREVIEW").show();
+								};
+							</script>
 						</div>
 					</div>
 				</div>
@@ -274,8 +340,24 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<input type="file" name="GAMBAR3" id="GAMBAR3" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<input onchange="loadFile3(event)" type="file" name="GAMBAR3" id="GAMBAR3" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<img style="display:none;width:150px;height:150px;" id="GAMBAR3PREVIEW" src="#"  />
+							<script>
+								var loadFile3 = function(event) {
+									var output = document.getElementById('GAMBAR3PREVIEW');
+									output.src = URL.createObjectURL(event.target.files[0]);
+									output.onload = function() {
+									URL.revokeObjectURL(output.src) // free memory
+									}
+									
+									$("#GAMBAR3PREVIEW").show();
+								};
+							</script>
 						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
 					</div>
 				</div>
 			</div>
@@ -292,9 +374,23 @@
 				</div>
 			</div>
 		</div>
-	<?php echo form_close(); ?>
-	<!-- </form> -->
+	</form>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#modal_beli').DataTable({
+			dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
+				"<'row'<'col-md-6'f><'col-md-6'l>>" + // peletakan entries, search, dan test_btn
+				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
+			buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+			order: true,
+		});
+		$('.modal-footer').on('click', '#close', function() {
+			$('input[type=search]').val('').keyup(); // this line and next one clear the search dialog
+		});
+	});
+</script>
 
 <script>
 	(function() {
@@ -461,7 +557,7 @@
 	function select_dragon() {
 		$('.js-example-responsive-dragon').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_PesananCetakanImport/getDataAjax_dragon') ?>",
+				url: "<?= base_url('admin/Transaksi_BoronganCNC/getDataAjax_dragon') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,

@@ -132,9 +132,9 @@
 <div class="container-fluid">
 	<br>
 	<div class="alert alert-success alert-container" role="alert">
-		<i class="fas fa-university"></i> Validasi Pesanan Cetakan Import
+		<i class="fas fa-university"></i> Validasi Pesanan Cetakan
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakanImport/validasi_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakan/validasi_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -147,7 +147,7 @@
 							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?= $NO_BUKTI ?>" readonly>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($TGL, TRUE)); ?>" onclick="select()">
+						<input <?php if ($VAL == !0) echo 'class="form-control TGL text_input" readonly'; ?> type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($TGL, TRUE)); ?>" onclick="select()">
 						</div>
 						<div class="col-md-1">
 							<label class="label">DR </label>
@@ -188,20 +188,21 @@
 						<div class="col-md-2">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Size </label>
+							<label class="label">Tujuan </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input SIZE" id="SIZE" name="SIZE" type="text" value="<?= $SIZE ?>">
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-1">
-							<label class="label">Jumlah </label>
+							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text">
+								<option selected><?= $TUJUAN ?></option>
+								<option value="CNC">CNC</option>
+								<option value="PBL">PBL</option>
+							</select>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input JUMLAH" id="JUMLAH" name="JUMLAH" type="text" value="<?= $JUMLAH ?>" required>
+							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TIPE" id="TIPE" name="TIPE" type="text">
+								<option selected><?= $TIPE ?></option>
+								<option value="MRL">MRL</option>
+								<option value="MRE">MRE</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -216,10 +217,10 @@
 						<div class="col-md-2">
 						</div>
 						<div class="col-md-1">
-							<label <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="label">Tipe Cetakan </label>
+							<label class="label">Tipe Cetakan </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input TIPE_CETAK" id="TIPE_CETAK" name="TIPE_CETAK" type="text" value="<?= $TIPE_CETAK ?>">
+							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TIPE_CETAK" id="TIPE_CETAK" name="TIPE_CETAK" type="text" value="<?= $TIPE_CETAK ?>">
 						</div>
 					</div>
 				</div>
@@ -234,13 +235,14 @@
 						<div class="col-md-2">
 						</div>
 						<div class="col-md-1">
-							<label class="label">Pilih Proses </label>
+							<label class="label">Jenis </label>
 						</div>
 						<div class="col-md-2">
-							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text">
-								<option selected><?php echo $PROSES ?></option>
-								<option value="CETAKAN">CETAKAN</option>
-								<option value="MATRAS">MATRAS</option>
+							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input JENIS" id="JENIS" name="JENIS" type="text">
+								<option selected><?= $JENIS ?></option>
+								<option value="Sample">Sample</option>
+								<option value="Seri">Seri</option>
+								<option value="Reparasi">Reparasi</option>
 							</select>
 						</div>
 					</div>
@@ -252,6 +254,25 @@
 						</div>
 						<div class="col-md-2">
 							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+						</div>
+						<div class="col-md-2">
+						</div>
+						<div class="col-md-1">
+							<label class="label">Flag </label>
+						</div>
+						<div class="col-md-2">
+							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input FLAG" id="FLAG" name="FLAG" type="text">
+								<option selected><?= $FLAG ?></option>
+								<option value="LOKAL">LOKAL</option>
+								<option value="IMPORT">IMPORT</option>
+							</select>
+						</div>
+						<div class="col-md-2">
+							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text">
+								<option selected><?= $PROSES ?></option>
+								<option value="CETAKAN">CETAKAN</option>
+								<option value="MATRAS">MATRAS</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -270,7 +291,7 @@
 					<div class="form-group row">
 						<div class="col-md-2">
 						<img src="../gambar/<?= $GAMBAR1 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
-						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp" value="<?= $GAMBAR1 ?>">
+						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						</div>
 					</div>
 				</div>
@@ -295,21 +316,6 @@
 				</div>
 				<div class="col-md-12">
 					<div class="form-group row">
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-4">
-							<label class="label">Gambar Cetakan Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-2">
-						<img src="../gambar/<?= $GAMBAR3 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
-						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR3" id="GAMBAR3" accept="image/png, image/jpeg, image/jpg, image/bmp" value="<?= $GAMBAR3 ?>">
-						</div>
 					</div>
 				</div>
 			</div>
@@ -418,15 +424,6 @@
 		hitung();
 	}
 
-	function btVerifikasi() {
-		if (confirm("Yakin Posting?")) {
-			// document.getElementById("transaksipemesanan").submit();
-			window.location.replace("<?php echo base_url('admin/Transaksi_PesananRNDInternal/verifikasi_ttd1/' . $rowh->ID) ?>");
-		} else {
-			alert("Batal Posting!");
-		}
-	}
-
 	function hitung() {
 		var TOTAL_QTY = 0;
 		var TOTAL = 0;
@@ -501,8 +498,7 @@
 			this.value ^= 1;
 			console.log(this.value)
 		});
-		select_no_bon();
-		select_kd_bhn();
+		select_dragon();
 	}
 
 	function hapus() {
@@ -518,10 +514,11 @@
 	$(document).ready(function() {
 		select_dragon();
 	});
+
 	function select_dragon() {
 		$('.js-example-responsive-dragon').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_PesananCetakanImport/getDataAjax_dragon') ?>",
+				url: "<?= base_url('admin/Transaksi_BoronganCNC/getDataAjax_dragon') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,

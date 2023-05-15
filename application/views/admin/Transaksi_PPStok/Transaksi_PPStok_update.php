@@ -141,7 +141,7 @@ foreach ($ppstok as $rowh) {
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input type="hidden" name="ID" class="form-control" value="<?php echo $rowh->ID ?>">
+							<input type="hidden" id="ID" name="ID" class="form-control" value="<?php echo $rowh->ID ?>">
 							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
 						</div>
 						<div class="col-md-2"></div>
@@ -366,7 +366,7 @@ foreach ($ppstok as $rowh) {
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<button type="submit" onclick="chekbox()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+						<button <?php if ($rowh->TTD3 == !0) echo 'style="visibility: hidden;"'; ?>  type="submit" onclick="chekbox()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
 						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
 					</div>
 					<a type="text" class="btn btn-light"> </a>
@@ -765,13 +765,13 @@ foreach ($ppstok as $rowh) {
 		var ID = $('#ID').val();
 		$.ajax({
 			type: 'get',
-			url: '<?php echo base_url('index.php/admin/Transaksi_Validasi_LPB/next'); ?>',
+			url: '<?php echo base_url('index.php/admin/Transaksi_PPStok/next'); ?>',
 			data: {
 				ID: ID
 			},
 			dataType: 'json',
 			success: function(response) {
-				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_Validasi_LPB/update/'); ?>" + response[0].NO_ID);
+				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_PPStok/update/'); ?>" + response[0].NO_ID);
 				console.log(response[0].NO_ID);
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {

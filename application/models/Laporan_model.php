@@ -520,6 +520,11 @@ class Laporan_model extends CI_Model
 		$per = $this->session->userdata['periode'];
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
+		$kunci = $this->input->post('KUNCI', TRUE);
+		$katakunci = "";
+		if($kunci != ""){
+			$katakunci = "AND pakai.NOTES LIKE '%$kunci%'";
+		}
 		$q1 = "SELECT pakai.NOTES AS NOTES,
 				pakaid.TGL AS TGL,
 				pakaid.NO_BUKTI AS NO_BUKTI,
@@ -541,6 +546,7 @@ class Laporan_model extends CI_Model
 			AND pakai.ATK = 0
 			AND pakai.FLAG = 'PK'
 			AND pakai.FLAG2 = 'SP'
+			$katakunci
 			ORDER BY pakaid.TGL";
 		return $this->db->query($q1);
 	}
@@ -614,55 +620,72 @@ class Laporan_model extends CI_Model
 		$bulan = substr(date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE))), 5, 2);
 		$tahun = substr($this->input->post('TGL_1'), 6, 4);
 		$masa = $this->input->post('MASA');
-		$q1 = "SELECT bhnd.RAK, 
-			bhnd.KD_BHN,
-			bhnd.NA_BHN, 
-			bhn.SATUAN,
-			bhnd.AK$bulan AS AK, 
-			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) as HARI,
-			CASE 
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 720 
-				THEN '> 24 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 630 
-				THEN '> 21 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 540 
-				THEN '> 18 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 450 
-				THEN '> 15 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 360
-				THEN '> 12 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 270
-				THEN '> 9 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 180 
-				THEN '> 6 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 90 
-				THEN '> 3 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 30 
-					THEN '> 1 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) < 30 
-				THEN '< 1 Bulan'
-			END AS KET
-		FROM bhn, bhnd
-		WHERE bhn.KD_BHN = bhnd.KD_BHN
-		AND bhnd.DR='$dr'
-		AND bhnd.FLAG='SP'
-		-- AND bhn.SUB='$sub'
-		AND bhnd.TG_BL < '$tgl_1'
-		AND bhnd.TG_PK < '$tgl_1'
-		AND bhnd.YER = '$tahun'
-		-- AND TIMESTAMPDIFF(MONTH,bhn.TG_BL, bhn.TG_PK) = '$masa'
-		GROUP BY bhnd.KD_BHN
-		ORDER BY bhnd.KD_BHN";
+		$KD = $this->input->post('KD');
+		$LD = $this->input->post('LD');
+
+		$kondisi = "";
+		if($KD != "" && $LD == ""){
+			$kondisi = "WHERE X.TG_USIA < ('$tgl_1' + INTERVAL '$KD' MONTH) AND X.TG_USIA > '$tgl_1'";
+		}elseif($KD == "" && $LD != ""){
+			$kondisi = "WHERE X.TG_USIA > ('$tgl_1' - INTERVAL '$LD' MONTH) AND X.TG_USIA < '$tgl_1'";
+		}elseif($KD != "" && $LD != ""){
+			$kondisi = "WHERE X.TG_USIA > ('$tgl_1' - INTERVAL '$LD' MONTH) AND X.TG_USIA < ('$tgl_1' + INTERVAL '$KD' MONTH)";
+		}else{
+			$kondisi = "";
+		}
+
+		$q1 = "SELECT X.* FROM (
+				SELECT bhnd.RAK, 
+					'2022-05-31' AS TGL_PILIH,
+					bhnd.TG_USIA,
+					bhnd.KD_BHN,
+					bhnd.NA_BHN, 
+					bhn.SATUAN,
+					bhnd.AK$bulan AS AK, 
+					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) as HARI,
+					CASE 
+						WHEN 
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 720 
+						THEN '> 24 Bulan'
+						WHEN 
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 630 
+						THEN '> 21 Bulan'
+						WHEN 
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 540 
+						THEN '> 18 Bulan'
+						WHEN 
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 450 
+						THEN '> 15 Bulan'
+						WHEN 
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 360
+						THEN '> 12 Bulan'
+						WHEN 
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 270
+						THEN '> 9 Bulan'
+						WHEN 
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 180 
+						THEN '> 6 Bulan'
+						WHEN 
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 90 
+						THEN '> 3 Bulan'
+						WHEN 
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 30 
+							THEN '> 1 Bulan'
+						WHEN 
+							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) < 30 
+						THEN '< 1 Bulan'
+					END AS KET
+				FROM bhn, bhnd
+				WHERE bhn.KD_BHN = bhnd.KD_BHN
+				AND bhnd.DR='$dr'
+				AND bhnd.FLAG='SP'
+				-- AND bhn.SUB='$sub'
+				AND bhnd.TG_BL < '$tgl_1'
+				AND bhnd.TG_PK < '$tgl_1'
+				AND bhnd.YER = '$tahun'
+				-- AND TIMESTAMPDIFF(MONTH,bhn.TG_BL, bhn.TG_PK) = '$masa'
+				GROUP BY bhnd.KD_BHN
+				ORDER BY bhnd.KD_BHN) X $kondisi";
 		return $this->db->query($q1);
 	}
 

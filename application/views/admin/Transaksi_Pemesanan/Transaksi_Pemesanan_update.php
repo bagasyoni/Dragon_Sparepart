@@ -150,7 +150,7 @@ foreach ($pemesanan as $rowh) {
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input type="hidden" name="ID" class="form-control" value="<?php echo $rowh->ID ?>">
+							<input type="hidden" id="ID" name="ID" class="form-control" value="<?php echo $rowh->ID ?>">
 							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
 						</div>
 						<div class="col-md-2"></div>
@@ -950,19 +950,20 @@ foreach ($pemesanan as $rowh) {
 
 	function next() {
 		var ID = $('#ID').val();
+		// console.log("ID AWAL: "+ID);
 		$.ajax({
 			type: 'get',
-			url: '<?php echo base_url('index.php/admin/Transaksi_Pemesanan/next'); ?>',
+			url: "<?= base_url('admin/Transaksi_Pemesanan/next') ?>",
 			data: {
 				ID: ID
 			},
 			dataType: 'json',
 			success: function(response) {
 				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_Pemesanan/update/'); ?>" + response[0].NO_ID);
-				console.log(response[0].NO_ID);
+				// console.log("respon :"+response[0].NO_ID);
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				// console.log('error');
+				console.log('error');
 			}
 		});
 	}

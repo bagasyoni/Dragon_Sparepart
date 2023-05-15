@@ -134,7 +134,7 @@
 	<div class="alert alert-success alert-container" role="alert">
 		<i class="fas fa-university"></i> Update Pesanan Cetakan
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakan/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakan/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" enctype="multipart/form-data" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -290,7 +290,8 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<img src="../gambar/<?= $GAMBAR1 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<img src="<?= base_url('gambar/pesanancetakan/'.$GAMBAR1)?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input type="text" name="G1" id="G1" value="<?=$GAMBAR1?>" hidden>
 						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						</div>
 					</div>
@@ -309,7 +310,8 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<img src="../gambar/<?= $GAMBAR2 ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<img src="<?= base_url('gambar/pesanancetakan/'.$GAMBAR2)?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input type="text" name="G2" id="G2" value="<?=$GAMBAR2?>" hidden>
 						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						</div>
 					</div>

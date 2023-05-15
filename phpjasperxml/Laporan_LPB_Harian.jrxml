@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan_LPB_Harian" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e9d54873-9ce9-470f-9eaf-8951cf53f673">
 	<property name="com.jaspersoft.studio.unit." value="cm"/>
 	<parameter name="ID" class="java.lang.String"/>
@@ -30,10 +30,10 @@
 	<group name="KD_BHN">
 		<groupExpression><![CDATA[$F{NO_BUKTI}]]></groupExpression>
 		<groupHeader>
-			<band height="4"/>
+			<band/>
 		</groupHeader>
 		<groupFooter>
-			<band height="3"/>
+			<band/>
 		</groupFooter>
 	</group>
 	<background>
@@ -76,7 +76,7 @@
 				<text><![CDATA[NO. ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="50" y="10" width="88" height="20" uuid="1dbe3190-e3ef-40b3-92d3-6cf3b455c9ce"/>
+				<reportElement x="50" y="10" width="70" height="20" uuid="1dbe3190-e3ef-40b3-92d3-6cf3b455c9ce"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -89,7 +89,7 @@
 				<text><![CDATA[NO LPB]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="138" y="10" width="213" height="20" uuid="e630974a-441b-4820-9e08-1a563e403e02"/>
+				<reportElement x="180" y="10" width="200" height="20" uuid="e630974a-441b-4820-9e08-1a563e403e02"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -102,7 +102,7 @@
 				<text><![CDATA[NAMA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="351" y="10" width="61" height="20" uuid="ba55003c-0f62-4dcc-bc23-89550bdac2d4"/>
+				<reportElement x="380" y="10" width="61" height="20" uuid="ba55003c-0f62-4dcc-bc23-89550bdac2d4"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -115,7 +115,7 @@
 				<text><![CDATA[SATUAN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="412" y="10" width="59" height="20" uuid="b943dd82-cc9a-4482-a265-7afacd4b7b66"/>
+				<reportElement x="441" y="10" width="59" height="20" uuid="b943dd82-cc9a-4482-a265-7afacd4b7b66"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -128,7 +128,7 @@
 				<text><![CDATA[JUMLAH]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="471" y="10" width="127" height="20" uuid="39ff6455-3363-41aa-a316-6cd34ba7a519"/>
+				<reportElement x="500" y="10" width="98" height="20" uuid="39ff6455-3363-41aa-a316-6cd34ba7a519"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -139,6 +139,19 @@
 					<font fontName="Times New Roman" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NO PP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="10" width="60" height="20" uuid="a2f944dc-722e-4edc-b447-ffdcafd4e0f5"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TGL]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -159,7 +172,7 @@
 				<patternExpression><![CDATA[$V{COLUMN_NUMBER}]]></patternExpression>
 			</textField>
 			<textField>
-				<reportElement x="351" y="0" width="61" height="21" uuid="7cf0b3bd-4b79-4b61-b84a-9b0d3ba71d84"/>
+				<reportElement x="380" y="0" width="61" height="21" uuid="7cf0b3bd-4b79-4b61-b84a-9b0d3ba71d84"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -172,7 +185,7 @@
 				<textFieldExpression><![CDATA[$F{SATUAN}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="412" y="0" width="59" height="21" uuid="170e83bd-e09a-4106-b99a-fe1e2a1824e8"/>
+				<reportElement x="441" y="0" width="59" height="21" uuid="170e83bd-e09a-4106-b99a-fe1e2a1824e8"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -185,7 +198,7 @@
 				<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="471" y="0" width="127" height="21" uuid="02439e20-1c8f-4d31-862b-974a962a6a92"/>
+				<reportElement x="500" y="0" width="98" height="21" uuid="02439e20-1c8f-4d31-862b-974a962a6a92"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -198,7 +211,7 @@
 				<textFieldExpression><![CDATA[$F{NO_PP}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="138" y="0" width="213" height="21" uuid="6927b111-2d53-4cdf-ae0b-47566770919d"/>
+				<reportElement x="180" y="0" width="200" height="21" uuid="6927b111-2d53-4cdf-ae0b-47566770919d"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -211,7 +224,7 @@
 				<textFieldExpression><![CDATA[$F{BARANG}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="50" y="0" width="88" height="21" uuid="8e634d9d-5e28-4a72-a322-e29ce5a259de"/>
+				<reportElement x="50" y="0" width="70" height="21" uuid="8e634d9d-5e28-4a72-a322-e29ce5a259de"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -222,6 +235,19 @@
 					<font fontName="Times New Roman" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NO_BUKTI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="60" height="21" uuid="a5a04804-1907-4429-929f-90a7e5933eac"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TGL}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

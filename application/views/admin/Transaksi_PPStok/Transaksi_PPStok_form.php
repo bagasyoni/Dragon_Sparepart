@@ -301,8 +301,8 @@
 						<th>Kode</th>
 						<th width="30px">Article</th>
 						<th width="30px">Satuan</th>
-						<th>Stok</th>
 						<th>Rak</th>
+						<th>Stok</th>
 					</thead>
 					<tbody>
 						<?php

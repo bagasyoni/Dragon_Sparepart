@@ -1,3 +1,5 @@
+<div id="notif"></div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="<?php echo base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -52,6 +54,30 @@
 </script>
 
 <script type="text/javascript">
+    $(document).ready(function()
+  {
+	<?php $level =  $this->session->userdata['kd_gd'];
+if($level == 'SP1') { ?>
+		setInterval(function () {
+			$.ajax({
+				method:"GET",
+				url:"<?php echo base_url('admin/auth/fetch');?>",
+				success:function(data)
+				{
+					if(data && $("#notif").html() == "")
+					{
+						$("#notif").html(data);
+					}
+					else 
+					{
+						$("#notif").html("");
+					}
+				}
+			});
+		}, 1000);
+		
+<?php } ?>
+  });
   $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
     if (!$(this).next().hasClass('show')) {
       $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");

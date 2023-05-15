@@ -316,6 +316,7 @@
 			<div class="modal-body">
 				<table class='table table-bordered' id='no_bon'>
 					<thead>
+						<th></th>
 						<th>No Bukti</th>
 						<th width="30px">Article</th>
 						<th width="30px">Tipe</th>
@@ -344,9 +345,18 @@
 						WHERE bon.NO_BUKTI=bond.NO_BUKTI AND bon.TTD2<>'' AND bon.TUJUAN='$sub' AND bon.DR='$dr' AND bond.OK=0 AND bond.QTY - bond.KIRIM <> 0
 						ORDER BY bond.NO_BUKTI";
 						$a = $this->db->query($sql)->result();
+
+
+
 						foreach ($a as $b) {
 						?>
 							<tr>
+								<tD><input class="checkbox" type="checkbox" data-nobukti='<?php echo $b->NO_BON;?>'
+								data-namabahan='<?php echo $b->NA_BHN;?>'
+								data-ket='<?php echo $b->KET;?>'
+								data-qty='<?php echo $b->QTY;?>'
+								data-satuan='<?php echo $b->SATUAN;?>'
+								/></td>
 								<td class='NBBVAL'><a href="#" class="select_no_bon"><?php echo $b->NO_BON; ?></a></td>
 								<td class='NABVAL text_input'><?php echo $b->NA_BHN; ?></td>
 								<td class='TIBVAL text_input'><?php echo $b->TIPE; ?></td>
@@ -360,6 +370,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
+				<Button type="button" id="btnSelect" data-dismiss="modal" class="btn btn-primary">Select</button>
 			</div>
 		</div>
 	</div>
@@ -377,16 +388,22 @@
 						<th>Kode Barang</th>
 						<th width="30px">Nama Barang</th>
 						<th width="30px">Satuan</th>
+						<th width="30px">Stok</th>
+						<th width="30px">Rak</th>
 					</thead>
 					<tbody>
 						<?php
 						$dr = $this->session->userdata['dr'];
 						$sub = $this->session->userdata['sub'];
+						$mounth = SUBSTR($this->session->userdata['periode'],0,2);
+						$yer = SUBSTR($this->session->userdata['periode'],3,7);
 						$sql = "SELECT bhn.KD_BHN, 
 							bhn.NA_BHN,
-							bhn.SATUAN
+							bhn.SATUAN,
+							bhnd.AK$mounth AS STOK,
+							bhnd.RAK
 						FROM bhn, bhnd
-						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhn.SUB='$sub' AND bhn.FLAG='SP' AND bhn.FLAG2='SP' AND bhnd.DR='$dr'
+						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhn.SUB='$sub' AND bhn.FLAG='SP' AND bhn.FLAG2='SP' AND bhnd.DR='$dr' AND bhnd.yer='$yer'
 						ORDER BY bhn.KD_BHN";
 						$a = $this->db->query($sql)->result();
 						foreach ($a as $b) {
@@ -395,6 +412,8 @@
 								<td class='KDBVAL'><a href="#" class="select_kd_bhn"><?php echo $b->KD_BHN; ?></a></td>
 								<td class='NABVAL text_input'><?php echo $b->NA_BHN; ?></td>
 								<td class='SATVAL text_input'><?php echo $b->SATUAN; ?></td>
+								<td class='STKVAL text_input'><?php echo $b->STOK; ?></td>
+								<td class='RAKVAL text_input'><?php echo $b->RAK; ?></td>
 							</tr>
 						<?php } ?>
 					</tbody>
@@ -432,11 +451,52 @@
 	var idrow = 1;
 	var x = 0;
 
+	var evt;
+
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	$(document).ready(function() {
+
+
+		$('#modal_no_bon').on('show.bs.modal', function (event) {
+			
+			evt = event.target;
+			
+			console.log(evt);
+		});
+
 		modalClick();
+
+		$("#btnSelect").click(function()
+		{
+			var length = $(".checkbox:checked").length - 1;
+			$(".checkbox:checked").each(function(index)
+			{
+			
+				var val = $(this).parents("tr").find(".NBBVAL").text();
+				var temp = idrow - 1;
+			$("#NO_BON" + temp).val(val);
+			var val = $(this).parents("tr").find(".NABVAL").text();
+			$("#NA_BHN" + temp).val(val);
+			var val = $(this).parents("tr").find(".TIBVAL").text();
+			$("#TIPE" + temp).val(val);
+			var val = $(this).parents("tr").find(".QTBVAL").text();
+			$("#QTY" + temp).val(val);
+			var val = $(this).parents("tr").find(".SIBVAL").text();
+			$("#SISABON" + temp).val(val);
+			var val = $(this).parents("tr").find(".DEBVAL").text();
+			$("#DEVISI" + temp).val(val);
+			$('#modal_no_bon').modal('toggle');
+			var no_bon = $(this).parents("tr").find(".NBBVAL").text();
+			
+			if(index <= length - 1)
+				tambah();
+			
+				
+			});
+			hitung();
+		});
 
 		$("#TOTAL_QTY").autoNumeric('init', {
 			aSign: '<?php echo ''; ?>',
@@ -458,6 +518,7 @@
 		// 	target = $(e.relatedTarget);
 		// });
 		$('body').on('click', '.select_no_bon', function() {
+			
 			console.log(x);
 			var val = $(this).parents("tr").find(".NBBVAL").text();
 			$("#NO_BON" + x).val(val);
@@ -484,6 +545,8 @@
 			$("#KD_BHN" + x).val(val);
 			var val = $(this).parents("tr").find(".SATVAL").text();
 			$("#SATUAN" + x).val(val);
+			var val = $(this).parents("tr").find(".NABVAL").text();
+			$("#NA_BHN" + x).val(val);
 			$('#modal_kd_bhn').modal('toggle');
 			var kd_bhn = $(this).parents("tr").find(".KDBVAL").text();
 		});
