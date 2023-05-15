@@ -189,7 +189,8 @@
 								<!-- <th width="75px">Rak</th> -->
 								<th width="250px">Nama Barang</th>
 								<th width="250px">Ket Barang</th>
-								<th width="250px">Qty</th>
+								<th width="250px">Jumlah</th>
+								<th width="250px">Satuan</th>
 								<th width="250px">Keterangan</th>
 								<!-- <th width="125px">Kode Golongan</th> -->
 								<th width="250px">Diterima Sparepart</th>
@@ -207,6 +208,7 @@
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" required></td>
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1 text_input"></td>
 								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
+								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
 								<td><input name="KET2[]" id="KET20" type="text" class="form-control KET2 text_input"></td>
 								<!-- <td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td> -->
 								<td>
@@ -227,6 +229,7 @@
 							<td></td>
 							<!-- <td></td> -->
 							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
+							<td></td>
 							<td></td>
 							<!-- <td></td> -->
 							<td></td>
@@ -379,29 +382,32 @@
 		var td6 = x.insertCell(5);
 		var td7 = x.insertCell(6);
 		var td8 = x.insertCell(7);
-		var td9 = x.insertCell(8);
+		// var td9 = x.insertCell(8);
 		// var td10 = x.insertCell(9);
 		// var td11 = x.insertCell(10);
 
-		var rak0 = "<div class='input-group'><select class='js-example-responsive-rak form-control RAK0 text_input' name='RAK[]' id=RAK0" + idrow + " onchange='rak(this.id)' onfocusout='hitung()' required></select></div>";
+		// var rak0 = "<div class='input-group'><select class='js-example-responsive-rak form-control RAK0 text_input' name='RAK[]' id=RAK0" + idrow + " onchange='rak(this.id)' onfocusout='hitung()' required></select></div>";
 
-		var rak = rak0;
+		// var rak = rak0;
 
-		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET2" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()'></select></div>";
+		// var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET2" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()'></select></div>";
 
-		var kd_gol = kd_gol0;
+		// var kd_gol = kd_gol0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
 		// td2.innerHTML = rak;
-		td2.innerHTML = "<input name='RAK[]' id=RAK" + idrow + " type='text' class='form-control RAK text_input'>";
-		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly> <input hidden name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' readonly>";
+		td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input'>";
+		td3.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
+		// td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly> <input hidden name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' readonly>";
 		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' >";
+		td6.innerHTML = "<input name='KET2[]' id=KET2" + idrow + " type='text' class='form-control KET2 text_input'>";
 		// td6.innerHTML = "<input name='NA_GOL[]' id=NA_GOL" + idrow + " type='text' class='form-control NA_GOL text_input' readonly hidden>";
-		td6.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
-		td7.innerHTML = kd_gol;
-		td8.innerHTML = "<input name='GRUP[]' id=GRUP" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
-		td9.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
+		// td6.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
+		// td7.innerHTML = kd_gol;
+		// td8.innerHTML = "<input name='GRUP[]' id=GRUP" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
+		td7.innerHTML = "<input name='SP[]' id='SP0' type='checkbox' value='0' class='checkbox_container SP' unchecked onclick='return false'>";
+		td8.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
