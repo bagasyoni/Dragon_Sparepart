@@ -830,22 +830,32 @@ class Transaksi_PesananLBBA extends CI_Controller
         include_once("phpjasperxml/class/PHPJasperXML.inc.php");
         include_once("phpjasperxml/setting.php");
         $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_MELLBBA.jrxml");
+        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Pesanan_Melbba.jrxml");
         $no_id = $id;
-        $query = "SELECT a.GAMBAR1 AS GHEAD, b.GAMBAR1 AS GDETAIL FROM pp a,ppd b WHERE a.NO_ID = '$no_id' AND a.NO_BUKTI = b.NO_BUKTI";
+        // $query = "SELECT a.GAMBAR1 AS GHEAD, b.GAMBAR1 AS GDETAIL FROM pp a,ppd b WHERE a.NO_ID = '$no_id' AND a.NO_BUKTI = b.NO_BUKTI";
+        $query = "SELECT a.ARTICLE,'' BAGIAN, '' PESAN,a.NO_BUKTI,a.TG_SMP TGL,a.TGL_DIMINTA TGL_DIMINTA,a.GAMBAR1 GAMBAR,
+                    b.KD_BHN,b.NA_BHN,b.WARNA,b.SERI,b.QTY,b.SATUAN,b.GAMBAR1
+                    FROM pp a, ppd b
+                    WHERE a.NO_BUKTI = b.NO_BUKTI AND a.NO_ID = '$no_id'";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);
         while ($row1 = mysqli_fetch_assoc($result1)) {
             array_push($PHPJasperXML->arraysqltable, array(
-                "GHEAD" => $row1["GHEAD"],
-                "GDETAIL" => $row1["GDETAIL"],
-                "TGL_SP" => $row1["TGL_SP"],
-                "KODECUS" => $row1["KODECUS"],
                 "ARTICLE" => $row1["ARTICLE"],
-                "LUSIN" => $row1["LUSIN"],
-                "PAIR" => $row1["PAIR"],
-                "REC" => $row1["REC"],
+                "BAGIAN" => $row1["BAGIAN"],
+                "PESAN" => $row1["PESAN"],
+                "NO_BUKTI" => $row1["NO_BUKTI"],
+                "TGL" => $row1["TGL"],
+                "TGL_DIMINTA" => $row1["TGL_DIMINTA"],
+                "GAMBAR" => $row1["GAMBAR"],
+                "KD_BHN" => $row1["KD_BHN"],
+                "NA_BHN" => $row1["NA_BHN"],
+                "WARNA" => $row1["WARNA"],
+                "SERI" => $row1["SERI"],
+                "QTY" => $row1["QTY"],
+                "SATUAN" => $row1["SATUAN"],
+                "GAMBAR1" => $row1["GAMBAR1"],
             ));
         }
         ob_end_clean();
