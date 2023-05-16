@@ -154,7 +154,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#cetakanModal').on('show.bs.modal', function (event) {
+        $('#cetakanimportModal').on('show.bs.modal', function (event) {
 			var a = event.relatedTarget;
 			var no = $(a).data("no");
 			$("#sp1").text(no);

@@ -845,13 +845,13 @@ class Transaksi_PesananCetakanImport extends CI_Controller
         include_once("phpjasperxml/class/PHPJasperXML.inc.php");
         include_once("phpjasperxml/setting.php");
         $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Pesanan_CetakImport.jrxml");
+        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Pesanan_CatakImport.jrxml");
         $no_id = $id;
-        $query = "SELECT a.NO_ID, a.ARTICLE, a.NO_BUKTI, a.TGL, a.PESAN, a.TS, a.GAMBAR2 AS GAMBAR, a.JENIS, 
+        $query = "SELECT a.NO_ID, a.ARTICLE, a.NO_BUKTI, a.TGL, a.PESAN, a.TS, a.GAMBAR1 AS GAMBAR, a.JENIS, a.GAMBAR2 AS GAMBAR1,
                 a.M_LASTING, a.TYP, a.NOTES, a.TIPE_CETAK,
                 a.TTD1_USR,a.TTD2_USR,a.TTD3_USR,a.TTD4_USR,a.TTD5_USR,a.TTD6_USR,
                 a.TTD1_SMP,a.TTD2_SMP,a.TTD3_SMP,a.TTD4_SMP,a.TTD5_SMP,a.TTD6_SMP,
-                b.NA_BHN, b.SIZE, b.QTY, b.JENIS AS JENIS2, b.SATUAN, b.TGL_DIMINTA, b.GAMBAR1
+                b.NA_BHN, b.SIZE, b.QTY, b.JENIS AS JENIS2, b.SATUAN, b.TGL_DIMINTA
         FROM pp a, ppd b
         WHERE a.NO_ID = '$no_id'
         AND a.NO_BUKTI = b.NO_BUKTI";

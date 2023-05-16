@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Transaksi_PP_Bahan" language="groovy" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="145"/>
@@ -302,7 +302,7 @@
 			</textField>
 			<image>
 				<reportElement x="456" y="48" width="71" height="70" uuid="c7c873b8-1c96-49ec-b499-695818e8653f"/>
-				<imageExpression><![CDATA["GAMBAR/pesananpisausample/"+ $F{GAMBAR}]]></imageExpression>
+				<imageExpression><![CDATA["GAMBAR/pesanancetakanimport/"+ $F{GAMBAR}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="0" y="104" width="50" height="15" uuid="14289b77-5125-4df5-b6fb-c862d8686ab9">
@@ -559,7 +559,7 @@
 			</textField>
 			<image>
 				<reportElement x="430" y="3" width="46" height="40" uuid="948c36d7-1098-4db0-803e-a51a947a79f1"/>
-				<imageExpression><![CDATA["GAMBAR/pesananpisausample/"+$F{GAMBAR1}]]></imageExpression>
+				<imageExpression><![CDATA["GAMBAR/pesanancetakanimport/"+$F{GAMBAR1}]]></imageExpression>
 			</image>
 			<textField textAdjust="StretchHeight">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="140" y="0" width="51" height="46" isPrintWhenDetailOverflows="true" uuid="6d2b11d3-8e26-4ce8-9d47-ee98f7d98a39">
