@@ -934,13 +934,18 @@ class Transaksi_PesananPisau extends CI_Controller
         $result1 = mysqli_query($conn, $query);
         while ($row1 = mysqli_fetch_assoc($result1)) {
             array_push($PHPJasperXML->arraysqltable, array(
-                "GHEAD" => $row1["GHEAD"],
-                "GDETAIL" => $row1["GDETAIL"],
-                "TGL_SP" => $row1["TGL_SP"],
-                "KODECUS" => $row1["KODECUS"],
+                "NO_ID" => $row1["NO_ID"],
                 "ARTICLE" => $row1["ARTICLE"],
-                "LUSIN" => $row1["LUSIN"],
-                "PAIR" => $row1["PAIR"],
+                "NO_BUKTI" => $row1["NO_BUKTI"],
+                "TGL" => $row1["TGL"],
+                "PESAN" => $row1["PESAN"],
+                "TS" => $row1["TS"],
+                "GAMBAR" => $row1["GAMBAR"],
+                "NA_BHN" => $row1["NA_BHN"],
+                "SIZE" => $row1["SIZE"],
+                "QTY" => $row1["QTY"],
+                "TGL_DIMINTA" => $row1["TGL_DIMINTA"],
+                "GAMBAR1" => $row1["GAMBAR1"],
                 "REC" => $row1["REC"],
             ));
         }

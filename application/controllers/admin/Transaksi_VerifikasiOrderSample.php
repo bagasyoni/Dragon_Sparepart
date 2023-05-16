@@ -18,8 +18,8 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
             );
             redirect('admin/auth');
         }
-        if ($this->session->userdata['menu_sparepart'] != 'pp') {
-            $this->session->set_userdata('menu_sparepart', 'pp');
+        if ($this->session->userdata['menu_sparepart'] != 'mr_order_sample') {
+            $this->session->set_userdata('menu_sparepart', 'mr_order_sample');
             $this->session->set_userdata('kode_menu', 'T0036');
             $this->session->set_userdata('keyword_pp', '');
             $this->session->set_userdata('order_pp', 'NO_ID');
@@ -35,16 +35,16 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => 'PSL',
+            // 'SUB' => 'PSL',
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
-            'VAL' => '0',
+            // 'VAL' => '0',
             // 'TYP' => 'RND_PISAU',
         );
         $this->db->select('*');
-        $this->db->from('pp');
+        $this->db->from('mr_order_sample');
         $this->db->where($where);
         $i = 0;
         foreach ($this->column_search as $item) {
@@ -89,15 +89,15 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => 'PSL',
+            // 'SUB' => 'PSL',
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
-            'VAL' => '0',
+            // 'VAL' => '0',
             // 'TYP' => 'RND_PISAU',
         );
-        $this->db->from('pp');
+        $this->db->from('mr_order_sample');
         $this->db->where($where);
         return $this->db->count_all_results();
     }
@@ -107,28 +107,30 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
         $list = $this->get_datatables();
         $data = array();
         $no = @$_POST['start'];
-        foreach ($list as $pp) {
-            $JASPER = "window.open('JASPER/" . $pp->NO_ID . "','', 'width=1000','height=900');";
+        foreach ($list as $mr_order_sample) {
+            $JASPER = "window.open('JASPER/" . $mr_order_sample->NO_ID . "','', 'width=1000','height=900');";
             $no++;
             $row = array();
-            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $pp->NO_ID . "'>";
+            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $mr_order_sample->NO_ID . "'>";
             $row[] = '<div class="dropdown">
                         <a style="background-color: #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_VerifikasiOrderSample/update/' . $pp->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_VerifikasiOrderSample/update/' . $mr_order_sample->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
-            $row[] = $pp->NO_BUKTI;
-            $row[] = date("d-m-Y", strtotime($pp->TGL));
-            $row[] = $pp->DEVISI;
-            $row[] = $pp->KET;
-            $row[] = $pp->TS;
-            $row[] = $pp->PESAN;
-            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesananpisausample/$pp->GAMBAR' width='auto' height='120'>";
+            $row[] = $mr_order_sample->NO_BUKTI;
+            $row[] = date("d-m-Y", strtotime($mr_order_sample->TGL));
+            $row[] = date("d-m-Y", strtotime($mr_order_sample->TGL_DIMINTA));
+            $row[] = $mr_order_sample->KODE_DEVISI;
+            $row[] = $mr_order_sample->KET;
+            $row[] = $mr_order_sample->JENIS_SAMPLE;
+            $row[] = $mr_order_sample->JENIS_ORDER;
+            $row[] = $mr_order_sample->TUJUAN;
+            // $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesananpisausample/$mr_order_sample->GAMBAR' width='auto' height='120'>";
             $data[] = $row;
         }
         $output = array(
@@ -144,17 +146,17 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
     {
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
-        $this->session->set_userdata('judul', 'Transaksi Verifikasi Pesanan Pisau Sample');
+        $this->session->set_userdata('judul', 'Transaksi Verifikasi Order Sample');
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => 'PSL',
+            // 'SUB' => 'PSL',
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
-            'VAL' => '0',
+            // 'VAL' => '0',
             // 'TYP' => 'RND_PISAU',
         );
-        $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
+        $data['mr_order_sample'] = $this->transaksi_model->tampil_data($where, 'mr_order_sample', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_VerifikasiOrderSample/Transaksi_VerifikasiOrderSample', $data);
@@ -164,9 +166,9 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
     public function delete($id)
     {
         $where = array('NO_ID' => $id);
-        $this->transaksi_model->hapus_data($where, 'pp');
+        $this->transaksi_model->hapus_data($where, 'mr_order_sample');
         $where = array('ID' => $id);
-        $this->transaksi_model->hapus_data($where, 'ppd');
+        $this->transaksi_model->hapus_data($where, 'mr_order_sampled');
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
@@ -181,38 +183,38 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
 
     // function delete_multiple()
     // {
-    //     $this->transaksi_model->remove_checked('pp', 'ppd');
+    //     $this->transaksi_model->remove_checked('mr_order_sample', 'mr_order_sampled');
     //     redirect('admin/Transaksi_PesananPisau/index_Transaksi_VerifikasiOrderSample');
     // }
 
     public function update($id)
     {
-        $q1 = "SELECT pp.NO_ID as ID,
-                pp.NO_BUKTI AS NO_BUKTI,
-                pp.TGL AS TGL,
-                pp.DEVISI AS DEVISI,
-                pp.ARTICLE AS ARTICLE,
-                pp.PESAN AS PESAN,
-                pp.JO AS JO,
-                pp.TGL_DIMINTA AS TGL_DIMINTA_H,
-                pp.TS AS TS,
-                pp.GAMBAR AS GAMBAR,
-                pp.TOTAL_QTY AS TOTAL_QTY,
-                pp.VAL AS VAL,
+        $q1 = "SELECT mr_order_sample.NO_ID as ID,
+                mr_order_sample.NO_BUKTI AS NO_BUKTI,
+                mr_order_sample.TGL AS TGL,
+                mr_order_sample.DEVISI AS DEVISI,
+                mr_order_sample.ARTICLE AS ARTICLE,
+                mr_order_sample.PESAN AS PESAN,
+                mr_order_sample.JO AS JO,
+                mr_order_sample.TGL_DIMINTA AS TGL_DIMINTA_H,
+                mr_order_sample.TS AS TS,
+                mr_order_sample.GAMBAR AS GAMBAR,
+                mr_order_sample.TOTAL_QTY AS TOTAL_QTY,
+                mr_order_sample.VAL AS VAL,
                 
-                ppd.NO_ID AS NO_ID,
-                ppd.REC AS REC,
-                ppd.NA_BHN AS NA_BHN,
-                ppd.SIZE AS SIZE,
-                ppd.QTY AS QTY,
-                ppd.SATUAN AS SATUAN,
-                IF(ppd.TGL_DIMINTA='0000-00-00','2001-01-01',ppd.TGL_DIMINTA) AS TGL_DIMINTA_D,
-                ppd.KET1 AS KET1,
-                ppd.GAMBAR1 AS GAMBAR1
-            FROM pp,ppd 
-            WHERE pp.NO_ID=$id 
-            AND pp.NO_ID=ppd.ID 
-            ORDER BY ppd.REC";
+                mr_order_sampled.NO_ID AS NO_ID,
+                mr_order_sampled.REC AS REC,
+                mr_order_sampled.NA_BHN AS NA_BHN,
+                mr_order_sampled.SIZE AS SIZE,
+                mr_order_sampled.QTY AS QTY,
+                mr_order_sampled.SATUAN AS SATUAN,
+                IF(mr_order_sampled.TGL_DIMINTA='0000-00-00','2001-01-01',mr_order_sampled.TGL_DIMINTA) AS TGL_DIMINTA_D,
+                mr_order_sampled.KET1 AS KET1,
+                mr_order_sampled.GAMBAR1 AS GAMBAR1
+            FROM mr_order_sample,mr_order_sampled 
+            WHERE mr_order_sample.NO_ID=$id 
+            AND mr_order_sample.NO_ID=mr_order_sampled.ID 
+            ORDER BY mr_order_sampled.REC";
         $data['rnd'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
@@ -224,7 +226,7 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
     {
         $delete = $this->input->post('check');
         for ($i = 0; $i < count($delete); $i++) {
-            $this->db->query("UPDATE pp SET VAL=1 where no_id=$delete[$i]");
+            $this->db->query("UPDATE mr_order_sample SET VAL=1 where no_id=$delete[$i]");
         }
         redirect('admin/Transaksi_VerifikasiOrderSample/index_Transaksi_VerifikasiOrderSample');
     }
@@ -327,29 +329,29 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
         $PHPJasperXML = new \PHPJasperXML();
         $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_PPStok.jrxml");
         $no_id = $id;
-        $query = "SELECT pp.no_id as ID,
-                pp.no_sp AS MODEL,
-                pp.perke AS PERKE,
-                pp.tgl_sp AS TGL_SP,
-                pp.nodo AS NODO,
-                pp.tgldo AS TGLDO,
-                pp.tlusin AS TLUSIN,
-                pp.tpair AS TPAIR,
+        $query = "SELECT mr_order_sample.no_id as ID,
+                mr_order_sample.no_sp AS MODEL,
+                mr_order_sample.perke AS PERKE,
+                mr_order_sample.tgl_sp AS TGL_SP,
+                mr_order_sample.nodo AS NODO,
+                mr_order_sample.tgldo AS TGLDO,
+                mr_order_sample.tlusin AS TLUSIN,
+                mr_order_sample.tpair AS TPAIR,
 
-                ppd.no_id AS NO_ID,
-                ppd.rec AS REC,
-                CONCAT(ppd.article,' - ',ppd.warna) AS ARTICLE,
-                ppd.size AS SIZE,
-                ppd.golong AS GOLONG,
-                ppd.sisa AS SISA,
-                ppd.lusin AS LUSIN,
-                ppd.pair AS PAIR,
-                CONCAT(ppd.kodecus,' - ',ppd.nama) AS KODECUS,
-                ppd.kota AS KOTA
-            FROM pp,ppd 
-            WHERE pp.no_id=$id 
-            AND pp.no_id=ppd.id 
-            ORDER BY ppd.rec";
+                mr_order_sampled.no_id AS NO_ID,
+                mr_order_sampled.rec AS REC,
+                CONCAT(mr_order_sampled.article,' - ',mr_order_sampled.warna) AS ARTICLE,
+                mr_order_sampled.size AS SIZE,
+                mr_order_sampled.golong AS GOLONG,
+                mr_order_sampled.sisa AS SISA,
+                mr_order_sampled.lusin AS LUSIN,
+                mr_order_sampled.pair AS PAIR,
+                CONCAT(mr_order_sampled.kodecus,' - ',mr_order_sampled.nama) AS KODECUS,
+                mr_order_sampled.kota AS KOTA
+            FROM mr_order_sample,mr_order_sampled 
+            WHERE mr_order_sample.no_id=$id 
+            AND mr_order_sample.no_id=mr_order_sampled.id 
+            ORDER BY mr_order_sampled.rec";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);
