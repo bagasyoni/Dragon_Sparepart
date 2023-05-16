@@ -432,7 +432,7 @@ class Transaksi_PesananCetakan extends CI_Controller
 
         $q1 = "SELECT a.NO_ID,a.NO_BUKTI,a.ARTICLE,a.TGL,a.NOTES,a.M_LASTING,a.TGL_DIMINTA,a.DEVISI,a.TOTAL_QTY,
                     a.TUJUAN,a.TIPE,a.TIPE_CETAK,a.JENIS,a.FLAG,a.PROSES,a.GAMBAR1,a.GAMBAR2,a.GAMBAR3,a.VAL,
-                    b.ID AS NO_IDX,b.REC,b.NA_BHN,b.KET1,b.SIZE,b.QTY,b.SATUAN
+                    b.NO_ID AS NO_IDX,b.REC,b.NA_BHN,b.KET1,b.SIZE,b.QTY,b.SATUAN
                 FROM pp a,ppd b 
                 WHERE a.NO_BUKTI = b.NO_BUKTI AND a.NO_ID='$NO_ID'";
 
@@ -515,6 +515,7 @@ class Transaksi_PesananCetakan extends CI_Controller
             'PROSES' => $this->input->post('PROSES', TRUE),
             'GAMBAR1' =>  $GAMBAR1,
             'GAMBAR2' => $GAMBAR2,
+            'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE))
         );
         $where = array(
             'NO_ID' => $NO_ID
