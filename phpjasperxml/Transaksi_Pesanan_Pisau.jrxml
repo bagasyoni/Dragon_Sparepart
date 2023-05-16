@@ -636,7 +636,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA["(  " +$F{TG_PROD} + "  )"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["(  " +$F{PROD} + "  )"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="236" y="90" width="80" height="20" uuid="92e3cf43-b5ca-4b1f-92be-16b84671cf54"/>

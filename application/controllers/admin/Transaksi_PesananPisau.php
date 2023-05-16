@@ -925,10 +925,13 @@ class Transaksi_PesananPisau extends CI_Controller
         $PHPJasperXML = new \PHPJasperXML();
         $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Pesanan_Pisau.jrxml");
         $no_id = $id;
-        $query = "SELECT a.NO_ID, a.ARTICLE, a.NO_BUKTI, a.TGL, a.PESAN, a.TS, a.GAMBAR, b.NA_BHN, b.SIZE, b.QTY, b.SATUAN, b.TGL_DIMINTA, b.GAMBAR1
-        FROM pp a, ppd b
-        WHERE a.NO_ID = '$no_id'
-        AND a.NO_BUKTI = b.NO_BUKTI";
+        $query = "SELECT a.NO_ID, a.ARTICLE, a.NO_BUKTI, a.TGL, a.PESAN, a.TS, a.GAMBAR, 
+                    a.TTD1_USR,a.TTD2_USR,a.TTD3_USR,a.TTD4_USR,a.TTD5_USR,a.TTD6_USR,a.TTD7_USR,
+                    a.TTD1_SMP,a.TTD2_SMP,a.TTD3_SMP,a.TTD4_SMP,a.TTD5_SMP,a.TTD6_SMP,a.TTD7_SMP,
+                    b.NA_BHN, b.SIZE, b.QTY, b.SATUAN, b.TGL_DIMINTA, b.GAMBAR1
+                    FROM pp a, ppd b
+                    WHERE a.NO_ID = '$no_id'
+                    AND a.NO_BUKTI = b.NO_BUKTI";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);
@@ -947,6 +950,20 @@ class Transaksi_PesananPisau extends CI_Controller
                 "TGL_DIMINTA" => $row1["TGL_DIMINTA"],
                 "GAMBAR1" => $row1["GAMBAR1"],
                 "REC" => $row1["REC"],
+                "CEO" => $row1["TTD1_USR"],
+                "GM" => $row1["TTD2_USR"],
+                "PPC" => $row1["TTD3_USR"],
+                "MARKET" => $row1["TTD4_USR"],
+                "RND" => $row1["TTD5_USR"],
+                "IE" => $row1["TTD6_USR"],
+                "PROD" => $row1["TTD7_USR"],
+                "TG_CEO" => $row1["TTD1_SMP"],
+                "TG_GM" => $row1["TTD2_SMP"],
+                "TG_PPC" => $row1["TTD3_SMP"],
+                "TG_MARKET" => $row1["TTD4_SMP"],
+                "TG_RND" => $row1["TTD5_SMP"],
+                "TG_IE" => $row1["TTD6_SMP"],
+                "TG_PROD" => $row1["TTD7_SMP"],
             ));
         }
         ob_end_clean();
