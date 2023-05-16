@@ -354,9 +354,9 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
         $no_id = $id;
         $query = "SELECT mr_order_sample.NO_ID as ID,
                 mr_order_sample.NO_BUKTI AS NO_BUKTI,
-                mr_order_sample.TGL AS TGL,
-                mr_order_sample.TGL_DIMINTA AS TGL_DIMINTA,
-                mr_order_sample.TGL_SELESAI AS TGL_SELESAI,
+                date_format(mr_order_sample.TGL,'%d-%m-%Y') AS TGL,
+                date_format(mr_order_sample.TGL_DIMINTA,'%d-%m-%Y') AS TGL_DIMINTA,
+                date_format(mr_order_sample.TGL_SELESAI,'%d-%m-%Y') AS TGL_SELESAI,
                 mr_order_sample.KODE_DEVISI AS KODE_DEVISI,
                 mr_order_sample.KET AS KET,
                 mr_order_sample.JENIS_SAMPLE AS JENIS_SAMPLE,
