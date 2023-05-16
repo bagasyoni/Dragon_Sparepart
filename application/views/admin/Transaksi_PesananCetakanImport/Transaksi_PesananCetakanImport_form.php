@@ -364,6 +364,58 @@
 		</div>
 		<br><br>
 		<div class="row">
+			<div class="col-md-12">
+				<div class="table-responsive scrollable">
+					<table id="datatable" class="table table-hoverx table-stripedx table-borderedx table-condensed table-scrollable">
+						<thead>
+							<tr>
+								<th width="40px">No</th>
+								<th width="150px">Komponen</th>
+								<th width="100px">Jenis Bahan</th>
+								<th width="150px">Size</th>
+								<th width="75px">Qty</th>
+								<th width="75px">Satuan</th>
+								<th width="50px"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
+								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" required></td>
+								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1 text_input" required></td>
+								<td><input name="SIZEX[]" id="SIZEX0" type="text" class="form-control SIZEX text_input"></td>
+								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
+								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
+								<td>
+									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+										<i class="fa fa-fw fa-trash-alt"></i>
+									</button> -->
+								</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
+							<td></td>
+							<td></td>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+		<br><br>
+		<div class="col-md-12">
+			<div class="form-group row">
+				<div class="col-md-1">
+					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="row">
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
@@ -491,7 +543,7 @@
 		$('#TOTAL').autoNumeric('update');
 	}
 
-	 	function tambah() {
+	function tambah() {
 
 		var x = document.getElementById('datatable').insertRow(idrow + 1);
 		var td1 = x.insertCell(0);
@@ -499,18 +551,16 @@
 		var td3 = x.insertCell(2);
 		var td4 = x.insertCell(3);
 		var td5 = x.insertCell(4);
-
-		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()' required></select></div>";
-		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN text_input' name='KD_BHN[]' id=KD_BHN" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
-		
-		var no_bon = no_bon0;
-		var kd_bhn = kd_bhn0;
+		var td6 = x.insertCell(5);
+		var td7 = x.insertCell(6);
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = "<input name='SIZE[]' id=SIZE" + idrow + " type='text' class='form-control SIZE text_input' required>";
-		td3.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' required>";
-		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
-		td5.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+		td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' required>";
+		td3.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input' required>";
+		td4.innerHTML = "<input name='SIZEX[]' id=SIZEX" + idrow + " type='text' class='form-control SIZEX text_input' required>";
+		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
+		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
+		td7.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -518,27 +568,9 @@
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			$("#HARGA" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
-			$("#TOTAL" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
 		}
 		idrow++;
 		nomor();
-		$(".ronly").on('keydown paste', function(e) {
-			e.preventDefault();
-			e.currentTarget.blur();
-		});
-		$('input[type="checkbox"]').on('change', function() {
-			this.value ^= 1;
-			console.log(this.value)
-		});
-		select_no_bon();
-		select_kd_bhn();
 	}
 
 	function hapus() {

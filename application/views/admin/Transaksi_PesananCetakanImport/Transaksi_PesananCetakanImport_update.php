@@ -1,3 +1,8 @@
+<?php
+foreach ($rnd as $rowh) {
+};
+?>
+
 <style>
 	#myInput {
 		background-image: url('<?php echo base_url() ?>assets/img/search-icon-blue.png');
@@ -143,24 +148,24 @@
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input type="hidden" id="NO_ID" name="NO_ID" class="form-control" value="<?= $NO_ID ?>">
-							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?= $NO_BUKTI ?>" readonly>
+							<input type="hidden" id="NO_ID" name="NO_ID" class="form-control" value="<?php echo $rowh->NO_ID ?>">
+							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
 						</div>
 						<div class="col-md-2">
-						<input <?php if ($VAL == !0) echo 'class="form-control TGL text_input" readonly'; ?> type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($TGL, TRUE)); ?>" onclick="select()">
+						<input <?php if ($rowh->VAL == !0) echo 'class="form-control TGL text_input" readonly'; ?> type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()">
 						</div>
 						<div class="col-md-1">
 							<label class="label">DR </label>
 						</div>
 						<div class="col-md-1">
-							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="js-example-responsive-dragon form-control DEVISI text_input" name="DEVISI" id="DEVISI" onchange="dragon(this.id)" required>
-								<option value="<?= $DEVISI ?>" selected id="DEVISI"><?= $DEVISI ?></option>
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="js-example-responsive-dragon form-control DEVISI text_input" name="DEVISI" id="DEVISI" onchange="dragon(this.id)" required>
+								<option value="<?php echo $rowh->DEVISI ?>" selected id="DEVISI"><?php echo $rowh->DEVISI ?></option>
 							</select>
 						</div>
 						<div class="col-md-2"></div>
 						<div class="col-md-2">
 							<?php
-							if ($VAL == 0)
+							if ($rowh->VAL == 0)
 								echo '<a 
 										type="button" 
 										class="btn btn-danger" 
@@ -183,7 +188,7 @@
 							<label class="label">Article </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input ARTICLE" id="ARTICLE" name="ARTICLE" type="text" value="<?= $ARTICLE ?>" required>
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input ARTICLE" id="ARTICLE" name="ARTICLE" type="text" value="<?php echo $rowh->ARTICLE ?>" required>
 						</div>
 						<div class="col-md-2">
 						</div>
@@ -191,21 +196,21 @@
 							<label class="label">Size </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input SIZE" id="SIZE" name="SIZE" type="text" value="<?= $SIZE ?>">
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input SIZE" id="SIZE" name="SIZE" type="text" value="<?php echo $rowh->SIZE ?>">
 						</div>
 						<!-- <div class="col-md-1">
 							<label class="label">Tujuan </label>
 						</div>
 						<div class="col-md-2">
-							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text">
-								<option selected><?= $TUJUAN ?></option>
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text">
+								<option selected><?php echo $rowh->TUJUAN ?></option>
 								<option value="CNC">CNC</option>
 								<option value="PBL">PBL</option>
 							</select>
 						</div>
 						<div class="col-md-2">
-							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TIPE" id="TIPE" name="TIPE" type="text">
-								<option selected><?= $TIPE ?></option>
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TIPE" id="TIPE" name="TIPE" type="text">
+								<option selected><?php echo $rowh->TIPE ?></option>
 								<option value="MRL">MRL</option>
 								<option value="MRE">MRE</option>
 							</select>
@@ -218,7 +223,7 @@
 							<label class="label">Jumlah </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input JUMLAH" id="JUMLAH" name="JUMLAH" type="text" value="<?= $JUMLAH ?>" required>
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input JUMLAH" id="JUMLAH" name="JUMLAH" type="text" value="<?php echo $rowh->JUMLAH ?>" required>
 						</div>
 					</div>
 				</div>
@@ -228,7 +233,7 @@
 							<label class="label">Keterangan </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value="<?= $NOTES ?>" required>
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value="<?php echo $rowh->NOTES ?>" required>
 						</div>
 						<div class="col-md-2">
 						</div>
@@ -236,7 +241,7 @@
 							<label class="label">Tipe Cetakan </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TIPE_CETAK" id="TIPE_CETAK" name="TIPE_CETAK" type="text" value="<?= $TIPE_CETAK ?>">
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TIPE_CETAK" id="TIPE_CETAK" name="TIPE_CETAK" type="text" value="<?php echo $rowh->TIPE_CETAK ?>">
 						</div>
 					</div>
 				</div>
@@ -246,7 +251,7 @@
 							<label class="label">M Lasting </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input M_LASTING" id="M_LASTING" name="M_LASTING" type="text" value="<?= $M_LASTING ?>" required>
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input M_LASTING" id="M_LASTING" name="M_LASTING" type="text" value="<?php echo $rowh->M_LASTING ?>" required>
 						</div>
 						<div class="col-md-2">
 						</div>
@@ -254,8 +259,8 @@
 							<label class="label">Pilih Proses </label>
 						</div>
 						<div class="col-md-2">
-							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text">
-								<option selected><?php echo $PROSES ?></option>
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text">
+								<option selected><?php echo $rowh->PROSES ?></option>
 								<option value="CETAKAN">CETAKAN</option>
 								<option value="MATRAS">MATRAS</option>
 							</select>
@@ -264,8 +269,8 @@
 							<label class="label">Jenis </label>
 						</div>
 						<div class="col-md-2">
-							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input JENIS" id="JENIS" name="JENIS" type="text">
-								<option selected><?= $JENIS ?></option>
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input JENIS" id="JENIS" name="JENIS" type="text">
+								<option selected><?php echo $rowh->JENIS ?></option>
 								<option value="Sample">Sample</option>
 								<option value="Seri">Seri</option>
 								<option value="Reparasi">Reparasi</option>
@@ -279,7 +284,7 @@
 							<label class="label">Tanggal Diminta </label>
 						</div>
 						<div class="col-md-2">
-							<input <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
 						</div>
 						<div class="col-md-2">
 						</div>
@@ -287,15 +292,15 @@
 							<label class="label">Flag </label>
 						</div>
 						<div class="col-md-2">
-							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input FLAG" id="FLAG" name="FLAG" type="text">
-								<option selected><?= $FLAG ?></option>
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input FLAG" id="FLAG" name="FLAG" type="text">
+								<option selected><?php echo $rowh->FLAG ?></option>
 								<option value="LOKAL">LOKAL</option>
 								<option value="IMPORT">IMPORT</option>
 							</select>
 						</div>
 						<div class="col-md-2">
-							<select <?php if ($VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text">
-								<option selected><?= $PROSES ?></option>
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text">
+								<option selected><?php echo $rowh->PROSES ?></option>
 								<option value="CETAKAN">CETAKAN</option>
 								<option value="MATRAS">MATRAS</option>
 							</select>
@@ -316,9 +321,9 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<img src="<?= base_url('gambar/pesanancetakanimport/'.$GAMBAR1)?>" style="width: 120px;float: left;margin-bottom: 5px;">
-						<input type="text" name="G1" id="G1" value="<?=$GAMBAR1?>" hidden>
-						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<img src="<?= base_url('gambar/pesanancetakanimport/'.$rowh->GAMBAR1)?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input type="text" name="G1" id="G1" value="<?php echo $rowh->GAMBAR1?>" hidden>
+						<input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						</div>
 					</div>
 				</div>
@@ -336,9 +341,9 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<img src="<?= base_url('gambar/pesanancetakanimport/'.$GAMBAR2)?>" style="width: 120px;float: left;margin-bottom: 5px;">
-						<input type="text" name="G2" id="G2" value="<?=$GAMBAR2?>" hidden>
-						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<img src="<?= base_url('gambar/pesanancetakanimport/'.$rowh->GAMBAR2)?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input type="text" name="G2" id="G2" value="<?php echo $rowh->GAMBAR2?>" hidden>
+						<input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						</div>
 					</div>
 				</div>
@@ -356,9 +361,9 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<img src="<?= base_url('gambar/pesanancetakanimport/'.$GAMBAR3)?>" style="width: 120px;float: left;margin-bottom: 5px;">
-						<input type="text" name="G3" id="G3" value="<?=$GAMBAR3?>" hidden>
-						<input <?php if ($VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR3" id="GAMBAR3" accept="image/png, image/jpeg, image/jpg, image/bmp">
+						<img src="<?= base_url('gambar/pesanancetakanimport/'.$rowh->GAMBAR3)?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input type="text" name="G3" id="G3" value="<?php echo $rowh->GAMBAR3?>" hidden>
+						<input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR3" id="GAMBAR3" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						</div>
 					</div>
 				</div>
@@ -368,7 +373,64 @@
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="table-responsive scrollable">
+					<table id="datatable" class="table table-hoverx table-stripedx table-borderedx table-condensed table-scrollable">
+						<thead>
+							<tr>
+								<th width="40px">No</th>
+								<th width="150px">Komponen</th>
+								<th width="100px">Jenis Bahan</th>
+								<th width="150px">Size</th>
+								<th width="75px">Qty</th>
+								<th width="75px">Satuan</th>
+								<th width="50px"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							$no = 0;
+							foreach ($rnd as $row) :
+							?>
+								<tr>
+									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input"></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="SIZEX[]" id="SIZEX<?php echo $no; ?>" value="<?= $row->SIZEX ?>" type="text" class="form-control SIZE text_input"></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="QTY[]" onclick="select()" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"></td>
+									<td>
+										<input name="NO_IDX[]" id="NO_IDX<?php echo $no; ?>" value="<?= $row->NO_IDX ?>" class="form-control" type="hidden">
+										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+											<i class="fa fa-fw fa-trash"></i>
+										</button>
+									</td>
+								</tr>
+								<?php $no++; ?>
+							<?php endforeach; ?>
+						</tbody>
+						<tfoot>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
+							<td></td>
+							<td></td>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
 		<br><br>
+		<div class="col-md-12">
+			<div class="form-group row">
+				<div class="col-md-1">
+					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
+				</div>
+			</div>
+		</div>
 		<!--tab-->
 		<br>
 		<div class="col-md-12">
@@ -503,27 +565,16 @@
 		var td3 = x.insertCell(2);
 		var td4 = x.insertCell(3);
 		var td5 = x.insertCell(4);
+		var td6 = x.insertCell(5);
+		var td7 = x.insertCell(6);
 
-		var no_bon0 = "<div class='input-group'><select class='js-example-responsive-no_bon form-control NO_BON text_input' name='NO_BON[]' id=NO_BON" + idrow + " onchange='no_bon(this.id)' onfocusout='hitung()'></select></div>";
-		
-		var no_bon = no_bon0;
-		
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = no_bon;
-		td3.innerHTML = "<input name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' readonly>";
-		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
-		td5.innerHTML = "<input name='JENIS[]' id=JENIS" + idrow + " type='text' class='form-control JENIS text_input'>";
-		td6.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary'>";
-		td7.innerHTML = "<input name='BILANGAN[]' id=BILANGAN" + idrow + " type='text' class='form-control BILANGAN text_input' readonly>";
-		td8.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
-		td9.innerHTML = "<input name='DEVISI[]' id=DEVISI" + idrow + " type='text' class='form-control DEVISI text_input'>";
-		td10.innerHTML = "<input name='KET[]' id=KET" + idrow + " type='text' class='form-control KET text_input'>";
-		td11.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {
-																																																			echo $_POST["TGL_DIMINTA"];
-																																																		} else echo date('d-m-Y'); ?>'>";
-		td12.innerHTML = "<input name='SISABON[]' onclick='select()' onkeyup='hitung()' value='0' id=SISABON" + idrow + " type='text' class='form-control SISABON rightJustified text-primary' readonly>";
-		td13.innerHTML = "<input name='URGENT[]' id=URGENT" + idrow + " type='checkbox' class='checkbox_container' value='1' unchecked>";
-		td14.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+		td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' required>";
+		td3.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input' required>";
+		td4.innerHTML = "<input name='SIZEX[]' id=SIZEX" + idrow + " type='text' class='form-control SIZEX text_input' required>";
+		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
+		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
+		td7.innerHTML = "<input type='hidden' value='0' name='NO_IDX[]' id=NO_IDX" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -531,22 +582,9 @@
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			$("#SISABON" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
 		}
 		idrow++;
 		nomor();
-		$(".ronly").on('keydown paste', function(e) {
-			e.preventDefault();
-			e.currentTarget.blur();
-		});
-		$('input[type="checkbox"]').on('change', function() {
-			this.value ^= 1;
-			console.log(this.value)
-		});
-		select_dragon();
 	}
 
 	function hapus() {
