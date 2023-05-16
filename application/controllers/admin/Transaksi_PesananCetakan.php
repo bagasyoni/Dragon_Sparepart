@@ -520,6 +520,77 @@ class Transaksi_PesananCetakan extends CI_Controller
             'NO_ID' => $NO_ID
         );
         $this->transaksi_model->update_data($where, $datah, 'pp');
+
+        $id = $NO_ID;
+        $q1 = "SELECT a.NO_ID AS ID, a.NO_BUKTI, a.TGL, a.TGL_DIMINTA, a.DEVISI, a.ARTICLE, a.PESAN, 
+                a.JO, a.FLAG3, a.GAMBAR1, a.VAL, a.TOTAL_QTY, b.GAMBAR1 AS GDETAIL, b.REC, b.NA_BHN, 
+                b.KD_BHN, b.WARNA, b.SERI, b.QTY, b.SATUAN, DATE_FORMAT(b.TGL_DIMINTA, '%d-%m-%Y') AS TGL_DIMINTAD, b.KET AS KET,
+                b.NO_ID AS NO_ID
+                FROM pp a,ppd b WHERE a.NO_ID = '$id' AND a.NO_BUKTI = b.NO_BUKTI ORDER BY b.REC";
+        $data = $this->transaksi_model->edit_data($q1)->result();
+        $NO_IDX = $this->input->post('NO_IDX');
+        $REC = $this->input->post('REC');
+        $NA_BHN = $this->input->post('NA_BHN');
+        $KET1 = $this->input->post('KET1');
+        $SIZE = $this->input->post('SIZE');
+        $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
+        $SATUAN = $this->input->post('SATUAN');
+        $jum = count($data);
+        $ID = array_column($data, 'NO_ID');
+        $jumy = count($NO_IDX);
+        $i = 0;
+        while ($i < $jum) {
+            if (in_array($ID[$i], $NO_IDX)) {
+                $URUT = array_search($ID[$i], $NO_IDX);
+                $datad = array(
+                    'REC' => $REC[$URUT],
+                    'NA_BHN' => $NA_BHN[$URUT],
+                    'KET1' => $KET1[$URUT],
+                    'SIZE' => $SIZE[$URUT],
+                    'QTY' => str_replace(',', '', $QTY[$URUT]),
+                    'SATUAN' => $SATUAN[$URUT]
+                    // 'FLAG' => 'PP',
+                    // 'SUB' => 'MB',
+                    // 'TYP' => 'RND_MELBBA',
+                    // 'DR' => $this->session->userdata['dr'],
+                    // 'PER' => $this->session->userdata['periode'],
+                    // 'USRNM' => $this->session->userdata['username'],
+                    // 'TG_SMP' => date("Y-m-d h:i a")
+                );
+                $where = array(
+                    'NO_ID' => $NO_IDX[$URUT]
+                );
+                $this->transaksi_model->update_data($where, $datad, 'ppd');
+            } else {
+                $where = array(
+                    'NO_ID' => $ID[$i]
+                );
+                $this->transaksi_model->hapus_data($where, 'ppd');
+            }
+            $i++;
+        }
+        $i = 0;
+        while ($i < $jumy) {
+            if ($NO_IDX[$i] == "0") {
+                $datad = array(
+                    'ID' => $this->input->post('NO_ID', TRUE),
+                    'REC' => $REC[$i],
+                    'NO_BUKTI' => $bukti,
+                    'NA_BHN' => $NA_BHN[$i],
+                    'KET1' => $KET1[$i],
+                    'SIZE' => $SIZE[$i],
+                    'QTY' => str_replace(',', '', $QTY[$i]),
+                    'SATUAN' => $SATUAN[$i],
+                    'DR' => $this->session->userdata['dr'],
+                    'PER' => $this->session->userdata['periode'],
+                    'USRNM' => $this->session->userdata['username'],
+                    'TG_SMP' => date("Y-m-d h:i a")
+                );
+                $this->transaksi_model->input_datad('ppd', $datad);
+            }
+            $i++;
+        }
+
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-success alert-dismissible fade show" role="alert"> 
