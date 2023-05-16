@@ -735,44 +735,52 @@ class Transaksi_PesananCetakanImport extends CI_Controller
         include_once("phpjasperxml/class/PHPJasperXML.inc.php");
         include_once("phpjasperxml/setting.php");
         $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_PPStok.jrxml");
+        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Pesanan_CetakImport.jrxml");
         $no_id = $id;
-        $query = "SELECT pp.no_id as ID,
-                pp.no_sp AS MODEL,
-                pp.perke AS PERKE,
-                pp.tgl_sp AS TGL_SP,
-                pp.nodo AS NODO,
-                pp.tgldo AS TGLDO,
-                pp.tlusin AS TLUSIN,
-                pp.tpair AS TPAIR,
-
-                ppd.no_id AS NO_ID,
-                ppd.rec AS REC,
-                CONCAT(ppd.article,' - ',ppd.warna) AS ARTICLE,
-                ppd.size AS SIZE,
-                ppd.golong AS GOLONG,
-                ppd.sisa AS SISA,
-                ppd.lusin AS LUSIN,
-                ppd.pair AS PAIR,
-                CONCAT(ppd.kodecus,' - ',ppd.nama) AS KODECUS,
-                ppd.kota AS KOTA
-            FROM pp,ppd 
-            WHERE pp.no_id=$id 
-            AND pp.no_id=ppd.id 
-            ORDER BY ppd.rec";
+        $query = "SELECT a.NO_ID, a.ARTICLE, a.NO_BUKTI, a.TGL, a.PESAN, a.TS, a.GAMBAR2 AS GAMBAR, a.JENIS, 
+                a.M_LASTING, a.TYP, a.NOTES, a.TIPE_CETAK,
+                a.TTD1_USR,a.TTD2_USR,a.TTD3_USR,a.TTD4_USR,a.TTD5_USR,a.TTD6_USR,
+                a.TTD1_SMP,a.TTD2_SMP,a.TTD3_SMP,a.TTD4_SMP,a.TTD5_SMP,a.TTD6_SMP,
+                b.NA_BHN, b.SIZE, b.QTY, b.JENIS AS JENIS2, b.SATUAN, b.TGL_DIMINTA, b.GAMBAR1
+        FROM pp a, ppd b
+        WHERE a.NO_ID = '$no_id'
+        AND a.NO_BUKTI = b.NO_BUKTI";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);
         while ($row1 = mysqli_fetch_assoc($result1)) {
             array_push($PHPJasperXML->arraysqltable, array(
-                "KDMTS" => $row1["KDMTS"],
-                "MODEL" => $row1["MODEL"],
-                "TGL_SP" => $row1["TGL_SP"],
-                "KODECUS" => $row1["KODECUS"],
+                "NO_ID" => $row1["NO_ID"],
                 "ARTICLE" => $row1["ARTICLE"],
-                "LUSIN" => $row1["LUSIN"],
-                "PAIR" => $row1["PAIR"],
+                "NO_BUKTI" => $row1["NO_BUKTI"],
+                "TGL" => $row1["TGL"],
+                "PESAN" => $row1["PESAN"],
+                "JENIS" => $row1["JENIS"],
+                "M_LASTING" => $row1["M_LASTING"],
+                "TYP" => $row1["TYP"],
+                "NOTES" => $row1["NOTES"],
+                "TIPE_CETAK" => $row1["TIPE_CETAK"],
+                "TS" => $row1["TS"],
+                "GAMBAR" => $row1["GAMBAR"],
+                "NA_BHN" => $row1["NA_BHN"],
+                "SIZE" => $row1["SIZE"],
+                "JENIS2" => $row1["JENIS2"],
+                "QTY" => $row1["QTY"],
+                "TGL_DIMINTA" => $row1["TGL_DIMINTA"],
+                "GAMBAR1" => $row1["GAMBAR1"],
                 "REC" => $row1["REC"],
+                "CEO" => $row1["TTD1_USR"],
+                "GM" => $row1["TTD2_USR"],
+                "PBL" => $row1["TTD3_USR"],
+                "CNC" => $row1["TTD4_USR"],
+                "MARKET" => $row1["TTD5_USR"],
+                "RND" => $row1["TTD6_USR"],
+                "TG_CEO" => $row1["TTD1_SMP"],
+                "TG_GM" => $row1["TTD2_SMP"],
+                "TG_PBL" => $row1["TTD3_SMP"],
+                "TG_CNC" => $row1["TTD4_SMP"],
+                "TG_MARKET" => $row1["TTD5_SMP"],
+                "TG_RND" => $row1["TTD6_SMP"],
             ));
         }
         ob_end_clean();
