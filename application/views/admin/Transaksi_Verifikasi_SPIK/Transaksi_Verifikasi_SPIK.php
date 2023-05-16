@@ -79,7 +79,7 @@
         <div class="alert alert-success alert-container" role="alert">
             <i class="fas fa-university"></i>
             <label>
-                Transaksi Verifkikasi Order Sample
+                Transaksi Verifkikasi SPIK
             </label>
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
