@@ -192,29 +192,52 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
         $q1 = "SELECT mr_order_sample.NO_ID as ID,
                 mr_order_sample.NO_BUKTI AS NO_BUKTI,
                 mr_order_sample.TGL AS TGL,
-                mr_order_sample.DEVISI AS DEVISI,
-                mr_order_sample.ARTICLE AS ARTICLE,
-                mr_order_sample.PESAN AS PESAN,
-                mr_order_sample.JO AS JO,
-                mr_order_sample.TGL_DIMINTA AS TGL_DIMINTA_H,
-                mr_order_sample.TS AS TS,
-                mr_order_sample.GAMBAR AS GAMBAR,
+                mr_order_sample.TGL_DIMINTA AS TGL_DIMINTA,
+                mr_order_sample.KODE_DEVISI AS KODE_DEVISI,
+                mr_order_sample.KET AS KET,
+                mr_order_sample.JENIS_SAMPLE AS JENIS_SAMPLE,
+                mr_order_sample.JENIS_ORDER AS JENIS_ORDER,
+                mr_order_sample.TUJUAN AS TUJUAN,
                 mr_order_sample.TOTAL_QTY AS TOTAL_QTY,
                 mr_order_sample.VAL AS VAL,
                 
                 mr_order_sampled.NO_ID AS NO_ID,
                 mr_order_sampled.REC AS REC,
-                mr_order_sampled.NA_BHN AS NA_BHN,
+                mr_order_sampled.ARTICLE AS ARTICLE,
+                mr_order_sampled.WARNA AS WARNA,
+                mr_order_sampled.OUTSOLE AS OUTSOLE,
                 mr_order_sampled.SIZE AS SIZE,
                 mr_order_sampled.QTY AS QTY,
                 mr_order_sampled.SATUAN AS SATUAN,
-                IF(mr_order_sampled.TGL_DIMINTA='0000-00-00','2001-01-01',mr_order_sampled.TGL_DIMINTA) AS TGL_DIMINTA_D,
-                mr_order_sampled.KET1 AS KET1,
-                mr_order_sampled.GAMBAR1 AS GAMBAR1
-            FROM mr_order_sample,mr_order_sampled 
-            WHERE mr_order_sample.NO_ID=$id 
-            AND mr_order_sample.NO_ID=mr_order_sampled.ID 
-            ORDER BY mr_order_sampled.REC";
+                mr_order_sampled.KET AS KET
+        FROM mr_order_sample, mr_order_sampled 
+        WHERE mr_order_sample.NO_ID=$id 
+        AND mr_order_sample.NO_ID=mr_order_sampled.ID 
+        ORDER BY mr_order_sampled.REC";
+
+        // SELECT mr_order_sample.NO_ID as ID,
+        //         mr_order_sample.NO_BUKTI AS NO_BUKTI,
+        //         mr_order_sample.TGL AS TGL,
+        //         mr_order_sample.TGL_DIMINTA AS TGL_DIMINTA_H,
+        //         mr_order_sample.KODE_DEVISI AS KODE_DEVISI,
+        //         mr_order_sample.KET AS KET,
+        //         mr_order_sample.JENIS_SAMPLE AS JENIS_SAMPLE,
+        //         mr_order_sample.JENIS_ORDER AS JO,
+        //         mr_order_sample.TUJUAN AS TS,
+        //         -- mr_order_sample.TOTAL_QTY AS TOTAL_QTY,
+        //         -- mr_order_sample.VAL AS VAL,
+                
+        //         mr_order_sampled.NO_ID AS NO_ID,
+        //         mr_order_sampled.REC AS REC,
+        //         mr_order_sampled.ARTICLE AS NA_BHN,
+        //         mr_order_sampled.SIZE AS SIZE,
+        //         mr_order_sampled.QTY AS QTY,
+        //         mr_order_sampled.SATUAN AS SATUAN,
+        //         mr_order_sampled.KET AS KET1,
+        //     FROM mr_order_sample,mr_order_sampled 
+        //     WHERE mr_order_sample.NO_ID=$id 
+        //     AND mr_order_sample.NO_ID=mr_order_sampled.ID 
+        //     ORDER BY mr_order_sampled.REC";
         $data['rnd'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
