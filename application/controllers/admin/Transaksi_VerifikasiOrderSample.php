@@ -350,44 +350,68 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
         include_once("phpjasperxml/class/PHPJasperXML.inc.php");
         include_once("phpjasperxml/setting.php");
         $PHPJasperXML = new \PHPJasperXML();
-        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_PPStok.jrxml");
+        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Validasi_OrderSample.jrxml");
         $no_id = $id;
-        $query = "SELECT mr_order_sample.no_id as ID,
-                mr_order_sample.no_sp AS MODEL,
-                mr_order_sample.perke AS PERKE,
-                mr_order_sample.tgl_sp AS TGL_SP,
-                mr_order_sample.nodo AS NODO,
-                mr_order_sample.tgldo AS TGLDO,
-                mr_order_sample.tlusin AS TLUSIN,
-                mr_order_sample.tpair AS TPAIR,
-
-                mr_order_sampled.no_id AS NO_ID,
-                mr_order_sampled.rec AS REC,
-                CONCAT(mr_order_sampled.article,' - ',mr_order_sampled.warna) AS ARTICLE,
-                mr_order_sampled.size AS SIZE,
-                mr_order_sampled.golong AS GOLONG,
-                mr_order_sampled.sisa AS SISA,
-                mr_order_sampled.lusin AS LUSIN,
-                mr_order_sampled.pair AS PAIR,
-                CONCAT(mr_order_sampled.kodecus,' - ',mr_order_sampled.nama) AS KODECUS,
-                mr_order_sampled.kota AS KOTA
-            FROM mr_order_sample,mr_order_sampled 
-            WHERE mr_order_sample.no_id=$id 
-            AND mr_order_sample.no_id=mr_order_sampled.id 
-            ORDER BY mr_order_sampled.rec";
+        $query = "SELECT mr_order_sample.NO_ID as ID,
+                mr_order_sample.NO_BUKTI AS NO_BUKTI,
+                mr_order_sample.TGL AS TGL,
+                mr_order_sample.TGL_DIMINTA AS TGL_DIMINTA,
+                mr_order_sample.TGL_SELESAI AS TGL_SELESAI,
+                mr_order_sample.KODE_DEVISI AS KODE_DEVISI,
+                mr_order_sample.KET AS KET,
+                mr_order_sample.JENIS_SAMPLE AS JENIS_SAMPLE,
+                mr_order_sample.JENIS_ORDER AS JENIS_ORDER,
+                mr_order_sample.TUJUAN AS TUJUAN,
+                mr_order_sample.TOTAL_QTY AS TOTAL_QTY,
+                mr_order_sample.VAL AS VAL,
+                mr_order_sample.NM_TTD1 AS TTD1_USR, 
+                mr_order_sample.NM_TTD2 AS TTD2_USR, 
+                mr_order_sample.NM_TTD3 AS TTD3_USR,
+                mr_order_sample.TG_TTD1 AS TTD1_SMP,
+                mr_order_sample.TG_TTD2 AS TTD2_SMP,
+                mr_order_sample.TG_TTD3 AS TTD3_SMP,
+                
+                mr_order_sampled.NO_ID AS NO_ID,
+                mr_order_sampled.REC AS REC,
+                mr_order_sampled.ARTICLE AS ARTICLE,
+                mr_order_sampled.WARNA AS WARNA,
+                mr_order_sampled.OUTSOLE AS OUTSOLE,
+                mr_order_sampled.SIZE AS SIZE,
+                mr_order_sampled.JENIS AS JENIS,
+                mr_order_sampled.QTY AS QTY,
+                mr_order_sampled.SATUAN AS SATUAN,
+                mr_order_sampled.KET AS KET2
+        FROM mr_order_sample, mr_order_sampled 
+        WHERE mr_order_sample.NO_ID=$id 
+        AND mr_order_sample.NO_ID=mr_order_sampled.ID 
+        ORDER BY mr_order_sampled.REC";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);
         while ($row1 = mysqli_fetch_assoc($result1)) {
             array_push($PHPJasperXML->arraysqltable, array(
-                "KDMTS" => $row1["KDMTS"],
-                "MODEL" => $row1["MODEL"],
-                "TGL_SP" => $row1["TGL_SP"],
-                "KODECUS" => $row1["KODECUS"],
-                "ARTICLE" => $row1["ARTICLE"],
-                "LUSIN" => $row1["LUSIN"],
-                "PAIR" => $row1["PAIR"],
+                "NO_BUKTI" => $row1["NO_BUKTI"],
+                "TGL" => $row1["TGL"],
+                "TGL_DIMINTA" => $row1["TGL_DIMINTA"],
+                "TGL_SELESAI" => $row1["TGL_SELESAI"],
+                "KET" => $row1["KET"],
+                "JENIS_SAMPLE" => $row1["JENIS_SAMPLE"],
+                "JENIS_ORDER" => $row1["JENIS_ORDER"],
                 "REC" => $row1["REC"],
+                "TUJUAN" => $row1["TUJUAN"],
+                "RND" => $row1["TTD1_USR"],
+                "GM" => $row1["TTD2_USR"],
+                "MARKET" => $row1["TTD3_USR"],
+                "TG_RND" => $row1["TTD1_SMP"],
+                "TG_GM" => $row1["TTD2_SMP"],
+                "TG_MARKET" => $row1["TTD3_SMP"],
+                "ARTICLE" => $row1["ARTICLE"],
+                "WARNAC" => $row1["WARNA"],
+                "OUTSOLE" => $row1["OUTSOLE"],
+                "SIZE" => $row1["SIZE"],
+                "JENIS" => $row1["JENIS"],
+                "QTY" => $row1["QTY"],
+                "KET2" => $row1["KET2"],
             ));
         }
         ob_end_clean();
