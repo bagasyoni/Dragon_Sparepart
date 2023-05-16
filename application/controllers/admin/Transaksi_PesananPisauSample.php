@@ -907,4 +907,66 @@ class Transaksi_PesananPisauSample extends CI_Controller
         $select['items'] = $selectajax;
         $this->output->set_content_type('application/json')->set_output(json_encode($select));
     }
+
+    function JASPER($id)
+    {
+        $CI = &get_instance();
+        $CI->load->database();
+        $servername = $CI->db->hostname;
+        $username = $CI->db->username;
+        $password = $CI->db->password;
+        $database = $CI->db->database;
+        $conn = mysqli_connect($servername, $username, $password, $database);
+        error_reporting(E_ALL);
+        ob_start();
+        include_once('phpjasperxml/class/tcpdf/tcpdf.php');
+        include_once("phpjasperxml/class/PHPJasperXML.inc.php");
+        include_once("phpjasperxml/setting.php");
+        $PHPJasperXML = new \PHPJasperXML();
+        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Pesanan_PisauSample.jrxml");
+        $no_id = $id;
+        $query = "SELECT a.NO_ID, a.ARTICLE, a.NO_BUKTI, a.TGL, a.PESAN, a.TS, a.GAMBAR, 
+                    a.TTD1_USR,a.TTD2_USR,a.TTD3_USR,a.TTD4_USR,a.TTD5_USR,a.TTD6_USR,a.TTD7_USR,
+                    a.TTD1_SMP,a.TTD2_SMP,a.TTD3_SMP,a.TTD4_SMP,a.TTD5_SMP,a.TTD6_SMP,a.TTD7_SMP,
+                    b.NA_BHN, b.SIZE, b.QTY, b.SATUAN, b.TGL_DIMINTA, b.GAMBAR1
+                    FROM pp a, ppd b
+                    WHERE a.NO_ID = '$no_id'
+                    AND a.NO_BUKTI = b.NO_BUKTI";
+        $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
+        $PHPJasperXML->arraysqltable = array();
+        $result1 = mysqli_query($conn, $query);
+        while ($row1 = mysqli_fetch_assoc($result1)) {
+            array_push($PHPJasperXML->arraysqltable, array(
+                "NO_ID" => $row1["NO_ID"],
+                "ARTICLE" => $row1["ARTICLE"],
+                "NO_BUKTI" => $row1["NO_BUKTI"],
+                "TGL" => $row1["TGL"],
+                "PESAN" => $row1["PESAN"],
+                "TS" => $row1["TS"],
+                "GAMBAR" => $row1["GAMBAR"],
+                "NA_BHN" => $row1["NA_BHN"],
+                "SIZE" => $row1["SIZE"],
+                "QTY" => $row1["QTY"],
+                "TGL_DIMINTA" => $row1["TGL_DIMINTA"],
+                "GAMBAR1" => $row1["GAMBAR1"],
+                "REC" => $row1["REC"],
+                "CEO" => $row1["TTD1_USR"],
+                "GM" => $row1["TTD2_USR"],
+                "PPC" => $row1["TTD3_USR"],
+                "MARKET" => $row1["TTD4_USR"],
+                "RND" => $row1["TTD5_USR"],
+                "IE" => $row1["TTD6_USR"],
+                "PROD" => $row1["TTD7_USR"],
+                "TG_CEO" => $row1["TTD1_SMP"],
+                "TG_GM" => $row1["TTD2_SMP"],
+                "TG_PPC" => $row1["TTD3_SMP"],
+                "TG_MARKET" => $row1["TTD4_SMP"],
+                "TG_RND" => $row1["TTD5_SMP"],
+                "TG_IE" => $row1["TTD6_SMP"],
+                "TG_PROD" => $row1["TTD7_SMP"],
+            ));
+        }
+        ob_end_clean();
+        $PHPJasperXML->outpage("I");
+    }
 }
