@@ -352,6 +352,7 @@ class Transaksi_PesananCetakan extends CI_Controller
             'PROSES' => $this->input->post('PROSES', TRUE),
             'GAMBAR1' => $gambar1,
             'GAMBAR2' => $gambar2,
+            'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             // 'FLAG' => 'LOKAL',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_CETAK',
@@ -362,6 +363,35 @@ class Transaksi_PesananCetakan extends CI_Controller
             'TG_SMP' => date("Y-m-d h:i a")
         );
         $this->transaksi_model->input_datah('pp', $datah);
+
+        $ID = $this->db->query("SELECT MAX(NO_ID) AS NO_ID FROM pp WHERE NO_BUKTI = '$bukti' GROUP BY NO_BUKTI")->result();
+        $REC = $this->input->post('REC');
+        $NA_BHN = $this->input->post('NA_BHN');
+        $KET1 = $this->input->post('KET1');
+        $SIZE = $this->input->post('SIZE');
+        $QTY = str_replace(',', '', $this->input->post('QTY', TRUE));
+        $SATUAN = $this->input->post('SATUAN');
+        $i = 0;
+        foreach ($REC as $a) {
+            $datad = array(
+                'ID' => $ID[0]->NO_ID,
+                'NO_BUKTI' => $bukti,
+                'REC' => $REC[$i],
+                'NA_BHN' => $NA_BHN[$i],
+                'KET1' => $KET1[$i],
+                'SIZE' => $SIZE[$i],
+                'QTY' => str_replace(',', '', $QTY[$i]),
+                'SATUAN' => $SATUAN[$i],
+                'DR' => $this->session->userdata['dr'],
+                'PER' => $this->session->userdata['periode'],
+                'USRNM' => $this->session->userdata['username'],
+                'TG_SMP' => date("Y-m-d h:i a")
+            );
+            $this->transaksi_model->input_datad('ppd', $datad);
+            $i++;
+            // die;
+        }
+
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
