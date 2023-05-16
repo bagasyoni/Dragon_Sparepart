@@ -406,29 +406,37 @@ class Transaksi_PesananCetakan extends CI_Controller
 
     public function update($NO_ID)
     {
-        $where = array('NO_ID' => $NO_ID);
-        $ambildata = $this->master_model->edit_data($where, 'pp');
-        $r = $ambildata->row_array();
-        $data = [
-            'NO_ID' => $r['NO_ID'],
-            'NO_BUKTI' => $r['NO_BUKTI'],
-            'ARTICLE' => $r['ARTICLE'],
-            'TGL' => $r['TGL'],
-            'NOTES' => $r['NOTES'],
-            'M_LASTING' => $r['M_LASTING'],
-            'TGL_DIMINTA' => $r['TGL_DIMINTA'],
-            'DEVISI' => $r['DEVISI'],
-            'TUJUAN' => $r['TUJUAN'],
-            'TIPE' => $r['TIPE'],
-            'TIPE_CETAK' => $r['TIPE_CETAK'],
-            'JENIS' => $r['JENIS'],
-            'FLAG' => $r['FLAG'],
-            'PROSES' => $r['PROSES'],
-            'GAMBAR1' => $r['GAMBAR1'],
-            'GAMBAR2' => $r['GAMBAR2'],
-            'GAMBAR3' => $r['GAMBAR3'],
-            'VAL' => $r['VAL'],
-        ];
+        // $where = array('NO_ID' => $NO_ID);
+        // $ambildata = $this->master_model->edit_data($where, 'pp');
+        // $r = $ambildata->row_array();
+        // $data = [
+        //     'NO_ID' => $r['NO_ID'],
+        //     'NO_BUKTI' => $r['NO_BUKTI'],
+        //     'ARTICLE' => $r['ARTICLE'],
+        //     'TGL' => $r['TGL'],
+        //     'NOTES' => $r['NOTES'],
+        //     'M_LASTING' => $r['M_LASTING'],
+        //     'TGL_DIMINTA' => $r['TGL_DIMINTA'],
+        //     'DEVISI' => $r['DEVISI'],
+        //     'TUJUAN' => $r['TUJUAN'],
+        //     'TIPE' => $r['TIPE'],
+        //     'TIPE_CETAK' => $r['TIPE_CETAK'],
+        //     'JENIS' => $r['JENIS'],
+        //     'FLAG' => $r['FLAG'],
+        //     'PROSES' => $r['PROSES'],
+        //     'GAMBAR1' => $r['GAMBAR1'],
+        //     'GAMBAR2' => $r['GAMBAR2'],
+        //     'GAMBAR3' => $r['GAMBAR3'],
+        //     'VAL' => $r['VAL'],
+        // ];
+
+        $q1 = "SELECT a.NO_ID,a.NO_BUKTI,a.ARTICLE,a.TGL,a.NOTES,a.M_LASTING,a.TGL_DIMINTA,a.DEVISI,a.TOTAL_QTY,
+                    a.TUJUAN,a.TIPE,a.TIPE_CETAK,a.JENIS,a.FLAG,a.PROSES,a.GAMBAR1,a.GAMBAR2,a.GAMBAR3,a.VAL,
+                    b.ID AS NO_IDX,b.REC,b.NA_BHN,b.KET1,b.SIZE,b.QTY,b.SATUAN
+                FROM pp a,ppd b 
+                WHERE a.NO_BUKTI = b.NO_BUKTI AND a.NO_ID='$NO_ID'";
+
+        $data['rnd'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_PesananCetakan/Transaksi_PesananCetakan_update', $data);
