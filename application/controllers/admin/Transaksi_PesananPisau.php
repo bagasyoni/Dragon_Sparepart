@@ -907,4 +907,44 @@ class Transaksi_PesananPisau extends CI_Controller
         $select['items'] = $selectajax;
         $this->output->set_content_type('application/json')->set_output(json_encode($select));
     }
+
+    function JASPER($id)
+    {
+        $CI = &get_instance();
+        $CI->load->database();
+        $servername = $CI->db->hostname;
+        $username = $CI->db->username;
+        $password = $CI->db->password;
+        $database = $CI->db->database;
+        $conn = mysqli_connect($servername, $username, $password, $database);
+        error_reporting(E_ALL);
+        ob_start();
+        include_once('phpjasperxml/class/tcpdf/tcpdf.php');
+        include_once("phpjasperxml/class/PHPJasperXML.inc.php");
+        include_once("phpjasperxml/setting.php");
+        $PHPJasperXML = new \PHPJasperXML();
+        $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Pesanan_Pisau.jrxml");
+        $no_id = $id;
+        $query = "SELECT a.NO_ID, a.ARTICLE, a.NO_BUKTI, a.TGL, a.PESAN, a.TS, a.GAMBAR, b.NA_BHN, b.SIZE, b.QTY, b.SATUAN, b.TGL_DIMINTA, b.GAMBAR1
+        FROM pp a, ppd b
+        WHERE a.NO_ID = '$no_id'
+        AND a.NO_BUKTI = b.NO_BUKTI";
+        $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
+        $PHPJasperXML->arraysqltable = array();
+        $result1 = mysqli_query($conn, $query);
+        while ($row1 = mysqli_fetch_assoc($result1)) {
+            array_push($PHPJasperXML->arraysqltable, array(
+                "GHEAD" => $row1["GHEAD"],
+                "GDETAIL" => $row1["GDETAIL"],
+                "TGL_SP" => $row1["TGL_SP"],
+                "KODECUS" => $row1["KODECUS"],
+                "ARTICLE" => $row1["ARTICLE"],
+                "LUSIN" => $row1["LUSIN"],
+                "PAIR" => $row1["PAIR"],
+                "REC" => $row1["REC"],
+            ));
+        }
+        ob_end_clean();
+        $PHPJasperXML->outpage("I");
+    }
 }
