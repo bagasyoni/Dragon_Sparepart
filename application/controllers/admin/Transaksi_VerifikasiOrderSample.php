@@ -118,7 +118,14 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_VerifikasiOrderSample/update/' . $mr_order_sample->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
-                            <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
+                            <a name="NO_ID" data-ttd1 = "' . $mr_order_sample->NM_TTD1 . '" 
+							data-ttd1d = "' . $mr_order_sample->TG_TTD1 . '"
+							data-ttd2 = "' . $mr_order_sample->NM_TTD2 . '" 
+							data-ttd2d = "' . $mr_order_sample->TG_TTD2 . '"
+							data-ttd3 = "' . $mr_order_sample->NM_TTD3 . '" 
+							data-ttd3d = "' . $mr_order_sample->TG_TTD3 . '"
+							data-id = "' . $mr_order_sample->NO_ID . '" 
+							data-no="' . $mr_order_sample->NO_BUKTI . '" class="dropdown-item" href="#" data-toggle="modal" data-target="#melbbaModal";"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
@@ -377,6 +384,7 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
                 mr_order_sampled.ARTICLE AS ARTICLE,
                 mr_order_sampled.WARNA AS WARNA,
                 mr_order_sampled.OUTSOLE AS OUTSOLE,
+                mr_order_sampled.GAMBAR1 AS GAMBAR,
                 mr_order_sampled.SIZE AS SIZE,
                 mr_order_sampled.JENIS AS JENIS,
                 mr_order_sampled.QTY AS QTY,
@@ -411,6 +419,7 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
                 "OUTSOLE" => $row1["OUTSOLE"],
                 "SIZE" => $row1["SIZE"],
                 "JENIS" => $row1["JENIS"],
+                "GAMBAR" => $row1["GAMBAR"],
                 "QTY" => $row1["QTY"],
                 "KET2" => $row1["KET2"],
             ));
