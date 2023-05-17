@@ -230,6 +230,7 @@ foreach ($rnd as $rowh) {
 						<thead>
 							<tr>
 								<th width="10px">No</th>
+								<th width="65px"></th>
 								<th width="150px">Article</th>
 								<th width="100px">Warna</th>
 								<th width="100px">Outsole</th>
@@ -248,6 +249,7 @@ foreach ($rnd as $rowh) {
 							?>
 								<tr>
 									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
+									<td><img src="<?= base_url('gambar/ordersample/'.$row->GAMBAR1)  ?>" style="width: 120px;float: left;margin-bottom: 5px;"></td>
 									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control ARTICLE text_input" readonly'; ?> name="ARTICLE[]" id="ARTICLE<?php echo $no; ?>" value="<?= $row->ARTICLE ?>" type="text" class="form-control ARTICLE text_input"readonly></td>
 									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control WARNA text_input" readonly'; ?> name="WARNA[]" id="WARNA<?php echo $no; ?>" value="<?= $row->WARNA ?>" type="text" class="form-control WARNA text_input"readonly></td>
 									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control OUTSOLE text_input" readonly'; ?> name="OUTSOLE[]" id="OUTSOLE<?php echo $no; ?>" value="<?= $row->OUTSOLE ?>" type="text" class="form-control OUTSOLE text_input"readonly></td>

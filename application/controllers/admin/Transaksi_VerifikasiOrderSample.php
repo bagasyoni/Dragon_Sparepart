@@ -153,7 +153,7 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
             // 'SUB' => 'PSL',
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
-            // 'VAL' => '0',
+            'VAL' => '0',
             // 'TYP' => 'RND_PISAU',
         );
         $data['mr_order_sample'] = $this->transaksi_model->tampil_data($where, 'mr_order_sample', 'NO_ID')->result();
@@ -209,6 +209,7 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
                 mr_order_sampled.SIZE AS SIZE,
                 mr_order_sampled.QTY AS QTY,
                 mr_order_sampled.SATUAN AS SATUAN,
+                mr_order_sampled.GAMBAR1 AS GAMBAR1,
                 mr_order_sampled.KET AS KET
         FROM mr_order_sample, mr_order_sampled 
         WHERE mr_order_sample.NO_ID=$id 
