@@ -191,25 +191,15 @@ class Transaksi_Verifikasi_SPIK extends CI_Controller
     {
         $q1 = "SELECT ppc_spik.NO_ID as ID,
                 ppc_spik.NO_BUKTI AS NO_BUKTI,
+                ppc_spik.NO_ORDER AS NO_ORDER,
                 ppc_spik.TGL AS TGL,
-                ppc_spik.TGL_DIMINTA AS TGL_DIMINTA,
-                ppc_spik.KODE_DEVISI AS KODE_DEVISI,
-                ppc_spik.KET AS KET,
-                ppc_spik.JENIS_SAMPLE AS JENIS_SAMPLE,
-                ppc_spik.JENIS_ORDER AS JENIS_ORDER,
+                ppc_spik.DR AS DR,
                 ppc_spik.TUJUAN AS TUJUAN,
-                ppc_spik.TOTAL_QTY AS TOTAL_QTY,
-                ppc_spik.VAL AS VAL,
                 
                 ppc_spikd.NO_ID AS NO_ID,
                 ppc_spikd.REC AS REC,
-                ppc_spikd.ARTICLE AS ARTICLE,
-                ppc_spikd.WARNA AS WARNA,
-                ppc_spikd.OUTSOLE AS OUTSOLE,
-                ppc_spikd.SIZE AS SIZE,
-                ppc_spikd.QTY AS QTY,
-                ppc_spikd.SATUAN AS SATUAN,
-                ppc_spikd.KET AS KET
+                ppc_spikd.GAMBAR1 AS GAMBAR1,
+                ppc_spikd.MODEL AS MODEL
         FROM ppc_spik, ppc_spikd 
         WHERE ppc_spik.NO_ID=$id 
         AND ppc_spik.NO_ID=ppc_spikd.ID 
