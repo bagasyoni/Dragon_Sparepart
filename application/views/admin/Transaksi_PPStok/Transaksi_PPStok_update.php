@@ -366,7 +366,7 @@ foreach ($ppstok as $rowh) {
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<button <?php if ($rowh->TTD3 == !0) echo 'style="visibility: hidden;"'; ?>  type="submit" onclick="chekbox()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+						<button <?php if ($rowh->TTD3 == !0) echo 'style="visibility: hidden;"'; ?>  type="submit" onclick="chekbox(),cektgl()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
 						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
 					</div>
 					<a type="text" class="btn btn-light"> </a>
@@ -543,6 +543,32 @@ foreach ($ppstok as $rowh) {
 			$(this).val(i++);
 		});
 		hitung();
+	}
+
+	$('#TGL').change(function() {
+		cektgl();
+	});
+	function cektgl() {
+		var TGLCEK = $("#TGL").val();
+		var hariCek = TGLCEK.substr(0,2);
+		var bulanCek = TGLCEK.substr(3,2);
+		var tahunCek = TGLCEK.substr(6,4);
+		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>.toString().padStart(2,'0');
+		var tahunSesi = <?= substr($this->session->userdata['periode'],-4)?>;
+		if(bulanCek != bulanSesi){
+			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
+			alert("Bulan tidak sesuai Periode!");
+			$(this).submit(function() {
+				return false;
+			})
+		}
+		if(tahunCek != tahunSesi){
+			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
+			alert("Tahun tidak sesuai Periode!");
+			$(this).submit(function() {
+				return false;
+			})
+		}
 	}
 
 	function btVerifikasi() {
