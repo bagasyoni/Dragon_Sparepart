@@ -201,7 +201,7 @@
 			// 	hist += (ttd7 + " pada tanggal " + ttd7d) + "<Br/>";
 			// else lengkap = 0;
 			
-			if(lengkap == 0)
+			if(lengkap == 'x')
 			{
 				$("#btnPrint").hide();
 			}

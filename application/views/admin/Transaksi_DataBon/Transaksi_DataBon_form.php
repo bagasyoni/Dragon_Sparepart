@@ -157,7 +157,7 @@
 							<label class="label"></label>
 						</div>
 						<div class="col-md-1">
-							<label class="label">Tujaun</label>
+							<label class="label">Tujuan</label>
 						</div>
 						<div class="col-md-2">
 							<select class="form-control TUJUAN text_input" name="TUJUAN" id="TUJUAN" style="width: 100%;">
@@ -169,12 +169,12 @@
 								<option value="RND">RND</option>
 							</select>
 						</div>
-						<div class="col-md-1">
+						<!-- <div class="col-md-1">
 							<label class="label">Notes </label>
 						</div>
 						<div class="col-md-2">
 							<input class="form-control text_input NOTES text_input" id="NOTES" name="NOTES" type="text" value=''>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>

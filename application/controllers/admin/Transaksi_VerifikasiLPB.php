@@ -1,6 +1,6 @@
 <?php
 
-class Transaksi_VerifikasiOrderSample extends CI_Controller
+class Transaksi_VerifikasiLPB extends CI_Controller
 {
 
     function __construct()
@@ -117,7 +117,7 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_VerifikasiOrderSample/update/' . $mr_order_sample->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_VerifikasiLPB/update/' . $mr_order_sample->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a name="NO_ID" data-ttd1 = "' . $mr_order_sample->NM_TTD1 . '" 
 							data-ttd1d = "' . $mr_order_sample->TG_TTD1 . '"
 							data-ttd2 = "' . $mr_order_sample->NM_TTD2 . '" 
@@ -149,11 +149,11 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
         echo json_encode($output);
     }
 
-    public function index_Transaksi_VerifikasiOrderSample()
+    public function index_Transaksi_VerifikasiLPB()
     {
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
-        $this->session->set_userdata('judul', 'Transaksi Verifikasi Order Sample');
+        $this->session->set_userdata('judul', 'Transaksi Verifikasi LPB');
         $where = array(
             // 'DR' => $dr,
             'PER' => $per,
@@ -166,7 +166,7 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
         $data['mr_order_sample'] = $this->transaksi_model->tampil_data($where, 'mr_order_sample', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
-        $this->load->view('admin/Transaksi_VerifikasiOrderSample/Transaksi_VerifikasiOrderSample', $data);
+        $this->load->view('admin/Transaksi_VerifikasiLPB/Transaksi_VerifikasiLPB', $data);
         $this->load->view('templates_admin/footer');
     }
 
@@ -185,13 +185,13 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
                 </button> 
             </div>'
         );
-        redirect('admin/Transaksi_VerifikasiOrderSample/index_Transaksi_VerifikasiOrderSample');
+        redirect('admin/Transaksi_VerifikasiLPB/index_Transaksi_VerifikasiLPB');
     }
 
     // function delete_multiple()
     // {
     //     $this->transaksi_model->remove_checked('mr_order_sample', 'mr_order_sampled');
-    //     redirect('admin/Transaksi_PesananPisau/index_Transaksi_VerifikasiOrderSample');
+    //     redirect('admin/Transaksi_PesananPisau/index_Transaksi_VerifikasiLPB');
     // }
 
     public function update($id)
@@ -249,7 +249,7 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
         $data['rnd'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
-        $this->load->view('admin/Transaksi_VerifikasiOrderSample/Transaksi_VerifikasiOrderSample_update', $data);
+        $this->load->view('admin/Transaksi_VerifikasiLPB/Transaksi_VerifikasiLPB_update', $data);
         $this->load->view('templates_admin/footer');
     }
 
@@ -259,7 +259,7 @@ class Transaksi_VerifikasiOrderSample extends CI_Controller
         for ($i = 0; $i < count($delete); $i++) {
             $this->db->query("UPDATE mr_order_sample SET VAL=1 where no_id=$delete[$i]");
         }
-        redirect('admin/Transaksi_VerifikasiOrderSample/index_Transaksi_VerifikasiOrderSample');
+        redirect('admin/Transaksi_VerifikasiLPB/index_Transaksi_VerifikasiLPB');
     }
 
     public function getDataAjax_bhn()

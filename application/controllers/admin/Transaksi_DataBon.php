@@ -26,8 +26,8 @@ class Transaksi_DataBon extends CI_Controller
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'NOTES', 'FLAG', 'DR');
-    var $column_search = array('NO_BUKTI', 'TGL', 'NOTES', 'FLAG', 'DR');
+    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'FLAG', 'DR');
+    var $column_search = array('NO_BUKTI', 'TGL', 'FLAG', 'DR');
     var $order = array('NO_ID' => 'desc');
 
     private function _get_datatables_query()
@@ -188,7 +188,7 @@ class Transaksi_DataBon extends CI_Controller
 
         $datah = array(
             'NO_BUKTI' => $NO_BUKTI,
-            'NOTES' => $this->input->post('NOTES', TRUE),
+            // 'NOTES' => $this->input->post('NOTES', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             // 'FLAG' => 'PK',
@@ -251,7 +251,7 @@ class Transaksi_DataBon extends CI_Controller
     public function update($id)
     {
         $q1 = "SELECT a.NO_ID AS ID, a.NO_BUKTI, a.DR, DATE_FORMAT(a.TGL, '%d-%m-%Y') AS TGL, 
-            a.DR, a.TUJUAN, a.NOTES, a.TOTAL_QTY,  a.TTD2 AS SP, b.REC, b.NO_ID,b.NA_BHN, b.KET1, b.QTY, b.KET2, b.SATUAN
+            a.DR, a.TUJUAN, a.TOTAL_QTY,  a.TTD2 AS SP, b.REC, b.NO_ID,b.NA_BHN, b.KET1, b.QTY, b.KET2, b.SATUAN
         FROM bon a, bond b
         WHERE a.NO_ID=$id
         -- AND a.NO_BUKTI = b.NO_BUKTI;
@@ -269,7 +269,7 @@ class Transaksi_DataBon extends CI_Controller
         $bukti = $this->input->post('NO_BUKTI');
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
-            'NOTES' => $this->input->post('NOTES', TRUE),
+            // 'NOTES' => $this->input->post('NOTES', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             // 'FLAG' => 'PK',
@@ -289,7 +289,7 @@ class Transaksi_DataBon extends CI_Controller
         $this->transaksi_model->update_data($where, $datah, 'bon');
         $id = $this->input->post('ID', TRUE);
         $q1 = "SELECT a.NO_ID AS ID, a.NO_BUKTI, a.DR, DATE_FORMAT(a.TGL, '%d-%m-%Y') AS TGL, 
-                a.DR, a.TUJUAN, a.NOTES, a.TOTAL_QTY,  a.TTD2 AS SP, b.REC, b.NA_BHN, b.KET1, 
+                a.DR, a.TUJUAN, a.TOTAL_QTY,  a.TTD2 AS SP, b.REC, b.NA_BHN, b.KET1, 
                 b.NO_ID, b.QTY, b.KET2, b.SATUAN
                 FROM bon a, bond b
                 WHERE a.NO_ID=$id
