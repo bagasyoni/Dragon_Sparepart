@@ -464,7 +464,7 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="46" splitType="Stretch">
+		<band height="51" splitType="Stretch">
 			<textField textAdjust="StretchHeight">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="30" y="0" width="110" height="46" isPrintWhenDetailOverflows="true" uuid="0cce33b5-fac7-4c02-8dea-d0ac4ea23a08"/>
 				<box padding="0">
@@ -558,6 +558,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="430" y="3" width="46" height="40" uuid="948c36d7-1098-4db0-803e-a51a947a79f1"/>
+				<imageExpression><![CDATA["GAMBAR/pesanancetakanimport/"+$F{GAMBAR1}]]></imageExpression>
+			</image>
 			<textField textAdjust="StretchHeight">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="140" y="0" width="51" height="46" isPrintWhenDetailOverflows="true" uuid="6d2b11d3-8e26-4ce8-9d47-ee98f7d98a39">
 					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
@@ -576,12 +580,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{JENIS2}]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="440" y="3" width="46" height="40" printWhenGroupChanges="Group1" uuid="948c36d7-1098-4db0-803e-a51a947a79f1">
-					<printWhenExpression><![CDATA[$F{NO_BUKTI}]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA["GAMBAR/pesanancetakanimport/"+$F{GAMBAR1}]]></imageExpression>
-			</image>
 		</band>
 	</detail>
 	<lastPageFooter>
