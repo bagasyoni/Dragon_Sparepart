@@ -34,6 +34,11 @@
 		width: 100%;
 	}
 
+	.text_input {
+		color: black;
+		text-transform: uppercase;
+	}
+
 	table {
 		table-layout: fixed;
 	}
@@ -120,7 +125,7 @@
 	<div class="alert alert-success alert-container" role="alert">
 		<i class="fas fa-university"></i> Input <?php echo $this->session->userdata['judul']; ?>
 	</div>
-	<form id="bonpemakaian" name="bonpemakaian" action="<?php echo base_url('admin/Transaksi_BonPemakaian/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_VerifikasiLPB/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" enctype="multipart/form-data" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -129,25 +134,73 @@
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NO_BUKTI text_input" id="NO_BUKTI" name="NO_BUKTI" type="text" value='' required>
+							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" placeholder='<?php echo $this->session->userdata['bukti']; ?>' readonly>
+						</div>
+						<div class="col-md-1">
+							<label class="label">Tanggal </label>
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+						</div>
+						<div class="col-md-1">
+							<label class="label">DR </label>
+						</div>
+						<div class="col-md-1">
+							<select value="" class="js-example-responsive-dragon form-control DR" name="DR" id="DR" onchange="dragon(this.id)" onfocusout="hitung()" required></select>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-1">
-							<label class="label">Notes </label>
+							<label class="label">Article </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NOTES text_input" id="NOTES" name="NOTES" type="text" value=''>
+							<input class="form-control text_input KET" id="KET" name="KET" type="text" required>
 						</div>
 						<div class="col-md-1">
-							<label class="label">Tgl </label>
+							<label class="label">Pesan </label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {
-																																						echo $_POST["TGL"];
-																																					} else echo date('d-m-Y'); ?>" onclick="select()">
+							<select class="form-control" id="PESAN" name="PESAN">
+								<option value="BARU">Baru</option>
+								<option value="PERBAIKAN">Perbaikan</option>
+							</select>
+						</div>
+						<div class="col-md-1">
+							<label class="label"> </label>
+						</div>
+						<div class="col-md-2">
+							<select class="form-control" id="JO" name="JO">
+								<option value="MRL">MRL</option>
+								<option value="MRE">MRE</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-1">
+							<label class="label">Tanggal Diminta </label>
+						</div>
+						<div class="col-md-2">
+							<input type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL_DIMINTA"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+						</div>
+						<div class="col-md-1">
+							<label class="label">TS </label>
+						</div>
+						<div class="col-md-2">
+							<input class="form-control text_input TS" id="TS" name="TS" type="text">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-1">
+							<label class="label">Gambar </label>
+						</div>
+						<div class="col-md-2">
+						<input type="file" name="GAMBAR" id="GAMBAR" accept="image/png, image/jpeg, image/jpg, image/gif">
 						</div>
 					</div>
 				</div>
@@ -159,38 +212,31 @@
 					<table id="datatable" class="table table-hoverx table-stripedx table-borderedx table-condensed table-scrollable">
 						<thead>
 							<tr>
-								<th width="50px">No</th>
-								<!-- <th width="75px">Rak</th> -->
-								<th width="75px">Rak</th>
-								<th width="250px">Uraian</th>
+								<th width="10px">No</th>
+								<th width="150px">Komponen</th>
+								<th width="150px">Size</th>
 								<th width="75px">Qty</th>
-								<th width="100px">Satuan</th>
-								<!-- <th width="125px">Kode Golongan</th> -->
-								<th width="150px">Keterangan 1</th>
-								<th width="125px">Keterangan 2</th>
-								<th width="175px">Grup</th>
+								<th width="75px">Satuan</th>
+								<th width="175px">Keterangan</th>
+								<th width="75px">Tanggal Diminta</th>
+								<th width="175px">Gambar</th>
 								<th width="50px"></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-								<!-- <td>
-									<select class="js-example-responsive-rak form-control RAK0 text_input" name="RAK[]" id="RAK0" onchange="rak(this.id)" onfocusout="hitung()" required></select>
-								</td> -->
-								<td><input name="RAK[]" id="RAK0" type="text" class="form-control RAK text_input"></td>
-								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" readonly></td>
-								<td hidden><input name="KD_BHN[]" id="KD_BHN0" type="text" class="form-control KD_BHN text_input" readonly></td>
-								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
+								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" required></td>
+								<td><input name="SIZE[]" id="SIZE0" type="text" class="form-control SIZE text_input" required></td>
+								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1 text_input"></td>
 								<td>
-									<select class="js-example-responsive-sp_mesin form-control KET20 text_input" name="KET2[]" id="KET20" onchange="kd_gol(this.id)" onfocusout="hitung()"></select>
+									<input name="TGL_DIMINTA[]" id="TGL_DIMINTA0" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																		} else echo date('d-m-Y'); ?>" onclick="select()">
 								</td>
-								<!-- <td hidden><input name="NA_GOL[]" id="NA_GOL0" type="text" class="form-control NA_GOL text_input" readonly></td> -->
-								<td><input name="GRUP[]" id="GRUP0" type="text" class="form-control GRUP text_input" readonly></td>
+								<td><input name="GAMBAR1[]" id="GAMBAR10" type="text" class="form-control GAMBAR1 text_input"></td>
 								<td>
-									<!-- <button type="hidden" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
 									</button> -->
 								</td>
@@ -200,10 +246,8 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<!-- <td></td> -->
 							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
 							<td></td>
-							<!-- <td></td> -->
 							<td></td>
 							<td></td>
 							<td></td>
@@ -227,7 +271,7 @@
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<button type="submit" onclick="cektgl()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+						<button type="submit" onclick="chekbox()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
 						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
 					</div>
 					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
@@ -239,7 +283,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#modal_bagian').DataTable({
+		$('#modal_beli').DataTable({
 			dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
 				"<'row'<'col-md-6'f><'col-md-6'l>>" + // peletakan entries, search, dan test_btn
 				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
@@ -280,9 +324,6 @@
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
 	$(document).ready(function() {
-
-		isiRAK();
-
 		$("#TOTAL_QTY").autoNumeric('init', {
 			aSign: '<?php echo ''; ?>',
 			vMin: '-999999999.99'
@@ -293,6 +334,14 @@
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
+			$("#HARGA" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+			$("#TOTAL" + i.toString()).autoNumeric('init', {
+			aSign: '<?php echo ''; ?>',
+			vMin: '-999999999.99'
+		});
 		}
 		$('body').on('click', '.btn-delete', function() {
 			var r = confirm("Yakin dihapus?");
@@ -304,7 +353,6 @@
 					nomor();
 				}
 			} else {
-				// txt = "Batal Hapus";
 			}
 		});
 		$('input[type="checkbox"]').on('change', function() {
@@ -323,38 +371,13 @@
 		});
 		hitung();
 	}
-
-	$('#TGL').change(function() {
-		cektgl();
-	});
-	function cektgl() {
-		var TGLCEK = $("#TGL").val();
-		var hariCek = TGLCEK.substr(0,2);
-		var bulanCek = TGLCEK.substr(3,2);
-		var tahunCek = TGLCEK.substr(6,4);
-		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>.toString().padStart(2,'0');
-		var tahunSesi = <?= substr($this->session->userdata['periode'],-4)?>;
-		if(bulanCek != bulanSesi){
-			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
-			alert("Bulan tidak sesuai Periode!");
-			$(this).submit(function() {
-				return false;
-			})
-		}
-		if(tahunCek != tahunSesi){
-			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
-			alert("Tahun tidak sesuai Periode!");
-			$(this).submit(function() {
-				return false;
-			})
-		}
-	}
-
+//backup
 	function hitung() {
 		var TOTAL_QTY = 0;
+		var TOTAL = 0;
 		var total_row = idrow;
 		for (i = 0; i < total_row; i++) {
-
+			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
 		};
 		$(".QTY").each(function() {
 			var val = parseFloat($(this).val().replace(/,/g, ''));
@@ -363,10 +386,13 @@
 		});
 
 		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
+		if (isNaN(TOTAL)) TOTAL = 0;
 
 		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
+		$('#TOTAL').val(numberWithCommas(TOTAL));
 
 		$('#TOTAL_QTY').autoNumeric('update');
+		$('#TOTAL').autoNumeric('update');
 	}
 
 	function tambah() {
@@ -381,32 +407,28 @@
 		var td7 = x.insertCell(6);
 		var td8 = x.insertCell(7);
 		var td9 = x.insertCell(8);
-		// var td10 = x.insertCell(9);
-		// var td11 = x.insertCell(10);
-
-		var rak0 = "<div class='input-group'><select class='js-example-responsive-rak form-control RAK0 text_input' name='RAK[]' id=RAK0" + idrow + " onchange='rak(this.id)' onfocusout='hitung()' required></select></div>";
-
-		var rak = rak0;
-
-		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET2" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()' required></select></div>";
-
-		var kd_gol = kd_gol0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		// td2.innerHTML = rak;
-		td2.innerHTML = "<input name='RAK[]' id=RAK" + idrow + " type='text' class='form-control RAK text_input'>";
-		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' readonly> <input hidden name='KD_BHN[]' id=KD_BHN" + idrow + " type='text' class='form-control KD_BHN text_input' readonly>";
+		td2.innerHTML = "<input name='NA_BHN[]' id=NA_BHN" + idrow + " type='text' class='form-control NA_BHN text_input' required>";
+		td3.innerHTML = "<input name='SIZE[]' id=SIZE" + idrow + " type='text' class='form-control SIZE text_input' required>";
 		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
-		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' >";
-		// td6.innerHTML = "<input name='NA_GOL[]' id=NA_GOL" + idrow + " type='text' class='form-control NA_GOL text_input' readonly hidden>";
+		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input' required>";
 		td6.innerHTML = "<input name='KET1[]' id=KET1" + idrow + " type='text' class='form-control KET1 text_input'>";
-		td7.innerHTML = kd_gol;
-		td8.innerHTML = "<input name='GRUP[]' id=GRUP" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
-		td9.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
+		td7.innerHTML = "<input name='TGL_DIMINTA[]' ocnlick='select()' id=TGL_DIMINTA" + idrow + " type='text' class='date form-control TGL_DIMINTA text_input' data-date-format='dd-mm-yyyy' value='<?php if (isset($_POST["tampilkan"])) {} else echo date('d-m-Y'); ?>'>";
+		td8.innerHTML = "<input name='GAMBAR1[]' id=GAMBAR1" + idrow + " type='text' class='form-control GAMBAR1 text_input'>";
+		td9.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
 			$("#QTY" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+			$("#HARGA" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+			$("#TOTAL" + i.toString()).autoNumeric('init', {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
@@ -421,9 +443,7 @@
 			this.value ^= 1;
 			console.log(this.value)
 		});
-		select_rak();
-		isiRAK();
-		select_sp_mesin();
+		select_dr();
 	}
 
 	function hapus() {
@@ -437,14 +457,13 @@
 
 <script>
 	$(document).ready(function() {
-		select_rak();
-		select_sp_mesin();
+		select_dr();
 	});
 
-	function select_sp_mesin() {
-		$('.js-example-responsive-sp_mesin').select2({
+	function select_dr() {
+		$('.js-example-responsive-dragon').select2({
 			ajax: {
-				url: "<?= base_url('admin/Transaksi_BonPemakaian/getDataAjax_sp_mesin') ?>",
+				url: "<?= base_url('admin/Transaksi_VerifikasiLPB/getDataAjax_dr') ?>",
 				dataType: "json",
 				type: "post",
 				delay: 10,
@@ -465,127 +484,32 @@
 				},
 				cache: true
 			},
-			placeholder: 'Pilih Keterangan',
+			placeholder: 'Pilih Dragon',
 			minimumInputLength: 0,
-			templateResult: format_kd_gol,
-			templateSelection: formatSelection_kd_gol
+			templateResult: format_dragon,
+			templateSelection: formatSelection_dragon
 		});
 	}
 
-	function format_kd_gol(repo_kd_gol) {
-		if (repo_kd_gol.loading) {
-			return repo_kd_gol.text;
+	function format_dragon(repo_dragon) {
+		if (repo_dragon.loading) {
+			return repo_dragon.text;
 		}
 		var $container = $(
 			"<div class='select2-result-repository clearfix text_input'>" +
 			"<div class='select2-result-repository__title text_input'></div>" +
 			"</div>"
 		);
-		$container.find(".select2-result-repository__title").text(repo_kd_gol.KD_GOL);
+		$container.find(".select2-result-repository__title").text(repo_dragon.DR);
 		return $container;
 	}
-	var na_gol = '';
-	var grup = '';
 
-	function formatSelection_kd_gol(repo_kd_gol) {
-		na_gol = repo_kd_gol.NA_GOL;
-		// ket2 = repo_kd_gol.NA_GOL;
-		grup = repo_kd_gol.GRUP;
-		return repo_kd_gol.text;
+
+	function formatSelection_dragon(repo_dragon) {
+		return repo_dragon.text;
 	}
 
-	function kd_gol(x) {
-		var q = x.substring(4, 12);
-		$('#NA_GOL' + q).val(na_gol);
-		$('#GRUP' + q).val(grup);
-
-		console.log(q);
-	}
-
-	function select_rak() {
-		$('.js-example-responsive-rak').select2({
-			ajax: {
-				url: "<?= base_url('admin/Transaksi_BonPemakaian/getDataAjax_bhn') ?>",
-				dataType: "json",
-				type: "post",
-				delay: 10,
-				data: function(params) {
-					return {
-						search: params.term,
-						page: params.page
-					}
-				},
-				processResults: function(data, params) {
-					params.page = params.page || 1;
-					return {
-						results: data.items,
-						pagination: {
-							more: data.total_count
-						}
-					};
-				},
-				cache: true
-			},
-			placeholder: 'Pilih Rak',
-			minimumInputLength: 0,
-			templateResult: format_rak,
-			templateSelection: formatSelection_rak
-		});
-	}
-
-	function format_rak(repo_rak) {
-		if (repo_rak.loading) {
-			return repo_rak.text;
-		}
-		var $container = $(
-			"<div class='select2-result-repository clearfix text_input'>" +
-			"<div class='select2-result-repository__title text_input'></div>" +
-			"</div>"
-		);
-		$container.find(".select2-result-repository__title").text(repo_rak.RAK);
-		return $container;
-	}
-	var na_bhn = '';
-	var satuan = '';
-
-	function formatSelection_rak(repo_rak) {
-		na_bhn = repo_rak.NA_BHN;
-		satuan = repo_rak.SATUAN;
-		return repo_rak.text;
-	}
-
-	function rak(x) {
-		var q = x.substring(3, 12);
-		$('#NA_BHN' + q).val(na_bhn);
-		$('#SATUAN' + q).val(satuan);
-		console.log(q);
-	}
-
-	function isiRAK() {
-		$(".RAK").change(function() {
-			// AMBIL ID / NO URUT
-			var ID = $(this).attr('id').substring(3, 5);
-			// AMBIL ISI RAK
-			var VAL = $(this).val();
-			console.log(VAL);
-			$.ajax({
-				type: 'POST',
-				url: '<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/isiRAK'); ?>',
-				data: {
-					VAL: VAL
-				},
-				dataType: 'json',
-				success: function(response) {
-					// window.location.replace("<?php echo base_url('index.php/admin/Transaksi_Barang_Masuk/update/'); ?>" + response[0].NO_ID);
-					console.log('ADA');
-					$("#NA_BHN" + ID).val(response[0].NA_BHN);
-					$("#KD_BHN" + ID).val(response[0].KD_BHN);
-					$("#SATUAN" + ID).val(response[0].SATUAN);
-				},
-				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					console.log('gak ada');
-				}
-			});
-		})
+	function dragon(x) {
+		var q = x.substring(2, 10);
 	}
 </script>

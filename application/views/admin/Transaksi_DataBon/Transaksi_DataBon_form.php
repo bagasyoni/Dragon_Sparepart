@@ -157,7 +157,7 @@
 							<label class="label"></label>
 						</div>
 						<div class="col-md-1">
-							<label class="label">Tujaun</label>
+							<label class="label">Tujuan</label>
 						</div>
 						<div class="col-md-2">
 							<select class="form-control TUJUAN text_input" name="TUJUAN" id="TUJUAN" style="width: 100%;">
@@ -169,12 +169,12 @@
 								<option value="RND">RND</option>
 							</select>
 						</div>
-						<div class="col-md-1">
+						<!-- <div class="col-md-1">
 							<label class="label">Notes </label>
 						</div>
 						<div class="col-md-2">
 							<input class="form-control text_input NOTES text_input" id="NOTES" name="NOTES" type="text" value=''>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -255,7 +255,7 @@
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
-						<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+						<button type="submit" onclick="cektgl()" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
 						<a type="button" href="javascript:javascript:history.go(-1)" class="btn btn-danger">Cancel</a>
 					</div>
 					<h4><span id="error" style="display:none; color:#F00">Terjadi Kesalahan... </span> <span id="success" style="display:none; color:#0C0">Savings.done...</span></h4>
@@ -350,6 +350,32 @@
 			$(this).val(i++);
 		});
 		hitung();
+	}
+
+	$('#TGL').change(function() {
+		cektgl();
+	});
+	function cektgl() {
+		var TGLCEK = $("#TGL").val();
+		var hariCek = TGLCEK.substr(0,2);
+		var bulanCek = TGLCEK.substr(3,2);
+		var tahunCek = TGLCEK.substr(6,4);
+		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>.toString().padStart(2,'0');
+		var tahunSesi = <?= substr($this->session->userdata['periode'],-4)?>;
+		if(bulanCek != bulanSesi){
+			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
+			alert("Bulan tidak sesuai Periode!");
+			$(this).submit(function() {
+				return false;
+			})
+		}
+		if(tahunCek != tahunSesi){
+			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
+			alert("Tahun tidak sesuai Periode!");
+			$(this).submit(function() {
+				return false;
+			})
+		}
 	}
 
 	function hitung() {
