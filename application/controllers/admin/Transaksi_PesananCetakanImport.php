@@ -847,52 +847,92 @@ class Transaksi_PesananCetakanImport extends CI_Controller
         $PHPJasperXML = new \PHPJasperXML();
         $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Pesanan_CatakImport.jrxml");
         $no_id = $id;
-        $query = "SELECT a.NO_ID, a.ARTICLE, a.NO_BUKTI, a.TGL, a.PESAN, a.TS, a.GAMBAR1 AS GAMBAR, a.JENIS, a.GAMBAR2 AS GAMBAR1,
-                a.M_LASTING, a.TYP, a.NOTES, a.TIPE_CETAK,
-                a.TTD1_USR,a.TTD2_USR,a.TTD3_USR,a.TTD4_USR,a.TTD5_USR,a.TTD6_USR,
-                a.TTD1_SMP,a.TTD2_SMP,a.TTD3_SMP,a.TTD4_SMP,a.TTD5_SMP,a.TTD6_SMP,
-                b.NA_BHN, b.SIZE, b.QTY, b.JENIS AS JENIS2, b.SATUAN, b.TGL_DIMINTA
-        FROM pp a, ppd b
-        WHERE a.NO_ID = '$no_id'
-        AND a.NO_BUKTI = b.NO_BUKTI";
+        $head = "SELECT a.NO_ID, a.ARTICLE, a.NO_BUKTI, a.TGL, a.PESAN, a.TS, a.GAMBAR1 AS GAMBAR, a.JENIS, a.GAMBAR2 AS GAMBAR1,
+                    a.M_LASTING, a.TYP, a.NOTES, a.TIPE_CETAK,
+                    a.TTD1_USR,a.TTD2_USR,a.TTD3_USR,a.TTD4_USR,a.TTD5_USR,a.TTD6_USR,
+                    a.TTD1_SMP,a.TTD2_SMP,a.TTD3_SMP,a.TTD4_SMP,a.TTD5_SMP,a.TTD6_SMP
+                FROM pp a
+                WHERE a.NO_ID = '$no_id'";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
-        $result1 = mysqli_query($conn, $query);
-        while ($row1 = mysqli_fetch_assoc($result1)) {
-            array_push($PHPJasperXML->arraysqltable, array(
-                "NO_ID" => $row1["NO_ID"],
-                "ARTICLE" => $row1["ARTICLE"],
-                "NO_BUKTI" => $row1["NO_BUKTI"],
-                "TGL" => $row1["TGL"],
-                "PESAN" => $row1["PESAN"],
-                "JENIS" => $row1["JENIS"],
-                "M_LASTING" => $row1["M_LASTING"],
-                "TYP" => $row1["TYP"],
-                "NOTES" => $row1["NOTES"],
-                "TIPE_CETAK" => $row1["TIPE_CETAK"],
-                "TS" => $row1["TS"],
-                "GAMBAR" => $row1["GAMBAR"],
-                "NA_BHN" => $row1["NA_BHN"],
-                "SIZE" => $row1["SIZE"],
-                "JENIS2" => $row1["JENIS2"],
-                "QTY" => $row1["QTY"],
-                "TGL_DIMINTA" => $row1["TGL_DIMINTA"],
-                "GAMBAR1" => $row1["GAMBAR1"],
-                "REC" => $row1["REC"],
-                "CEO" => $row1["TTD1_USR"],
-                "GM" => $row1["TTD2_USR"],
-                "PBL" => $row1["TTD3_USR"],
-                "CNC" => $row1["TTD4_USR"],
-                "MARKET" => $row1["TTD5_USR"],
-                "RND" => $row1["TTD6_USR"],
-                "TG_CEO" => $row1["TTD1_SMP"],
-                "TG_GM" => $row1["TTD2_SMP"],
-                "TG_PBL" => $row1["TTD3_SMP"],
-                "TG_CNC" => $row1["TTD4_SMP"],
-                "TG_MARKET" => $row1["TTD5_SMP"],
-                "TG_RND" => $row1["TTD6_SMP"],
-            ));
+        $result1 = mysqli_query($conn, $head);
+        while ($row2 = mysqli_fetch_assoc($result1)) {
+            $NO_ID = $row2["NO_ID"];
+            $ARTICLE = $row2["ARTICLE"];
+            $NO_BUKTI = $row2["NO_BUKTI"];
+            $TGL = $row2["TGL"];
+            $PESAN = $row2["PESAN"];
+            $JENIS = $row2["JENIS"];
+            $M_LASTING = $row2["M_LASTING"];
+            $TYP = $row2["TYP"];
+            $NOTES = $row2["NOTES"];
+            $TIPE_CETAK = $row2["TIPE_CETAK"];
+            $TS = $row2["TS"];
+            $GAMBAR = $row2["GAMBAR"];
+            $QTY = $row2["QTY"];
+            $GAMBAR1 = $row2["GAMBAR1"];
+            $REC = $row2["REC"];
+            $CEO = $row2["TTD1_USR"];
+            $GM = $row2["TTD2_USR"];
+            $PBL = $row2["TTD3_USR"];
+            $CNC = $row2["TTD4_USR"];
+            $MARKET = $row2["TTD5_USR"];
+            $RND = $row2["TTD6_USR"];
+            $TG_CEO = $row2["TTD1_SMP"];
+            $TG_GM = $row2["TTD2_SMP"];
+            $TG_PBL = $row2["TTD3_SMP"];
+            $TG_CNC = $row2["TTD4_SMP"];
+            $TG_MARKET = $row2["TTD5_SMP"];
+            $TG_RND = $row2["TTD6_SMP"];
         }
+        $detail = "SELECT b.NA_BHN, b.SIZE, b.QTY, b.JENIS AS JENIS2, b.SATUAN, b.TGL_DIMINTA
+                FROM pp a, ppd b
+                WHERE a.NO_ID = '$no_id'
+                AND a.NO_BUKTI = b.NO_BUKTI";
+        $result2 = mysqli_query($conn, $detail);
+        while ($row1 = mysqli_fetch_assoc($result2)) {
+            $NA_BHN .= '\n'.$row1["NA_BHN"];
+            $SIZE .= '\n'.$row1["SIZE"];
+            $QTY .= '\n'.$row1["QTY"];
+            $JENIS2 .= '\n'.$row1["JENIS2"];
+            $SATUAN .= '\n'.$row1["SATUAN"];
+            $TGL_DIMINTA .= '\n'.$row1["TGL_DIMINTA"];
+        }
+        array_push($PHPJasperXML->arraysqltable, array(
+                "NO_ID" => $NO_ID,
+                "ARTICLE" => $ARTICLE,
+                "NO_BUKTI" => $NO_BUKTI,
+                "TGL" => $TGL,
+                "PESAN" => $PESAN,
+                "JENIS" => $JENIS,
+                "M_LASTING" => $M_LASTING ,
+                "TYP" =>$TYP,
+                "NOTES" => $NOTES,
+                "TIPE_CETAK" => $TIPE_CETAK,
+                "TS" => $TS,
+                "GAMBAR" => $GAMBAR,
+                "QTY" => $QTY,
+                "GAMBAR1" => $GAMBAR1,
+                "REC" => $REC,
+                "CEO" => $CEO,
+                "GM" => $GM,
+                "PBL" => $PBL,
+                "CNC" => $CNC,
+                "MARKET" => $MARKET,
+                "RND" => $RND,
+                "TG_CEO" => $TG_CEO,
+                "TG_GM" => $TG_GM,
+                "TG_PBL" =>$TG_PBL,
+                "TG_CNC" => $TG_CNC,
+                "TG_MARKET" => $TG_MARKET,
+                "TG_RND" => $TG_RND,
+                "NA_BHN" => $NA_BHN,
+                "SIZE" => $SIZE,
+                "QTY" => $QTY,
+                "JENIS2" => $JENIS2,
+                "SATUAN" => $SATUAN,
+                "TGL_DIMINTA" => $TGL_DIMINTA,
+            ));
         ob_end_clean();
         $PHPJasperXML->outpage("I");
     }
