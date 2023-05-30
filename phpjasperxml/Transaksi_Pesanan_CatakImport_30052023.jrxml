@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Transaksi_PP_Bahan" language="groovy" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="145"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
@@ -464,7 +465,7 @@
 	</pageHeader>
 	<detail>
 		<band height="51" splitType="Stretch">
-			<textField isStretchWithOverflow="true">
+			<textField>
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="30" y="0" width="100" height="46" isPrintWhenDetailOverflows="true" uuid="0cce33b5-fac7-4c02-8dea-d0ac4ea23a08"/>
 				<box padding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -477,7 +478,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NA_BHN}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField>
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="46" isPrintWhenDetailOverflows="true" uuid="94f737d5-64ca-4de1-a14b-d63a5f38a158">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -493,7 +494,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField>
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="191" y="0" width="46" height="46" isPrintWhenDetailOverflows="true" uuid="03f602d3-71d0-4ec2-8948-a4d6573e655f">
 					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
 				</reportElement>
@@ -511,7 +512,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SIZE}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField>
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="237" y="0" width="54" height="46" isPrintWhenDetailOverflows="true" uuid="a44da78e-c84e-42e6-8f42-0b29123ecf51">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -526,7 +527,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField>
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="291" y="0" width="53" height="46" isPrintWhenDetailOverflows="true" uuid="fca84ea3-fdb1-4900-96ce-42c3c7ec4607">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
@@ -541,7 +542,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SATUAN}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField>
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="344" y="0" width="227" height="46" isPrintWhenDetailOverflows="true" uuid="733cc3db-3ebf-41a7-961d-e9aa5eab3efb">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
@@ -561,7 +562,7 @@
 				<reportElement x="431" y="3" width="46" height="40" uuid="948c36d7-1098-4db0-803e-a51a947a79f1"/>
 				<imageExpression><![CDATA["GAMBAR/pesanancetakanimport/"+ $F{GAMBAR1}]]></imageExpression>
 			</image>
-			<textField isStretchWithOverflow="true">
+			<textField>
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="130" y="0" width="61" height="46" isPrintWhenDetailOverflows="true" uuid="6d2b11d3-8e26-4ce8-9d47-ee98f7d98a39">
 					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
 				</reportElement>

@@ -891,12 +891,12 @@ class Transaksi_PesananCetakanImport extends CI_Controller
                 AND a.NO_BUKTI = b.NO_BUKTI";
         $result2 = mysqli_query($conn, $detail);
         while ($row1 = mysqli_fetch_assoc($result2)) {
-            $NA_BHN .= '\n'.$row1["NA_BHN"];
-            $SIZE .= '\n'.$row1["SIZE"];
-            $QTY .= '\n'.$row1["QTY"];
-            $JENIS2 .= '\n'.$row1["JENIS2"];
-            $SATUAN .= '\n'.$row1["SATUAN"];
-            $TGL_DIMINTA .= '\n'.$row1["TGL_DIMINTA"];
+            $NA_BHN .= $row1["NA_BHN"]."\n";
+            $SIZE .= $row1["SIZE"]."\n";
+            $QTY .= $row1["QTY"]."\n";
+            $JENIS2 .= $row1["JENIS2"]."\n";
+            $SATUAN .= $row1["SATUAN"]."\n";
+            $TGL_DIMINTA .= $row1["TGL_DIMINTA"]."\n";
         }
         array_push($PHPJasperXML->arraysqltable, array(
                 "NO_ID" => $NO_ID,
