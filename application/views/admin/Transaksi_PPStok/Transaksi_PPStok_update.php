@@ -302,7 +302,7 @@ foreach ($ppstok as $rowh) {
 									</td>
 									<td>
 										<span class="input-group-btn">
-											<a <?php if ($rowh->TTD3 == !0) echo 'hidden'; ?> class="btn default modal-KD_BHN" onfocusout="hitung()" id="0"><i class="fa fa-search"></i></a>
+											<a <?php if ($rowh->TTD3 == !0) echo 'hidden'; ?> class="btn default modal-KD_BHN" onfocusout="hitung()" id="<?php echo $no; ?>"><i class="fa fa-search"></i></a>
 										</span>
 									</td>
 									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input"></td>
