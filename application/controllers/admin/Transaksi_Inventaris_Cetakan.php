@@ -87,6 +87,7 @@ class Transaksi_Inventaris_Cetakan extends CI_Controller {
         $no = @$_POST['start'];
         foreach ($list as $sp_invenc) {
             $JASPER = "window.open('JASPER/" . $sp_invenc->NO_ID . "','', 'width=1000','height=900');";
+            $JASPER2 = "window.open('JASPER2/" . $sp_invenc->NO_ID . "','', 'width=1000','height=900');";
             $no++;
             $row = array();
             $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $sp_invenc->NO_ID . "'>";
@@ -98,6 +99,7 @@ class Transaksi_Inventaris_Cetakan extends CI_Controller {
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_Inventaris_Cetakan/update/' . $sp_invenc->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_Inventaris_Cetakan/delete/' . $sp_invenc->NO_ID) . '"  onclick="return confirm(&quot; Apakah Anda Yakin Ingin Menghapus? &quot;)"><i class="fa fa-trash"></i> Delete</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
+                            <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER2 . '");"><i class="fa fa-print"></i> Print Semua</a>
                         </div>
                     </div>';
             $row[] = $no . ".";
@@ -396,6 +398,84 @@ class Transaksi_Inventaris_Cetakan extends CI_Controller {
         $cetak_1 = $this->input->post('CETAK_1');
         $dr = $this->session->userdata['dr'];
         $query = "SELECT * FROM sp_invenc WHERE NO_ID=$id";
+        $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
+        $PHPJasperXML->arraysqltable = array();
+        $result1 = mysqli_query($conn, $query);
+        while ($row1 = mysqli_fetch_assoc($result1)) {
+            array_push($PHPJasperXML->arraysqltable, array(
+                "CETAK" => $row1["CETAK"],
+                "NAMA" => $row1["NAMA"],
+                "KODE" => $row1["KODE"],
+                "N1" => $row1["N1"],
+                "J1" => $row1["J1"],
+                "N2" => $row1["N2"],
+                "J2" => $row1["J2"],
+                "N3" => $row1["N3"],
+                "J3" => $row1["J3"],
+                "N4" => $row1["N4"],
+                "J4" => $row1["J4"],
+                "N5" => $row1["N5"],
+                "J5" => $row1["J5"],
+                "N6" => $row1["N6"],
+                "J6" => $row1["J6"],
+                "N7" => $row1["N7"],
+                "J7" => $row1["J7"],
+                "N8" => $row1["N8"],
+                "J8" => $row1["J8"],
+                "N9" => $row1["N9"],
+                "J9" => $row1["J9"],
+                "N10" => $row1["N10"],
+                "J10" => $row1["J10"],
+                "N11" => $row1["N11"],
+                "J11" => $row1["J11"],
+                "N12" => $row1["N12"],
+                "J12" => $row1["J12"],
+                "N13" => $row1["N13"],
+                "J13" => $row1["J13"],
+                "N14" => $row1["N14"],
+                "J14" => $row1["J14"],
+                "N15" => $row1["N15"],
+                "J15" => $row1["J15"],
+                "N16" => $row1["N16"],
+                "J16" => $row1["J16"],
+                "N17" => $row1["N17"],
+                "J17" => $row1["J17"],
+                "N18" => $row1["N18"],
+                "J18" => $row1["J18"],
+                "N19" => $row1["N19"],
+                "J19" => $row1["J19"],
+                "N20" => $row1["N20"],
+                "J20" => $row1["J20"],
+                "KET1" => $row1["KET1"],
+                "KET2" => $row1["KET2"],
+                "KET3" => $row1["KET3"],
+                "JUMLAH" => $row1["JUMLAH"],
+                "DR" => $row1["DR"],
+            ));
+        }
+        ob_end_clean();
+        $PHPJasperXML->outpage("I");
+    }
+
+    function JASPER2()
+    {
+        $CI = &get_instance();
+        $CI->load->database();
+        $servername = $CI->db->hostname;
+        $username = $CI->db->username;
+        $password = $CI->db->password;
+        $database = $CI->db->database;
+        $conn = mysqli_connect($servername, $username, $password, $database);
+        error_reporting(E_ALL);
+        ob_start();
+        include_once('phpjasperxml/class/tcpdf/tcpdf.php');
+        include_once("phpjasperxml/class/PHPJasperXML.inc.php");
+        include_once("phpjasperxml/setting.php");
+        $PHPJasperXML = new \PHPJasperXML();
+        $PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Inventaris_Cetakan.jrxml");
+        $cetak_1 = $this->input->post('CETAK_1');
+        $dr = $this->session->userdata['dr'];
+        $query = "SELECT * FROM sp_invenc WHERE DR='$dr'";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);

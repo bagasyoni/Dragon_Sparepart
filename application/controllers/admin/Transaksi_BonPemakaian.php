@@ -278,7 +278,7 @@ class Transaksi_BonPemakaian extends CI_Controller
                 'KET2' => $KET2[$i] ?? "-",
                 'GRUP' => $GRUP[$i],
                 // 'NA_GOL' => $NA_GOL[$i],
-                'NA_GOL' => $KET2[$i],
+                'NA_GOL' => $KET2[$i] ?? "-",
                 'FLAG' => 'PK',
                 'FLAG2' => 'SP',
                 'ATK' => '0',

@@ -354,7 +354,7 @@ foreach ($ppstok as $rowh) {
 		</div>
 		<br><br>
 		<!--tab-->
-		<div class="col-md-12" <?php if ($rowh->TTD3 == !0) echo 'style="visibility: hidden;"'; ?>>
+		<div class="col-md-12" <?php if ($rowh->TTD3 == !0) echo 'style="visibility: hidden;"'; ?>> <!--tombol edit-->
 			<div class="form-group row">
 				<div class="col-md-1">
 					<button type="button" onclick="tambah()" class="btn btn-sm btn-success"><i class="fas fa-plus fa-sm md-3"></i> </button>
