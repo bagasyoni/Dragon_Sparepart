@@ -41,9 +41,8 @@ class Master_Barang extends CI_Controller
             // 'bhnd.FLAG2' => 'SP',
             // 'bhnd.SUB' => $sub,
             // 'bhnd.RAK <>' => '',
-
             'FLAG' => 'SP',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
             'SUB' => $sub,
         );
         $this->db->select('*');

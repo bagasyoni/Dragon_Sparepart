@@ -170,9 +170,9 @@ class Transaksi_Pemesanan extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 3, 7);
-        $value22 = STRVAL($value11) . 1;
-        $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
+        $value11 = substr($nom[0], 3, 3);
+        $value22 = STRVAL($value11) + 1;
+        $urut = str_pad($value22, 3, "0", STR_PAD_LEFT);
         $tahun = substr($this->session->userdata['periode'], -4);
         if (substr($this->session->userdata['periode'], 0, 2) == 1) {
             $romawi = 'I';
@@ -226,9 +226,9 @@ class Transaksi_Pemesanan extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 3, 7);
+        $value11 = substr($nom[0], 3, 3);
         $value22 = STRVAL($value11) + 1;
-        $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
+        $urut = str_pad($value22, 3, "0", STR_PAD_LEFT);
         $tahun = substr($this->session->userdata['periode'], -4);
         if (substr($this->session->userdata['periode'], 0, 2) == 1) {
             $romawi = 'I';

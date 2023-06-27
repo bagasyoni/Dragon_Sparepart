@@ -603,6 +603,7 @@ foreach ($pemesanan as $rowh) {
 			$("#DEVISI" + x).val(val);
 			$('#modal_no_bon').modal('toggle');
 			var no_bon = $(this).parents("tr").find(".NBBVAL").text();
+			hitung();
 		});
 
 		$('#modal_kd_bhn').on('show.bs.modal', function(e) {
@@ -700,6 +701,8 @@ foreach ($pemesanan as $rowh) {
 			// } else {
 			// 	console.log('OK !!!')
 			// }
+			// $this->load->helper("terbilang");
+			// $('#BILANGAN' + i).val(number_to_words(qty));
 			$('#BILANGAN' + i).val(angkaTerbilang(qty));
 			// console.log(angkaTerbilang('Terbilang :'+qty));
 		};

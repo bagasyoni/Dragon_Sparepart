@@ -623,6 +623,8 @@
 			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
 			var sisabon = parseFloat($('#SISABON' + i).val().replace(/,/g, ''));
 
+			// $this->load->helper("terbilang");
+			// $('#BILANGAN' + i).val(number_to_words(qty));
 			$('#BILANGAN' + i).val(angkaTerbilang(qty));
 
 			// if (qty > sisabon) {
