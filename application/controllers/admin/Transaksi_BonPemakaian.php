@@ -40,7 +40,7 @@ class Transaksi_BonPemakaian extends CI_Controller
             'PER' => $per,
             'SUB' => $sub,
             'FLAG' => 'PK',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
             'ATK' => '0'
         );
         $this->db->select('*');

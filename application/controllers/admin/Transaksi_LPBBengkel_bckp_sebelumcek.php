@@ -33,9 +33,9 @@ class Transaksi_LPBBengkel extends CI_Controller {
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            // 'SUB' => $sub,
+            'SUB' => $sub,
             'FLAG' => 'BL',
-            'FLAG2' => 'NB',
+            'FLAG2' => 'SP',
             'ATK' => '0',
         );
         $this->db->select('*');
@@ -84,9 +84,9 @@ class Transaksi_LPBBengkel extends CI_Controller {
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            // 'SUB' => $sub,
+            'SUB' => $sub,
             'FLAG' => 'BL',
-            'FLAG2' => 'NB',
+            'FLAG2' => 'SP',
             'ATK' => '0',
         );
         $this->db->from('beli');
@@ -136,9 +136,9 @@ class Transaksi_LPBBengkel extends CI_Controller {
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            // 'SUB' => $sub,
+            'SUB' => $sub,
             'FLAG' => 'BL',
-            'FLAG2' => 'NB',
+            'FLAG2' => 'SP',
             'ATK' => '0',
         );
         $data['beli'] = $this->transaksi_model->tampil_data($where,'beli','NO_ID')->result();
@@ -195,7 +195,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
             $romawi = 'XII';
         }
         // BL / NOMER / DR / BULAN / TAHUN / SP
-        $bukti = 'NB' . '/' . $urut . '/' . 'DR' . $dr . '/' . $romawi . '/' . $tahun . '/' . $sub;
+        $bukti = 'SP' . '/' . $urut . '/' . 'DR' . $dr . '/' . $romawi . '/' . $tahun . '/' . $sub;
         $this->session->set_userdata('bukti', $bukti);
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
@@ -258,7 +258,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => 'BL',
-            'FLAG2' => 'NB',
+            'FLAG2' => 'SP',
             'SUB' => $this->session->userdata['sub'],
             'DR' => $this->session->userdata['dr'],
             'PER' => $this->session->userdata['periode'],
@@ -288,7 +288,7 @@ class Transaksi_LPBBengkel extends CI_Controller {
                 'SATUAN' => $SATUAN[$i],
                 'KET' => $KET[$i],
                 'FLAG' => 'BL',
-                'FLAG2' => 'NB',
+                'FLAG2' => 'SP',
                 'SUB' => $this->session->userdata['sub'],
                 'DR' => $this->session->userdata['dr'],
                 'PER' => $this->session->userdata['periode'],

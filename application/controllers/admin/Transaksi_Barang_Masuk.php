@@ -38,9 +38,9 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SUB' => $sub,
+            // 'SUB' => $sub,
             'FLAG' => 'BL',
-            'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             // 'SP' => 'LPB',
             'OK<>' => '2'
         );
@@ -93,9 +93,9 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SUB' => $sub,
+            // 'SUB' => $sub,
             'FLAG' => 'BL',
-            'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             // 'SP' => 'LPB',
         );
         $this->db->from('beli');
@@ -189,9 +189,9 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SUB' => $sub,
+            // 'SUB' => $sub,
             'FLAG' => 'BL',
-            'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             // 'SP' => 'LPB',
         );
         $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
