@@ -403,7 +403,9 @@
 							bhnd.AK$mounth AS STOK,
 							bhnd.RAK
 						FROM bhn, bhnd
-						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhn.SUB='$sub' AND bhn.FLAG='SP' AND bhn.FLAG2='SP' AND bhnd.DR='$dr' AND bhnd.yer='$yer'
+						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhn.SUB='$sub' AND bhn.FLAG='SP' 
+						-- AND bhn.FLAG2='SP' 
+						AND bhnd.DR='$dr' AND bhnd.yer='$yer'
 						ORDER BY bhn.KD_BHN";
 						$a = $this->db->query($sql)->result();
 						foreach ($a as $b) {
