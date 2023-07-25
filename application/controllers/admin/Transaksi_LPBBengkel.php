@@ -349,7 +349,8 @@ class Transaksi_LPBBengkel extends CI_Controller {
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL',TRUE))),
             'TOTAL_QTY' => str_replace(',','',$this->input->post('TOTAL_QTY',TRUE)),
             'FLAG' => 'BL',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             'ATK' => '0',
         );
         $where = array(
@@ -406,7 +407,8 @@ class Transaksi_LPBBengkel extends CI_Controller {
                     'SATUAN' => $SATUAN[$URUT],
                     'KET' => $KET[$URUT],
                     'FLAG' => 'BL',
-                    'FLAG2' => 'SP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'ATK' => '0',
                 );
                 $where = array(
@@ -436,7 +438,8 @@ class Transaksi_LPBBengkel extends CI_Controller {
                     'SATUAN' => $SATUAN[$i],
                     'KET' => $KET[$i],
                     'FLAG' => 'BL',
-                    'FLAG2' => 'SP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'ATK' => '0',
                 );
                 $this->transaksi_model->input_datad('belid', $datad);

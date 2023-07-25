@@ -336,7 +336,8 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'TOTAL_QTYPP' => str_replace(',', '', $this->input->post('TOTAL_QTYPP', TRUE)),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => 'BL',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
         );
         $where = array(
             'NO_ID' => $this->input->post('ID', TRUE)
@@ -405,7 +406,8 @@ class Transaksi_Barang_Masuk extends CI_Controller
                     'SAT_BL' => $SAT_BL[$URUT],
                     'SISA' => str_replace(',', '', $SISA[$URUT]),
                     'FLAG' => 'BL',
-                    'FLAG2' => 'SP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                 );
                 $where = array(
                     'NO_ID' => $NO_ID[$URUT]
@@ -437,7 +439,8 @@ class Transaksi_Barang_Masuk extends CI_Controller
                     'SISA' => str_replace(',', '', $SISA[$i]),
                     'QTY_BL' => str_replace(',', '', $QTY_BL[$i]),
                     'FLAG' => 'BL',
-                    'FLAG2' => 'SP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                 );
                 $this->transaksi_model->input_datad('belid', $datad);
             }
