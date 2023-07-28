@@ -35,9 +35,10 @@ class Transaksi_PesananPisau extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
             'SUB' => '1R&',
+            'FLAG2' => 'NB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_PISAU',
         );
@@ -87,9 +88,10 @@ class Transaksi_PesananPisau extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
             'SUB' => '1R&',
+            'FLAG2' => 'NB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_PISAU',
         );
@@ -162,7 +164,7 @@ class Transaksi_PesananPisau extends CI_Controller
             $row[] = $pp->TS;
             $row[] = $pp->PESAN;
             $row[] = $pp->TUJUAN;
-            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesananpisau/$pp->GAMBAR' width='auto' height='60'>";
+            $row[] = "<img src='/DragonSparepart/gambar/pesananpisau/$pp->GAMBAR' width='auto' height='60'>";
             if($pp->VAL==1){
                 $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
             }else{
@@ -185,10 +187,11 @@ class Transaksi_PesananPisau extends CI_Controller
         $per = $this->session->userdata['periode'];
         $this->session->set_userdata('judul', 'Transaksi Pesanan Pisau');
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
             'SUB' => '1R&',
             // 'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             // 'TYP' => 'RND_PISAU',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();
@@ -203,14 +206,14 @@ class Transaksi_PesananPisau extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='1R&' AND FLAG='' AND FLAG2='SP'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='1R&' AND FLAG='' AND FLAG2='NB'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         if($nom[0]==NULL){
             $value11 = 0;
         }else{
             $value11 = substr($nom[0], 3, 4);
         }
-        $value22 = STRVAL($value11) + 1;
+        $value22 = (float)$value11 + 1;
         $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
         $tahun = substr($this->session->userdata['periode'], -4);
         if (substr($this->session->userdata['periode'], 0, 2) == 1) {
@@ -326,7 +329,9 @@ class Transaksi_PesananPisau extends CI_Controller
             'GAMBAR' => $this->upload->data('file_name'),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => '',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             'TYP' => 'RND_PISAU',
             'SUB' => '1R&',
             'DR' => $this->session->userdata['dr'],
@@ -380,8 +385,10 @@ class Transaksi_PesananPisau extends CI_Controller
                 'KET1' => $KET1[$i],
                 'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$i])),
                 'GAMBAR1' => $this->upload->data('file_name'),
-                'FLAG' => '',
-                'FLAG2' => 'SP',
+                // 'FLAG' => '',
+                // 'FLAG2' => 'SP',
+                'FLAG' => 'PP',
+                'FLAG2' => 'NB',
                 'TYP' => 'RND_PISAU',
                 'SUB' => '1R&',
                 'DR' => $this->session->userdata['dr'],
@@ -478,7 +485,9 @@ class Transaksi_PesananPisau extends CI_Controller
             'GAMBAR' => $GAMBAR1,
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => '',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            'FLAG2' => 'NB',
             'TYP' => 'RND_PISAU',
             'SUB' => '1R&',
             'DR' => $this->session->userdata['dr'],
@@ -566,8 +575,10 @@ class Transaksi_PesananPisau extends CI_Controller
                     'KET1' => $KET1[$URUT],
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$URUT])),
                     'GAMBAR1' => $DGAMBAR,
-                    'FLAG' => '',
-                    'FLAG2' => 'SP',
+                    // 'FLAG' => '',
+                    // 'FLAG2' => 'SP',
+                    'FLAG' => 'PP',
+                    'FLAG2' => 'NB',
                     'TYP' => 'RND_PISAU',
                     'SUB' => '1R&',
                     'DR' => $this->session->userdata['dr'],
@@ -620,8 +631,10 @@ class Transaksi_PesananPisau extends CI_Controller
                     'KET1' => $KET1[$i],
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$i])),
                     'GAMBAR1' => $this->upload->data('file_name'),
+                    // 'FLAG' => 'PP',
+                    // 'FLAG2' => 'SP',
                     'FLAG' => 'PP',
-                    'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'TYP' => 'RND_PISAU',
                     'SUB' => '1R&',
                     'DR' => $this->session->userdata['dr'],
