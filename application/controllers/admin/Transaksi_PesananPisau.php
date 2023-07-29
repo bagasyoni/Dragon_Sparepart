@@ -334,7 +334,7 @@ class Transaksi_PesananPisau extends CI_Controller
             'FLAG2' => 'NB',
             'TYP' => 'RND_PISAU',
             'SUB' => '1R&',
-            'DR' => $this->session->userdata['dr'],
+            'DR' => $this->session->userdata['kd_area'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -391,7 +391,7 @@ class Transaksi_PesananPisau extends CI_Controller
                 'FLAG2' => 'NB',
                 'TYP' => 'RND_PISAU',
                 'SUB' => '1R&',
-                'DR' => $this->session->userdata['dr'],
+                'DR' => $this->session->userdata['kd_area'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
                 'TG_SMP' => date("Y-m-d h:i a")
@@ -490,7 +490,7 @@ class Transaksi_PesananPisau extends CI_Controller
             'FLAG2' => 'NB',
             'TYP' => 'RND_PISAU',
             'SUB' => '1R&',
-            'DR' => $this->session->userdata['dr'],
+            'DR' => $this->session->userdata['kd_area'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -581,7 +581,7 @@ class Transaksi_PesananPisau extends CI_Controller
                     'FLAG2' => 'NB',
                     'TYP' => 'RND_PISAU',
                     'SUB' => '1R&',
-                    'DR' => $this->session->userdata['dr'],
+                    'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
@@ -637,7 +637,7 @@ class Transaksi_PesananPisau extends CI_Controller
                     'FLAG2' => 'NB',
                     'TYP' => 'RND_PISAU',
                     'SUB' => '1R&',
-                    'DR' => $this->session->userdata['dr'],
+                    'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
@@ -711,7 +711,7 @@ class Transaksi_PesananPisau extends CI_Controller
             'TYP' => 'RND_PISAU',
             'SUB' => '1R&',
             'VAL' => '1',
-            'DR' => $this->session->userdata['dr'],
+            'DR' => $this->session->userdata['kd_area'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -778,7 +778,7 @@ class Transaksi_PesananPisau extends CI_Controller
                     'FLAG2' => 'SP',
                     'TYP' => 'RND_PISAU',
                     'SUB' => '1R&',
-                    'DR' => $this->session->userdata['dr'],
+                    'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
@@ -814,7 +814,7 @@ class Transaksi_PesananPisau extends CI_Controller
                     'FLAG2' => 'SP',
                     'TYP' => 'RND_PISAU',
                     'SUB' => '1R&',
-                    'DR' => $this->session->userdata['dr'],
+                    'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")

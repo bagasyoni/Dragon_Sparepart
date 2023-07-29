@@ -58,6 +58,7 @@ class Auth extends CI_Controller
                     $sess_data['id_font'] = $id_font;
                     $sess_data['size_font'] = $size_font;
 					$sess_data['kd_gd'] = $ck->KD_GD;
+					$sess_data['kd_area'] = $ck->KD_AREA;
                     $sess_data['username'] = $ck->USERNAME;
                     $sess_data['level'] = $ck->AKSES;
                     $sess_data['super_admin'] = $ck->SUPER_ADMIN;
