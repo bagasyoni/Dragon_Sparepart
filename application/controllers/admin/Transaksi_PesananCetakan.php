@@ -36,7 +36,7 @@ class Transaksi_PesananCetakan extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'SUB' => 'CT'
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
@@ -89,7 +89,7 @@ class Transaksi_PesananCetakan extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'SUB' => 'CT',
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
@@ -191,7 +191,7 @@ class Transaksi_PesananCetakan extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'SUB' => 'CT',
             // 'FLAG' => 'LOKAL',
             // 'FLAG' => 'PP',
@@ -208,17 +208,18 @@ class Transaksi_PesananCetakan extends CI_Controller
     public function input()
     {
         $per = $this->session->userdata['periode'];
-        $dr = $this->session->userdata['dr'];
+        // $dr = $this->session->userdata['dr'];
+        $dr = $this->session->userdata['kd_area'];
         $sub = $this->session->userdata['sub'];
         $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='CT'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         if($nom[0]==NULL){
             $value11 = 0;
         }else{
-            $value11 = substr($nom[0], 3, 4);
+            $value11 = substr($nom[0], 4, 3);
         }
-        $value22 = STRVAL($value11) + 1;
-        $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
+        $value22 = (float)STRVAL($value11) + 1;
+        $urut = str_pad($value22, 3, "0", STR_PAD_LEFT);
         $tahun = substr($this->session->userdata['periode'], -4);
         if (substr($this->session->userdata['periode'], 0, 2) == 1) {
             $romawi = 'I';
@@ -353,10 +354,12 @@ class Transaksi_PesananCetakan extends CI_Controller
             'GAMBAR1' => $gambar1,
             'GAMBAR2' => $gambar2,
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
-            // 'FLAG' => 'LOKAL',
+            'FLAG' => 'LOKAL',
             // 'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             // 'TYP' => 'RND_CETAK',
-            'DR' => $this->session->userdata['dr'],
+            // 'DR' => $this->session->userdata['dr'],
+            'DR' => $this->session->userdata['kd_area'],
             'SUB' => 'CT',
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
@@ -382,7 +385,8 @@ class Transaksi_PesananCetakan extends CI_Controller
                 'SIZE' => $SIZE[$i],
                 'QTY' => str_replace(',', '', $QTY[$i]),
                 'SATUAN' => $SATUAN[$i],
-                'DR' => $this->session->userdata['dr'],
+                // 'DR' => $this->session->userdata['dr'],
+                'DR' => $this->session->userdata['kd_area'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
                 'TG_SMP' => date("Y-m-d h:i a")
@@ -549,14 +553,15 @@ class Transaksi_PesananCetakan extends CI_Controller
                     'KET1' => $KET1[$URUT],
                     'SIZE' => $SIZE[$URUT],
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
-                    'SATUAN' => $SATUAN[$URUT]
-                    // 'FLAG' => 'PP',
+                    'SATUAN' => $SATUAN[$URUT],
+                    'FLAG' => 'PP',
+                    'FLAG2' => 'NB',
                     // 'SUB' => 'MB',
                     // 'TYP' => 'RND_MELBBA',
-                    // 'DR' => $this->session->userdata['dr'],
-                    // 'PER' => $this->session->userdata['periode'],
+                    'DR' => $this->session->userdata['kd_area'],
+                    'PER' => $this->session->userdata['periode'],
                     // 'USRNM' => $this->session->userdata['username'],
-                    // 'TG_SMP' => date("Y-m-d h:i a")
+                    'TG_SMP' => date("Y-m-d h:i a")
                 );
                 $where = array(
                     'NO_ID' => $NO_IDX[$URUT]
@@ -582,7 +587,8 @@ class Transaksi_PesananCetakan extends CI_Controller
                     'SIZE' => $SIZE[$i],
                     'QTY' => str_replace(',', '', $QTY[$i]),
                     'SATUAN' => $SATUAN[$i],
-                    'DR' => $this->session->userdata['dr'],
+                    // 'DR' => $this->session->userdata['dr'],
+                    'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
