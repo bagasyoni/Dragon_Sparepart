@@ -168,10 +168,11 @@ class Transaksi_Pemesanan extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $dr = $this->session->userdata['dr'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
+        // $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='' AND FLAG2='NB' and DR='$dr'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 3, 3);
-        $value22 = STRVAL($value11) + 1;
+        $value11 = substr($nom[0], 4, 3);
+        $value22 = (float)STRVAL($value11) + 1;
         $urut = str_pad($value22, 3, "0", STR_PAD_LEFT);
         $tahun = substr($this->session->userdata['periode'], -4);
         if (substr($this->session->userdata['periode'], 0, 2) == 1) {
@@ -224,7 +225,8 @@ class Transaksi_Pemesanan extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $dr = $this->session->userdata['dr'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
+        // $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='' AND FLAG2='NB'and DR='$dr'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         $value11 = substr($nom[0], 3, 3);
         $value22 = STRVAL($value11) + 1;
@@ -273,8 +275,10 @@ class Transaksi_Pemesanan extends CI_Controller
             'NOTES' => $this->input->post('NOTES', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG' => 'PP',
+            // 'FLAG2' => 'SP',
+            'FLAG' => '',
+            'FLAG2' => 'NB',
             'LOGISTIK' => '0',
             'TTD1' => '1',
             'TTD2' => '1',
@@ -328,7 +332,8 @@ class Transaksi_Pemesanan extends CI_Controller
                 'SISABON' => str_replace(',', '', $SISABON[$i]),
                 'URGENT' => isset($URGENT[$i]) ? $URGENT[$i] : 0,
                 'FLAG' => 'PP',
-                'FLAG2' => 'SP',
+                // 'FLAG2' => 'SP',
+                'FLAG2' => 'NB',
                 'LOGISTIK' => '0',
                 'PILIH' => '0',
                 'TYP' => 'PEMESANAN',
@@ -407,8 +412,9 @@ class Transaksi_Pemesanan extends CI_Controller
             'NOTES' => $this->input->post('NOTES', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
-            'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            'FLAG' => '',
+            // 'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             'LOGISTIK' => '0',
             'TYP' => 'PEMESANAN',
             'TTD1' => '1',
@@ -507,7 +513,8 @@ class Transaksi_Pemesanan extends CI_Controller
                     'SISABON' => str_replace(',', '', $SISABON[$URUT]),
                     'URGENT' => isset($URGENT[$URUT]) ? $URGENT[$URUT] : 0,
                     'FLAG' => 'PP',
-                    'FLAG2' => 'SP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'LOGISTIK' => '0',
                     'TYP' => 'PEMESANAN',
                     'SUB' => $this->session->userdata['sub'],
@@ -551,7 +558,8 @@ class Transaksi_Pemesanan extends CI_Controller
                     'SISABON' => str_replace(',', '', $SISABON[$i]),
                     'URGENT' => isset($URGENT[$URUT]) ? $URGENT[$URUT] : 0,
                     'FLAG' => 'PP',
-                    'FLAG2' => 'SP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'LOGISTIK' => '0',
                     'TYP' => 'PEMESANAN',
                     'SUB' => $this->session->userdata['sub'],

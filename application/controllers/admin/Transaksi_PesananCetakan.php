@@ -386,6 +386,8 @@ class Transaksi_PesananCetakan extends CI_Controller
                 'QTY' => str_replace(',', '', $QTY[$i]),
                 'SATUAN' => $SATUAN[$i],
                 // 'DR' => $this->session->userdata['dr'],
+                'FLAG' => 'PP',
+                'FLAG2' => 'NB',
                 'DR' => $this->session->userdata['kd_area'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
