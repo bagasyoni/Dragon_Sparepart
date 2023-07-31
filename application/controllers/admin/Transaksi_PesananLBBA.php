@@ -37,7 +37,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'FLAG' => 'PP',
             'SUB' => 'MB',
             // 'FLAG2' => 'SP',
@@ -90,7 +90,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'FLAG' => 'PP',
             'SUB' => 'MB',
             // 'FLAG2' => 'SP',
@@ -175,7 +175,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'FLAG' => 'PP',
             'SUB' => 'MB',
             // 'FLAG2' => 'SP',
@@ -191,17 +191,17 @@ class Transaksi_PesananLBBA extends CI_Controller
     public function input()
     {
         $per = $this->session->userdata['periode'];
-        $dr = $this->session->userdata['dr'];
+        $dr = $this->session->userdata['kd_area'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT COALESCE(MAX(NO_BUKTI), 0) as NO_BUKTI FROM pp WHERE SUB='MB' AND PER='$per' AND FLAG='PP' AND FLAG2='SP'")->result();
+        $nomer = $this->db->query("SELECT COALESCE(MAX(NO_BUKTI), 0) as NO_BUKTI FROM pp WHERE SUB='MB' AND PER='$per' AND FLAG='PP' AND FLAG2='NB'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         if($nom[0]=='0'){
             $value11 = 0;
         }else{
-            $value11 = substr($nom[0], 3, 4);
+            $value11 = substr($nom[0], 4, 3);
         }
-        $value22 = STRVAL($value11) + 1;
-        $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
+        $value22 = (float)STRVAL($value11) + 1;
+        $urut = str_pad($value22, 3, "0", STR_PAD_LEFT);
         $tahun = substr($this->session->userdata['periode'], -4);
         if (substr($this->session->userdata['periode'], 0, 2) == 1) {
             $romawi = 'I';
@@ -341,10 +341,11 @@ class Transaksi_PesananLBBA extends CI_Controller
             'FLAG3' => $this->input->post('FLAG3', TRUE),
             'GAMBAR1' => $this->upload->data('file_name'),
             'FLAG' => 'PP',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             'TYP' => 'RND_MELBBA',
             'SUB' => 'MB',
-            'DR' => $this->session->userdata['dr'],
+            'DR' => $this->session->userdata['kd_area'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -400,9 +401,11 @@ class Transaksi_PesananLBBA extends CI_Controller
                 'GAMBAR1' => $this->upload->data('file_name'),
                 'TGL_DIMINTA' => $TGL_DIMINTAX[$i],
                 'FLAG' => 'PP',
+                // 'FLAG2' => 'SP',
+                'FLAG2' => 'NB',
                 'SUB' => 'MB',
                 'TYP' => 'RND_LBBA',
-                'DR' => $this->session->userdata['dr'],
+                'DR' => $this->session->userdata['kd_area'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
                 'TG_SMP' => date("Y-m-d h:i a")
@@ -579,8 +582,10 @@ class Transaksi_PesananLBBA extends CI_Controller
                     'QTY' => str_replace(',', '', $QTY[$URUT]),
                     'SATUAN' => $SATUAN[$URUT],
                     'KET' => $KET[$URUT],
-                    'GAMBAR1' => $DGAMBAR
+                    'GAMBAR1' => $DGAMBAR,
                     // 'FLAG' => 'PP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     // 'SUB' => 'MB',
                     // 'TYP' => 'RND_MELBBA',
                     // 'DR' => $this->session->userdata['dr'],
@@ -636,9 +641,11 @@ class Transaksi_PesananLBBA extends CI_Controller
                     'KET' => $KET[$i],
                     'GAMBAR1' => $this->upload->data('file_name'),
                     'FLAG' => 'PP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'SUB' => 'MB',
                     'TYP' => 'RND_MELBBA',
-                    'DR' => $this->session->userdata['dr'],
+                    'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")

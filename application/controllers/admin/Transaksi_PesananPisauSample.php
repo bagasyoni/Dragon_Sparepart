@@ -32,10 +32,10 @@ class Transaksi_PesananPisauSample extends CI_Controller
 
     private function _get_datatables_query()
     {
-        $dr = $this->session->userdata['dr'];
+        $dr = $this->session->userdata['kd_area'];
         $per = $this->session->userdata['periode'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
             'SUB' => 'PSL',
             // 'FLAG2' => 'SP',
@@ -84,10 +84,10 @@ class Transaksi_PesananPisauSample extends CI_Controller
 
     function count_all()
     {
-        $dr = $this->session->userdata['dr'];
+        $dr = $this->session->userdata['kd_area'];
         $per = $this->session->userdata['periode'];
         $where = array(
-            'DR' => $dr,
+            // 'DR' => $dr,
             'PER' => $per,
             'SUB' => 'PSL',
             // 'FLAG2' => 'SP',
@@ -181,7 +181,7 @@ class Transaksi_PesananPisauSample extends CI_Controller
 
     public function index_Transaksi_PesananPisauSample()
     {
-        $dr = $this->session->userdata['dr'];
+        $dr = $this->session->userdata['kd_area'];
         $per = $this->session->userdata['periode'];
         $this->session->set_userdata('judul', 'Transaksi Pesanan Pisau Sample');
         $where = array(
@@ -201,17 +201,17 @@ class Transaksi_PesananPisauSample extends CI_Controller
     public function input()
     {
         $per = $this->session->userdata['periode'];
-        $dr = $this->session->userdata['dr'];
+        $dr = $this->session->userdata['kd_area'];
         $sub = $this->session->userdata['sub'];
         $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='PSL' AND FLAG='' AND FLAG2='SP'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         if($nom[0]==NULL){
             $value11 = 0;
         }else{
-            $value11 = substr($nom[0], 3, 4);
+            $value11 = substr($nom[0], 4, 3);
         }
         $value22 = STRVAL($value11) + 1;
-        $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
+        $urut = str_pad($value22, 3, "0", STR_PAD_LEFT);
         $tahun = substr($this->session->userdata['periode'], -4);
         if (substr($this->session->userdata['periode'], 0, 2) == 1) {
             $romawi = 'I';
@@ -326,10 +326,11 @@ class Transaksi_PesananPisauSample extends CI_Controller
             'GAMBAR' => $this->upload->data('file_name'),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => '',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             'TYP' => 'RND_PISAU_SAMPLE',
             'SUB' => 'PSL',
-            'DR' => $this->session->userdata['dr'],
+            'DR' => $this->session->userdata['kd_area'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -381,10 +382,11 @@ class Transaksi_PesananPisauSample extends CI_Controller
                 'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$i])),
                 'GAMBAR1' => $this->upload->data('file_name'),
                 'FLAG' => '',
-                'FLAG2' => 'SP',
+                // 'FLAG2' => 'SP',
+                'FLAG2' => 'NB',
                 'TYP' => 'RND_PISAU_SAMPLE',
                 'SUB' => 'PSL',
-                'DR' => $this->session->userdata['dr'],
+                'DR' => $this->session->userdata['kd_area'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
                 'TG_SMP' => date("Y-m-d h:i a")
@@ -478,10 +480,11 @@ class Transaksi_PesananPisauSample extends CI_Controller
             'GAMBAR' => $GAMBAR1,
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => '',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             'TYP' => 'RND_PISAU_SAMPLE',
             'SUB' => 'PSL',
-            'DR' => $this->session->userdata['dr'],
+            'DR' => $this->session->userdata['kd_area'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -567,10 +570,11 @@ class Transaksi_PesananPisauSample extends CI_Controller
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$URUT])),
                     'GAMBAR1' => $DGAMBAR,
                     'FLAG' => '',
-                    'FLAG2' => 'SP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'TYP' => 'RND_PISAU_SAMPLE',
                     'SUB' => 'PSL',
-                    'DR' => $this->session->userdata['dr'],
+                    'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
@@ -621,10 +625,11 @@ class Transaksi_PesananPisauSample extends CI_Controller
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$i])),
                     'GAMBAR1' => $this->upload->data('file_name'),
                     'FLAG' => 'PP',
-                    'FLAG2' => 'SP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'TYP' => 'RND_PISAU_SAMPLE',
                     'SUB' => 'PSL',
-                    'DR' => $this->session->userdata['dr'],
+                    'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
@@ -694,11 +699,12 @@ class Transaksi_PesananPisauSample extends CI_Controller
             'GAMBAR' => $this->input->post('GAMBAR', TRUE),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             'FLAG' => '',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             'TYP' => 'RND_PISAU_SAMPLE',
             'SUB' => 'PSL',
             'VAL' => '1',
-            'DR' => $this->session->userdata['dr'],
+            'DR' => $this->session->userdata['kd_area'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
             'TG_SMP' => date("Y-m-d h:i a")
@@ -762,10 +768,11 @@ class Transaksi_PesananPisauSample extends CI_Controller
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$URUT])),
                     'GAMBAR1' => $GAMBAR1[$URUT],
                     'FLAG' => '',
-                    'FLAG2' => 'SP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'TYP' => 'RND_PISAU_SAMPLE',
                     'SUB' => 'PSL',
-                    'DR' => $this->session->userdata['dr'],
+                    'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
@@ -798,10 +805,11 @@ class Transaksi_PesananPisauSample extends CI_Controller
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$i])),
                     'GAMBAR1' => $GAMBAR1[$i],
                     'FLAG' => 'PP',
-                    'FLAG2' => 'SP',
+                    // 'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'TYP' => 'RND_PISAU_SAMPLE',
                     'SUB' => 'PSL',
-                    'DR' => $this->session->userdata['dr'],
+                    'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
                     'TG_SMP' => date("Y-m-d h:i a")
