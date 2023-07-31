@@ -27,8 +27,8 @@ class Transaksi_BonSudahValidasi extends CI_Controller
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'DEVISI', 'KET', 'PESAN');
-    var $column_search = array('NO_BUKTI', 'TGL', 'DEVISI', 'KET', 'PESAN');
+    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'TUJUAN', 'USRNM');
+    var $column_search = array('NO_BUKTI', 'TGL', 'TUJUAN', 'USRNM');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query()

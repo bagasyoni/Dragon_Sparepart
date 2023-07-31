@@ -233,7 +233,7 @@ class Transaksi_DataBon extends CI_Controller
             $this->transaksi_model->input_datad('bond', $datad);
             $i++;
         }
-        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM bon WHERE NO_BUKTI='$bukti'")->result();
+        $xx = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM bon WHERE NO_BUKTI='$NO_BUKTI'")->result();
         $no_bukti = $xx[0]->BUKTIX;
         $this->db->query("CALL spp_pakaiins('" . $no_bukti . "')");
         $this->session->set_flashdata(
