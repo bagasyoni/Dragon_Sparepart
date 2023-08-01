@@ -350,6 +350,33 @@
 		}
 	}
 
+	$('#NO_BUKTI').change(function() {
+		ceknobukti();
+	});
+	function ceknobukti() {
+		
+		$.ajax({
+			type: 'get',
+			url: '<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/cek_bukti'); ?>',
+			data: {
+				BUKTI: $("#NO_BUKTI").val();
+			},
+			dataType: 'json',
+			success: function(response) {
+				var JUMLAH = parseFloat(response[0].BUDGET);
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+			}
+		});
+
+		if(JUMLAH >= 1){
+			alert("Nomer Bukti Sudah ada .....!");
+			$(this).submit(function() {
+				return false;
+			})
+		}
+	}
+
 	function hitung() {
 		var TOTAL_QTY = 0;
 		var total_row = idrow;

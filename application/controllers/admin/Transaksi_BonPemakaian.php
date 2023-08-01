@@ -693,4 +693,21 @@ class Transaksi_BonPemakaian extends CI_Controller
         };
         echo json_encode($hasil);
     }
+
+    function cek_bukti()
+    {
+        $BUKTI = $this->input->get('BUKTI');
+		$drx = $this->session->userdata['dr'];
+        $subx = $this->session->userdata['sub'];
+        $per = $this->session->userdata['periode'];
+        $q1="SELECT count(NO_BUKTI) AS jumlah FROM pakai WHERE left(NO_BUKTI,3)='$BUKTI' AND SUB='$subx' AND DR='$drx' AND PER='$per'";
+
+        $q2 = $this->db->query($q1);
+        if ($q2->num_rows() > 0) {
+            foreach ($q2->result() as $row) {
+                $hasil[] = $row;
+            }
+        };
+        echo json_encode($hasil);
+    }
 }
