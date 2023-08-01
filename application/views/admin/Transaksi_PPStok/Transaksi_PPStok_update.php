@@ -313,7 +313,7 @@ foreach ($ppstok as $rowh) {
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="DEVISI[]" id="DEVISI<?php echo $no; ?>" value="<?= $row->DEVISI ?>" type="text" class="form-control DEVISI text_input"></td>
 									<td><input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="KET[]" id="KET<?php echo $no; ?>" value="<?= $row->KET ?>" type="text" class="form-control KET text_input"></td>
 									<td>
-										<input <?php if ($rowh->TTD3 == !0) echo 'class="form-control TGL_DIMINTA text_input" readonly'; ?> name="TGL_DIMINTA[]" id="TGL_DIMINTA<?php echo $no; ?>" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($row->TGL_DIMINTA, TRUE)); ?>" onclick="select()">
+										<input <?php if ($rowh->TTD3 == !0) echo 'class="form-control TGL_DIMINTA text_input" readonly'; ?> name="TGL_DIMINTA[]" id="TGL_DIMINTA<?php echo $no; ?>" type="text" class="date form-control text_input" data-date-format="dd-mm-yyyy" value="<?php echo $row->TGL_DIMINTA=='0000-00-00'||$row->TGL_DIMINTA=='2001-01-01'?'':date('d-m-Y', strtotime($row->TGL_DIMINTA, TRUE)); ?>" onclick="select()">
 									</td>
 									<td>
 										<input <?php if ($rowh->TTD3 == !0) echo 'readonly'; ?> name="SISA[]" onkeyup="hitung()" id="SISA<?php echo $no; ?>" value="<?php echo number_format($row->SISA, 2, '.', ','); ?>" type="text" class="form-control SISA rightJustified text-primary" required>
@@ -422,7 +422,7 @@ foreach ($ppstok as $rowh) {
 							bhnd.RAK, 
 							bhnd.AK$per AS STOK 
 						FROM bhn, bhnd
-						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND bhnd.DR = '$dr' AND bhnd.SUB='$sub'
+						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='$sub' AND bhnd.DR = '$dr' AND bhnd.SUB='$sub'
 						GROUP BY bhn.KD_BHN
 						ORDER BY bhn.KD_BHN ";
 						$a = $this->db->query($sql)->result();
@@ -506,6 +506,8 @@ foreach ($ppstok as $rowh) {
 			$("#RAK" + x).val(val);
 			$('#modal_kd_bhn').modal('toggle');
 			var kd_bhn = $(this).parents("tr").find(".NBVAL").text();
+
+			$('input[type=search]').val('').keyup();
 		});
 
 		$('body').on('click', '.btn-delete', function() {
@@ -553,7 +555,7 @@ foreach ($ppstok as $rowh) {
 		var hariCek = TGLCEK.substr(0,2);
 		var bulanCek = TGLCEK.substr(3,2);
 		var tahunCek = TGLCEK.substr(6,4);
-		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>.toString().padStart(2,'0');
+		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>;
 		var tahunSesi = <?= substr($this->session->userdata['periode'],-4)?>;
 		if(bulanCek != bulanSesi){
 			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);

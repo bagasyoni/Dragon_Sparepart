@@ -317,7 +317,7 @@
 							bhnd.RAK, 
 							bhnd.AK$per AS STOK 
 						FROM bhn, bhnd
-						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND bhnd.DR = '$dr' AND bhnd.SUB='$sub'
+						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='$sub' AND bhnd.DR = '$dr' AND bhnd.SUB='$sub'
 						GROUP BY bhn.KD_BHN
 						ORDER BY bhn.KD_BHN ";
 						$a = $this->db->query($sql)->result();
@@ -403,6 +403,8 @@
 			$("#RAK" + x).val(val);
 			$('#modal_kd_bhn').modal('toggle');
 			var kd_bhn = $(this).parents("tr").find(".NBVAL").text();
+			
+			$('input[type=search]').val('').keyup();
 		});
 
 		$('body').on('click', '.btn-delete', function() {

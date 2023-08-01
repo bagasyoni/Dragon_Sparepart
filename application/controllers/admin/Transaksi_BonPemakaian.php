@@ -177,7 +177,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         $value11 = substr($nom[0], 3, 7);
         $value22 = STRVAL($value11) + 1;
         $urut = str_pad($value22, 4, "0", STR_PAD_LEFT);
-        $tahun = substr($this->session->userdata['periode'], -4);
+        $tahun = substr($this->session->userdata['periode'], -2);
         $bulan = substr($this->session->userdata['periode'], 0, 2);
         if (substr($this->session->userdata['periode'], 0, 2) == 1) {
             $romawi = 'I';
@@ -224,8 +224,6 @@ class Transaksi_BonPemakaian extends CI_Controller
         } else {
             $bukti = $this->input->post('NO_BUKTI', TRUE);
         }
-        // var_dump($bukti);
-        // die;
 
         $datah = array(
             'NO_BUKTI' => $bukti,
@@ -672,11 +670,18 @@ class Transaksi_BonPemakaian extends CI_Controller
         $VAL = $this->input->post('VAL');
 
         $dr = $this->session->userdata['dr'];
+        if($dr=='I'){
+            $rak='_DR1';
+        }elseif($dr=='II'){
+            $rak='_DR2';
+        }else{
+            $rak='_DR3';
+        }
         $sub = $this->session->userdata['sub'];
 
         $q1 = "SELECT bhn.NA_BHN, bhn.SATUAN, bhnd.RAK, bhnd.KD_BHN
             FROM bhn, bhnd
-            WHERE bhnd.RAK='$VAL' AND bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='SP' AND bhnd.DR='$dr' AND bhnd.SUB='$sub' AND bhnd.RAK <> '' 
+            WHERE bhn.RAK$rak='$VAL' AND bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='$sub' AND bhnd.DR='$dr' AND bhnd.SUB='$sub' AND bhnd.RAK <> '' 
             GROUP BY bhn.KD_BHN
             ORDER BY bhn.KD_BHN";
 

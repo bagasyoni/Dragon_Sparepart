@@ -332,7 +332,7 @@
 		var hariCek = TGLCEK.substr(0,2);
 		var bulanCek = TGLCEK.substr(3,2);
 		var tahunCek = TGLCEK.substr(6,4);
-		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>.toString().padStart(2,'0');
+		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>;
 		var tahunSesi = <?= substr($this->session->userdata['periode'],-4)?>;
 		if(bulanCek != bulanSesi){
 			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
@@ -384,11 +384,11 @@
 		// var td10 = x.insertCell(9);
 		// var td11 = x.insertCell(10);
 
-		var rak0 = "<div class='input-group'><select class='js-example-responsive-rak form-control RAK0 text_input' name='RAK[]' id=RAK0" + idrow + " onchange='rak(this.id)' onfocusout='hitung()' required></select></div>";
+		var rak0 = "<div class='input-group'><select class='js-example-responsive-rak form-control RAK0 text_input' name='RAK[]' id=RAK0" + idrow + " onchange='rak(this.id)' onfocusout='hitung()'></select></div>";
 
 		var rak = rak0;
 
-		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET2" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()' required></select></div>";
+		var kd_gol0 = "<div class='input-group'><select class='js-example-responsive-sp_mesin form-control KET20 text_input' name='KET2[]' id=KET2" + idrow + " onchange='kd_gol(this.id)' onfocusout='hitung()'></select></div>";
 
 		var kd_gol = kd_gol0;
 

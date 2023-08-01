@@ -31,7 +31,7 @@ class Transaksi_Verifikasi_Bon extends CI_Controller {
         $sub = $this->session->userdata['sub'];
         $where = array(
             'DR' => $dr,
-            // 'SUB' => $sub,
+            'TUJUAN' => $sub,
             'OK' => '0',
             'TTD2' => '',
         );
@@ -79,7 +79,7 @@ class Transaksi_Verifikasi_Bon extends CI_Controller {
         $sub = $this->session->userdata['sub'];
         $where = array(
             'DR' => $dr,
-            // 'SUB' => $sub,
+            'TUJUAN' => $sub,
             'OK' => '0',
             'TTD2' => '',
         );
@@ -127,7 +127,7 @@ class Transaksi_Verifikasi_Bon extends CI_Controller {
         $this->session->set_userdata('judul', 'Transaksi Verifikasi Bon');
         $where = array(
             'DR' => $dr,
-            // 'SUB' => $sub,
+            'TUJUAN' => $sub,
             'OK' => '0',
             'TTD2' => '',
         );
