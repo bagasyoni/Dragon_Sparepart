@@ -155,7 +155,7 @@ class Transaksi_Verifikasi_Bon extends CI_Controller {
                 bond.QTY AS QTY
             FROM bon,bond 
             WHERE bon.NO_ID=$id 
-            AND bon.NO_ID=bond.NO_ID 
+            AND bon.NO_ID=bond.ID 
             ORDER BY bond.REC";
         $data['verifikasi_bon']= $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');

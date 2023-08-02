@@ -354,7 +354,7 @@ foreach ($bonpemakaian as $rowh) {
 		var hariCek = TGLCEK.substr(0,2);
 		var bulanCek = TGLCEK.substr(3,2);
 		var tahunCek = TGLCEK.substr(6,4);
-		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>.toString().padStart(2,'0');
+		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>;
 		var tahunSesi = <?= substr($this->session->userdata['periode'],-4)?>;
 		if(bulanCek != bulanSesi){
 			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
@@ -619,5 +619,45 @@ foreach ($bonpemakaian as $rowh) {
 				}
 			});
 		})
+	}
+</script>
+
+<script>
+	function prev() {
+		var ID = $('#ID').val();
+		$.ajax({
+			type: 'get',
+			url: '<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/prev'); ?>',
+			data: {
+				ID: ID
+			},
+			dataType: 'json',
+			success: function(response) {
+				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/update/'); ?>" + response[0].NO_ID);
+				// console.log('test');
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				// console.log('error');
+			}
+		});
+	}
+
+	function next() {
+		var ID = $('#ID').val();
+		$.ajax({
+			type: 'get',
+			url: '<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/next'); ?>',
+			data: {
+				ID: ID
+			},
+			dataType: 'json',
+			success: function(response) {
+				window.location.replace("<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/update/'); ?>" + response[0].NO_ID);
+				console.log(response[0].NO_ID);
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				// console.log('error');
+			}
+		});
 	}
 </script>

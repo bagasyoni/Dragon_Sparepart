@@ -26,9 +26,9 @@ class Transaksi_BonPemakaian extends CI_Controller
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'NOTES', 'FLAG', 'DR');
+    var $column_order = array(null, null, null,'NO_BUKTI' , 'TGL', 'NOTES', 'FLAG', 'DR');
     var $column_search = array('NO_BUKTI', 'TGL', 'NOTES', 'FLAG', 'DR');
-    var $order = array('NO_ID' => 'desc');
+    var $order = array('NO_BUKTI' => 'ASC');
 
     private function _get_datatables_query()
     {
@@ -636,7 +636,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM pakai WHERE NO_ID<'$ID' AND FLAG = 'PK' AND FLAG2 = 'SP' AND PER='$per' AND ATK = '0' AND DR = '$dr' AND SUB = '$sub' ORDER BY NO_ID DESC LIMIT 1";
+        $q1 = " SELECT NO_ID FROM pakai WHERE NO_ID<'$ID' AND FLAG = 'PK' AND PER='$per' AND DR = '$dr' AND SUB = '$sub' ORDER BY NO_ID DESC LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
@@ -654,7 +654,7 @@ class Transaksi_BonPemakaian extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
 
-        $q1 = " SELECT NO_ID FROM pakai WHERE NO_ID>'$ID' AND FLAG = 'PK' AND FLAG2 = 'SP' AND PER='$per' AND ATK = '0' AND DR = '$dr' AND SUB = '$sub' ORDER BY NO_ID LIMIT 1";
+        $q1 = " SELECT NO_ID FROM pakai WHERE NO_ID>'$ID' AND FLAG = 'PK' AND PER='$per' AND DR = '$dr' AND SUB = '$sub' ORDER BY NO_ID LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
@@ -710,4 +710,6 @@ class Transaksi_BonPemakaian extends CI_Controller
         };
         echo json_encode($hasil);
     }
+
+    
 }

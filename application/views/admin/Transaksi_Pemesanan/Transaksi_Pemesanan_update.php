@@ -508,17 +508,33 @@ foreach ($pemesanan as $rowh) {
 						<th>Kode Barang</th>
 						<th width="30px">Nama Barang</th>
 						<th width="30px">Satuan</th>
+						<th width="30px">Stok</th>
+						<th width="30px">Rak</th>
 					</thead>
 					<tbody>
 						<?php
+						$per = substr($this->session->userdata['periode'], 0, -5);
 						$dr = $this->session->userdata['dr'];
 						$sub = $this->session->userdata['sub'];
-						$sql = "SELECT bhn.KD_BHN, 
-							bhn.NA_BHN,
-							bhn.SATUAN
+						$sql = "SELECT bhn.NO_ID, 
+							bhnd.KD_BHN, 
+							bhnd.NA_BHN,  
+							bhn.SATUAN, 
+							bhnd.AW$per AS QTY, 
+							bhnd.RAK, 
+							bhnd.AK$per AS STOK 
 						FROM bhn, bhnd
-						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhn.SUB='$sub' AND bhn.FLAG='SP' AND bhn.FLAG2='SP' AND bhnd.DR='$dr'
-						ORDER BY bhn.KD_BHN";
+						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='$sub' AND bhnd.SUB='$sub' AND bhnd.DR='$dr'
+						GROUP BY bhn.KD_BHN
+						ORDER BY bhn.KD_BHN ";
+						// $dr = $this->session->userdata['dr'];
+						// $sub = $this->session->userdata['sub'];
+						// $sql = "SELECT bhn.KD_BHN, 
+						// 	bhn.NA_BHN,
+						// 	bhn.SATUAN
+						// FROM bhn, bhnd
+						// WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhn.SUB='$sub' AND bhn.FLAG='SP' AND bhn.FLAG2='SP' AND bhnd.DR='$dr'
+						// ORDER BY bhn.KD_BHN";
 						$a = $this->db->query($sql)->result();
 						foreach ($a as $b) {
 						?>
@@ -526,6 +542,8 @@ foreach ($pemesanan as $rowh) {
 								<td class='KDBVAL'><a href="#" class="select_kd_bhn"><?php echo $b->KD_BHN; ?></a></td>
 								<td class='NABVAL text_input'><?php echo $b->NA_BHN; ?></td>
 								<td class='SATVAL text_input'><?php echo $b->SATUAN; ?></td>
+								<td class='STKVAL text_input'><?php echo $b->STOK; ?></td>
+								<td class='RAKVAL text_input'><?php echo $b->RAK; ?></td>
 							</tr>
 						<?php } ?>
 					</tbody>
@@ -616,6 +634,8 @@ foreach ($pemesanan as $rowh) {
 			$("#KD_BHN" + x).val(val);
 			var val = $(this).parents("tr").find(".SATVAL").text();
 			$("#SATUAN" + x).val(val);
+			var val = $(this).parents("tr").find(".NABVAL").text();
+			$("#NA_BHN" + x).val(val);
 			$('#modal_kd_bhn').modal('toggle');
 			var kd_bhn = $(this).parents("tr").find(".KDBVAL").text();
 		});
@@ -669,7 +689,7 @@ foreach ($pemesanan as $rowh) {
 		var hariCek = TGLCEK.substr(0,2);
 		var bulanCek = TGLCEK.substr(3,2);
 		var tahunCek = TGLCEK.substr(6,4);
-		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>.toString().padStart(2,'0');
+		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>;
 		var tahunSesi = <?= substr($this->session->userdata['periode'],-4)?>;
 		if(bulanCek != bulanSesi){
 			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);

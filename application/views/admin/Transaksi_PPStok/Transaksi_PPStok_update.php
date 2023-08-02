@@ -415,14 +415,14 @@ foreach ($ppstok as $rowh) {
 						$dr = $this->session->userdata['dr'];
 						$sub = $this->session->userdata['sub'];
 						$sql = "SELECT bhn.NO_ID, 
-							bhn.KD_BHN, 
-							bhn.NA_BHN, 
+							bhnd.KD_BHN, 
+							bhnd.NA_BHN, 
 							bhn.SATUAN, 
 							bhnd.AW$per AS QTY, 
 							bhnd.RAK, 
 							bhnd.AK$per AS STOK 
 						FROM bhn, bhnd
-						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='$sub' AND bhnd.DR = '$dr' AND bhnd.SUB='$sub'
+						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='$sub' AND bhnd.SUB='$sub' AND bhnd.DR='$dr'
 						GROUP BY bhn.KD_BHN
 						ORDER BY bhn.KD_BHN ";
 						$a = $this->db->query($sql)->result();

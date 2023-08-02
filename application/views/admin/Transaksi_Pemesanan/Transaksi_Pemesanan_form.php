@@ -393,20 +393,34 @@
 					</thead>
 					<tbody>
 						<?php
+						$per = substr($this->session->userdata['periode'], 0, -5);
 						$dr = $this->session->userdata['dr'];
 						$sub = $this->session->userdata['sub'];
-						$mounth = SUBSTR($this->session->userdata['periode'],0,2);
-						$yer = SUBSTR($this->session->userdata['periode'],3,7);
-						$sql = "SELECT bhn.KD_BHN, 
-							bhn.NA_BHN,
-							bhn.SATUAN,
-							bhnd.AK$mounth AS STOK,
-							bhnd.RAK
+						$sql = "SELECT bhn.NO_ID, 
+							bhnd.KD_BHN, 
+							bhnd.NA_BHN, 
+							bhn.SATUAN, 
+							bhnd.AW$per AS QTY, 
+							bhnd.RAK, 
+							bhnd.AK$per AS STOK 
 						FROM bhn, bhnd
-						WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhn.SUB='$sub' AND bhn.FLAG='SP' 
-						-- AND bhn.FLAG2='SP' 
-						AND bhnd.DR='$dr' AND bhnd.yer='$yer'
-						ORDER BY bhn.KD_BHN";
+						WHERE bhn.KD_BHN=bhnd.KD_BHN  AND bhnd.FLAG='$sub' AND bhnd.SUB='$sub' AND bhnd.DR='$dr'
+						GROUP BY bhn.KD_BHN
+						ORDER BY bhn.KD_BHN ";
+						// $dr = $this->session->userdata['dr'];
+						// $sub = $this->session->userdata['sub'];
+						// $mounth = SUBSTR($this->session->userdata['periode'],0,2);
+						// $yer = SUBSTR($this->session->userdata['periode'],3,7);
+						// $sql = "SELECT bhn.KD_BHN, 
+						// 	bhn.NA_BHN,
+						// 	bhn.SATUAN,
+						// 	bhnd.AK$mounth AS STOK,
+						// 	bhnd.RAK
+						// FROM bhn, bhnd
+						// WHERE bhn.KD_BHN=bhnd.KD_BHN AND bhn.SUB='$sub' AND bhn.FLAG='SP' 
+						// -- AND bhn.FLAG2='SP' 
+						// AND bhnd.DR='$dr' AND bhnd.yer='$yer'
+						// ORDER BY bhn.KD_BHN";
 						$a = $this->db->query($sql)->result();
 						foreach ($a as $b) {
 						?>

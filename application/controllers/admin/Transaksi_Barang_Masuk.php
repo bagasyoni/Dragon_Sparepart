@@ -35,14 +35,16 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
+        $devisi = $this->session->userdata['devisi'];
         $where = array(
             'DR' => $dr,
             'PER' => $per,
             // 'SUB' => $sub,
+            'KD_BAG' => $devisi,
             'FLAG' => 'BL',
             'FLAG2' => 'NB',
             // 'SP' => 'LPB',
-            'OK<>' => '2'
+            // 'OK<>' => '2'
         );
         $this->db->select('*');
         $this->db->from('beli');
@@ -90,10 +92,12 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
+        $devisi = $this->session->userdata['devisi'];
         $where = array(
             'DR' => $dr,
             'PER' => $per,
             // 'SUB' => $sub,
+            'KD_BAG' => $devisi,
             'FLAG' => 'BL',
             'FLAG2' => 'NB',
             // 'SP' => 'LPB',
@@ -185,11 +189,13 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
+        $devisi = $this->session->userdata['devisi'];
         $this->session->set_userdata('judul', 'Transaksi Barang Masuk');
         $where = array(
             'DR' => $dr,
             'PER' => $per,
             // 'SUB' => $sub,
+            'KD_BAG' => $devisi,
             'FLAG' => 'BL',
             'FLAG2' => 'NB',
             // 'SP' => 'LPB',
