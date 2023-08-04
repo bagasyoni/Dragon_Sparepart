@@ -33,18 +33,27 @@ class Transaksi_VerifikasiLPB extends CI_Controller
     private function _get_datatables_query()
     {
         $dr = $this->session->userdata['dr'];
+        if(substr($dr,-1)==1){
+            $drx='I';
+        }elseif(substr($dr,-1)==2){
+            $drx='II';
+        }else{
+            $drx='III';
+        }
         $per = $this->session->userdata['periode'];
+        $devisi = $this->session->userdata['devisi'];
         $where = array(
-            // 'DR' => $dr,
-            'PER' => $per,
-            // 'SUB' => 'PSL',
-            // 'FLAG' => 'PP',
-            // 'FLAG2' => 'SP',
-            // 'VAL' => '0',
-            // 'TYP' => 'RND_PISAU',
+            'DR' => $dr,
+            // 'PER' => $per,
+            // 'SUB' => $sub,
+            'KD_BAG' => $devisi,
+            'FLAG' => 'BL',
+            'FLAG2' => 'NB',
+            // 'SP' => 'LPB',
         );
         $this->db->select('*');
-        $this->db->from('mr_order_sample');
+        // $this->db->from('mr_order_sample');
+        $this->db->from('beli');
         $this->db->where($where);
         $i = 0;
         foreach ($this->column_search as $item) {
@@ -87,17 +96,26 @@ class Transaksi_VerifikasiLPB extends CI_Controller
     function count_all()
     {
         $dr = $this->session->userdata['dr'];
+        if(substr($dr,-1)==1){
+            $drx='I';
+        }elseif(substr($dr,-1)==2){
+            $drx='II';
+        }else{
+            $drx='III';
+        }
         $per = $this->session->userdata['periode'];
+        $devisi = $this->session->userdata['devisi'];
         $where = array(
-            // 'DR' => $dr,
-            'PER' => $per,
-            // 'SUB' => 'PSL',
-            // 'FLAG' => 'PP',
-            // 'FLAG2' => 'SP',
-            // 'VAL' => '0',
-            // 'TYP' => 'RND_PISAU',
+            'DR' => $dr,
+            // 'PER' => $per,
+            // 'SUB' => $sub,
+            'KD_BAG' => $devisi,
+            'FLAG' => 'BL',
+            'FLAG2' => 'NB',
+            // 'SP' => 'LPB',
         );
-        $this->db->from('mr_order_sample');
+        // $this->db->from('mr_order_sample');
+        $this->db->from('beli');
         $this->db->where($where);
         return $this->db->count_all_results();
     }
@@ -152,18 +170,26 @@ class Transaksi_VerifikasiLPB extends CI_Controller
     public function index_Transaksi_VerifikasiLPB()
     {
         $dr = $this->session->userdata['dr'];
+        if(substr($dr,-1)==1){
+            $drx='I';
+        }elseif(substr($dr,-1)==2){
+            $drx='II';
+        }else{
+            $drx='III';
+        };
         $per = $this->session->userdata['periode'];
-        $this->session->set_userdata('judul', 'Transaksi Verifikasi LPB');
+        $devisi = $this->session->userdata['devisi'];
         $where = array(
-            // 'DR' => $dr,
-            'PER' => $per,
-            // 'SUB' => 'PSL',
-            // 'FLAG' => 'PP',
-            // 'FLAG2' => 'SP',
-            'VAL' => '0',
-            // 'TYP' => 'RND_PISAU',
+            'DR' => $dr,
+            // 'PER' => $per,
+            // 'SUB' => $sub,
+            'KD_BAG' => $devisi,
+            'FLAG' => 'BL',
+            'FLAG2' => 'NB',
+            // 'SP' => 'LPB',
         );
-        $data['mr_order_sample'] = $this->transaksi_model->tampil_data($where, 'mr_order_sample', 'NO_ID')->result();
+        // $data['mr_order_sample'] = $this->transaksi_model->tampil_data($where, 'mr_order_sample', 'NO_ID')->result();
+        $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_VerifikasiLPB/Transaksi_VerifikasiLPB', $data);

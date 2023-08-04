@@ -26,7 +26,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         }
     }
 
-    var $column_order = array(null, null, null, 'TGL', 'NO_BUKTI', 'TGL', 'NAMAS', 'TTD2');
+    var $column_order = array(null, null, null,'VAL','TGL', 'NO_BUKTI', 'TGL', 'NAMAS', 'TTD2');
     var $column_search = array('TGL', 'NO_BUKTI', 'TGL', 'NAMAS', 'TTD2');
     var $order = array('NO_ID' => 'desc');
 
@@ -44,7 +44,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'FLAG' => 'BL',
             'FLAG2' => 'NB',
             // 'SP' => 'LPB',
-            // 'OK<>' => '2'
+            'OK<>' => '2'
         );
         $this->db->select('*');
         $this->db->from('beli');
@@ -101,6 +101,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'FLAG' => 'BL',
             'FLAG2' => 'NB',
             // 'SP' => 'LPB',
+            'OK<>' => '2'
         );
         $this->db->from('beli');
         $this->db->where($where);
@@ -199,6 +200,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
             'FLAG' => 'BL',
             'FLAG2' => 'NB',
             // 'SP' => 'LPB',
+            'OK<>' => '2'
         );
         $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
         // $data['barang_masuk'] = $this->transaksi_model->edit_data($q1)->result();
