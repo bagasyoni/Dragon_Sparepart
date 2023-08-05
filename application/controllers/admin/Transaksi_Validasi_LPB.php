@@ -32,15 +32,29 @@ class Transaksi_Validasi_LPB extends CI_Controller
 
     private function _get_datatables_query()
     {
+        // $dr = $this->session->userdata['dr'];
+        // $per = $this->session->userdata['periode'];
+        // $sub = $this->session->userdata['sub'];
+        // $where = array(
+        //     'DR' => $dr,
+        //     'PER' => $per,
+        //     'SUB' => $sub,
+        //     'FLAG' => 'BL',
+        //     'FLAG2' => 'SP',
+        //     // 'SP' => 'LPB',
+        //     'OK<>' => '1'
+        // );
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
+        $devisi = $this->session->userdata['devisi'];
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SUB' => $sub,
+            // 'SUB' => $sub,
+            'KD_BAG' => $devisi,
             'FLAG' => 'BL',
-            'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             // 'SP' => 'LPB',
             'OK<>' => '1'
         );
@@ -87,16 +101,30 @@ class Transaksi_Validasi_LPB extends CI_Controller
 
     function count_all()
     {
+        // $dr = $this->session->userdata['dr'];
+        // $per = $this->session->userdata['periode'];
+        // $sub = $this->session->userdata['sub'];
+        // $where = array(
+        //     'DR' => $dr,
+        //     'PER' => $per,
+        //     'SUB' => $sub,
+        //     'FLAG' => 'BL',
+        //     'FLAG2' => 'SP',
+        //     // 'SP' => 'LPB',
+        // );
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
+        $devisi = $this->session->userdata['devisi'];
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SUB' => $sub,
+            // 'SUB' => $sub,
+            'KD_BAG' => $devisi,
             'FLAG' => 'BL',
-            'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             // 'SP' => 'LPB',
+            'OK<>' => '1'
         );
         $this->db->from('beli');
         $this->db->where($where);
@@ -156,17 +184,32 @@ class Transaksi_Validasi_LPB extends CI_Controller
 
     public function index_Transaksi_Validasi_LPB()
     {
+        // $dr = $this->session->userdata['dr'];
+        // $per = $this->session->userdata['periode'];
+        // $sub = $this->session->userdata['sub'];
+        // $this->session->set_userdata('judul', 'Transaksi Validasi LPB');
+        // $where = array(
+        //     'DR' => $dr,
+        //     'PER' => $per,
+        //     'SUB' => $sub,
+        //     'FLAG' => 'BL',
+        //     'FLAG2' => 'SP',
+        //     // 'SP' => 'LPB',
+        // );
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $this->session->set_userdata('judul', 'Transaksi Validasi LPB');
+        $devisi = $this->session->userdata['devisi'];
         $where = array(
             'DR' => $dr,
             'PER' => $per,
-            'SUB' => $sub,
+            // 'SUB' => $sub,
+            'KD_BAG' => $devisi,
             'FLAG' => 'BL',
-            'FLAG2' => 'SP',
+            'FLAG2' => 'NB',
             // 'SP' => 'LPB',
+            'OK<>' => '1'
         );
         $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
