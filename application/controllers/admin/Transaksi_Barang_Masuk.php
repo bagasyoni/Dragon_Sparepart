@@ -314,7 +314,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
 
                 belid.NO_ID,
                 belid.REC,
-                belid.OK,
+                -- belid.OK,
                 belid.KD_BHN,
                 belid.NA_BHN,
                 belid.RAK,
@@ -322,8 +322,8 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 belid.SATUAN,
                 belid.QTY,
                 belid.SAT_BL,
-                belid.QTY_BL,
-                belid.VAL
+                belid.QTY_BL
+                -- belid.VAL
             FROM beli, belid 
             WHERE beli.NO_ID = $id 
             AND beli.NO_ID = belid.ID 
