@@ -26,8 +26,8 @@ class Master_Inventaris extends CI_Controller
         }
     }
 
-    var $column_order = array(null, null, null, 'NO_BUKTI', 'TGL', 'NA_BAGIAN', 'NAMA', 'TOTAL_QTY', 'DR');
-    var $column_search = array('NO_BUKTI', 'TGL', 'NA_BAGIAN', 'NAMA', 'TOTAL_QTY', 'DR');
+    var $column_order = array(null, null, null, 'NO_BUKTI','KODE','TGL', 'NA_BAGIAN', 'NAMA', 'TOTAL_QTY', 'DR');
+    var $column_search = array('NO_BUKTI','KODE','TGL', 'NA_BAGIAN', 'NAMA', 'TOTAL_QTY', 'DR');
     var $order = array('NO_BUKTI' => 'asc');
 
     private function _get_datatables_query()
@@ -118,6 +118,7 @@ class Master_Inventaris extends CI_Controller
                     </div>';
             $row[] = $no . ".";
             $row[] = $inventaris->NO_BUKTI;
+            $row[] = $inventaris->KODE;
             $row[] = $inventaris->TGL;
             $row[] = $inventaris->NA_BAGIAN;
             $row[] = $inventaris->NAMA;
@@ -154,15 +155,15 @@ class Master_Inventaris extends CI_Controller
 
     public function input()
     {
-        $per = $this->session->userdata['periode'];
-        $dr = $this->session->userdata['dr'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM inventaris WHERE FLAG='INV' AND PER='$per' AND DR='$dr'")->result();
-        $nom = array_column($nomer, 'NO_BUKTI');
-        $value11 = substr($nom[0], 4, 7);
-        $value22 = STRVAL($value11) . 1;
-        $urut = str_pad($value22, 3, "0", STR_PAD_LEFT);
-        $bukti = 'INV' . '/' . $urut . '/' . $per . '/' . 'DR' . $dr;
-        $this->session->set_userdata('bukti', $bukti);
+        // $per = $this->session->userdata['periode'];
+        // $dr = $this->session->userdata['dr'];
+        // $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM inventaris WHERE FLAG='INV' AND PER='$per' AND DR='$dr'")->result();
+        // $nom = array_column($nomer, 'NO_BUKTI');
+        // $value11 = substr($nom[0], 4, 7);
+        // $value22 = STRVAL($value11) . 1;
+        // $urut = str_pad($value22, 3, "0", STR_PAD_LEFT);
+        // $bukti = 'INV' . '/' . $urut . '/' . $per . '/' . 'DR' . $dr;
+        // $this->session->set_userdata('bukti', $bukti);
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Master_Inventaris/Master_Inventaris_form');
@@ -181,6 +182,7 @@ class Master_Inventaris extends CI_Controller
         $bukti = 'INV' . '/' . $urut . '/' . $per . '/' . 'DR' . $dr;
         $datah = array(
             'NO_BUKTI' => $bukti,
+            'KODE'=> $this->input->post('NO_BUKTIX', TRUE),
             'NA_BAGIAN' => $this->input->post('NA_BAGIAN', TRUE),
             'NAMA' => $this->input->post('NAMA', TRUE),
             'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
@@ -207,6 +209,7 @@ class Master_Inventaris extends CI_Controller
             $datad = array(
                 'ID' => $ID[0]->no_id,
                 'NO_BUKTI' => $bukti,
+                'KODE' => $this->input->post('NO_BUKTIX', TRUE),
                 'NA_BAGIAN' => $this->input->post('NA_BAGIAN', TRUE),
                 'NAMA' => $this->input->post('NAMA', TRUE),
                 'TGL' => date("Y-m-d", strtotime($this->input->post('TGL', TRUE))),
@@ -248,6 +251,7 @@ class Master_Inventaris extends CI_Controller
                 inventaris.NAMA AS NAMA,
                 inventaris.TGL AS TGL,
                 inventaris.TOTAL_QTY AS TOTAL_QTY,
+                inventaris.KODE AS KODE,
 
                 inventarisd.NO_ID AS NO_ID,
                 inventarisd.REC AS REC,

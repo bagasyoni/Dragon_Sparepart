@@ -93,6 +93,7 @@
                         <th width="75px">Menu</th>
                         <th width="75px">No</th>
                         <th width="200px">No Bukti</th>
+                        <th width="200px">KODE</th>
                         <th width="200px">Tgl</th>
                         <th width="200px">Bagian</th>
                         <th width="125px">Nama</th>

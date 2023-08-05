@@ -135,7 +135,8 @@ foreach ($inventaris as $rowh) {
 						</div>
 						<div class="col-md-2">
 							<input type="hidden" name="ID" class="form-control" value="<?php echo $rowh->ID ?>">
-							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
+							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" hidden>
+							<input class="form-control text_input NO_BUKTIX" id="NO_BUKTIX" name="NO_BUKTIX" type="text" value="<?php echo $rowh->KODE ?>" readonly>
 						</div>
 						<div class="col-md-1" hidden>
 							<label class="label">Tanggal </label>
@@ -157,7 +158,7 @@ foreach ($inventaris as $rowh) {
 							<label class="label">Nama </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NAMA text_input" id="NAMA" name="NAMA" type="text" value="<?php echo $rowh->NAMA ?>" readonly>
+							<input class="form-control text_input NAMA text_input" id="NAMA" name="NAMA" type="text" value="<?php echo $rowh->NAMA ?>" >
 						</div>
 					</div>
 				</div>
