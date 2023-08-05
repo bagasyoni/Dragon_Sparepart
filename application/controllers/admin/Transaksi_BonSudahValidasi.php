@@ -34,10 +34,12 @@ class Transaksi_BonSudahValidasi extends CI_Controller
     private function _get_datatables_query()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
+       // $dr= $this->session->userdata['dr'];
+		$kd_bag= $this->session->userdata['kd_bag'];
         $where = array(
             // 'PER' => $per,
             // 'DR' => $dr,
+			'KD_BAG' => $kd_bag,
             'FLAG' => '0',
             // 'SUB' => 'MB',
             // 'FLAG2' => 'SP',
@@ -88,10 +90,12 @@ class Transaksi_BonSudahValidasi extends CI_Controller
     function count_all()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
+       // $dr= $this->session->userdata['dr'];
+		 $kd_bag= $this->session->userdata['kd_bag'];
         $where = array(
            // 'PER' => $per,
             // 'DR' => $dr,
+			'KD_BAG' => $kd_bag,
             'FLAG' => '0',
             // 'SUB' => 'MB',
             // 'FLAG2' => 'SP',
@@ -150,10 +154,12 @@ class Transaksi_BonSudahValidasi extends CI_Controller
     public function index_Transaksi_BonSudahValidasi()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
+        //$dr= $this->session->userdata['dr'];
+		$kd_bag= $this->session->userdata['kd_bag'];
         $where = array(
             // 'PER' => $per,
             // 'DR' => $dr,
+			'KD_BAG' => $kd_bag,
             'FLAG' => '0',
             // 'SUB' => 'MB',
             // 'FLAG2' => 'SP',

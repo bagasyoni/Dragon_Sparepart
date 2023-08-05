@@ -34,7 +34,8 @@ class Transaksi_BonBelumValidasi extends CI_Controller
     private function _get_datatables_query()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
+		//$dr= $this->session->userdata['dr'];
+		$kd_bag= $this->session->userdata['kd_bag'];
         $where = array(
             // 'PER' => $per,
             // 'DR' => $dr,
@@ -43,6 +44,8 @@ class Transaksi_BonBelumValidasi extends CI_Controller
             // 'FLAG2' => 'SP',
             'OK' => '0',
             // 'TYP' => 'RND_LBBA',
+			 'KD_BAG' => $kd_bag,
+			
         );
         $this->db->select('*');
         $this->db->from('bon');
@@ -88,7 +91,8 @@ class Transaksi_BonBelumValidasi extends CI_Controller
     function count_all()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
+       // $dr= $this->session->userdata['dr'];
+		$kd_bag= $this->session->userdata['kd_bag'];
         $where = array(
             // 'PER' => $per,
             // 'DR' => $dr,
@@ -97,6 +101,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
             // 'FLAG2' => 'SP',
             'OK' => '0',
             // 'TYP' => 'RND_LBBA',
+			 'KD_BAG' => $kd_bag,
         );
         $this->db->from('bon');
         $this->db->where($where);
@@ -150,7 +155,8 @@ class Transaksi_BonBelumValidasi extends CI_Controller
     public function index_Transaksi_BonBelumValidasi()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
+        //$dr= $this->session->userdata['dr'];
+		$kd_bag= $this->session->userdata['kd_bag'];
         $where = array(
             // 'PER' => $per,
             // 'DR' => $dr,
@@ -159,6 +165,7 @@ class Transaksi_BonBelumValidasi extends CI_Controller
             // 'FLAG2' => 'SP',
             'OK' => '0',
             // 'TYP' => 'RND_LBBA',
+			   'KD_BAG' =>$kd_bag,
         );
         $data['pakai'] = $this->transaksi_model->tampil_data($where, 'bon', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
