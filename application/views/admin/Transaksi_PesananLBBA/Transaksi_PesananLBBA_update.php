@@ -160,14 +160,14 @@ foreach ($rnd as $rowh) {
 						<div class="col-md-2">
 							<select class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" <?php if ($rowh->VAL == !0) echo 'disabled'; ?>>
 								<option value=""></option>
-								<option <?php echo ($this->session->userdata['dr']=='RND1')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD1')?'selected':'';?> value="RD1">PUMA</option>
-								<option <?php echo ($this->session->userdata['dr']=='RND1')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD2')?'selected':'';?> value="RD2">CANVAS</option>
-								<option <?php echo ($this->session->userdata['dr']=='RND3')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD7')?'selected':'';?> value="RD7">INJECT DR3</option>
-								<option <?php echo ($this->session->userdata['dr']=='RND4')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD5')?'selected':'';?> value="RD5">CEMENTING</option>
-								<option <?php echo ($this->session->userdata['dr']=='RND4')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD8')?'selected':'';?> value="RD8">INJECT DR4</option>
-								<option <?php echo ($this->session->userdata['dr']=='RNDAB')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD3')?'selected':'';?> value="RD3">AIR BLOW</option>
-								<option <?php echo ($this->session->userdata['dr']=='RNDAB')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD4')?'selected':'';?> value="RD4">PHYLON</option>
-								<option <?php echo ($this->session->userdata['dr']=='RNDVC')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD6')?'selected':'';?>  value="RD6">VULCANIZED</option>
+								<option <?php echo ($this->session->userdata['dr']=='RD1')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD1')?'selected':'';?> value="RD1">PUMA</option>
+								<option <?php echo ($this->session->userdata['dr']=='RD1')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD2')?'selected':'';?> value="RD2">CANVAS</option>
+								<option <?php echo ($this->session->userdata['dr']=='RD3')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD7')?'selected':'';?> value="RD7">INJECT DR3</option>
+								<option <?php echo ($this->session->userdata['dr']=='RD4')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD5')?'selected':'';?> value="RD5">CEMENTING</option>
+								<option <?php echo ($this->session->userdata['dr']=='RD4')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD8')?'selected':'';?> value="RD8">INJECT DR4</option>
+								<option <?php echo ($this->session->userdata['dr']=='RDAB')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD3')?'selected':'';?> value="RD3">AIR BLOW</option>
+								<option <?php echo ($this->session->userdata['dr']=='RDAB')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD4')?'selected':'';?> value="RD4">PHYLON</option>
+								<option <?php echo ($this->session->userdata['dr']=='RDVC')?'':'hidden';?> <?php echo ($rowh->DEVISI=='RD6')?'selected':'';?>  value="RD6">VULCANIZED</option>
 							</select>
 							<!-- <input  class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text" value=""> -->
 						</div>

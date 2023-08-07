@@ -144,34 +144,34 @@
 						</div>
 						<div class="col-md-2">
 							<select class="form-control text_input DEVISI" id="DEVISI" name="DEVISI" type="text">
-								<?php if ($this->session->userdata['dr']=='RND1'){ // lutfi ayu //DR1
+								<?php if ($this->session->userdata['dr']=='RD1'){ // lutfi ayu //DR1
 								echo '
 								<option value=""></option>
 								<option value="RD1">PUMA</option>
 								<option value="RD2">CANVAS</option>
 								';
 								}
-								else if ($this->session->userdata['dr']=='RND3') { //prayit indri //DR3
+								else if ($this->session->userdata['dr']=='RD3') { //prayit indri //DR3
 								echo '
 								<option value=""></option>
 								<option value="RD7">INJECT DR3</option>
 								';
 								}
-								else if ($this->session->userdata['dr']=='RND4') { // mulyadi muklisun //DR2
+								else if ($this->session->userdata['dr']=='RD4') { // mulyadi muklisun //DR2
 								echo '
 								<option value=""></option>
 								<option value="RD5">CEMENTING</option>
 								<option value="RD8">INJECT DR4</option>
 								';
 								}
-								else if ($this->session->userdata['dr']=='RNDAB') { // toni ardhia  //DR2
+								else if ($this->session->userdata['dr']=='RDAB') { // toni ardhia  //DR2
 								echo '
 								<option value=""></option>
 								<option value="RD3">AIR BLOW</option>
 								<option value="RD4">PHYLON</option>
 								';
 								}
-								else if ($this->session->userdata['dr']=='RNDVC') { // yudi yona //DR2
+								else if ($this->session->userdata['dr']=='RDVC') { // yudi yona //DR2
 								echo '
 								<option value=""></option>
 								<option value="RD6">VULCANIZED</option>
