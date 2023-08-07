@@ -161,11 +161,10 @@
 							<label class="label">Tujuan </label>
 						</div>
 						<div class="col-md-2">
-					 	<select class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN"  type="text">
-								<option value="CNC" selected>CNC</option>
+							<select class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text">
+								<option value="CNC">CNC</option>
 								<option value="PBL">PBL</option>
-								
-							</select> 
+							</select>
 						</div>
 						<div class="col-md-2">
 							<select class="form-control text_input TIPE" id="TIPE" name="TIPE" type="text">
