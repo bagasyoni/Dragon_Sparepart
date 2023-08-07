@@ -308,7 +308,7 @@ foreach ($rnd as $rowh) {
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-4">
-							<label class="label">Gambar Cetakan Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
+							<label class="label">Gambar Sepatu Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
 						</div>
 					</div>
 				</div>

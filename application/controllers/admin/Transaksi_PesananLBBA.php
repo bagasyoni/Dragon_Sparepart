@@ -34,11 +34,11 @@ class Transaksi_PesananLBBA extends CI_Controller
     private function _get_datatables_query()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
+        $dr= $this->session->userdata['kd_area'];
         $where = array(
             'PER' => $per,
-            // 'DR' => $dr,
-            'FLAG' => 'PP',
+            'DR' => $dr,
+            // 'FLAG' => 'PBL',
             'SUB' => 'MB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_LBBA',
@@ -87,12 +87,12 @@ class Transaksi_PesananLBBA extends CI_Controller
     function count_all()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
+        $dr= $this->session->userdata['kd_area'];
         $where = array(
             'PER' => $per,
-            // 'DR' => $dr,
-            'FLAG' => 'PP',
-            'SUB' => 'MB',
+            'DR' => $dr,
+            // 'FLAG' => 'PBL',
+            'SUB' => 'MB'
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_LBBA',
         );
@@ -152,7 +152,7 @@ class Transaksi_PesananLBBA extends CI_Controller
             $row[] = $pp->PESAN;
             $row[] = $pp->JO;
             $row[] = $pp->FLAG3;
-            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/melbba/$pp->GAMBAR1' width='auto' height='120'>";
+            $row[] = "<img src='/DragonSparepart/gambar/melbba/$pp->GAMBAR1' width='auto' height='120'>";
             if($pp->VAL==1){
                 $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
             }else{
@@ -172,12 +172,12 @@ class Transaksi_PesananLBBA extends CI_Controller
     public function index_Transaksi_PesananLBBA()
     {
         $per = $this->session->userdata['periode'];
-        $dr= $this->session->userdata['dr'];
+        $dr= $this->session->userdata['kd_area'];
         $where = array(
             'PER' => $per,
-            // 'DR' => $dr,
-            'FLAG' => 'PP',
-            'SUB' => 'MB',
+            'DR' => $dr,
+            // 'FLAG' => 'PBL',
+            'SUB' => 'MB'
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_LBBA',
         );
@@ -193,12 +193,12 @@ class Transaksi_PesananLBBA extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['kd_area'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT COALESCE(MAX(NO_BUKTI), 0) as NO_BUKTI FROM pp WHERE SUB='MB' AND PER='$per' AND FLAG='PP' AND FLAG2='NB'")->result();
+        $nomer = $this->db->query("SELECT COALESCE(MAX(NO_BUKTI), 0) as NO_BUKTI FROM pp WHERE SUB='MB' AND PER='$per'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         if($nom[0]=='0'){
             $value11 = 0;
         }else{
-            $value11 = substr($nom[0], 4, 3);
+            $value11 = substr($nom[0], 3, 3);
         }
         $value22 = (float)STRVAL($value11) + 1;
         $urut = str_pad($value22, 3, "0", STR_PAD_LEFT);

@@ -408,7 +408,7 @@
 		var hariCek = TGLCEK.substr(0,2);
 		var bulanCek = TGLCEK.substr(3,2);
 		var tahunCek = TGLCEK.substr(6,4);
-		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>.toString().padStart(2,'0');
+		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>;
 		var tahunSesi = <?= substr($this->session->userdata['periode'],-4)?>;
 		if(bulanCek != bulanSesi){
 			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
