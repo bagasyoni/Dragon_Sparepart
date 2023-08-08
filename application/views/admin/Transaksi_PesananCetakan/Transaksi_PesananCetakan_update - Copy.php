@@ -1,3 +1,8 @@
+<?php
+foreach ($rnd as $rowh) {
+};
+?>
+
 <style>
 	#myInput {
 		background-image: url('<?php echo base_url() ?>assets/img/search-icon-blue.png');
@@ -114,7 +119,16 @@
 		width: 100%;
 	}
 
-	.text_input {
+	hr {
+		border: 0;
+		clear: both;
+		display: block;
+		width: 100%;
+		background-color: black;
+		height: 1px;
+	}
+
+	*/ .text_input {
 		font-size: small;
 		color: black;
 	}
@@ -123,9 +137,9 @@
 <div class="container-fluid">
 	<br>
 	<div class="alert alert-success alert-container" role="alert">
-		<i class="fas fa-university"></i> Input Pesanan Cetakan
+		<i class="fas fa-university"></i> Update Pesanan Cetakan
 	</div>
-	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakan/input_aksi'); ?>" class="form-horizontal needs-validation" method="post" enctype="multipart/form-data" novalidate>
+	<form id="cnc" name="cnc" action="<?php echo base_url('admin/Transaksi_PesananCetakan/update_aksi'); ?>" class="form-horizontal needs-validation" method="post" enctype="multipart/form-data" novalidate>
 		<div class="form-body">
 			<div class="row">
 				<div class="col-md-12">
@@ -134,16 +148,37 @@
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value='<?php echo $this->session->userdata['bukti']; ?>' readonly>
+							<input type="hidden" id="NO_ID" name="NO_ID" class="form-control" value="<?php echo $rowh->NO_ID ?>">
+							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
 						</div>
 						<div class="col-md-2">
-							<input type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+						<input <?php if ($rowh->VAL == !0) echo 'class="form-control TGL text_input" readonly'; ?> type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()">
 						</div>
 						<div class="col-md-1">
 							<label class="label">DR </label>
 						</div>
 						<div class="col-md-1">
-						<select value="" class="js-example-responsive-dragon form-control DEVISI" name="DEVISI" id="DEVISI" onchange="dragon(this.id)" onfocusout="hitung()" required></select>
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="js-example-responsive-dragon form-control DEVISI text_input" name="DEVISI" id="DEVISI" onchange="dragon(this.id)" required>
+								<option value="<?php echo $rowh->DEVISI ?>" selected id="DEVISI"><?php echo $rowh->DEVISI ?></option>
+							</select>
+						</div>
+						<div class="col-md-2"></div>
+						<div class="col-md-2">
+							<?php
+							if ($rowh->VAL == 0)
+								echo '<a 
+										type="button" 
+										class="btn btn-danger" 
+									>
+										<span style="color: white; font-weight: bold;"> BELUM DIVALIDASI</span>
+									</a>';
+							else echo '<a 
+									type="button" 
+									class="btn btn-success" 
+								>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-check"></i> SUDAH DIVALIDASI</span>
+								</a>';
+							?>
 						</div>
 					</div>
 				</div>
@@ -153,7 +188,7 @@
 							<label class="label">Article </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input ARTICLE" id="ARTICLE" name="ARTICLE" type="text" required>
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input ARTICLE" id="ARTICLE" name="ARTICLE" type="text" value="<?php echo $rowh->ARTICLE ?>" required>
 						</div>
 						<div class="col-md-2">
 						</div>
@@ -161,23 +196,15 @@
 							<label class="label">Tujuan </label>
 						</div>
 						<div class="col-md-2">
-
-	
-						<select class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text">
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text">
+								<option selected><?php echo $rowh->TUJUAN ?></option>
 								<option value="CNC">CNC</option>
 								<!-- <option value="PBL">PBL</option> -->
-							</select> 
-
-					 <!--	<select class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN"  type="text">
-								<option value="CNC" selected>CNC</option>
-								<option value="PBL">PBL</option>
-								
-							</select> 
-                       -->
-					   
+							</select>
 						</div>
 						<div class="col-md-2">
-							<select class="form-control text_input TIPE" id="TIPE" name="TIPE" type="text">
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TIPE" id="TIPE" name="TIPE" type="text">
+								<option selected><?php echo $rowh->TIPE ?></option>
 								<option value="MRL">MRL</option>
 								<option value="MRE">MRE</option>
 							</select>
@@ -190,7 +217,7 @@
 							<label class="label">Keterangan </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" required>
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input NOTES" id="NOTES" name="NOTES" type="text" value="<?php echo $rowh->NOTES ?>" required>
 						</div>
 						<div class="col-md-2">
 						</div>
@@ -198,7 +225,7 @@
 							<label class="label">Tipe Cetakan </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input TIPE_CETAK" id="TIPE_CETAK" name="TIPE_CETAK" type="text">
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TIPE_CETAK" id="TIPE_CETAK" name="TIPE_CETAK" type="text" value="<?php echo $rowh->TIPE_CETAK ?>">
 						</div>
 					</div>
 				</div>
@@ -208,7 +235,7 @@
 							<label class="label">M Lasting </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input M_LASTING" id="M_LASTING" name="M_LASTING" type="text" required>
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input M_LASTING" id="M_LASTING" name="M_LASTING" type="text" value="<?php echo $rowh->M_LASTING ?>" required>
 						</div>
 						<div class="col-md-2">
 						</div>
@@ -216,7 +243,8 @@
 							<label class="label">Jenis </label>
 						</div>
 						<div class="col-md-2">
-							<select class="form-control text_input JENIS" id="JENIS" name="JENIS" type="text">
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input JENIS" id="JENIS" name="JENIS" type="text">
+								<option selected><?php echo $rowh->JENIS ?></option>
 								<option value="Sample">Sample</option>
 								<option value="Seri">Seri</option>
 								<option value="Reparasi">Reparasi</option>
@@ -230,7 +258,7 @@
 							<label class="label">Tanggal Diminta </label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
+							<input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php if (isset($_POST["tampilkan"])) {																																echo $_POST["TGL"];																													} else echo date('d-m-Y'); ?>" onclick="select()">
 						</div>
 						<div class="col-md-2">
 						</div>
@@ -238,13 +266,15 @@
 							<label class="label">Flag </label>
 						</div>
 						<div class="col-md-2">
-							<select class="form-control text_input FLAG" id="FLAG" name="FLAG" type="text">
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input FLAG" id="FLAG" name="FLAG" type="text">
+								<option selected><?php echo $rowh->FLAG ?></option>
 								<option value="LOKAL">LOKAL</option>
 								<option value="IMPORT">IMPORT</option>
 							</select>
 						</div>
 						<div class="col-md-2">
-							<select class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text">
+							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input PROSES" id="PROSES" name="PROSES" type="text">
+								<option selected><?php echo $rowh->PROSES ?></option>
 								<option value="CETAKAN">CETAKAN</option>
 								<option value="MATRAS">MATRAS</option>
 							</select>
@@ -265,19 +295,9 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<input onchange="loadFile(event)" type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
-							<img style="display:none;width:150px;height:150px;" id="GAMBAR1PREVIEW" src="#"  />
-							<script>
-							var loadFile = function(event) {
-								var output = document.getElementById('GAMBAR1PREVIEW');
-								output.src = URL.createObjectURL(event.target.files[0]);
-								output.onload = function() {
-								URL.revokeObjectURL(output.src) // free memory
-								}
-								
-								$("#GAMBAR1PREVIEW").show();
-							};
-							</script>
+						<img src="<?= base_url('gambar/pesanancetakan/'.$rowh->GAMBAR1)?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input type="text" name="G1" id="G1" value="<?php echo $rowh->GAMBAR1?>" hidden>
+						<input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR1" id="GAMBAR1" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						</div>
 					</div>
 				</div>
@@ -295,19 +315,9 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-2">
-						<input onchange="loadFile2(event)" type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
-						<img style="display:none;width:150px;height:150px;" id="GAMBAR2PREVIEW" src="#"  />
-							<script>
-								var loadFile2 = function(event) {
-									var output = document.getElementById('GAMBAR2PREVIEW');
-									output.src = URL.createObjectURL(event.target.files[0]);
-									output.onload = function() {
-									URL.revokeObjectURL(output.src) // free memory
-									}
-									
-									$("#GAMBAR2PREVIEW").show();
-								};
-							</script>
+						<img src="<?= base_url('gambar/pesanancetakan/'.$rowh->GAMBAR2)?>" style="width: 120px;float: left;margin-bottom: 5px;">
+						<input type="text" name="G2" id="G2" value="<?php echo $rowh->GAMBAR2?>" hidden>
+						<input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> type="file" name="GAMBAR2" id="GAMBAR2" accept="image/png, image/jpeg, image/jpg, image/bmp">
 						</div>
 					</div>
 				</div>
@@ -333,26 +343,33 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" required></td>
-								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1 text_input" required></td>
-								<td><input name="SIZE[]" id="SIZE0" type="text" class="form-control SIZE text_input"></td>
-								<td><input name="QTY[]" onclick="select()" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
-								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input"></td>
-								<td>
-									<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
-										<i class="fa fa-fw fa-trash-alt"></i>
-									</button> -->
-								</td>
-							</tr>
+							<?php
+							$no = 0;
+							foreach ($rnd as $row) :
+							?>
+								<tr>
+									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input"></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="SIZE[]" id="SIZE<?php echo $no; ?>" value="<?= $row->SIZE ?>" type="text" class="form-control SIZE text_input"></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="QTY[]" onclick="select()" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"></td>
+									<td>
+										<input name="NO_IDX[]" id="NO_IDX<?php echo $no; ?>" value="<?= $row->NO_IDX ?>" class="form-control" type="hidden">
+										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+											<i class="fa fa-fw fa-trash"></i>
+										</button>
+									</td>
+								</tr>
+								<?php $no++; ?>
+							<?php endforeach; ?>
 						</tbody>
 						<tfoot>
 							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
+							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
 							<td></td>
 							<td></td>
 						</tfoot>
@@ -368,8 +385,9 @@
 				</div>
 			</div>
 		</div>
+		<!--tab-->
 		<br>
-		<div class="row">
+		<div class="col-md-12">
 			<div class="col-xs-9">
 				<div class="wells">
 					<div class="btn-group cxx">
@@ -406,7 +424,6 @@
 			var validation = Array.prototype.filter.call(forms, function(form) {
 				form.addEventListener('submit', function(event) {
 					if (form.checkValidity() === false) {
-						alert("Data Belum Lengkap");
 						event.preventDefault();
 						event.stopPropagation();
 					} else {
@@ -420,7 +437,7 @@
 		}, false);
 	})();
 	var target;
-	var idrow = 1;
+	var idrow = <?php echo $no ?>;
 
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -436,9 +453,11 @@
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			
-			
-		};
+			$("#SISABON" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+		}
 		$('body').on('click', '.btn-delete', function() {
 			var r = confirm("Yakin dihapus?");
 			if (r == true) {
@@ -449,6 +468,7 @@
 					nomor();
 				}
 			} else {
+				// txt = "Batal Hapus";
 			}
 		});
 		$('input[type="checkbox"]').on('change', function() {
@@ -457,7 +477,7 @@
 		});
 		$(".date").datepicker({
 			'dateFormat': 'dd-mm-yy',
-		});
+		})
 	});
 
 	function nomor() {
@@ -476,7 +496,7 @@
 		var hariCek = TGLCEK.substr(0,2);
 		var bulanCek = TGLCEK.substr(3,2);
 		var tahunCek = TGLCEK.substr(6,4);
-		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>;
+		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>.toString().padStart(2,'0');
 		var tahunSesi = <?= substr($this->session->userdata['periode'],-4)?>;
 		if(bulanCek != bulanSesi){
 			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
@@ -493,9 +513,31 @@
 			})
 		}
 	}
-//backup
 
-function tambah() {
+	function hitung() {
+		var TOTAL_QTY = 0;
+		var TOTAL = 0;
+		var total_row = idrow;
+		for (i = 0; i < total_row; i++) {
+			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
+		};
+		$(".QTY").each(function() {
+			var val = parseFloat($(this).val().replace(/,/g, ''));
+			if (isNaN(val)) val = 0;
+			TOTAL_QTY += val;
+		});
+
+		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
+		if (isNaN(TOTAL)) TOTAL = 0;
+
+		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
+		$('#TOTAL').val(numberWithCommas(TOTAL));
+
+		$('#TOTAL_QTY').autoNumeric('update');
+		$('#TOTAL').autoNumeric('update');
+	}
+
+	function tambah() {
 
 		var x = document.getElementById('datatable').insertRow(idrow + 1);
 		var td1 = x.insertCell(0);
@@ -512,7 +554,7 @@ function tambah() {
 		td4.innerHTML = "<input name='SIZE[]' id=SIZE" + idrow + " type='text' class='form-control SIZE text_input' required>";
 		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
-		td7.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+		td7.innerHTML = "<input type='hidden' value='0' name='NO_IDX[]' id=NO_IDX" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -524,29 +566,6 @@ function tambah() {
 		idrow++;
 		nomor();
 	}
-	
-	function hitung() {
-		var TOTAL_QTY = 0;
-
-		var total_row = idrow;
-		for (i = 0; i < total_row; i++) {
-			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
-		};
-		$(".QTY").each(function() {
-			var val = parseFloat($(this).val().replace(/,/g, ''));
-			if (isNaN(val)) val = 0;
-			TOTAL_QTY += val;
-		});
-
-		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
-	
-		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
-		
-		$('#TOTAL_QTY').autoNumeric('update');
-
-	}
-
-	
 
 	function hapus() {
 		if (idrow > 1) {
@@ -561,6 +580,7 @@ function tambah() {
 	$(document).ready(function() {
 		select_dragon();
 	});
+
 	function select_dragon() {
 		$('.js-example-responsive-dragon').select2({
 			ajax: {

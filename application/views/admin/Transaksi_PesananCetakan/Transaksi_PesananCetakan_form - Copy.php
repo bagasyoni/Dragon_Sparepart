@@ -436,9 +436,15 @@
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			
-			
-		};
+			$("#HARGA" + i.toString()).autoNumeric('init', {
+				aSign: '<?php echo ''; ?>',
+				vMin: '-999999999.99'
+			});
+			$("#TOTAL" + i.toString()).autoNumeric('init', {
+			aSign: '<?php echo ''; ?>',
+			vMin: '-999999999.99'
+		});
+		}
 		$('body').on('click', '.btn-delete', function() {
 			var r = confirm("Yakin dihapus?");
 			if (r == true) {
@@ -457,7 +463,7 @@
 		});
 		$(".date").datepicker({
 			'dateFormat': 'dd-mm-yy',
-		});
+		})
 	});
 
 	function nomor() {
@@ -476,7 +482,7 @@
 		var hariCek = TGLCEK.substr(0,2);
 		var bulanCek = TGLCEK.substr(3,2);
 		var tahunCek = TGLCEK.substr(6,4);
-		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>;
+		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>.toString().padStart(2,'0');
 		var tahunSesi = <?= substr($this->session->userdata['periode'],-4)?>;
 		if(bulanCek != bulanSesi){
 			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
@@ -494,8 +500,30 @@
 		}
 	}
 //backup
+	function hitung() {
+		var TOTAL_QTY = 0;
+		var TOTAL = 0;
+		var total_row = idrow;
+		for (i = 0; i < total_row; i++) {
+			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
+		};
+		$(".QTY").each(function() {
+			var val = parseFloat($(this).val().replace(/,/g, ''));
+			if (isNaN(val)) val = 0;
+			TOTAL_QTY += val;
+		});
 
-function tambah() {
+		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
+		if (isNaN(TOTAL)) TOTAL = 0;
+
+		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
+		$('#TOTAL').val(numberWithCommas(TOTAL));
+
+		$('#TOTAL_QTY').autoNumeric('update');
+		$('#TOTAL').autoNumeric('update');
+	}
+
+	function tambah() {
 
 		var x = document.getElementById('datatable').insertRow(idrow + 1);
 		var td1 = x.insertCell(0);
@@ -524,29 +552,6 @@ function tambah() {
 		idrow++;
 		nomor();
 	}
-	
-	function hitung() {
-		var TOTAL_QTY = 0;
-
-		var total_row = idrow;
-		for (i = 0; i < total_row; i++) {
-			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
-		};
-		$(".QTY").each(function() {
-			var val = parseFloat($(this).val().replace(/,/g, ''));
-			if (isNaN(val)) val = 0;
-			TOTAL_QTY += val;
-		});
-
-		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
-	
-		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
-		
-		$('#TOTAL_QTY').autoNumeric('update');
-
-	}
-
-	
 
 	function hapus() {
 		if (idrow > 1) {

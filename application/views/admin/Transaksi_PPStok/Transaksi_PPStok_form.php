@@ -282,6 +282,7 @@
 				"<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
 			buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
 			order: true,
+			"oSearch": { "bSmart": false, "bRegex": true },
 		});
 		$('.modal-footer').on('click', '#close', function() {
 			$('input[type=search]').val('').keyup(); // this line and next one clear the search dialog

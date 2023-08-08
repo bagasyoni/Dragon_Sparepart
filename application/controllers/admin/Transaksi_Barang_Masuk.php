@@ -541,6 +541,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $search = $this->input->post('search');
         $page = ((int)$this->input->post('page'));
+        $sub = $this->session->userdata['sub'];
         if ($page == 0) {
             $xa = 0;
         } else {
@@ -549,7 +550,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $perPage = 10;
         $results = $this->db->query("SELECT bhnd.NO_ID, bhnd.KD_BHN, bhnd.NA_BHN, bhn.SATUAN, bhnd.RAK
             FROM bhn, bhnd
-            WHERE bhn.KD_BHN = bhnd.KD_BHN AND bhnd.DR = '$dr' AND bhnd.FLAG = 'SP' AND bhnd.sub='SP' AND (bhnd.KD_BHN LIKE '%$search%' OR bhnd.NA_BHN LIKE '%$search%' OR bhn.SATUAN LIKE '%$search%' OR bhnd.RAK LIKE '%$search%')
+            WHERE bhn.KD_BHN = bhnd.KD_BHN AND bhnd.FLAG='$sub' AND bhnd.SUB='$sub' AND bhnd.DR='$dr' AND (bhnd.KD_BHN LIKE '%$search%' OR bhnd.NA_BHN LIKE '%$search%' OR bhn.SATUAN LIKE '%$search%' OR bhnd.RAK LIKE '%$search%')
             ORDER BY bhn.KD_BHN LIMIT $xa,$perPage");
         $selectajax = array();
         foreach ($results->RESULT_ARRAY() as $row) {
