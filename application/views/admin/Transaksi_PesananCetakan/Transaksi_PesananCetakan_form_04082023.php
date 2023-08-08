@@ -161,18 +161,10 @@
 							<label class="label">Tujuan </label>
 						</div>
 						<div class="col-md-2">
-<<<<<<< HEAD
 							<select class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text">
 								<option value="CNC">CNC</option>
-								<!-- <option value="PBL">PBL</option> -->
-							</select>
-=======
-					 	<select class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN"  type="text">
-								<option value="CNC" selected>CNC</option>
 								<option value="PBL">PBL</option>
-								
-							</select> 
->>>>>>> 769c06933836d222344c3ac8c779a695c7de4388
+							</select>
 						</div>
 						<div class="col-md-2">
 							<select class="form-control text_input TIPE" id="TIPE" name="TIPE" type="text">
@@ -286,7 +278,7 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-4">
-							<label class="label">Gambar Sepatu Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
+							<label class="label">Gambar Cetakan Maksimal 1 MB ekstensi yang diperbolehkan .jpg .png .jpeg .bmp </label>
 						</div>
 					</div>
 				</div>
