@@ -188,7 +188,9 @@ foreach ($inventaris as $rowh) {
 							foreach ($inventaris as $row) :
 							?>
 								<tr>
-									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
+									<td><input name="RECX" id="RECX" value="<?= $no+1 ?>" type="text" class="form-control RECX text_input"  readonly>
+									<input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" hidden>	
+									</td>
 									<td><input name="JENIS[]" id="JENIS<?php echo $no; ?>" value="<?= $row->JENIS ?>" type="text" class="form-control JENIS text_input"></td>
 									<td><input name="MERK[]" id="MERK<?php echo $no; ?>" value="<?= $row->MERK ?>" type="text" class="form-control MERK text_input"></td>
 									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"></td>

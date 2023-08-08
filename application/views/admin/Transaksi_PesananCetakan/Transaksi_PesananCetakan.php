@@ -205,18 +205,18 @@
 			// 	hist += (ttd7 + " pada tanggal " + ttd7d) + "<Br/>";
 			// else lengkap = 0;
 			
-			if(lengkap == 0)
-			{
-				$("#btnPrint").hide();
-			}
-			else
-			{
+			//if(lengkap == 0)
+			//{
+			//	$("#btnPrint").hide();
+			//}
+			//else
+			//{
 				var id = $(a).data("id");
 				$("#btnPrint").click(function()
 				{
 					window.open("JASPER/" + id);
 				});
-			}
+			//}
 			
 			$("#sp3").html(hist);
 			console.log(event.relatedTarget);

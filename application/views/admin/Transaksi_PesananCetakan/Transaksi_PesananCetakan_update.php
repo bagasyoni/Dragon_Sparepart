@@ -199,7 +199,7 @@ foreach ($rnd as $rowh) {
 							<select <?php if ($rowh->VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text">
 								<option selected><?php echo $rowh->TUJUAN ?></option>
 								<option value="CNC">CNC</option>
-								<option value="PBL">PBL</option>
+								<!-- <option value="PBL">PBL</option> -->
 							</select>
 						</div>
 						<div class="col-md-2">

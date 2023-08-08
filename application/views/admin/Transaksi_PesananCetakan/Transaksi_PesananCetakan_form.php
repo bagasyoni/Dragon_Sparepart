@@ -163,7 +163,7 @@
 						<div class="col-md-2">
 							<select class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text">
 								<option value="CNC">CNC</option>
-								<option value="PBL">PBL</option>
+								<!-- <option value="PBL">PBL</option> -->
 							</select>
 						</div>
 						<div class="col-md-2">

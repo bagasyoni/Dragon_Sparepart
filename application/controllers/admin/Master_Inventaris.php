@@ -231,6 +231,8 @@ class Master_Inventaris extends CI_Controller
             $this->transaksi_model->input_datad('inventarisd', $datad);
             $i++;
         }
+        $x = $this->db->query("SELECT no_id AS idx FROM inventaris WHERE NO_BUKTI='$bukti'")->result();
+		$no_id = $x[0]->idx;
         $this->session->set_flashdata(
             'pesan',
             '<div class="alert alert-danger alert-dismissible fade show" role="alert"> 
@@ -240,7 +242,8 @@ class Master_Inventaris extends CI_Controller
                 </button> 
             </div>'
         );
-        redirect('admin/Master_Inventaris/index_Master_Inventaris');
+        // redirect('admin/Master_Inventaris/index_Master_Inventaris');
+        redirect('admin/Master_Inventaris/update/'.$no_id.'');
     }
 
     public function update($id)
@@ -266,7 +269,7 @@ class Master_Inventaris extends CI_Controller
             FROM inventaris,inventarisd 
             WHERE inventaris.NO_ID=$id 
             AND inventaris.NO_ID=inventarisd.ID 
-            ORDER BY inventarisd.REC";
+            ORDER BY inventarisd.JENIS,inventarisd.REC";
         $data['inventaris'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
@@ -404,7 +407,9 @@ class Master_Inventaris extends CI_Controller
                 </button> 
             </div>'
         );
-        redirect('admin/Master_Inventaris/index_Master_Inventaris');
+        // redirect('admin/Master_Inventaris/index_Master_Inventaris');
+        $no_id = $this->input->post('ID', TRUE);
+        redirect('admin/Master_Inventaris/update/'.$no_id.'');
     }
 
     public function delete($id)

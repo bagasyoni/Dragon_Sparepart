@@ -893,7 +893,7 @@ class Transaksi_PesananPisau extends CI_Controller
 
     public function getDataAjax_dr()
     {
-        $dr = $this->session->userdata['dr'];
+        $devisi = $this->session->userdata['devisi'];
         $search = $this->input->post('search');
         $page = ((int)$this->input->post('page'));
         if ($page == 0) {
@@ -905,7 +905,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $results = $this->db->query("SELECT KD_DEV, NM_DEV, FLAG, NAMA, AREA
             FROM rn_dev
             WHERE (KD_DEV LIKE '%$search%' OR NM_DEV LIKE '%$search%')
-            AND KD_DEV='$dr'
+            AND KD_DEV='$devisi'
             ORDER BY KD_DEV 
             LIMIT $xa,$perPage");
         $selectajax = array();
