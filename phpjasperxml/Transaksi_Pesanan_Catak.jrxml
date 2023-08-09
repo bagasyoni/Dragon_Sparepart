@@ -340,6 +340,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA["Tanggal Datang	:"]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="456" y="48" width="71" height="70" uuid="24902c69-881b-4be2-b5d2-9e5a276bb7e6"/>
+				<imageExpression><![CDATA[($F{GAMBAR}=="") ? "assets/ttd/KOSONG.png" : "GAMBAR/pesanancetakan/"+ $F{GAMBAR}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -571,6 +575,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{JENIS2}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="430" y="3" width="46" height="40" uuid="cfb1e51c-d946-43c6-b1f1-659006d3c059"/>
+				<imageExpression><![CDATA[($F{GAMBAR1}=="") ? "assets/ttd/KOSONG.png" : "GAMBAR/pesanancetakan/"+ $F{GAMBAR1}]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 	<lastPageFooter>

@@ -294,6 +294,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA["Tanggal Diminta	:"]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="462" y="46" width="71" height="70" uuid="b4148e7d-6986-4b75-a82a-eac8866455b2"/>
+				<imageExpression><![CDATA[($F{GAMBAR}=="") ? "assets/ttd/KOSONG.png" : "GAMBAR/pesananpisau/"+ $F{GAMBAR}
+
+]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -493,7 +499,7 @@
 			</textField>
 			<image>
 				<reportElement x="430" y="3" width="46" height="40" uuid="948c36d7-1098-4db0-803e-a51a947a79f1"/>
-				<imageExpression><![CDATA["GAMBAR/pesananpisau/"+$F{GAMBAR1}]]></imageExpression>
+				<imageExpression><![CDATA[($F{GAMBAR1}=="") ? "assets/ttd/KOSONG.png" : "GAMBAR/pesananpisau/"+ $F{GAMBAR1}]]></imageExpression>
 			</image>
 		</band>
 	</detail>

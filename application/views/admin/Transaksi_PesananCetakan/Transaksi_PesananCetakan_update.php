@@ -453,10 +453,7 @@ foreach ($rnd as $rowh) {
 				aSign: '<?php echo ''; ?>',
 				vMin: '-999999999.99'
 			});
-			$("#SISABON" + i.toString()).autoNumeric('init', {
-				aSign: '<?php echo ''; ?>',
-				vMin: '-999999999.99'
-			});
+
 		}
 		$('body').on('click', '.btn-delete', function() {
 			var r = confirm("Yakin dihapus?");
@@ -496,7 +493,7 @@ foreach ($rnd as $rowh) {
 		var hariCek = TGLCEK.substr(0,2);
 		var bulanCek = TGLCEK.substr(3,2);
 		var tahunCek = TGLCEK.substr(6,4);
-		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>.toString().padStart(2,'0');
+		var bulanSesi = <?= substr($this->session->userdata['periode'],0,2)?>;
 		var tahunSesi = <?= substr($this->session->userdata['periode'],-4)?>;
 		if(bulanCek != bulanSesi){
 			$("#TGL").val(hariCek+'-'+bulanSesi+'-'+tahunSesi);
@@ -514,30 +511,8 @@ foreach ($rnd as $rowh) {
 		}
 	}
 
-	function hitung() {
-		var TOTAL_QTY = 0;
-		var TOTAL = 0;
-		var total_row = idrow;
-		for (i = 0; i < total_row; i++) {
-			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
-		};
-		$(".QTY").each(function() {
-			var val = parseFloat($(this).val().replace(/,/g, ''));
-			if (isNaN(val)) val = 0;
-			TOTAL_QTY += val;
-		});
-
-		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
-		if (isNaN(TOTAL)) TOTAL = 0;
-
-		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
-		$('#TOTAL').val(numberWithCommas(TOTAL));
-
-		$('#TOTAL_QTY').autoNumeric('update');
-		$('#TOTAL').autoNumeric('update');
-	}
-
-	function tambah() {
+	
+function tambah() {
 
 		var x = document.getElementById('datatable').insertRow(idrow + 1);
 		var td1 = x.insertCell(0);
@@ -554,7 +529,7 @@ foreach ($rnd as $rowh) {
 		td4.innerHTML = "<input name='SIZE[]' id=SIZE" + idrow + " type='text' class='form-control SIZE text_input' required>";
 		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
-		td7.innerHTML = "<input type='hidden' value='0' name='NO_IDX[]' id=NO_IDX" + idrow + "  class='form-control'>" +
+		td7.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -566,6 +541,29 @@ foreach ($rnd as $rowh) {
 		idrow++;
 		nomor();
 	}
+	
+	function hitung() {
+		var TOTAL_QTY = 0;
+
+		var total_row = idrow;
+		for (i = 0; i < total_row; i++) {
+			var qty = parseFloat($('#QTY' + i).val().replace(/,/g, ''));
+		};
+		$(".QTY").each(function() {
+			var val = parseFloat($(this).val().replace(/,/g, ''));
+			if (isNaN(val)) val = 0;
+			TOTAL_QTY += val;
+		});
+
+		if (isNaN(TOTAL_QTY)) TOTAL_QTY = 0;
+	
+		$('#TOTAL_QTY').val(numberWithCommas(TOTAL_QTY));
+		
+		$('#TOTAL_QTY').autoNumeric('update');
+
+	}
+
+	
 
 	function hapus() {
 		if (idrow > 1) {
@@ -580,7 +578,6 @@ foreach ($rnd as $rowh) {
 	$(document).ready(function() {
 		select_dragon();
 	});
-
 	function select_dragon() {
 		$('.js-example-responsive-dragon').select2({
 			ajax: {
