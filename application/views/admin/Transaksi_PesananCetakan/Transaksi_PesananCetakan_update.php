@@ -529,7 +529,7 @@ function tambah() {
 		td4.innerHTML = "<input name='SIZE[]' id=SIZE" + idrow + " type='text' class='form-control SIZE text_input' required>";
 		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
 		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN" + idrow + " type='text' class='form-control SATUAN text_input'>";
-		td7.innerHTML = "<input type='hidden' value='0' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control'>" +
+		td7.innerHTML = "<input type='hidden' value='0' name='NO_IDX[]' id=NO_IDX" + idrow + "  class='form-control'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {

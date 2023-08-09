@@ -155,6 +155,7 @@ class Laporan_model extends CI_Model
 		$dr = $this->session->userdata['dr'];
 		$sub = $this->session->userdata['sub'];
 		$per = $this->session->userdata['periode'];
+		$devisi = $this->session->userdata['devisi'];
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$q1 = "SELECT beli.PER AS PER,
 				belid.TGL AS TGL,
@@ -167,10 +168,12 @@ class Laporan_model extends CI_Model
 				belid.NO_BELI AS NO_BUKTI,
 				belid.REC AS REC
 			FROM beli, belid
-			WHERE beli.NO_BELI = belid.NO_BELI
+			WHERE beli.NO_BUKTI = belid.NO_BUKTI
 			AND belid.TGL='$tgl_1'
-			AND beli.SUB='$sub'
-			AND beli.FLAG2='SP'
+			AND beli.KD_BAG='$devisi'
+			AND beli.VAL <> 0
+			-- AND beli.SUB='$sub'
+			AND beli.FLAG2='NB'
 			ORDER BY belid.TGL";
 		return $this->db->query($q1);
 	}
