@@ -26,7 +26,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
         }
     }
 
-    var $column_order = array(null, null, null, 'TGL', 'NO_BUKTI', 'TGL', 'NAMAS', 'TTD2');
+    var $column_order = array(null, null, null,'VAL','TGL', 'NO_BUKTI', 'TGL', 'NAMAS', 'TTD2');
     var $column_search = array('TGL', 'NO_BUKTI', 'TGL', 'NAMAS', 'TTD2');
     var $order = array('NO_ID' => 'desc');
 
