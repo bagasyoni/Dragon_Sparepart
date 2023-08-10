@@ -169,7 +169,7 @@ class Transaksi_Pemesanan extends CI_Controller
         $sub = $this->session->userdata['sub'];
         $dr = $this->session->userdata['dr'];
         // $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='' AND FLAG2='NB' and DR='$dr'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='NB' and DR='$dr'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         $value11 = substr($nom[0], 4, 3);
         $value22 = (float)STRVAL($value11) + 1;
@@ -226,7 +226,7 @@ class Transaksi_Pemesanan extends CI_Controller
         $sub = $this->session->userdata['sub'];
         $dr = $this->session->userdata['dr'];
         // $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='SP'")->result();
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='' AND FLAG2='NB'and DR='$dr'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='$sub' AND FLAG='PP' AND FLAG2='NB'and DR='$dr'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         $value11 = substr($nom[0], 3, 3);
         $value22 = STRVAL($value11) + 1;
@@ -277,7 +277,7 @@ class Transaksi_Pemesanan extends CI_Controller
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
-            'FLAG' => '',
+            'FLAG' => 'PP',
             'FLAG2' => 'NB',
             'LOGISTIK' => '0',
             'TTD1' => '1',
