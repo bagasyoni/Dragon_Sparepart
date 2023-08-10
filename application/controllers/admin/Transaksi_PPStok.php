@@ -312,7 +312,7 @@ class Transaksi_PPStok extends CI_Controller
         $DEVISI = $this->input->post('DEVISI');
         $KET = $this->input->post('KET');
         $TGL_DIMINTA = $this->input->post('TGL_DIMINTA');
-        $SISABON = str_replace(',', '', $this->input->post('SISABON', TRUE));
+        // $SISABON = str_replace(',', '', $this->input->post('SISABON', TRUE));
         $URGENT = str_replace(',', '', $this->input->post('URGENT', TRUE));
         $i = 0;
         foreach ($REC as $a) {
@@ -333,7 +333,7 @@ class Transaksi_PPStok extends CI_Controller
                 'DEVISI' => $DEVISI[$i],
                 'KET' => $KET[$i],
                 'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$i])),
-                'SISABON' => str_replace(',', '', $SISABON[$i]),
+                // 'SISABON' => str_replace(',', '', $SISABON[$i]),
                 'URGENT' => isset($URGENT[$i]) ? $URGENT[$i] : 0,
                 'FLAG' => 'PP',
                 // 'FLAG2' => 'SP',
@@ -482,7 +482,7 @@ class Transaksi_PPStok extends CI_Controller
         $DEVISI = $this->input->post('DEVISI');
         $KET = $this->input->post('KET');
         $TGL_DIMINTA = $this->input->post('TGL_DIMINTA');
-        $SISABON = str_replace(',', '', $this->input->post('SISABON', TRUE));
+        // $SISABON = str_replace(',', '', $this->input->post('SISABON', TRUE));
         $URGENT =  $this->input->post('URGENT');
         $jum = count($data);
         $ID = array_column($data, 'NO_ID');
@@ -505,8 +505,8 @@ class Transaksi_PPStok extends CI_Controller
                     'SATUAN' => $SATUAN[$URUT],
                     'DEVISI' => $DEVISI[$URUT],
                     'KET' => $KET[$URUT],
-                    'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$URUT])),
-                    'SISABON' => str_replace(',', '', $SISABON[$URUT]),
+                    // 'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$URUT])),
+                    // 'SISABON' => str_replace(',', '', $SISABON[$URUT]),
                     'URGENT' => isset($URGENT[$URUT]) ? $URGENT[$URUT] : 0,
                     'FLAG' => 'PP',
                     // 'FLAG2' => 'SP',
@@ -549,7 +549,7 @@ class Transaksi_PPStok extends CI_Controller
                     'DEVISI' => $DEVISI[$i],
                     'KET' => $KET[$i],
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA[$i])),
-                    'SISABON' => str_replace(',', '', $SISABON[$i]),
+                    // 'SISABON' => str_replace(',', '', $SISABON[$i]),
                     'URGENT' => isset($URGENT[$URUT]) ? $URGENT[$URUT] : 0,
                     'FLAG' => 'PP',
                     // 'FLAG2' => 'SP',

@@ -159,7 +159,7 @@ class Laporan_model extends CI_Model
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 		$q1 = "SELECT beli.PER AS PER,
 				belid.TGL AS TGL,
-				belid.NO_BELI AS NO_BUKTI_BL_BELI,
+				belid.NO_BUKTI AS NO_BUKTI_BL_BELI,
 				CONCAT(belid.KD_BHN,' - ',belid.NA_BHN) AS BARANG,
 				belid.SATUAN AS SATUAN,
 				belid.QTY AS QTY,
@@ -171,7 +171,7 @@ class Laporan_model extends CI_Model
 			WHERE beli.NO_BUKTI = belid.NO_BUKTI
 			AND belid.TGL='$tgl_1'
 			AND beli.KD_BAG='$devisi'
-			AND beli.VAL <> 0
+			-- AND beli.VAL <> 0
 			-- AND beli.SUB='$sub'
 			AND beli.FLAG2='NB'
 			ORDER BY belid.TGL";
