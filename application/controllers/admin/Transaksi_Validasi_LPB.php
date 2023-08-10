@@ -245,8 +245,8 @@ class Transaksi_Validasi_LPB extends CI_Controller
                 belid.SATUAN,
                 belid.SAT_BL,
                 belid.QTY,
-                belid.QTY_BL,
-                belid.VAL
+                belid.QTY_BL
+                -- belid.VAL
             FROM beli, belid 
             WHERE beli.NO_ID = $id 
             AND beli.NO_ID = belid.ID 
@@ -573,8 +573,9 @@ class Transaksi_Validasi_LPB extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
+        $devisi = $this->session->userdata['devisi'];
 
-        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID<'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND OK<>'1' ORDER BY NO_BUKTI ASC LIMIT 1";
+        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID<'$ID' AND FLAG = 'BL' AND FLAG2 = 'NB' AND PER='$per' AND DR='$dr' AND KD_BAG='$devisi' AND OK<>'1' ORDER BY NO_BUKTI DESC LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {
@@ -592,8 +593,9 @@ class Transaksi_Validasi_LPB extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
+        $devisi = $this->session->userdata['devisi'];
 
-        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID>'$ID' AND FLAG = 'BL' AND FLAG2 = 'SP' AND PER='$per' AND DR='$dr' AND SUB='$sub' AND OK<>'1' ORDER BY NO_BUKTI ASC LIMIT 1";
+        $q1 = " SELECT NO_ID FROM beli WHERE NO_ID>'$ID' AND FLAG = 'BL' AND FLAG2 = 'NB' AND PER='$per' AND DR='$dr' AND KD_BAG='$devisi' AND OK<>'1' ORDER BY NO_BUKTI ASC LIMIT 1";
 
         $q2 = $this->db->query($q1);
         if ($q2->num_rows() > 0) {

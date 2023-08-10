@@ -167,8 +167,8 @@ class Transaksi_PesananCetakan extends CI_Controller
             $row[] = $pp->JENIS;
             $row[] = $pp->FLAG;
             $row[] = $pp->TUJUAN;
-            $row[] = "<img src='/DragonSparepart/gambar/pesanancetakan/$pp->GAMBAR1' width='auto' height='120'>";
-            $row[] = "<img src='/DragonSparepart/gambar/pesanancetakan/$pp->GAMBAR2' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesanancetakan/$pp->GAMBAR1' width='auto' height='120'>";
+            $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesanancetakan/$pp->GAMBAR2' width='auto' height='120'>";
             if($pp->VAL==1){
                 $row[] = "<button type='button' class='btn btn-block btn-warning' fdprocessedid='fbns9l'>Belum Selesai</button>";
             }else{
@@ -506,7 +506,7 @@ class Transaksi_PesananCetakan extends CI_Controller
             // $this->load->view('admin/Transaksi_PesananLBBA/Transaksi_PesananLBBA', $data);
         }
 
-        $NO_ID = $this->input->post('NO_ID', TRUE);
+        $NO_ID = $this->input->post('NO_ID');
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
             'ARTICLE' => $this->input->post('ARTICLE', TRUE),
