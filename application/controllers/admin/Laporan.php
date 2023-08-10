@@ -698,13 +698,14 @@ class Laporan extends CI_Controller
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 			$query = "SELECT beli.PER AS PER,
 					belid.TGL AS TGL,
-					belid.NO_BUKTI AS NO_BUKTI_BL_BELI,
-					CONCAT(belid.KD_BHN,' - ',belid.NA_BHN) AS BARANG,
+					belid.NO_BUKTI AS NO_BUKTI,
+					-- CONCAT(belid.KD_BHN,' - ',belid.NA_BHN) AS BARANG,
+					belid.NA_BHN AS BARANG,
 					belid.SATUAN AS SATUAN,
 					belid.QTY AS QTY,
 					belid.NO_PO AS NO_PO,
 					belid.NO_PP AS NO_PP,
-					belid.NO_BELI AS NO_BUKTI,
+					-- belid.NO_BELI AS NO_BUKTI,
 					belid.REC AS REC
 				FROM beli, belid
 				WHERE beli.NO_BUKTI = belid.NO_BUKTI
@@ -717,7 +718,7 @@ class Laporan extends CI_Controller
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
-					"NO_BUKTI_BL_BELI" => $row1["NO_BUKTI_BL_BELI"],
+					"NO_BUKTI" => 'xx',
 					"BARANG" => $row1["BARANG"],
 					"SATUAN" => $row1["SATUAN"],
 					"QTY" => $row1["QTY"],
@@ -725,6 +726,7 @@ class Laporan extends CI_Controller
 					"PER" => $row1["PER"],
 					"TGL" => $row1["TGL"],
 					"NO_PO" => $row1["NO_PO"],
+					"NO_PP" => $row1["NO_PP"],
 					"REC" => $row1["REC"],
 				));
 			}
