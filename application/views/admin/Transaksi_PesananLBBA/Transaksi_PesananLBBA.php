@@ -141,7 +141,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-				 <button id="btnPrint" data-dismiss="modal" class="btn btn-primary ">Cetak</button>
+				 <button id="btnPrint" data-dismiss="modal" class="btn btn-primary ">-</button>
             </div>
             </form>
         </div>
@@ -201,7 +201,7 @@
 			// 	hist += (ttd7 + " pada tanggal " + ttd7d) + "<Br/>";
 			// else lengkap = 0;
 			
-			if(lengkap == 'x')
+			/* if(lengkap == 'x')
 			{
 				$("#btnPrint").hide();
 			}
@@ -212,7 +212,7 @@
 				{
 					window.open("JASPER/" + id);
 				});
-			}
+			} */
 			
 			$("#sp3").html(hist);
 			console.log(event.relatedTarget);

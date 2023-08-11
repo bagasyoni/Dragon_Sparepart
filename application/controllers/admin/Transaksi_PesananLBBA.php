@@ -107,7 +107,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         $data = array();
         $no = @$_POST['start'];
         foreach ($list as $pp) {
-            // $JASPER = "window.open('JASPER/" . $pp->NO_ID . "','', 'width=1000','height=900');";
+             $JASPER = "window.open('JASPER/" . $pp->NO_ID . "','', 'width=1000','height=900');";
             // <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
             if($pp->TTD7 == 0){
                 $hidden = '';
@@ -140,7 +140,7 @@ class Transaksi_PesananLBBA extends CI_Controller
 							data-ttd7 = "' . $pp->TTD7_USR . '" 
 							data-ttd7d = "' . $pp->TTD7_SMP . '"
 							data-id = "' . $pp->NO_ID . '" 
-							data-no="' . $pp->NO_BUKTI . '" class="dropdown-item" href="#" data-toggle="modal" data-target="#melbbaModal";"><i class="fa fa-print"></i> Print</a>
+							data-no="' . $pp->NO_BUKTI . '" class="dropdown-item" href="#" onclick="' . $JASPER . '" data-toggle="modal" data-target="#melbbaModal";"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";

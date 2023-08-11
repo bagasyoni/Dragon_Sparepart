@@ -106,7 +106,7 @@ class Transaksi_PesananCetakan extends CI_Controller
         $data = array();
         $no = @$_POST['start'];
         foreach ($list as $pp) {
-            // $JASPER = "window.open('JASPER/" . $pp->NO_ID . "','', 'width=1000','height=900');";
+             $JASPER = "window.open('JASPER/" . $pp->NO_ID . "','', 'width=1000','height=900');";
             // $no++;
             // $row = array();
             // $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $pp->NO_ID . "'>";
@@ -152,7 +152,7 @@ class Transaksi_PesananCetakan extends CI_Controller
 							data-ttd7 = "' . $pp->TTD7_USR . '" 
 							data-ttd7d = "' . $pp->TTD7_SMP . '"
 							data-id = "' . $pp->NO_ID . '" 
-							data-no="' . $pp->NO_BUKTI . '" class="dropdown-item" href="#" data-toggle="modal" data-target="#cetakanModal";"><i class="fa fa-print"></i> Print</a>
+							data-no="' . $pp->NO_BUKTI . '" class="dropdown-item" href="#" onclick="' . $JASPER . '" data-toggle="modal" data-target="#cetakanModal";"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
             $row[] = $no . ".";

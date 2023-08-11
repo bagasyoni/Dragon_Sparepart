@@ -138,7 +138,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-				<button id="btnPrint" data-dismiss="modal" class="btn btn-primary ">Cetak</button>
+				<button id="btnPrint" data-dismiss="modal" class="btn btn-primary ">-</button>
             </div>
             </form>
         </div>
@@ -149,6 +149,7 @@
     $(document).ready(function() {
         $('#pisauModal').on('show.bs.modal', function (event) {
 			var a = event.relatedTarget;
+			
 			var no = $(a).data("no");
 			$("#sp1").text(no);
 			var ttd1 = $(a).data("ttd1");
@@ -204,11 +205,14 @@
 			//}
 			//else
 			//{
-				var id = $(a).data("id");
-				$("#btnPrint").click(function()
-				{
-					window.open("JASPER/" + id);
-				});
+				
+				//var id = $(a).data("id");
+				//$("#btnPrint").click(function()
+				//{
+				//	window.open("JASPER/" + id);
+				//});
+				
+				
 			//}
 			
 			$("#sp3").html(hist);
