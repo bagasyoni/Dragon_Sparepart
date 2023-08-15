@@ -257,7 +257,7 @@ foreach ($barang_masuk as $rowh) {
 										</div>
 									</td>
 									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="RAK[]" id="RAK<?php echo $no; ?>" valntiue="<?= $row->RAK ?>" type="text" class="form-control RAK text_input" readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="RAK[]" id="RAK<?php echo $no; ?>" value="<?= $row->RAK ?>" type="text" class="form-control RAK text_input" readonly></td>
 									<!-- <td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="QTY_BL[]" onkeyup="hitung()" id="QTY_BL<?php echo $no; ?>" value="<?php echo number_format($row->QTY_BL, 2, '.', ','); ?>" type="text" class="form-control QTY_BL rightJustified text-primary" readonly></td> -->
 									<td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="QTY_BL[]" onkeyup="hitung()" id="QTY_BL<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY_BL rightJustified text-primary" readonly></td>
 									<!-- <td><input <?php if ($rowh->VAL == !0) echo 'readonly'; ?> name="SAT_BL[]" id="SAT_BL<?php echo $no; ?>" value="<?= $row->SAT_BL ?>" type="text" class="form-control SAT_BL text_input"></td> -->

@@ -312,22 +312,22 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 beli.TTD6,
                 beli.OK,
 
-                belid_sp.NO_ID,
-                belid_sp.REC,
+                belid.NO_ID,
+                belid.REC,
                 -- belid.OK,
-                belid_sp.KD_BHN,
-                belid_sp.NA_BHN,
-                belid_sp.RAK,
-                belid_sp.SISA AS QTY,
-                belid_sp.SATUAN,
-                belid_sp.QTY,
-                belid_sp.SAT_BL,
-                belid_sp.QTY_BL
+                belid.KD_BHN,
+                belid.NA_BHN,
+                belid.RAK,
+                belid.SISA AS QTY,
+                belid.SATUAN,
+                belid.QTY,
+                belid.SAT_BL,
+                belid.QTY_BL
                 -- belid.VAL
-            FROM beli, belid_sp 
+            FROM beli, belid 
             WHERE beli.NO_ID = $id 
-            AND beli.NO_ID = belid_sp.ID 
-            ORDER BY belid_sp.REC";
+            AND beli.NO_ID = belid.ID 
+            ORDER BY belid.REC";
         $data['barang_masuk'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
@@ -367,22 +367,22 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 beli.TTD6,
                 beli.OK,
 
-                belid_sp.NO_ID,
-                belid_sp.REC,
-                belid_sp.OK,
-                belid_sp.KD_BHN,
-                belid_sp.NA_BHN,
-                belid_sp.RAK,
-                belid_sp.SISA AS QTY,
-                belid_sp.SATUAN,
-                belid_sp.QTY,
-                belid_sp.SAT_BL,
-                belid_sp.QTY_BL,
-                belid_sp.VAL
-            FROM beli, belid_sp 
+                belid.NO_ID,
+                belid.REC,
+                belid.OK,
+                belid.KD_BHN,
+                belid.NA_BHN,
+                belid.RAK,
+                belid.SISA AS QTY,
+                belid.SATUAN,
+                belid.QTY,
+                belid.SAT_BL,
+                belid.QTY_BL,
+                belid.VAL
+            FROM beli, belid 
             WHERE beli.NO_ID = $id
-            AND beli.NO_ID = belid_sp.ID 
-            ORDER BY belid_sp.REC";
+            AND beli.NO_ID = belid.ID 
+            ORDER BY belid.REC";
         $data = $this->transaksi_model->edit_data($q1)->result();
         $NO_ID = $this->input->post('NO_ID');
         $REC = $this->input->post('REC');
@@ -420,12 +420,12 @@ class Transaksi_Barang_Masuk extends CI_Controller
                 $where = array(
                     'NO_ID' => $NO_ID[$URUT]
                 );
-                $this->transaksi_model->update_data($where, $datad, 'belid_sp');
+                $this->transaksi_model->update_data($where, $datad, 'belid');
             } else {
                 $where = array(
                     'NO_ID' => $ID[$i]
                 );
-                $this->transaksi_model->hapus_data($where, 'belid_sp');
+                $this->transaksi_model->hapus_data($where, 'belid');
             }
             $i++;
         }
@@ -450,7 +450,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
                     // 'FLAG2' => 'SP',
                     'FLAG2' => 'NB',
                 );
-                $this->transaksi_model->input_datad('belid_sp', $datad);
+                $this->transaksi_model->input_datad('belid', $datad);
             }
             $i++;
         }
@@ -494,7 +494,7 @@ class Transaksi_Barang_Masuk extends CI_Controller
         $whered = array(
             'ID' => "$ID"
         );
-        $this->transaksi_model->update_data($whered, $datahd, 'belid_sp');
+        $this->transaksi_model->update_data($whered, $datahd, 'belid');
 
         $bukti = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_ID='$ID'")->result();
         $no_bukti = $bukti[0]->BUKTIX;
@@ -600,20 +600,20 @@ class Transaksi_Barang_Masuk extends CI_Controller
             beli.TTD5 AS TTD5,
             beli.TTD6 AS TTD6,
 
-            belid_sp.NO_ID AS NO_ID,
-            belid_sp.REC AS REC,
-            belid_sp.VAL AS VAL,
-            belid_sp.KD_BHN AS KD_BHN,
-            belid_sp.NA_BHN AS NA_BHN,
-            belid_sp.RAK AS RAK,
-            belid_sp.QTYPP AS QTYPP,
-            belid_sp.SATUANPP AS SATUANPP,
-            belid_sp.SISA AS QTY,
-            belid_sp.SATUAN AS SATUAN
-        FROM beli, belid_sp 
+            belid.NO_ID AS NO_ID,
+            belid.REC AS REC,
+            belid.VAL AS VAL,
+            belid.KD_BHN AS KD_BHN,
+            belid.NA_BHN AS NA_BHN,
+            belid.RAK AS RAK,
+            belid.QTYPP AS QTYPP,
+            belid.SATUANPP AS SATUANPP,
+            belid.SISA AS QTY,
+            belid.SATUAN AS SATUAN
+        FROM beli, belid 
         WHERE beli.NO_ID = $id 
-        AND beli.NO_ID = belid_sp.ID 
-        ORDER BY belid_sp.REC";
+        AND beli.NO_ID = belid.ID 
+        ORDER BY belid.REC";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);
