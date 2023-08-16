@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan_Master_Barang" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e9d54873-9ce9-470f-9eaf-8951cf53f673">
+	<property name="com.jaspersoft.studio.unit." value="inch"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="inch"/>
+	<parameter name="ID" class="java.lang.String"/>
+	<parameter name="KD_BHN" class="java.lang.String"/>
+	<parameter name="NA_BHN" class="java.lang.String"/>
+	<parameter name="SATUAN" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="ID" class="java.lang.String"/>
+	<field name="KD_BHN" class="java.lang.String"/>
+	<field name="NA_BHN" class="java.lang.String"/>
+	<field name="SATUAN" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="57" splitType="Stretch">
+			<textField>
+				<reportElement x="100" y="20" width="400" height="30" uuid="ba121a0d-e53f-4bb2-b9c1-555cd04ac54e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DAFTAR BARANG"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<line>
+				<reportElement x="10" y="7" width="589" height="1" uuid="20f92c51-ef9a-419f-be04-99c3d1cbd8e0"/>
+			</line>
+			<line>
+				<reportElement x="10" y="32" width="589" height="1" uuid="7c7d50d0-454c-4791-9afd-cb42ca7d48e0"/>
+			</line>
+			<staticText>
+				<reportElement x="12" y="10" width="60" height="20" uuid="c6893e00-5830-4e73-84f5-4f4ad2a24125"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="72" y="10" width="152" height="20" uuid="1dbe3190-e3ef-40b3-92d3-6cf3b455c9ce"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="10" width="236" height="20" uuid="e630974a-441b-4820-9e08-1a563e403e02"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="10" width="139" height="20" uuid="ba55003c-0f62-4dcc-bc23-89550bdac2d4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SATUAN]]></text>
+			</staticText>
+			<line>
+				<reportElement x="10" y="4" width="589" height="1" uuid="bcf4e14a-1288-4518-b41d-4280599e053b"/>
+			</line>
+			<line>
+				<reportElement x="10" y="35" width="589" height="1" uuid="a20580ea-b305-4adb-b026-1714cd938087"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="0" width="62" height="21" uuid="0cde358e-f416-4fea-aaa1-ac15aaf09e30"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="72" y="0" width="151" height="21" uuid="7cf0b3bd-4b79-4b61-b84a-9b0d3ba71d84"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KD_BHN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="0" width="236" height="21" uuid="170e83bd-e09a-4106-b99a-fe1e2a1824e8"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NA_BHN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="139" height="21" uuid="02439e20-1c8f-4d31-862b-974a962a6a92"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SATUAN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="19" splitType="Stretch">
+			<line>
+				<reportElement x="11" y="3" width="588" height="1" uuid="4aafbc8a-8fc2-4342-9abd-2f31784288ef"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

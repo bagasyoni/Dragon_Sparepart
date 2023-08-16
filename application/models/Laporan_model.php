@@ -10,18 +10,23 @@ class Laporan_model extends CI_Model
 		$kd_bhn_1 = $this->input->post('KD_BHN_1');
 		$kd_bhn_2 = $this->input->post('KD_BHN_2');
 		$q1 = "SELECT bhn.KD_BHN AS KD_BHN,
-				bhn.NA_BHN AS NA_BHN,
-				bhn.SATUAN AS SATUAN,
-				CASE bhn.AKTIF
-					WHEN '0' THEN 'TIDAK AKTIF'
-					WHEN '1' THEN 'AKTIF'
-				END AS 'STATUS'
-			FROM bhn
-			WHERE bhn.DR='$dr'
-			AND bhn.FLAG='SP'
-			AND bhn.SUB='$sub'
-			-- AND bhn.KD_BHN BETWEEN '$kd_bhn_1' AND '$kd_bhn_2'
-			ORDER BY KD_BHN";
+					bhn.NA_BHN AS NA_BHN,
+					bhn.SATUAN AS SATUAN,
+					bhn.rak_dr1,
+					bhn.rak_dr2,
+					bhn.rak_dr3,
+					flag,
+					sub,
+					CASE bhn.AKTIF
+						WHEN '0' THEN 'TIDAK AKTIF'
+						WHEN '1' THEN 'AKTIF'
+					END AS 'STATUS'
+				FROM bhn
+				WHERE if('$dr'='I',bhn.rak_dr1<>'',if('$dr'='II',bhn.rak_dr2<>'',bhn.rak_dr3<>''))
+				AND bhn.FLAG='$sub' 
+				AND bhn.SUB='$sub'
+				AND AKTIF = 1
+				ORDER BY bhn.KD_BHN";
 		return $this->db->query($q1);
 	}
 

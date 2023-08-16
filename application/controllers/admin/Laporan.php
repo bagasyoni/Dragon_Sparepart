@@ -81,25 +81,64 @@ class Laporan extends CI_Controller
 			$query = "SELECT bhn.KD_BHN AS KD_BHN,
 					bhn.NA_BHN AS NA_BHN,
 					bhn.SATUAN AS SATUAN,
+					bhn.rak_dr1,
+					bhn.rak_dr2,
+					bhn.rak_dr3,
+					flag,
+					sub,
 					CASE bhn.AKTIF
 						WHEN '0' THEN 'TIDAK AKTIF'
 						WHEN '1' THEN 'AKTIF'
 					END AS 'STATUS'
 				FROM bhn
-				WHERE bhn.DR='$dr'
-				AND bhn.FLAG='SP'
+				WHERE if('$dr'='I',bhn.rak_dr1<>'',if('$dr'='II',bhn.rak_dr2<>'',bhn.rak_dr3<>''))
+				AND bhn.FLAG='$sub' 
 				AND bhn.SUB='$sub'
-				-- AND bhn.KD_BHN BETWEEN '$kd_bhn_1' AND '$kd_bhn_2'
+				AND AKTIF = 1
 				ORDER BY bhn.KD_BHN";
 			$result1 = mysqli_query($conn, $query);
+			$no=1;
+			$x=1;
+			$nomer = [];
+			$KD_BHN = [];
+			$NA_BHN = [];
+			$SATUAN = [];
+			$nomer_2 = [];
+			$KD_BHN_2 = [];
+			$NA_BHN_2 = [];
+			$SATUAN_2 = [];
 			while ($row1 = mysqli_fetch_assoc($result1)) {
-				array_push($PHPJasperXML->arraysqltable, array(
-					"ID" => $row1["ID"],
-					"KD_BHN" => $row1["KD_BHN"],
-					"NA_BHN" => $row1["NA_BHN"],
-					"SATUAN" => $row1["SATUAN"],
-				));
+				if($x<=50){
+					array_push($nomer, $no) ;
+					array_push($KD_BHN, $row1["KD_BHN"]) ;
+					array_push($NA_BHN, $row1["NA_BHN"]) ;
+					array_push($SATUAN, $row1["SATUAN"]) ; 
+					$x++;
+					$no++;
+				}elseif($x<=100){
+					array_push($nomer_2, $no) ;
+					array_push($KD_BHN_2, $row1["KD_BHN"]) ;
+					array_push($NA_BHN_2, $row1["NA_BHN"]) ;
+					array_push($SATUAN_2, $row1["SATUAN"]) ; 
+					$x++;
+					$no++;
+				}else{
+					$x=1;
+					$no++;
+				}
 			}
+			for ($i = 0; $i < count($nomer); $i++){
+				array_push($PHPJasperXML->arraysqltable, array(
+					"NO" => $nomer[$i],
+					"KD_BHN" => $KD_BHN[$i],
+					"NA_BHN" => $NA_BHN[$i],
+					"SATUAN" => $SATUAN[$i],
+					"NO_2" => $nomer_2[$i],
+					"KD_BHN_2" => $KD_BHN_2[$i],
+					"NA_BHN_2" => $NA_BHN_2[$i],
+					"SATUAN_2" => $SATUAN_2[$i],
+				));
+			};
 			ob_end_clean();
 			$PHPJasperXML->outpage("I");
 		} else {
