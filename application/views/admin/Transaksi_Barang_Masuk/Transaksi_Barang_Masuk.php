@@ -114,10 +114,12 @@
             dom: "<'row'<'col-md-6'><'col-md-6'>>" + // 
                 "<'row'<'col-md-2'l><'col-md-6 test_btn'><'col-md-4'f>>" + // peletakan entries, search, dan test_btn
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
-            order: [
-                [8, 'asc'],
-                [4, 'desc']
+            "order": [
+                [3, 'asc']
             ],
+            // order: [
+            //     [8, 'asc']
+            // ],
             "processing": true,
             "serverSide": true,
             "ajax": {
