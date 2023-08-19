@@ -206,7 +206,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['kd_area'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='1R&' AND FLAG='' AND FLAG2='NB'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='1R&' AND FLAG='PP' AND FLAG2='NB'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         if($nom[0]==NULL){
             $value11 = 0;
@@ -328,8 +328,8 @@ class Transaksi_PesananPisau extends CI_Controller
             'TS' => $this->input->post('TS', TRUE),
             'GAMBAR' => $this->upload->data('file_name'),
             'TOTAL_QTY' => str_replace(',', '', $this->input->post('TOTAL_QTY', TRUE)),
-            'FLAG' => '',
-            // 'FLAG' => 'PP',
+            //'FLAG' => '',
+            'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
             'FLAG2' => 'NB',
             'TYP' => 'RND_PISAU',
