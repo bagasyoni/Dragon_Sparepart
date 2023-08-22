@@ -484,7 +484,7 @@ foreach ($Validasi_LPB as $rowh) {
 				window.location.replace("<?php echo base_url('admin/Transaksi_Validasi_LPB/verifikasi_pin/' . $rowh->ID) ?>");
 			}
 		} else {
-			alert("PIN MU SALAH COOK");
+			alert("PIN SALAH");
 		}
 	}
 </script>

@@ -43,15 +43,13 @@ class Transaksi_VerifikasiLPB extends CI_Controller
         $per = $this->session->userdata['periode'];
         $devisi = $this->session->userdata['devisi'];
         $where = array(
-
-            'DR' => $drx,
-            'PER' => $per,
+            'DR' => $dr,
+            // 'PER' => $per,
             // 'SUB' => $sub,
-            'KD_BAG' => 'RD1',
+            'KD_BAG' => $devisi,
             'FLAG' => 'BL',
             'FLAG2' => 'NB',
             // 'SP' => 'LPB',
-            'OK' => '0'
         );
         $this->db->select('*');
         // $this->db->from('mr_order_sample');
@@ -108,14 +106,13 @@ class Transaksi_VerifikasiLPB extends CI_Controller
         $per = $this->session->userdata['periode'];
         $devisi = $this->session->userdata['devisi'];
         $where = array(
-            'DR' => $drx,
-            'PER' => $per,
+            'DR' => $dr,
+            // 'PER' => $per,
             // 'SUB' => $sub,
-            'KD_BAG' => 'RD1',
+            'KD_BAG' => $devisi,
             'FLAG' => 'BL',
             'FLAG2' => 'NB',
             // 'SP' => 'LPB',
-            'OK' => '0'
         );
         // $this->db->from('mr_order_sample');
         $this->db->from('beli');
@@ -139,12 +136,12 @@ class Transaksi_VerifikasiLPB extends CI_Controller
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="' . site_url('admin/Transaksi_VerifikasiLPB/update/' . $mr_order_sample->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
-                            <a name="NO_ID" data-ttd1 = "' . $mr_order_sample->TTD1_USR . '" 
-							data-ttd1d = "' . $mr_order_sample->TTD1_SMP . '"
-							data-ttd2 = "' . $mr_order_sample->TTD2_USR . '" 
-							data-ttd2d = "' . $mr_order_sample->TTD2_SMP . '"
-							data-ttd3 = "' . $mr_order_sample->TTD3_USR . '" 
-							data-ttd3d = "' . $mr_order_sample->TTD3_SMP . '"
+                            <a name="NO_ID" data-ttd1 = "' . $mr_order_sample->NM_TTD1 . '" 
+							data-ttd1d = "' . $mr_order_sample->TG_TTD1 . '"
+							data-ttd2 = "' . $mr_order_sample->NM_TTD2 . '" 
+							data-ttd2d = "' . $mr_order_sample->TG_TTD2 . '"
+							data-ttd3 = "' . $mr_order_sample->NM_TTD3 . '" 
+							data-ttd3d = "' . $mr_order_sample->TG_TTD3 . '"
 							data-id = "' . $mr_order_sample->NO_ID . '" 
 							data-no="' . $mr_order_sample->NO_BUKTI . '" class="dropdown-item" href="#" data-toggle="modal" data-target="#melbbaModal";"><i class="fa fa-print"></i> Print</a>
                         </div>
@@ -152,12 +149,11 @@ class Transaksi_VerifikasiLPB extends CI_Controller
             $row[] = $no . ".";
             $row[] = $mr_order_sample->NO_BUKTI;
             $row[] = date("d-m-Y", strtotime($mr_order_sample->TGL));
-            $row[] = date("d-m-Y", strtotime($mr_order_sample->TGL));
-            // $row[] = date("d-m-Y", strtotime($mr_order_sample->TGL_DIMINTA));
-            // $row[] = $mr_order_sample->KODE_DEVISI;
+            $row[] = date("d-m-Y", strtotime($mr_order_sample->TGL_DIMINTA));
+            $row[] = $mr_order_sample->KODE_DEVISI;
             $row[] = $mr_order_sample->KET;
-            // $row[] = $mr_order_sample->JENIS_SAMPLE;
-            // $row[] = $mr_order_sample->JENIS_ORDER;
+            $row[] = $mr_order_sample->JENIS_SAMPLE;
+            $row[] = $mr_order_sample->JENIS_ORDER;
             $row[] = $mr_order_sample->TUJUAN;
             // $row[] = "<img src='/Dragon_Sparepart_baru/gambar/pesananpisausample/$mr_order_sample->GAMBAR' width='auto' height='120'>";
             $data[] = $row;
@@ -184,14 +180,13 @@ class Transaksi_VerifikasiLPB extends CI_Controller
         $per = $this->session->userdata['periode'];
         $devisi = $this->session->userdata['devisi'];
         $where = array(
-            'DR' => $drx,
-            'PER' => $per,
+            'DR' => $dr,
+            // 'PER' => $per,
             // 'SUB' => $sub,
-            'KD_BAG' => 'RD1',
+            'KD_BAG' => $devisi,
             'FLAG' => 'BL',
             'FLAG2' => 'NB',
             // 'SP' => 'LPB',
-            'OK' => '0'
         );
         // $data['mr_order_sample'] = $this->transaksi_model->tampil_data($where, 'mr_order_sample', 'NO_ID')->result();
         $data['beli'] = $this->transaksi_model->tampil_data($where, 'beli', 'NO_ID')->result();
@@ -227,117 +222,61 @@ class Transaksi_VerifikasiLPB extends CI_Controller
 
     public function update($id)
     {
-        $q1 = "SELECT beli.NO_ID as ID,
-                beli.NO_BUKTI,
-                beli.NAMAS,
-                beli.KODES,
-                beli.ALAMAT,
-                beli.KOTA,
-                beli.NO_PO,
-                beli.TGL,
-                beli.PIN2,
-                beli.TOTAL_QTY,
-                beli.VAL,
-                beli.TTD1,
-                beli.TTD2,
-                beli.TTD3,
-                beli.TTD4,
-                beli.TTD5,
-                beli.TTD6,
-                beli.OK,
+        $q1 = "SELECT mr_order_sample.NO_ID as ID,
+                mr_order_sample.NO_BUKTI AS NO_BUKTI,
+                mr_order_sample.TGL AS TGL,
+                mr_order_sample.TGL_DIMINTA AS TGL_DIMINTA,
+                mr_order_sample.KODE_DEVISI AS KODE_DEVISI,
+                mr_order_sample.KET AS KET,
+                mr_order_sample.JENIS_SAMPLE AS JENIS_SAMPLE,
+                mr_order_sample.JENIS_ORDER AS JENIS_ORDER,
+                mr_order_sample.TUJUAN AS TUJUAN,
+                mr_order_sample.TOTAL_QTY AS TOTAL_QTY,
+                mr_order_sample.VAL AS VAL,
+                
+                mr_order_sampled.NO_ID AS NO_ID,
+                mr_order_sampled.REC AS REC,
+                mr_order_sampled.ARTICLE AS ARTICLE,
+                mr_order_sampled.WARNA AS WARNA,
+                mr_order_sampled.OUTSOLE AS OUTSOLE,
+                mr_order_sampled.SIZE AS SIZE,
+                mr_order_sampled.QTY AS QTY,
+                mr_order_sampled.SATUAN AS SATUAN,
+                mr_order_sampled.GAMBAR1 AS GAMBAR1,
+                mr_order_sampled.KET AS KET
+        FROM mr_order_sample, mr_order_sampled 
+        WHERE mr_order_sample.NO_ID=$id 
+        AND mr_order_sample.NO_ID=mr_order_sampled.ID 
+        ORDER BY mr_order_sampled.REC";
 
-                belid.NO_ID,
-                belid.REC,
-                belid.OK,
-                belid.KD_BHN,
-                belid.NA_BHN,
-                belid.RAK,
-                belid.SISA AS QTY,
-                belid.SATUAN,
-                belid.SAT_BL,
-                belid.QTY,
-                belid.KET,
-                belid.QTY_BL
-                -- belid.VAL
-            FROM beli, belid 
-            WHERE beli.NO_ID = $id 
-            AND beli.NO_ID = belid.ID 
-            ORDER BY belid.REC";
+        // SELECT mr_order_sample.NO_ID as ID,
+        //         mr_order_sample.NO_BUKTI AS NO_BUKTI,
+        //         mr_order_sample.TGL AS TGL,
+        //         mr_order_sample.TGL_DIMINTA AS TGL_DIMINTA_H,
+        //         mr_order_sample.KODE_DEVISI AS KODE_DEVISI,
+        //         mr_order_sample.KET AS KET,
+        //         mr_order_sample.JENIS_SAMPLE AS JENIS_SAMPLE,
+        //         mr_order_sample.JENIS_ORDER AS JO,
+        //         mr_order_sample.TUJUAN AS TS,
+        //         -- mr_order_sample.TOTAL_QTY AS TOTAL_QTY,
+        //         -- mr_order_sample.VAL AS VAL,
+                
+        //         mr_order_sampled.NO_ID AS NO_ID,
+        //         mr_order_sampled.REC AS REC,
+        //         mr_order_sampled.ARTICLE AS NA_BHN,
+        //         mr_order_sampled.SIZE AS SIZE,
+        //         mr_order_sampled.QTY AS QTY,
+        //         mr_order_sampled.SATUAN AS SATUAN,
+        //         mr_order_sampled.KET AS KET1,
+        //     FROM mr_order_sample,mr_order_sampled 
+        //     WHERE mr_order_sample.NO_ID=$id 
+        //     AND mr_order_sample.NO_ID=mr_order_sampled.ID 
+        //     ORDER BY mr_order_sampled.REC";
         $data['rnd'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_VerifikasiLPB/Transaksi_VerifikasiLPB_update', $data);
         $this->load->view('templates_admin/footer');
-    }
-
-    public function verifikasi_pin($ID)
-    {
-        $pin = $this->session->userdata['pin'];
-        $username = $this->session->userdata['username'];
-        $datah = array(
-            'VAL' => '1',
-            // 'PIN2' => $pin,
-            // 'TTD2' => '1',
-            // 'TTD2_USR' => $username,
-            // 'TTD2_SMP' => date("Y-m-d h:i a"),
-            'OK' => '2',
-        );
-        $where = array(
-            'NO_ID' => "$ID"
-        );
-        $this->transaksi_model->update_data($where, $datah, 'beli');
-
-        $datahd = array(
-            'VAL' => '1',
-            // 'PIN2' => $pin,
-            // 'TTD2' => '1',
-            // 'TTD2_USR' => $username,
-            // 'TTD2_SMP' => date("Y-m-d h:i a"),
-            'OK' => '2',
-        );
-        $whered = array(
-            'ID' => "$ID"
-        );
-        $this->transaksi_model->update_data($whered, $datahd, 'belid');
-
-        // $bukti = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_ID='$ID'")->result();
-        // $no_bukti = $bukti[0]->BUKTIX;
-        // $this->db->query("CALL spp_beliins('" . $no_bukti . "')");
-        $this->session->set_flashdata(
-            'pesan',
-            '<div class="alert alert-warning alert-dismissible fade show" role="alert"> Data Succesfully Verified.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button> 
-            </div>'
-        );
-        redirect('admin/Transaksi_VerifikasiLPB/update/' . $ID);
-        // $ok = $this->db->query("SELECT OK FROM beli WHERE NO_ID='$ID'")->result();
-        // $ok2 = $ok[0]->OK;
-        // if($ok2 == 0){
-        //     $bukti = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_ID='$ID'")->result();
-        //     $no_bukti = $bukti[0]->BUKTIX;
-        //     $this->db->query("CALL spp_beliins('" . $no_bukti . "')");
-        //     $this->session->set_flashdata(
-        //         'pesan',
-        //         '<div class="alert alert-warning alert-dismissible fade show" role="alert"> Data Succesfully Verified.
-        //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        //                 <span aria-hidden="true">&times;</span>
-        //             </button> 
-        //         </div>'
-        //     );
-        //     redirect('admin/Transaksi_Validasi_LPB/index_Transaksi_Validasi_LPB');
-        // }else{
-        //     $this->session->set_flashdata(
-        //         'pesan',
-        //         '<div class="alert alert-warning alert-dismissible fade show" role="alert"> Data Succesfully Verified.
-        //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        //                 <span aria-hidden="true">&times;</span>
-        //             </button> 
-        //         </div>'
-        //     );
-        //     redirect('admin/Transaksi_Validasi_LPB/index_Transaksi_Validasi_LPB');
-        // }
     }
 
     function validasi()

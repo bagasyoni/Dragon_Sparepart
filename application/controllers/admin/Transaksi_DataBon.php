@@ -172,6 +172,8 @@ class Transaksi_DataBon extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['dr'];
         $sub = $this->session->userdata['sub'];
+        $devisi = $this->session->userdata['devisi'];
+        $na_devisi = $this->session->userdata['na_devisi'];
         $nomer = $this->db->query("SELECT COALESCE(MAX(NO_BUKTI), 0) as NO_BUKTI FROM bon WHERE PER='$per'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         if($nom[0]=='0'){
@@ -194,6 +196,8 @@ class Transaksi_DataBon extends CI_Controller
             // 'FLAG' => 'PK',
             // 'FLAG2' => 'SP',
             'TUJUAN' => $this->input->post('TUJUAN', TRUE),
+            'KD_BAG' => $devisi,
+            'NM_BAG' => $na_devisi,
             'DR' => $this->input->post('DR', TRUE),
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
@@ -226,7 +230,7 @@ class Transaksi_DataBon extends CI_Controller
                 // 'FLAG2' => 'SP',
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
-                'DR' => $this->session->userdata['dr'],
+                'DR' => $this->input->post('DR', TRUE),
                 // 'TUJUAN' => $TUJUAN[$i],
                 'TG_SMP' => date("Y-m-d h:i a")
             );

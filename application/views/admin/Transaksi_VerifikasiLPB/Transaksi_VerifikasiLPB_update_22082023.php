@@ -152,115 +152,71 @@ foreach ($rnd as $rowh) {
 							<input class="form-control text_input NO_BUKTI" id="NO_BUKTI" name="NO_BUKTI" type="text" value="<?php echo $rowh->NO_BUKTI ?>" readonly>
 						</div>
 						<div class="col-md-1">
-							<label class="label">Supplier </label>
-						</div>
-						<div class="col-md-2">
-							<input <?php if ($rowh-> VAL == !0) echo 'class="form-control KODES text_input" readonly'; ?> class="form-control text_input KODES" id="KODES" name="KODES" type="text" value="<?php echo $rowh->KODES ?>"readonly>
-						</div>
-						<div class="col-md-2"></div>
-						<div class="col-md-2">
-							<?php
-							if ($rowh->VAL == 0)
-								echo '<a 
-									type="button" 
-									class="btn btn-danger btn-center"
-								>
-									<span style="color: black; font-weight: bold;"></i> Belum Validasi</span>
-								</a>';
-							else echo '<a 
-									type="button"
-									class="btn btn-success btn-center" 
-								>
-									<span style="color: black; font-weight: bold;"><i class="fa fa-check"></i> Tervalidasi</span>
-								</a>';
-							?>
-						</div>
-						<div class="col-md-2">
-							<?php
-							if ($rowh->VAL == 0)
-								echo '<a 
-								type="button" 
-								class="btn btn-warning btn-center"
-								onclick="btVerifikasi()"
-								href="#"
-							>
-							<span style="color: black; font-weight: bold;"><i class="fa fa-upload"></i> Tombol Validasi</span>
-						</a>';
-							else echo '<a 
-							hidden
-							type="label"
-							class="btn btn-success btn-center" 
-								>
-							<span style="color: black; font-weight: bold;"><i class="fa fa-check"></i> Tervalidasi</span>
-						</a>';
-							?>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-1">
-							<label class="label">Tgl LPB</label>
+							<label class="label">Tanggal </label>
 						</div>
 						<div class="col-md-2">
 							<input <?php if ($rowh-> VAL == !0) echo 'class="form-control text_input" readonly'; ?> type="text" class="date form-control TGL text_input" id="TGL" name="TGL" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL, TRUE)); ?>" onclick="select()"readonly>
 						</div>
 						<div class="col-md-1">
-							<label class="label"></label>
+							<label class="label">Tanggal Diminta</label>
 						</div>
-						<div class="col-md-4">
-							<input <?php if ($rowh-> VAL == !0) echo 'class="form-control NAMAS text_input" readonly'; ?> class="form-control text_input NAMAS" id="NAMAS" name="NAMAS" type="text" value="<?php echo $rowh->NAMAS ?>"readonly>
+						<div class="col-md-2">
+							<input <?php if ($rowh-> VAL == !0) echo 'class="form-control text_input" readonly'; ?> type="text" class="date form-control TGL_DIMINTA text_input" id="TGL_DIMINTA" name="TGL_DIMINTA" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL_DIMINTA, TRUE)); ?>" onclick="select()"readonly>
 						</div>
+						<div class="col-md-1">
+							<label class="label">Divisi </label>
+						</div>
+						<div class="col-md-2">
+						<input <?php if ($rowh-> VAL == !0) echo 'class="form-control KODE_DEVISI text_input" readonly'; ?> class="form-control text_input KODE_DEVISI" id="KODE_DEVISI" name="KODE_DEVISI" type="text" value="<?php echo $rowh->KODE_DEVISI ?>"readonly>
+							<!-- <select <?php if ($rowh-> VAL == !0) echo 'class="form-control text_input" readonly'; ?> class="js-example-responsive-dragon form-control text_input" name="KODE_DEVISI" id="KODE_DEVISI" onchange="dragon(this.id)" readonly>
+								<option value="<?= $rowh->KODE_DEVISI ?>" selected id="KODE_DEVISI"><?= $rowh->KODE_DEVISI ?></option>
+							</select> -->
+						</div>
+						<!-- <div class="col-md-2"></div>
 						<div class="col-md-2">
 							<?php
-							if ($rowh->VAL == 1 && $rowh->OK == 1)
+							if ($rowh->VAL == 0)
 								echo '<a 
-								type="button" 
-									class="btn btn-warning btn-center"
+										type="button" 
+										class="btn btn-danger" 
 									>
-									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> STOK</span>
+										<span style="color: white; font-weight: bold;"> BELUM DIVALIDASI</span>
 									</a>';
-							if ($rowh->VAL == 1 && $rowh->OK == 2)
-								echo '<a 
-									type="button"
-									class="btn btn-warning btn-center" 
-									>
-									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> NON STOK</span>
-									</a>';
-							if ($rowh->VAL == 0 && $rowh->OK == 0)
-								echo '<a 
-									hidden
-									type="button"
-									class="btn btn-warning btn-center" 
-									>
-									<span style="color: black; font-weight: bold;"><i class="fa fa-dropbox"></i> NON STOK</span>
-									</a>';
+							else echo '<a 
+									type="button" 
+									class="btn btn-success" 
+								>
+									<span style="color: black; font-weight: bold;"><i class="fa fa-check"></i> SUDAH DIVALIDASI</span>
+								</a>';
 							?>
-						</div>
-						<div class="col-md-2">
-							<input <?php if ($rowh->VAL == !0) echo 'hidden'; ?> class="form-control text_input PIN2" id="PIN2" name="PIN2" type="password" maxlength="6" value="" placeholder="PIN ...">
-						</div>
+						</div> -->
 					</div>
 				</div>
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-1">
-							<label class="label">NO PP </label>
+							<label class="label">Ket </label>
 						</div>
-						<div class="col-md-3">
-							<input <?php if ($rowh-> VAL == !0) echo 'class="form-control NO_PO text_input" readonly'; ?> class="form-control text_input NO_PO" id="NO_PO" name="NO_PO" type="text" value="<?php echo $rowh->NO_PO ?>"readonly>
+						<div class="col-md-2">
+							<input <?php if ($rowh-> VAL == !0) echo 'class="form-control KET text_input" readonly'; ?> class="form-control text_input KET" id="KET" name="KET" type="text" value="<?php echo $rowh->KET ?>"readonly>
 						</div>
-						<div class="col-md-4">
-							<input <?php if ($rowh-> VAL == !0) echo 'class="form-control ALAMAT text_input" readonly'; ?> class="form-control text_input ALAMAT" id="ALAMAT" name="ALAMAT" type="text" value="<?php echo $rowh->ALAMAT ?>"readonly>
+						<div class="col-md-1">
+							<label class="label">Jenis Sample </label>
 						</div>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group row">
-						<div class="col-md-1"></div>
-						<div class="col-md-3"></div>
-						<div class="col-md-4">
-							<input <?php if ($rowh-> VAL == !0) echo 'class="form-control KOTA text_input" readonly'; ?> class="form-control text_input KOTA" id="KOTA" name="KOTA" type="text" value="<?php echo $rowh->KOTA ?>"readonly>
+						<div class="col-md-2">
+							<input <?php if ($rowh-> VAL == !0) echo 'class="form-control JENIS_SAMPLE text_input" readonly'; ?> class="form-control text_input JENIS_SAMPLE" id="JENIS_SAMPLE" name="JENIS_SAMPLE" type="text" value="<?php echo $rowh->JENIS_SAMPLE ?>"readonly>
+						</div>
+						<div class="col-md-1">
+							<label class="label">Jenis Order </label>
+						</div>
+						<div class="col-md-2">
+							<input <?php if ($rowh-> VAL == !0) echo 'class="form-control JENIS_ORDER text_input" readonly'; ?> class="form-control text_input JENIS_ORDER" id="JENIS_ORDER" name="JENIS_ORDER" type="text" value="<?php echo $rowh->JENIS_ORDER ?>"readonly>
+						</div>
+						<div class="col-md-1">
+							<label class="label">Tujuan</label>
+						</div>
+						<div class="col-md-2">
+							<input <?php if ($rowh-> VAL == !0) echo 'class="form-control TUJUAN text_input" readonly'; ?> class="form-control text_input TUJUAN" id="TUJUAN" name="TUJUAN" type="text" value="<?php echo $rowh->TUJUAN ?>"readonly>
 						</div>
 					</div>
 				</div>
@@ -274,11 +230,16 @@ foreach ($rnd as $rowh) {
 						<thead>
 							<tr>
 								<th width="10px">No</th>
-								<th width="50px">Kode</th>
-								<th width="150px">Uraian</th>
-								<th width="70px">Keterangan</th>
-								<th width="50px">Satuan</th>
-								<th width="40px">QTY</th>
+								<th width="65px"></th>
+								<th width="150px">Article</th>
+								<th width="100px">Warna</th>
+								<th width="100px">Outsole</th>
+								<th width="100px">Size</th>
+								<th width="100px">Jumlah</th>
+								<th width="100px">Satuan</th>
+								<th width="150px">Ket</th>
+								<!-- <th width="175px">Gambar</th> -->
+								<th width="50px"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -287,14 +248,26 @@ foreach ($rnd as $rowh) {
 							foreach ($rnd as $row) :
 							?>
 								<tr>
-									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly>
-									<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
-									</td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control KD_BHN text_input" readonly'; ?> name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" value="<?= $row->KD_BHN ?>" type="text" class="form-control KD_BHN text_input"readonly></td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control NA_BHN text_input" readonly'; ?> name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input"readonly></td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control KET text_input" readonly'; ?> name="KET[]" id="KET<?php echo $no; ?>" value="<?= $row->KET ?>" type="text" class="form-control KET text_input"readonly></td>
-									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control SATUAN text_input" readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"readonly></td>
+									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
+									<td><img src="<?= base_url('gambar/lpb/'.$row->GAMBAR1)  ?>" style="width: 120px;float: left;margin-bottom: 5px;"></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control ARTICLE text_input" readonly'; ?> name="ARTICLE[]" id="ARTICLE<?php echo $no; ?>" value="<?= $row->ARTICLE ?>" type="text" class="form-control ARTICLE text_input"readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control WARNA text_input" readonly'; ?> name="WARNA[]" id="WARNA<?php echo $no; ?>" value="<?= $row->WARNA ?>" type="text" class="form-control WARNA text_input"readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control OUTSOLE text_input" readonly'; ?> name="OUTSOLE[]" id="OUTSOLE<?php echo $no; ?>" value="<?= $row->OUTSOLE ?>" type="text" class="form-control OUTSOLE text_input"readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control SIZE text_input" readonly'; ?> name="SIZE[]" id="SIZE<?php echo $no; ?>" value="<?= $row->SIZE ?>" type="text" class="form-control SIZE text_input"readonly></td>
 									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control QTY text_input" readonly'; ?> name="QTY[]" onclick="select()" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control SATUAN text_input" readonly'; ?> name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input"readonly></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control KET text_input" readonly'; ?> name="KET[]" id="KET<?php echo $no; ?>" value="<?= $row->KET ?>" type="text" class="form-control KET text_input"readonly></td>
+									<!-- <td><input <?php if ($rowh->VAL == !0) echo 'class="form-control TGL_DIMINTA_D text_input" readonly'; ?> type="text" class="date form-control TGL_DIMINTA_D text_input" id="TGL_DIMINTA_D" name="TGL_DIMINTA_D" data-date-format="dd-mm-yyyy" value="<?php echo date('d-m-Y', strtotime($rowh->TGL_DIMINTA_D, TRUE)); ?>" onclick="select()">
+									</td>
+									<td><img src="<?= base_url('gambar/pesananpisausample/'.$row->GAMBAR1)  ?>" style="width: 120px;float: left;margin-bottom: 5px;">
+										<input type="text" name="G2<?php echo $no; ?>" id="G2<?php echo $no; ?>" value="<?=$row->GAMBAR1?>" hidden></td>
+									<td><input <?php if ($rowh->VAL == !0) echo 'class="form-control GAMBAR1X text_input" readonly'; ?> name="GAMBAR1X[]" id="GAMBAR1X<?php echo $no; ?>" value="<?= $row->GAMBAR1 ?>" type="file"></td> -->
+									<td>
+										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
+										<!-- <button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
+											<i class="fa fa-fw fa-trash-alt"></i>
+										</button> -->
+									</td>
 								</tr>
 								<?php $no++; ?>
 							<?php endforeach; ?>
@@ -305,7 +278,11 @@ foreach ($rnd as $rowh) {
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
+							<td></td>
+							<!-- <td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td> -->
+							<td></td>
+							<td></td>
+							<td></td>
 						</tfoot>
 					</table>
 				</div>
@@ -529,16 +506,6 @@ foreach ($rnd as $rowh) {
 			var x = document.getElementById('datatable').deleteRow(idrow);
 			idrow--;
 			nomor();
-		}
-	}
-
-	function btVerifikasi() {
-		if ($('#PIN2').val() == '<?= $this->session->userdata['pin'] ?>') {
-			if (confirm("Yakin Verifikasi?")) {
-				window.location.replace("<?php echo base_url('admin/Transaksi_VerifikasiLPB/verifikasi_pin/' . $rowh->ID) ?>");
-			}
-		} else {
-			alert("PIN SALAH");
 		}
 	}
 </script>

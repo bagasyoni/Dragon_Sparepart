@@ -61,6 +61,7 @@ class Auth extends CI_Controller
 					$sess_data['kd_bag'] = $ck->KD_BAG;
 					$sess_data['kd_area'] = $ck->KD_AREA;
 					$sess_data['devisi'] = $ck->DEVISI;
+					$sess_data['na_devisi'] = $ck->NA_DEVISI;
                     $sess_data['username'] = $ck->USERNAME;
                     $sess_data['level'] = $ck->AKSES;
                     $sess_data['super_admin'] = $ck->SUPER_ADMIN;

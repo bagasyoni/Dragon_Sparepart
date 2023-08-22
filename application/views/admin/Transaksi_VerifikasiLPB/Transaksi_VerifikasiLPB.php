@@ -95,10 +95,10 @@
                         <th width="225px">No Bukti</th>
                         <th width="100px">Tanggal</th>
                         <th width="100px">Tanggal Diminta</th>
-                        <th width="100px">Divisi</th>
+                        <!-- <th width="100px">Divisi</th> -->
                         <th width="100px">Ket</th>
-                        <th width="100px">Jenis Sample</th>
-                        <th width="100px">Jenis Order</th>
+                        <!-- <th width="100px">Jenis Sample</th> -->
+                        <!-- <th width="100px">Jenis Order</th> -->
                         <th width="100px">Tujuan</th>
                     </tr>
                 </thead>
