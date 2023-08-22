@@ -110,16 +110,16 @@ class Transaksi_Verifikasi_SPIK extends CI_Controller
         $data = array();
         $no = @$_POST['start'];
         foreach ($list as $ppc_spik) {
-            $JASPER = "window.open('JASPER/" . $ppc_spik->NO_ID . "','', 'width=1000','height=900');";
+            $JASPER = "window.open('JASPER/" . $ppc_spik->ROW_ID . "','', 'width=1000','height=900');";
             $no++;
             $row = array();
-            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $ppc_spik->NO_ID . "'>";
+            $row[] = "<input type='checkbox' class='singlechkbox' name='check[]' value='" . $ppc_spik->ROW_ID . "'>";
             $row[] = '<div class="dropdown">
                         <a style="background-color: #00b386;" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bars icon" style="font-size: 13px;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Verifikasi_SPIK/update/' . $ppc_spik->NO_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
+                            <a class="dropdown-item" href="' . site_url('admin/Transaksi_Verifikasi_SPIK/update/' . $ppc_spik->ROW_ID) . '"> <i class="fa fa-edit"></i> Edit</a>
                             <a name="NO_ID" class="dropdown-item" href="#" onclick="' . $JASPER . '");"><i class="fa fa-print"></i> Print</a>
                         </div>
                     </div>';
@@ -149,14 +149,15 @@ class Transaksi_Verifikasi_SPIK extends CI_Controller
         $this->session->set_userdata('judul', 'Transaksi Verifikasi Order Sample');
         $where = array(
             // 'DR' => $dr,
-            'PER' => $per,
+            // 'PER' => $per,
+            'TUJUAN' => $dr,
             // 'SUB' => 'PSL',
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
             // 'VAL' => '0',
             // 'TYP' => 'RND_PISAU',
         );
-        $data['ppc_spik'] = $this->transaksi_model->tampil_data($where, 'ppc_spik', 'NO_ID')->result();
+        $data['ppc_spik'] = $this->transaksi_model->tampil_data($where, 'ppc_spik', 'ROW_ID')->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
         $this->load->view('admin/Transaksi_Verifikasi_SPIK/Transaksi_Verifikasi_SPIK', $data);

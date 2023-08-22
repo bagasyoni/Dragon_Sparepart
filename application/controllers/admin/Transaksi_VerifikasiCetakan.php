@@ -36,12 +36,12 @@ class Transaksi_VerifikasiCetakan extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
+            'FLAG' => 'PP',
             'SUB' => 'CT',
-            // 'PER' => $per,
-            // 'FLAG' => 'PP',
+            'TTD7' => '1',
             // 'FLAG2' => 'SP',
-            'VAL' => '0',
+            // 'VAL' => '0',
             // 'TYP' => 'RND_PISAU',
         );
         $this->db->select('*');
@@ -91,12 +91,12 @@ class Transaksi_VerifikasiCetakan extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
+            'FLAG' => 'PP',
             'SUB' => 'CT',
-            // 'PER' => $per,
-            // 'FLAG' => 'PP',
+            'TTD7' => '1',
             // 'FLAG2' => 'SP',
-            'VAL' => '0',
+            // 'VAL' => '0',
             // 'TYP' => 'RND_PISAU',
         );
         $this->db->from('pp');
@@ -149,12 +149,12 @@ class Transaksi_VerifikasiCetakan extends CI_Controller
         $this->session->set_userdata('judul', 'Transaksi Verifikasi Cetakan');
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
+            'FLAG' => 'PP',
             'SUB' => 'CT',
-            // 'PER' => $per,
-            // 'FLAG' => 'PP',
+            'TTD7' => '1',
             // 'FLAG2' => 'SP',
-            'VAL' => '0',
+            // 'VAL' => '0',
             // 'TYP' => 'RND_PISAU',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();

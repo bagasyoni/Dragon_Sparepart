@@ -35,11 +35,13 @@ class Transaksi_DataBon extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
+        $kd_bag = $this->session->userdata['devisi'];
         $where = array(
             // 'DR' => $dr,
             'PER' => $per,
             // 'SUB' => $sub,
             'FLAG' => '0',
+            'KD_BAG' => $kd_bag,
             // 'FLAG2' => 'SP'
         );
         $this->db->select('*');
@@ -88,13 +90,14 @@ class Transaksi_DataBon extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
+        $kd_bag = $this->session->userdata['devisi'];
         $where = array(
             // 'DR' => $dr,
             'PER' => $per,
             // 'SUB' => $sub,
             'FLAG' => '0',
-            // 'FLAG2' => 'SP',
-            // 'ATK' => '0'
+            'KD_BAG' => $kd_bag,
+            // 'FLAG2' => 'SP'
         );
         $this->db->from('bon');
         $this->db->where($where);
@@ -143,14 +146,14 @@ class Transaksi_DataBon extends CI_Controller
         $dr = $this->session->userdata['dr'];
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
-        $this->session->set_userdata('judul', 'Transaksi Bon Pemakaian');
+        $kd_bag = $this->session->userdata['devisi'];
         $where = array(
             // 'DR' => $dr,
             'PER' => $per,
             // 'SUB' => $sub,
             'FLAG' => '0',
-            // 'FLAG2' => 'SP',
-            // 'ATK' => '0'
+            'KD_BAG' => $kd_bag,
+            // 'FLAG2' => 'SP'
         );
         $data['bon'] = $this->transaksi_model->tampil_data($where, 'bon', 'NO_ID')->result();
         $this->load->view('templates_admin/header');

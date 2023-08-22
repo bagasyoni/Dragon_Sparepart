@@ -36,11 +36,12 @@ class Transaksi_VerifikasiMELBBA extends CI_Controller
         $per = $this->session->userdata['periode'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'FLAG' => 'PP',
             'SUB' => 'MB',
+            'TTD7' => '1',
             // 'FLAG2' => 'SP',
-            'VAL' => '0',
+            // 'VAL' => '0',
             // 'TYP' => 'RND_PISAU',
         );
         $this->db->select('*');
@@ -90,11 +91,12 @@ class Transaksi_VerifikasiMELBBA extends CI_Controller
         $per = $this->session->userdata['periode'];
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'FLAG' => 'PP',
             'SUB' => 'MB',
+            'TTD7' => '1',
             // 'FLAG2' => 'SP',
-            'VAL' => '0',
+            // 'VAL' => '0',
             // 'TYP' => 'RND_PISAU',
         );
         $this->db->from('pp');
@@ -147,11 +149,12 @@ class Transaksi_VerifikasiMELBBA extends CI_Controller
         $this->session->set_userdata('judul', 'Transaksi Verifikasi Pesanan MELBBA');
         $where = array(
             'PER' => $per,
-            'DR' => $dr,
+            // 'DR' => $dr,
             'FLAG' => 'PP',
             'SUB' => 'MB',
+            'TTD7' => '1',
             // 'FLAG2' => 'SP',
-            'VAL' => '0',
+            // 'VAL' => '0',
             // 'TYP' => 'RND_PISAU',
         );
         $data['pp'] = $this->transaksi_model->tampil_data($where, 'pp', 'NO_ID')->result();

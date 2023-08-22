@@ -35,15 +35,16 @@ class Transaksi_BonSudahValidasi extends CI_Controller
     {
         $per = $this->session->userdata['periode'];
        // $dr= $this->session->userdata['dr'];
-		$kd_bag= $this->session->userdata['kd_bag'];
+		$kd_bag= $this->session->userdata['devisi'];
         $where = array(
             // 'PER' => $per,
             // 'DR' => $dr,
 			'KD_BAG' => $kd_bag,
-            'FLAG' => '0',
+            // 'FLAG' => '0',
+            'TTD2<>' => '',
             // 'SUB' => 'MB',
             // 'FLAG2' => 'SP',
-            'OK' => '1',
+            // 'OK' => '1',
             // 'TYP' => 'RND_LBBA',
         );
         $this->db->select('*');
@@ -91,15 +92,16 @@ class Transaksi_BonSudahValidasi extends CI_Controller
     {
         $per = $this->session->userdata['periode'];
        // $dr= $this->session->userdata['dr'];
-		 $kd_bag= $this->session->userdata['kd_bag'];
+		 $kd_bag= $this->session->userdata['devisi'];
         $where = array(
            // 'PER' => $per,
             // 'DR' => $dr,
 			'KD_BAG' => $kd_bag,
-            'FLAG' => '0',
+            // 'FLAG' => '0',
             // 'SUB' => 'MB',
             // 'FLAG2' => 'SP',
-            'OK' => '1',
+            'TTD2<>' => '',
+            // 'OK' => '1',
             // 'TYP' => 'RND_LBBA',
         );
         $this->db->from('bon');
@@ -155,15 +157,16 @@ class Transaksi_BonSudahValidasi extends CI_Controller
     {
         $per = $this->session->userdata['periode'];
         //$dr= $this->session->userdata['dr'];
-		$kd_bag= $this->session->userdata['kd_bag'];
+		$kd_bag= $this->session->userdata['devisi'];
         $where = array(
             // 'PER' => $per,
             // 'DR' => $dr,
 			'KD_BAG' => $kd_bag,
-            'FLAG' => '0',
+            // 'FLAG' => '0',
             // 'SUB' => 'MB',
             // 'FLAG2' => 'SP',
-            'OK' => '1',
+            'TTD2<>' => '',
+            // 'OK' => '1',
             // 'TYP' => 'RND_LBBA',
         );
         $data['pakai'] = $this->transaksi_model->tampil_data($where, 'bon', 'NO_ID')->result();
