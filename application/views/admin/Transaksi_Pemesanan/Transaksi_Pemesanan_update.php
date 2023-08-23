@@ -451,6 +451,7 @@ foreach ($pemesanan as $rowh) {
 						<th width="30px">Article</th>
 						<th width="30px">Tipe</th>
 						<th>Qty.</th>
+						<th>Satuan</th>
 						<th>Sisa</th>
 						<th>Devisi</th>
 						<th>Ket</th>
