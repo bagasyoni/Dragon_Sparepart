@@ -453,6 +453,7 @@ foreach ($pemesanan as $rowh) {
 						<th>Qty.</th>
 						<th>Sisa</th>
 						<th>Devisi</th>
+						<th>Ket</th>
 					</thead>
 					<tbody>
 						<?php
@@ -462,7 +463,7 @@ foreach ($pemesanan as $rowh) {
 							bond.KD_BHN, 
 							bond.NA_BHN,
 							bond.TYPE,
-							bond.KET,
+							bond.KET1 AS KET,
 							bond.NOTES AS TIPE,
 							(bond.QTY-bond.KIRIM) AS QTY,
 							(bond.QTY-bond.KIRIM) AS SISABON,
@@ -482,8 +483,10 @@ foreach ($pemesanan as $rowh) {
 								<td class='NABVAL text_input'><?php echo $b->NA_BHN; ?></td>
 								<td class='TIBVAL text_input'><?php echo $b->TIPE; ?></td>
 								<td class='QTBVAL text_input'><?php echo $b->QTY; ?></td>
+								<td class='SATUVAL text_input'><?php echo $b->SATUAN; ?></td>
 								<td class='SIBVAL text_input'><?php echo $b->SISABON; ?></td>
 								<td class='DEBVAL text_input'><?php echo $b->DEVISI; ?></td>
+								<td class='KETVAL text_input'><?php echo $b->KET; ?></td>
 							</tr>
 						<?php } ?>
 					</tbody>
@@ -619,6 +622,10 @@ foreach ($pemesanan as $rowh) {
 			$("#SISABON" + x).val(val);
 			var val = $(this).parents("tr").find(".DEBVAL").text();
 			$("#DEVISI" + x).val(val);
+			var val = $(this).parents("tr").find(".KETVAL").text();
+			$("#KET" + x).val(val);
+			var val = $(this).parents("tr").find(".SATUVAL").text();
+			$("#SATUAN" + x).val(val);
 			$('#modal_no_bon').modal('toggle');
 			var no_bon = $(this).parents("tr").find(".NBBVAL").text();
 			hitung();
