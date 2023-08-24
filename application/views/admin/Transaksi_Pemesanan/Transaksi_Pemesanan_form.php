@@ -321,6 +321,7 @@
 						<th width="30px">Article</th>
 						<th width="30px">Tipe</th>
 						<th>Qty.</th>
+						<th>Satuan</th>
 						<th>Sisa</th>
 						<th>Devisi</th>
 						<th>Ket</th>
@@ -362,6 +363,7 @@
 								<td class='NABVAL text_input'><?php echo $b->NA_BHN; ?></td>
 								<td class='TIBVAL text_input'><?php echo $b->TIPE; ?></td>
 								<td class='QTBVAL text_input'><?php echo $b->QTY; ?></td>
+								<td class='SATUVAL text_input'><?php echo $b->SATUAN; ?></td>
 								<td class='SIBVAL text_input'><?php echo $b->SISABON; ?></td>
 								<td class='DEBVAL text_input'><?php echo $b->DEVISI; ?></td>
 								<td class='KETVAL text_input'><?php echo $b->KET; ?></td>
@@ -507,6 +509,8 @@
 			$("#DEVISI" + temp).val(val);
 			var val = $(this).parents("tr").find(".KETVAL").text();
 			$("#KET" + temp).val(val);
+			var val = $(this).parents("tr").find(".SATUVAL").text();
+			$("#SATUAN" + temp).val(val);
 			$('#modal_no_bon').modal('toggle');
 			var no_bon = $(this).parents("tr").find(".NBBVAL").text();
 			
@@ -554,6 +558,8 @@
 			$("#DEVISI" + x).val(val);
 			var val = $(this).parents("tr").find(".KETVAL").text();
 			$("#KET" + x).val(val);
+			var val = $(this).parents("tr").find(".SATUVAL").text();
+			$("#SATUAN" + x).val(val);
 			$('#modal_no_bon').modal('toggle');
 			var no_bon = $(this).parents("tr").find(".NBBVAL").text();
 		});

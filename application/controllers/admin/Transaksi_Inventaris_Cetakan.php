@@ -106,7 +106,7 @@ class Transaksi_Inventaris_Cetakan extends CI_Controller {
             $row[] = $sp_invenc->CETAK;
             $row[] = $sp_invenc->NAMA;
             $row[] = $sp_invenc->KODE;
-            $row[] = $sp_invenc->NO_URUT;
+            $row[] = $sp_invenc->no_urut;
             $row[] = $sp_invenc->DR;
             $data[] = $row;
         }
@@ -223,7 +223,7 @@ class Transaksi_Inventaris_Cetakan extends CI_Controller {
             'CETAK' => $r['CETAK'],
             'NAMA' => $r['NAMA'],
             'KODE' => $r['KODE'],
-            'NO_URUT' => $r['NO_URUT'],
+            'NO_URUT' => $r['no_urut'],
             'N1' => $r['N1'],
             'J1' => $r['J1'],
             'N2' => $r['N2'],
