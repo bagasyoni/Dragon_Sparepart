@@ -83,20 +83,14 @@
                         "NO_BUKTI" => array(
                             "label" => "No Bukti",
                         ),
-                        "KD_BHN" => array(
-                            "label" => "Kode Barang",
-                        ),
-                        "NA_BHN" => array(
-                            "label" => "Nama Barang",
-                        ),
-                        "AW" => array(
+                        "AWAL" => array(
                             "label" => "Awal",
                             "type" => "number",
                             "decimals" => 2,
                             "decimalPoint" => ".",
                             "thousandSeparator" => ",",
                         ),
-                        "MA" => array(
+                        "MASUK" => array(
                             "label" => "Masuk",
                             "type" => "number",
                             "decimals" => 2,
@@ -104,16 +98,8 @@
                             "thousandSeparator" => ",",
                             "footer" => "sum",
                         ),
-                        "KE" => array(
+                        "KELUAR" => array(
                             "label" => "Pakai",
-                            "type" => "number",
-                            "decimals" => 2,
-                            "decimalPoint" => ".",
-                            "thousandSeparator" => ",",
-                            "footer" => "sum",
-                        ),
-                        "LN" => array(
-                            "label" => "Koreksi Stok",
                             "type" => "number",
                             "decimals" => 2,
                             "decimalPoint" => ".",

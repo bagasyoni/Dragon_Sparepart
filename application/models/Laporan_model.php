@@ -136,12 +136,30 @@ class Laporan_model extends CI_Model
 		$sub = $this->session->userdata['sub'];
 		$rak_1 = $this->input->post('RAK_1');
 		$per_1 = $this->input->post('PER_1');
+		if ($rak_1 == '') {
+			$rak_1 = 'RM7'; 
+		} else {
+			$rak_1 = $this->input->post('RAK_1');
+		}
+
 		if ($per_1 == '') {
 			$per_1 = $this->session->userdata['periode']; 
 		} else {
 			$per_1 = $this->input->post('PER_1');
 		}
-		$q1 = "CALL spp_kartustok('$rak_1', '$dr', '$sub', '$per_1')";
+		// $q1 = "CALL spp_kartustok('$rak_1', '$dr', '$sub', '$per_1')";
+		$bulan = substr($per_1,0,2);
+		$tahun = substr($per_1,3,4);
+		$this->db->query('TRUNCATE TABLE l_kartustok_bahan');
+		$this->db->query("INSERT INTO l_kartustok_bahan(TGL,NO_BUKTI,AWAL,MASUK,KELUAR,NA_BHN,URUT)
+							SELECT x.* FROM (
+							SELECT '' as TGL, 'Saldo Awal' as NO_BUKTI, AW$bulan as awal,0 as masuk,0 as keluar,NA_BHN, 1 as urut  FROM bhnd WHERE RAK='$rak_1' and YER='$tahun'
+							UNION ALL
+							SELECT DATE(TG_SMP) as TGL, NO_BUKTI,0 as AWAL,0 as MASUK, QTY as KELUAR,NA_BHN, 2 as urut FROM pakaid WHERE RAK='$rak_1' AND MONTH(TG_SMP) = '$bulan' AND YEAR(TG_SMP) ='$tahun' 
+							UNION ALL
+							SELECT belid_sp.TGL as TGL, belid_sp.NO_BUKTI,0 as AWAL,belid_sp.QTY as MASUK, 0 as KELUAR,NA_BHN, 2 as urut FROM belid_sp WHERE belid_sp.RAK='$rak_1' AND MONTH(belid_sp.TGL) = '$bulan' 
+							AND YEAR(belid_sp.TGL) ='$tahun') as x ORDER BY urut asc, x.TGL asc");
+		$q1 = "SELECT *,if(TGL='',@AK:=0+AWAL,@AK:=@AK+AWAL+MASUK-KELUAR) AS AK,'$rak_1' AS RAK, NA_BHN FROM l_kartustok_bahan ORDER BY urut asc, TGL asc";$q1 = "SELECT NO_BUKTI,TGL,AWAL,MASUK,KELUAR,if(TGL='',@AK:=0+AWAL,@AK:=@AK+AWAL+MASUK-KELUAR) AS AK,'$rak_1' AS RAK, NA_BHN FROM l_kartustok_bahan ORDER BY urut asc, TGL asc";
 		return $this->db->query($q1);
 	}
 
