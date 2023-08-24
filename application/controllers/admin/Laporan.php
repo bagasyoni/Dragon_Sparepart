@@ -631,7 +631,19 @@ class Laporan extends CI_Controller
 			} else {
 				$per_1 = $this->input->post('PER_1');
 			}
-			$query = "CALL spp_kartustok('$rak_1', '$dr', '$sub', '$per_1')";
+			// $query = "CALL spp_kartustok('$rak_1', '$dr', '$sub', '$per_1')";
+			$bulan = substr($per_1,0,2);
+			$tahun = substr($per_1,3,4);
+			$this->db->query('TRUNCATE TABLE l_kartustok_bahan');
+			$this->db->query("INSERT INTO l_kartustok_bahan(TGL,NO_BUKTI,AWAL,MASUK,KELUAR,NA_BHN,URUT)
+								SELECT x.* FROM (
+								SELECT '' as TGL, 'Saldo Awal' as NO_BUKTI, AW$bulan as awal,0 as masuk,0 as keluar,NA_BHN, 1 as urut  FROM bhnd WHERE RAK='$rak_1' and YER='$tahun'
+								UNION ALL
+								SELECT DATE(TG_SMP) as TGL, NO_BUKTI,0 as AWAL,0 as MASUK, QTY as KELUAR,NA_BHN, 2 as urut FROM pakaid WHERE RAK='$rak_1' AND MONTH(TG_SMP) = '$bulan' AND YEAR(TG_SMP) ='$tahun' 
+								UNION ALL
+								SELECT belid_sp.TGL as TGL, belid_sp.NO_BUKTI,0 as AWAL,belid_sp.QTY as MASUK, 0 as KELUAR,NA_BHN, 2 as urut FROM belid_sp WHERE belid_sp.RAK='$rak_1' AND MONTH(belid_sp.TGL) = '$bulan' 
+								AND YEAR(belid_sp.TGL) ='$tahun') as x ORDER BY urut asc, x.TGL asc");
+			$query = "SELECT *,if(TGL='',@AK:=0+AWAL,@AK:=@AK+AWAL+MASUK-KELUAR) AS AK,'$rak_1' AS RAK, NA_BHN FROM l_kartustok_bahan ORDER BY urut asc, TGL asc";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -639,9 +651,9 @@ class Laporan extends CI_Controller
 					"NA_BHN" => $row1["NA_BHN"],
 					"TGL" => $row1["TGL"],
 					"NO_BUKTI" => $row1["NO_BUKTI"],
-					"AW" => $row1["AW"],
-					"MA" => $row1["MA"],
-					"KE" => $row1["KE"],
+					"AW" => $row1["AWAL"],
+					"MA" => $row1["MASUK"],
+					"KE" => $row1["KELUAR"],
 					"AK" => $row1["AK"],
 				));
 			}
