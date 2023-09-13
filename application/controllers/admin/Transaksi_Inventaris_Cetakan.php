@@ -397,7 +397,7 @@ class Transaksi_Inventaris_Cetakan extends CI_Controller {
         $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Inventaris_Cetakan.jrxml");
         $cetak_1 = $this->input->post('CETAK_1');
         $dr = $this->session->userdata['dr'];
-        $query = "SELECT * FROM sp_invenc WHERE NO_ID=$id";
+        $query = "SELECT * FROM sp_invenc WHERE NO_ID=$id ORDER BY CETAK ASC";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);
@@ -475,7 +475,7 @@ class Transaksi_Inventaris_Cetakan extends CI_Controller {
         $PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Inventaris_Cetakan.jrxml");
         $cetak_1 = $this->input->post('CETAK_1');
         $dr = $this->session->userdata['dr'];
-        $query = "SELECT * FROM sp_invenc WHERE DR='$dr'";
+        $query = "SELECT * FROM sp_invenc WHERE DR='$dr' ORDER BY CETAK ASC";
         $PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
         $PHPJasperXML->arraysqltable = array();
         $result1 = mysqli_query($conn, $query);

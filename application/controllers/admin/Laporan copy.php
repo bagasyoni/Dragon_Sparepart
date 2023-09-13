@@ -1351,32 +1351,29 @@ class Laporan extends CI_Controller
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
 			$per = $this->session->userdata['periode'];
-			$devisi = $this->session->userdata['devisi'];
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 			$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
-			$query = "SELECT beli.PER AS PER,
-					belid.TGL AS TGL,
-					belid.NO_BUKTI AS NO_BUKTI,
-					-- CONCAT(belid.KD_BHN,' - ',belid.NA_BHN) AS BARANG,
-					belid.NA_BHN,
-					belid.KD_BHN,
-					belid.SATUAN AS SATUAN,
-					belid.QTY AS QTY,
-					belid.NO_PO AS NO_PO,
-					belid.NO_PP AS NO_PP,
-					-- belid.NO_BELI AS NO_BUKTI,
-					belid.REC AS REC
-				FROM beli, belid
-				WHERE beli.NO_BUKTI = belid.NO_BUKTI
-				AND belid.TGL>='$tgl_1'
-				AND belid.TGL<='$tgl_2'
-				AND beli.KD_BAG='$devisi'
-				-- AND beli.VAL <> 0
-				-- AND beli.SUB='$sub'
-				AND beli.FLAG2='NB'
-				ORDER BY belid.TGL";
+			$query = "SELECT belid.rak AS RAK,
+						belid.kd_bhn AS KD_BHN,
+						belid.na_bhn AS NA_BHN,
+						CONCAT(belid.kd_bhn,' - ',belid.na_bhn) AS BARANG,
+						beli.no_beli AS NO_BUKTI,
+						beli.tgl AS TGL,
+						belid.satuan AS SATUAN,
+						belid.qty AS QTY,
+						'$tgl_1' AS TGL_1,
+						'$tgl_2' AS TGL_2
+					FROM belid, beli
+					WHERE beli.no_bukti=belid.no_bukti 
+					AND beli.TGL >='$tgl_1'
+					AND beli.TGL <='$tgl_2'
+					AND beli.SUB = '$sub'
+					AND beli.DR='$dr'
+					AND belid.FLAG2='SP'
+					GROUP BY belid.na_bhn
+					ORDER BY belid.TGL";
 			$result1 = mysqli_query($conn, $query);
-			while ($row1 = mysqli_fetch_assoc($result1)){
+			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
 					"RAK" => $row1["RAK"],
 					"BARANG" => $row1["BARANG"],
