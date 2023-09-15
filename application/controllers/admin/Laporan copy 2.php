@@ -824,15 +824,101 @@ class Laporan extends CI_Controller
 			}
 			$tahun = substr($this->input->post('TGL_1'), -4);
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-			$query = "SELECT x.* FROM (
-							SELECT belid_sp.TGL as TGL,belid_sp.RAK,belid_sp.NA_BHN,belid_sp.SATUAN,0 STOK_AWAL,belid_sp.NO_BUKTI NOLPB,belid_sp.QTY as MASUK,
-								0 as JML_LPB,'' NO_BB,0 KELUAR,0 JML_BB,0 STOK_AKHIR, 3 as urut 
-								FROM belid_sp,beli WHERE beli.NO_BUKTI=belid_sp.NO_BUKTI AND  beli.OK = '1' AND 
-								belid_sp.TGL = '2023-07-01' AND belid_sp.FLAG2='NB' AND belid_sp.DR='I' AND beli.KD_BAG='SP1'
-							UNION ALL
-							SELECT TGL as TGL,RAK,NA_BHN,SATUAN,0 STOK_AWAL,'' NOLPB,0 as MASUK, 0 as JML_LPB,NO_BUKTI NOBB,QTY as KELUAR,
-								0 JML_BB,0 STOK_AKHIR, 2 as urut FROM pakaid WHERE TGL='2023-07-01' AND SUB = 'SP' AND DR = 'I'
-						) as x ORDER BY x.RAK asc";
+			$query = "SELECT TGL, RAK, NA_BHN, SATUAN, AW, NO_BUKTI_MA, MA, NO_BUKTI_KE, KE, NO_BUKTI_RKE, RKE,(MA-KE) T_AK,(MA+RKE) T_RAK,(AW+MA) T_MA,(AW-KE) T_KE, (MA+RKE) T_RKE
+		FROM (
+			SELECT '$tgl_1' AS TGL,
+				bhnd.RAK AS RAK,
+				bhnd.NA_BHN AS NA_BHN,
+				bhn.SATUAN AS SATUAN,
+				bhnd.AW$bulan+(belid.QTY-pakaid.QTY) AS AW,
+				'' AS NO_BUKTI_MA,
+				0 AS MA,
+				'' AS NO_BUKTI_KE,
+				0 AS KE,
+				'' AS NO_BUKTI_RKE,
+				0 AS RKE,
+				0 AS AK
+			FROM bhn, bhnd, belid, pakaid
+			WHERE bhn.KD_BHN = bhnd.KD_BHN
+			AND bhn.KD_BHN = belid.KD_BHN
+			AND bhn.KD_BHN = pakaid.KD_BHN
+			AND bhnd.YER = '$tahun'
+			AND bhn.FLAG2 = '$sub'
+			AND bhn.DR = '$dr'
+			-- AND belid.PER = '$per'
+			AND belid.TGL < '$tgl_1'
+			AND pakaid.PER = '$per'
+			AND pakaid.TGL < '$tgl_1'
+			GROUP BY bhnd.NA_BHN
+			UNION ALL
+			SELECT belid.TGL AS TGL, 
+				belid.RAK AS RAK,
+				belid.NA_BHN AS NA_BHN,
+				belid.SATUAN AS SATUAN,
+				0 AS AW,
+				belid.NO_BUKTI AS NO_BUKTI_MA,
+				belid.QTY AS MA,
+				'' AS NO_BUKTI_KE,
+				0 AS KE,
+				'' AS NO_BUKTI_RKE,
+				0 AS RKE,
+				0 AS AK
+			FROM belid, bhnd
+			WHERE bhnd.kd_bhn = belid.kd_bhn
+			-- AND belid.PER = '$per'
+			AND belid.DR = '$dr'
+			AND bhnd.DR = '$dr'
+			AND belid.SP = '$sub'
+			AND belid.TGL = '$tgl_1'
+			-- GROUP BY belid.NO_BUKTI
+			UNION ALL
+			SELECT pakaid.TGL AS TGL, 
+				pakaid.RAK AS RAK,
+				pakaid.NA_BHN AS NA_BHN,
+				pakaid.SATUAN AS SATUAN,
+				0 AS AW,
+				'' AS NO_BUKTI_MA,
+				0 AS MA,
+				pakaid.NO_BUKTI AS NO_BUKTI_KE,
+				pakaid.QTY AS KE,
+				'' AS NO_BUKTI_RKE,
+				0 AS RKE,
+				0 AS AK
+			FROM pakaid, bhnd
+			WHERE bhnd.kd_bhn = pakaid.KD_BHN
+			-- AND pakaid.PER = '$per'
+			AND pakaid.DR = '$dr'
+			AND bhnd.DR = '$dr'
+			AND pakaid.SUB = '$sub'
+			AND pakaid.TGL = '$tgl_1'
+			AND pakaid.FLAG = 'PK'
+			AND pakaid.FLAG2 = 'SP'
+			-- GROUP BY pakaid.NO_BUKTI
+			UNION ALL
+			SELECT pakaid.TGL AS TGL, 
+				pakaid.RAK AS RAK,
+				pakaid.NA_BHN AS NA_BHN,
+				pakaid.SATUAN AS SATUAN,
+				0 AS AW,
+				'' AS NO_BUKTI,
+				0 AS MA,
+				'' AS NO_BUKTI_KE,
+				0 AS KE,
+				pakaid.NO_BUKTI AS NO_BUKTI_RKE,
+				pakaid.QTY AS RKE,
+				0 AS AK
+			FROM pakaid, bhnd
+			WHERE bhnd.kd_bhn = pakaid.KD_BHN
+			-- AND pakaid.PER = '$per'
+			AND pakaid.DR = '$dr'
+			AND bhnd.DR = '$dr'
+			AND pakaid.SUB = '$sub'
+			AND pakaid.TGL = '$tgl_1'
+			AND pakaid.FLAG = 'KP'
+			AND pakaid.FLAG2 = 'SP'
+			-- GROUP BY pakaid.NO_BUKTI
+		) AS AAA
+		ORDER BY NA_BHN";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
