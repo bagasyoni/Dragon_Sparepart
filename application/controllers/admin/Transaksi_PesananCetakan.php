@@ -37,8 +37,8 @@ class Transaksi_PesananCetakan extends CI_Controller
         $where = array(
             'PER' => $per,
             // 'DR' => $dr,
-            'SUB' => 'CT'
-            // 'FLAG' => 'PP',
+            'SUB' => 'CT',
+            'PBL' => 1,
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_CETAK',
         );
@@ -91,7 +91,7 @@ class Transaksi_PesananCetakan extends CI_Controller
             'PER' => $per,
             // 'DR' => $dr,
             'SUB' => 'CT',
-            // 'FLAG' => 'PP',
+            'PBL'  => 1,
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_CETAK',
         );
@@ -193,7 +193,7 @@ class Transaksi_PesananCetakan extends CI_Controller
             'PER' => $per,
             // 'DR' => $dr,
             'SUB' => 'CT',
-            // 'FLAG' => 'LOKAL',
+            'PBL' => 1,
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_CETAK',
