@@ -98,6 +98,7 @@ class Transaksi_PesananPisau extends CI_Controller
         );
         $this->db->from('pp');
         $this->db->where($where);
+        $this->db->like('NO_BUKTI', 'RD2');
         return $this->db->count_all_results();
     }
 
