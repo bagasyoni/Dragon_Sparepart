@@ -45,6 +45,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $this->db->select('*');
         $this->db->from('pp');
         $this->db->where($where);
+        $this->db->like('NO_BUKTI', 'RD2');
         $i = 0;
         foreach ($this->column_search as $item) {
             if (@$_POST['search']['value']) {
