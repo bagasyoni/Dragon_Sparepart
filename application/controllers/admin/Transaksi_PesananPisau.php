@@ -959,6 +959,7 @@ class Transaksi_PesananPisau extends CI_Controller
                 "PESAN" => $row1["PESAN"],
                 "TS" => $row1["TS"],
                 "GAMBAR" => $row1["GAMBAR"],
+                "SATUAN" => $row1["SATUAN"],
                 "NA_BHN" => $row1["NA_BHN"],
                 "SIZE" => $row1["SIZE"],
                 "QTY" => $row1["QTY"],
