@@ -816,23 +816,44 @@ class Laporan extends CI_Controller
 			$dr = $this->session->userdata['dr'];
 			$tgl_1 = $this->input->post('TGL_1');
 			$sub = $this->session->userdata['sub'];
+			$kd_bag = $this->session->userdata['kd_bag'];
 			$per = $this->session->userdata['periode'];
 			if ($tgl_1 == '') {
-				$bulan = Date('m');
+				$bulan = str_pad(Date('m'), 2, "0", STR_PAD_LEFT);
 			} else {
-				$bulan = date("m", strtotime($tgl_1));
+				$bulan = str_pad(date("m", strtotime($tgl_1)), 2, "0", STR_PAD_LEFT);
 			}
 			$tahun = substr($this->input->post('TGL_1'), -4);
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-			$query = "SELECT x.* FROM (
-							SELECT belid_sp.TGL as TGL,belid_sp.RAK,belid_sp.NA_BHN,belid_sp.SATUAN,0 STOK_AWAL,belid_sp.NO_BUKTI NOLPB,belid_sp.QTY as MASUK,
-								0 as JML_LPB,'' NO_BB,0 KELUAR,0 JML_BB,0 STOK_AKHIR, 3 as urut 
+			$query = "SELECT hasil1.*,(hasil1.STOK_AWAL+IFNULL(masuk.MASUK,0)-IFNULL(keluar.KELUAR,0)) AS TAW, 
+							((hasil1.STOK_AWAL+IFNULL(masuk.MASUK,0)-IFNULL(keluar.KELUAR,0))+hasil1.JML_LPB-hasil1.JML_BB) AS TAK,
+							'$per' AS PER
+						FROM(		
+								SELECT x.TGL ,x.RAK,x.NA_BHN,x.SATUAN,bhnd.AW$bulan STOK_AWAL,
+									GROUP_CONCAT(x.NOLPB) NO_LPB,GROUP_CONCAT(x.MASUK) MASUK,SUM(x.JML_LPB) JML_LPB,
+									GROUP_CONCAT(x.NO_BB SEPARATOR ',  ') NO_BB,GROUP_CONCAT(x.KELUAR) KELUAR,
+									SUM(x.JML_BB) JML_BB,x.STOK_AKHIR,x.urut 
+								FROM ( 
+											SELECT belid_sp.TGL as TGL,belid_sp.RAK,belid_sp.NA_BHN,belid_sp.SATUAN,0 STOK_AWAL,
+												belid_sp.NO_BUKTI NOLPB,belid_sp.QTY as MASUK, belid_sp.QTY as JML_LPB,'' NO_BB,
+												0 KELUAR,0 JML_BB,0 STOK_AKHIR, 3 as urut 
+											FROM belid_sp,beli WHERE beli.NO_BUKTI=belid_sp.NO_BUKTI AND  beli.OK = '1' AND 
+												belid_sp.TGL = '$tgl_1' AND belid_sp.FLAG2='NB' AND belid_sp.DR='$dr' AND beli.KD_BAG='$kd_bag'
+									UNION ALL
+											SELECT TGL as TGL,RAK,NA_BHN,SATUAN,0 STOK_AWAL,'' NOLPB,0 as MASUK, 0 as JML_LPB,
+												NO_BUKTI NOBB,QTY as KELUAR,QTY AS JML_BB,0 STOK_AKHIR, 2 as urut 
+											FROM pakaid WHERE TGL='$tgl_1' AND SUB = 'SP' AND DR = '$dr'
+								) as x LEFT JOIN bhnd ON X.RAK = bhnd.RAK AND bhnd.DR='$dr' AND bhnd.YER='$tahun'
+								GROUP BY RAK ORDER BY x.RAK asc
+						) as hasil1 
+						LEFT JOIN (SELECT belid_sp.RAK,SUM(belid_sp.QTY) as MASUK 
 								FROM belid_sp,beli WHERE beli.NO_BUKTI=belid_sp.NO_BUKTI AND  beli.OK = '1' AND 
-								belid_sp.TGL = '2023-07-01' AND belid_sp.FLAG2='NB' AND belid_sp.DR='I' AND beli.KD_BAG='SP1'
-							UNION ALL
-							SELECT TGL as TGL,RAK,NA_BHN,SATUAN,0 STOK_AWAL,'' NOLPB,0 as MASUK, 0 as JML_LPB,NO_BUKTI NOBB,QTY as KELUAR,
-								0 JML_BB,0 STOK_AKHIR, 2 as urut FROM pakaid WHERE TGL='2023-07-01' AND SUB = 'SP' AND DR = 'I'
-						) as x ORDER BY x.RAK asc";
+								belid_sp.TGL < '$tgl_1' AND MONTH(belid_sp.TGL)='$bulan' AND YEAR(belid_sp.TGL)='$tahun' AND belid_sp.FLAG2='NB' 
+								AND belid_sp.DR='$dr' AND beli.KD_BAG='$kd_bag' GROUP BY RAK) as masuk
+						ON hasil1.RAK = masuk.RAK
+						LEFT JOIN (SELECT RAK,SUM(QTY) as KELUAR 
+								FROM pakaid WHERE TGL<'$tgl_1' AND MONTH(TGL)='$bulan' AND YEAR(TGL)='$tahun' AND SUB = 'SP' AND DR = '$dr' GROUP BY RAK) as keluar
+						ON hasil1.RAK = keluar.RAK";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -842,18 +863,18 @@ class Laporan extends CI_Controller
 					"KD_BHN" => $row1["KD_BHN"],
 					"NA_BHN" => $row1["NA_BHN"],
 					"SATUAN" => $row1["SATUAN"],
-					"AW" => $row1["AW"],
-					"NO_BUKTI_MA" => $row1["NO_BUKTI_MA"],
-					"MA" => $row1["MA"],
-					"NO_BUKTI_KE" => $row1["NO_BUKTI_KE"],
-					"KE" => $row1["KE"],
+					"AW" => $row1["TAW"],
+					"NO_BUKTI_MA" => $row1["NO_LPB"],
+					"MA" => $row1["MASUK"],
+					"NO_BUKTI_KE" => $row1["NO_BB"],
+					"KE" => $row1["KELUAR"],
 					"AK" => $row1["AK"],
 					"NO_BUKTI_RKE" => $row1["NO_BUKTI_RKE"],
 					"RKE" => $row1["RKE"],
-					"T_MA" => $row1["T_MA"],
-					"T_KE" => $row1["T_KE"],
+					"T_MA" => $row1["JML_LPB"],
+					"T_KE" => $row1["JML_BB"],
 					"T_RKE" => $row1["T_RKE"],
-					"T_AK" => $row1["T_AK"],
+					"T_AK" => $row1["TAK"],
 					"T_RAK" => $row1["T_RAK"],
 				));
 			}
