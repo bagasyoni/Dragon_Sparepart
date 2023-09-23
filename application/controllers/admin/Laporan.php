@@ -1066,29 +1066,57 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$sub = $this->session->userdata['sub'];
+			$sub = $this->session->userdata['sub'];
 			$per = $this->session->userdata['periode'];
-			$bulan = substr($this->session->userdata['periode'], 0, -5);
-			$tahun = substr($this->session->userdata['periode'], -4);
-			$query = "SELECT KD_BHN, NA_BHN, SATUAN, PER, AW, MA, KE, LN, AK
-					FROM (
-						SELECT bhnd.KD_BHN AS KD_BHN,
-							bhnd.NA_BHN AS NA_BHN,
-							bhn.SATUAN AS SATUAN,
-							'$per' AS PER,
-							bhnd.AW$bulan AS AW,
-							bhnd.MA$bulan AS MA,
-							bhnd.KE$bulan AS KE,
-							bhnd.LN$bulan AS LN,
-							bhnd.AK$bulan AS AK
-						FROM bhnd, bhn
-						WHERE bhnd.KD_BHN = bhn.KD_BHN
-						AND bhnd.YER = '$tahun'
-						AND bhn.DR = '$dr'
-						AND bhn.FLAG = 'SP'
-						AND bhn.SUB = '$sub'
-						GROUP BY bhn.KD_BHN
-					) AS KD_BHN
-					ORDER BY KD_BHN";
+			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
+			$bulan = $bulan = str_pad(date("m", strtotime($tgl_1)), 2, "0", STR_PAD_LEFT);
+			$tahun = $bulan = str_pad(date("Y", strtotime($tgl_1)), 4, "0", STR_PAD_LEFT);
+			if ($tgl_1 == '') {
+				$bulan = str_pad(Date('m'), 2, "0", STR_PAD_LEFT);
+				$tahun = str_pad(Date('Y'), 4, "0", STR_PAD_LEFT);
+			} else {
+				$bulan = str_pad(date("m", strtotime($tgl_1)), 2, "0", STR_PAD_LEFT);
+				$tahun = str_pad(date("Y", strtotime($tgl_1)), 4, "0", STR_PAD_LEFT);
+			}
+			$kd_bag = $this->session->userdata['kd_bag'];
+			$perx = $bulan.'/'.$tahun;
+			// $query = "SELECT KD_BHN, NA_BHN, SATUAN, PER, AW, MA, KE, LN, AK
+			// 		FROM (
+			// 			SELECT bhnd.KD_BHN AS KD_BHN,
+			// 				bhnd.NA_BHN AS NA_BHN,
+			// 				bhn.SATUAN AS SATUAN,
+			// 				'$per' AS PER,
+			// 				bhnd.AW$bulan AS AW,
+			// 				bhnd.MA$bulan AS MA,
+			// 				bhnd.KE$bulan AS KE,
+			// 				bhnd.LN$bulan AS LN,
+			// 				bhnd.AK$bulan AS AK
+			// 			FROM bhnd, bhn
+			// 			WHERE bhnd.KD_BHN = bhn.KD_BHN
+			// 			AND bhnd.YER = '$tahun'
+			// 			AND bhn.DR = '$dr'
+			// 			AND bhn.FLAG = 'SP'
+			// 			AND bhn.SUB = '$sub'
+			// 			GROUP BY bhn.KD_BHN
+			// 		) AS KD_BHN
+			// 		ORDER BY KD_BHN";
+			$query = "SELECT hasil.RAK AS KD_BHN,hasil.NA_BHN,hasil.SATUAN,'$perx' AS PER, hasil.awal AS AW,hasil.masuk AS MA,
+						hasil.keluar AS KE,0 AS LN, (hasil.awal+hasil.masuk-hasil.keluar) AS AK FROM (
+							SELECT b.RAK, b.NA_BHN, a.SATUAN, b.AW$bulan as awal, IFNULL(X.MASUK,0) as MASUK, IFNULL(Z.KELUAR,0) as KELUAR
+							FROM bhn a,bhnd b 
+							LEFT JOIN
+								(SELECT belid_sp.RAK, SUM(belid_sp.QTY) as MASUK
+									FROM belid_sp,beli WHERE beli.NO_BUKTI=belid_sp.NO_BUKTI AND  beli.OK = '1' AND 
+									belid_sp.TGL >= '$tahun-$bulan-01' AND belid_sp.TGL <= '$tgl_1' AND belid_sp.FLAG2='NB' AND belid_sp.DR='$dr' AND beli.KD_BAG='$kd_bag'
+									GROUP BY belid_sp.RAK
+								) AS X ON X.RAK=b.RAK
+							LEFT JOIN
+								(SELECT RAK,SUM(QTY) as KELUAR 
+									FROM pakaid WHERE TGL>='$tahun-$bulan-01' AND TGL<='$tgl_1' AND SUB = 'SP' AND DR = '$dr'
+									GROUP BY RAK
+								) AS Z ON Z.RAK=b.RAK
+							WHERE a.KD_BHN=b.KD_BHN AND b.DR='$dr' and b.YER='$tahun' AND b.RAK<>'' AND b.SUB='SP' ORDER BY b.RAK
+						) AS HASIL";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -1108,7 +1136,7 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->outpage("I");
 		} else {
 			$data = array(
-				'PER' => set_value('PER'),
+				'TGL_1' => set_value('TGL_1'),
 			);
 			$data['bulanan'] = $this->laporan_model->tampil_data_bulanan()->result();
 			$this->load->view('templates_admin/header');

@@ -27,6 +27,23 @@
                     </div>
                 </div>
             </div> -->
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-md-1">
+                        <label class="label-title">Tanggal</label>
+                    </div>
+                    <div class="col-md-3 nopadding">
+                        <input 
+                            type="text" 
+                            class="date form-control text_input" 
+                            id="TGL_1" 
+                            name="TGL_1" 
+                            data-date-format="dd-mm-yyyy" 
+                            value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["TGL_1"]; } else echo date('d-m-Y'); ?>" 
+                        >
+                    </div>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="form-group row">
                     <div class="col-sm-2 nopadding">
