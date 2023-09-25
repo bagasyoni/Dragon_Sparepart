@@ -534,8 +534,8 @@ class Laporan_model extends CI_Model
 			AND pakaid.DR = '$dr'
 			AND pakaid.SUB = '$sub'
 			AND pakaid.FLAG ='PK'
-			AND pakaid.FLAG2 ='SP'
-			AND pakaid.KET2 ='$na_gol'
+			-- AND pakaid.FLAG2 ='SP'
+			AND pakaid.GRUP ='$na_gol'
 			ORDER BY pakaid.TGL";
 		return $this->db->query($q1);
 	}

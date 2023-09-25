@@ -203,7 +203,7 @@
     function select_grup_mesin_1() {
         $('#NA_GOL_1').select2({
             ajax: {
-                url: "<?= base_url('admin/laporan/getData_grup_mesin_1') ?>",
+                url: "<?= base_url('admin/laporan/getData_grup_mesin_1_b') ?>",
                 dataType: "json",
                 type: "post",
                 delay: 250,

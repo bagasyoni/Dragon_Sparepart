@@ -1260,8 +1260,8 @@ class Laporan extends CI_Controller
 				AND pakaid.DR = '$dr'
 				AND pakaid.SUB = '$sub'
 				AND pakaid.FLAG ='PK'
-				AND pakaid.FLAG2 ='SP'
-				AND pakaid.KET2 ='$na_gol'
+				-- AND pakaid.FLAG2 ='SP'
+				AND pakaid.GRUP ='$na_gol'
 				ORDER BY pakaid.TGL";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -3743,6 +3743,35 @@ class Laporan extends CI_Controller
 			$selectajax[] = array(
 				'id' => $row['NA_GOL_1'],
 				'text' => $row['NA_GOL_1']
+			);
+		}
+		$select['total_count'] =  $results->NUM_ROWS();
+		$select['items'] = $selectajax;
+		$this->output->set_content_type('application/json')->set_output(json_encode($select));
+	}
+
+	public function getData_grup_mesin_1_b()
+	{
+		$dr = $this->session->userdata['dr'];
+		$search = $this->input->post('search');
+		$page = ((int)$this->input->post('page'));
+		if ($page == 0) {
+			$xa = 0;
+		} else {
+			$xa = ($page - 1) * 10;
+		}
+		$perPage = 10;
+		$results = $this->db->query("SELECT NO_ID, KD_GOL AS KD_GOL_1, NA_GOL AS NA_GOL_1, GRUP AS GRUP_1
+			FROM sp_mesin
+			WHERE (KD_GOL LIKE '%$search%' OR NA_GOL LIKE '%$search%' OR GRUP LIKE '%$search%')
+			AND DR='$dr'
+			GROUP BY GRUP
+			ORDER BY KD_GOL LIMIT $xa,$perPage");
+		$selectajax = array();
+		foreach ($results->RESULT_ARRAY() as $row) {
+			$selectajax[] = array(
+				'id' => $row['GRUP_1'],
+				'text' => $row['GRUP_1']
 			);
 		}
 		$select['total_count'] =  $results->NUM_ROWS();
