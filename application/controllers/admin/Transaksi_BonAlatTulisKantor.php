@@ -36,11 +36,17 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $where = array(
+            // 'DR' => $dr,
+            // 'PER' => $per,
+            // 'SUB' => $sub,
+            // 'FLAG' => 'PK',
+            // 'FLAG2' => 'SP',
             'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
             'FLAG' => 'PK',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
+            'ATK' => '1'
         );
         $this->db->select('*');
         $this->db->from('pakai');
@@ -89,11 +95,17 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
         $per = $this->session->userdata['periode'];
         $sub = $this->session->userdata['sub'];
         $where = array(
+            // 'DR' => $dr,
+            // 'PER' => $per,
+            // 'SUB' => $sub,
+            // 'FLAG' => 'PK',
+            // 'FLAG2' => 'SP',
             'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
             'FLAG' => 'PK',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
+            'ATK' => '1'
         );
         $this->db->from('pakai');
         $this->db->where($where);
@@ -144,11 +156,17 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
         $sub = $this->session->userdata['sub'];
         $this->session->set_userdata('judul', 'Transaksi Bon Alat Tulis Kantor');
         $where = array(
+            // 'DR' => $dr,
+            // 'PER' => $per,
+            // 'SUB' => $sub,
+            // 'FLAG' => 'PK',
+            // 'FLAG2' => 'SP',
             'DR' => $dr,
             'PER' => $per,
             'SUB' => $sub,
             'FLAG' => 'PK',
-            'FLAG2' => 'SP',
+            // 'FLAG2' => 'SP',
+            'ATK' => '1'
         );
         $data['pakai'] = $this->transaksi_model->tampil_data($where, 'pakai', 'NO_ID')->result();
         $this->load->view('templates_admin/header');
@@ -660,5 +678,34 @@ class Transaksi_BonAlatTulisKantor extends CI_Controller
         }
         ob_end_clean();
         $PHPJasperXML->outpage("I");
+    }
+
+    function isiRAK()
+    {
+        $VAL = $this->input->post('VAL');
+
+        $dr = $this->session->userdata['dr'];
+        if($dr=='I'){
+            $rak='_DR1';
+        }elseif($dr=='II'){
+            $rak='_DR2';
+        }else{
+            $rak='_DR3';
+        }
+        $sub = $this->session->userdata['sub'];
+
+        $q1 = "SELECT bhn.NA_BHN, bhn.SATUAN, bhnd.RAK, bhnd.KD_BHN
+            FROM bhn, bhnd
+            WHERE bhn.RAK$rak='$VAL' AND bhn.KD_BHN=bhnd.KD_BHN AND bhnd.FLAG='$sub' AND bhnd.DR='$dr' AND bhnd.SUB='$sub' AND bhnd.RAK <> '' 
+            GROUP BY bhn.KD_BHN
+            ORDER BY bhn.KD_BHN";
+
+        $q2 = $this->db->query($q1);
+        if ($q2->num_rows() > 0) {
+            foreach ($q2->result() as $row) {
+                $hasil[] = $row;
+            }
+        };
+        echo json_encode($hasil);
     }
 }

@@ -167,34 +167,34 @@
 						<thead>
 							<tr>
 								<th width="50px">No</th>
-								<th width="75px">Kode</th>
+								<!-- <th width="75px">Kode</th> -->
 								<th width="75px">Rak</th>
 								<th width="250px">Uraian</th>
 								<th width="75px">Qty</th>
 								<th width="100px">Satuan</th>
 								<th width="150px">Keterangan 1</th>
-								<th width="125px">Keterangan 2</th>
+								<!-- <th width="125px">Keterangan 2</th>
 								<th width="175px">Grup</th>
-								<th width="125px">Nama Gol</th>
+								<th width="125px">Nama Gol</th> -->
 								<th width="50px"></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td><input name="REC[]" id="REC0" type="text" value="1" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-								<td>
+								<!-- <td>
 									<select class="js-example-responsive-kd_bhn form-control KD_BHN0 text_input" name="KD_BHN[]" id="KD_BHN0" onchange="kd_bhn(this.id)" onfocusout="hitung()" required></select>
-								</td>
-								<td><input name="RAK[]" id="RAK0" type="text" class="form-control RAK text_input" readonly></td>
+								</td> -->
+								<td><input name="RAK[]" id="RAK0" type="text" class="form-control RAK text_input"></td>
 								<td><input name="NA_BHN[]" id="NA_BHN0" type="text" class="form-control NA_BHN text_input" readonly></td>
 								<td><input name="QTY[]" onkeyup="hitung()" value="0" id="QTY0" type="text" class="form-control QTY rightJustified text-primary" required></td>
 								<td><input name="SATUAN[]" id="SATUAN0" type="text" class="form-control SATUAN text_input" readonly></td>
 								<td><input name="KET1[]" id="KET10" type="text" class="form-control KET1 text_input"></td>
-								<td>
+								<!-- <td>
 									<select class="js-example-responsive-sp_mesin form-control KET20 text_input" name="KET2[]" id="KET20" onchange="kd_gol(this.id)" onfocusout="hitung()"></select>
 								</td>
 								<td><input name="GRUP[]" id="GRUP0" type="text" class="form-control GRUP text_input" readonly></td>
-								<td><input name="NA_GOL[]" id="NA_GOL0" type="text" class="form-control NA_GOL text_input" readonly></td>
+								<td><input name="NA_GOL[]" id="NA_GOL0" type="text" class="form-control NA_GOL text_input" readonly></td> -->
 								<td>
 									<!-- <button type="hidden" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
 										<i class="fa fa-fw fa-trash-alt"></i>
@@ -204,14 +204,14 @@
 						</tbody>
 						<tfoot>
 							<td></td>
-							<td></td>
+							<!-- <td></td> -->
 							<td></td>
 							<td></td>
 							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="0" readonly></td>
 							<td></td>
 							<td></td>
-							<td></td>
-							<td></td>
+							<!-- <td></td>
+							<td></td> -->
 							<td></td>
 						</tfoot>
 					</table>
@@ -356,10 +356,10 @@
 		var td5 = x.insertCell(4);
 		var td6 = x.insertCell(5);
 		var td7 = x.insertCell(6);
-		var td8 = x.insertCell(7);
-		var td9 = x.insertCell(8);
-		var td10 = x.insertCell(9);
-		var td11 = x.insertCell(10);
+		// var td8 = x.insertCell(7);
+		// var td9 = x.insertCell(8);
+		// var td10 = x.insertCell(9);
+		// var td11 = x.insertCell(10);
 
 		var kd_bhn0 = "<div class='input-group'><select class='js-example-responsive-kd_bhn form-control KD_BHN0 text_input' name='KD_BHN[]' id=KD_BHN0" + idrow + " onchange='kd_bhn(this.id)' onfocusout='hitung()' required></select></div>";
 
@@ -370,16 +370,16 @@
 		var kd_gol = kd_gol0;
 
 		td1.innerHTML = "<input name='REC[]' id=REC" + idrow + " type='text' class='REC form-control text_input' onkeypress='return tabE(this,event)' readonly>";
-		td2.innerHTML = kd_bhn;
-		td3.innerHTML = "<input name='RAK[]' id=RAK0" + idrow + " type='text' class='form-control RAK text_input' readonly>";
-		td4.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
-		td5.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
-		td6.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
-		td7.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
-		td8.innerHTML = kd_gol;
-		td9.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
-		td10.innerHTML = "<input name='NA_GOL[]' id=NA_GOL0" + idrow + " type='text' class='form-control NA_GOL text_input' readonly>";
-		td11.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
+		// td2.innerHTML = kd_bhn;
+		td2.innerHTML = "<input name='RAK[]' id=RAK0" + idrow + " type='text' class='form-control RAK text_input'>";
+		td3.innerHTML = "<input name='NA_BHN[]' id=NA_BHN0" + idrow + " type='text' class='form-control NA_BHN text_input' readonly>";
+		td4.innerHTML = "<input name='QTY[]' onclick='select()' onkeyup='hitung()' value='0' id=QTY" + idrow + " type='text' class='form-control QTY rightJustified text-primary' required>";
+		td5.innerHTML = "<input name='SATUAN[]' id=SATUAN0" + idrow + " type='text' class='form-control SATUAN text_input' readonly>";
+		td6.innerHTML = "<input name='KET1[]' id=KET10" + idrow + " type='text' class='form-control KET1 text_input'>";
+		// td8.innerHTML = kd_gol;
+		// td9.innerHTML = "<input name='GRUP[]' id=GRUP0" + idrow + " type='text' class='form-control GRUP text_input' readonly>";
+		// td10.innerHTML = "<input name='NA_GOL[]' id=NA_GOL0" + idrow + " type='text' class='form-control NA_GOL text_input' readonly>";
+		td7.innerHTML = "<input type='hidden' name='NO_ID[]' id=NO_ID" + idrow + "  class='form-control' value='0'>" +
 			" <button type='button' class='btn btn-sm btn-circle btn-outline-danger btn-delete' onclick=''> <i class='fa fa-fw fa-trash'></i> </button>";
 		jumlahdata = 100;
 		for (i = 0; i <= jumlahdata; i++) {
@@ -395,6 +395,7 @@
 			e.currentTarget.blur();
 		});
 		select_kd_bhn();
+		isiRAK();
 		select_sp_mesin();
 	}
 
@@ -409,6 +410,7 @@
 
 <script>
 	$(document).ready(function() {
+		isiRAK();
 		select_kd_bhn();
 		select_sp_mesin();
 	});
@@ -535,5 +537,32 @@
 		$('#NA_BHN' + q).val(na_bhn);
 		$('#SATUAN' + q).val(satuan);
 		console.log(q);
+	}
+
+	function isiRAK() {
+		$(".RAK").change(function() {
+			// AMBIL ID / NO URUT
+			var ID = $(this).attr('id').substring(3, 5);
+			// AMBIL ISI RAK
+			var VAL = $(this).val();
+			console.log(VAL);
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo base_url('index.php/admin/Transaksi_BonPemakaian/isiRAK'); ?>',
+				data: {
+					VAL: VAL
+				},
+				dataType: 'json',
+				success: function(response) {
+					console.log('ADA');
+					$("#NA_BHN" + ID).val(response[0].NA_BHN);
+					$("#KD_BHN" + ID).val(response[0].KD_BHN);
+					$("#SATUAN" + ID).val(response[0].SATUAN);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log('gak ada');
+				}
+			});
+		})
 	}
 </script>

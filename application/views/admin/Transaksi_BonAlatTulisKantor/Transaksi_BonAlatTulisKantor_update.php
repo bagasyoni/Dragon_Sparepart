@@ -180,15 +180,15 @@ foreach ($bon_atk as $rowh) {
 						<thead>
 							<tr>
 								<th width="50px">No</th>
-								<th width="75px">Kode</th>
+								<!-- <th width="75px">Kode</th> -->
 								<th width="75px">Rak</th>
 								<th width="250px">Uraian</th>
 								<th width="75px">Qty</th>
 								<th width="100px">Satuan</th>
 								<th width="150px">Keterangan 1</th>
-								<th width="125px">Keterangan 2</th>
+								<!-- <th width="125px">Keterangan 2</th>
 								<th width="175px">Grup</th>
-								<th width="125px">Nama Gol</th>
+								<th width="125px">Nama Gol</th> -->
 								<th width="50px"></th>
 							</tr>
 						</thead>
@@ -199,19 +199,19 @@ foreach ($bon_atk as $rowh) {
 							?>
 								<tr>
 									<td><input name="REC[]" id="REC<?php echo $no; ?>" value="<?= $row->REC ?>" type="text" class="form-control REC text_input" onkeypress="return tabE(this,event)" readonly></td>
-									<td>
+									<!-- <td>
 										<div class="input-group">
 											<select class="js-example-responsive-kd_bhn form-control KD_BHN text_input" name="KD_BHN[]" id="KD_BHN<?php echo $no; ?>" onchange="kd_bhn(this.id)" required>
 												<option value="<?php echo $row->KD_BHN; ?>" selected id="KD_BHN<?php echo $no; ?>"><?php echo $row->KD_BHN; ?></option>
 											</select>
 										</div>
-									</td>
+									</td> -->
 									<td><input name="RAK[]" id="RAK<?php echo $no; ?>" value="<?= $row->RAK ?>" type="text" class="form-control RAK text_input" readonly></td>
 									<td><input name="NA_BHN[]" id="NA_BHN<?php echo $no; ?>" value="<?= $row->NA_BHN ?>" type="text" class="form-control NA_BHN text_input" readonly></td>
 									<td><input name="QTY[]" onkeyup="hitung()" id="QTY<?php echo $no; ?>" value="<?php echo number_format($row->QTY, 2, '.', ','); ?>" type="text" class="form-control QTY rightJustified text-primary"></td>
 									<td><input name="SATUAN[]" id="SATUAN<?php echo $no; ?>" value="<?= $row->SATUAN ?>" type="text" class="form-control SATUAN text_input" readonly></td>
 									<td><input name="KET1[]" id="KET1<?php echo $no; ?>" value="<?= $row->KET1 ?>" type="text" class="form-control KET1 text_input"></td>
-									<td>
+									<!-- <td>
 										<div class="input-group">
 											<select class="js-example-responsive-sp_mesin form-control KET2 text_input" name="KET2[]" id="KET2<?php echo $no; ?>" onchange="kd_gol(this.id)" required>
 												<option value="<?php echo $row->KET2; ?>" selected id="KET2<?php echo $no; ?>"><?php echo $row->KET2; ?></option>
@@ -219,7 +219,7 @@ foreach ($bon_atk as $rowh) {
 										</div>
 									</td>
 									<td><input name="GRUP[]" id="GRUP<?php echo $no; ?>" value="<?= $row->GRUP ?>" type="text" class="form-control GRUP text_input" readonly></td>
-									<td><input name="NA_GOL[]" id="NA_GOL<?php echo $no; ?>" value="<?= $row->NA_GOL ?>" type="text" class="form-control NA_GOL text_input" readonly></td>
+									<td><input name="NA_GOL[]" id="NA_GOL<?php echo $no; ?>" value="<?= $row->NA_GOL ?>" type="text" class="form-control NA_GOL text_input" readonly></td> -->
 									<td>
 										<input name="NO_ID[]" id="NO_ID<?php echo $no; ?>" value="<?= $row->NO_ID ?>" class="form-control" type="hidden">
 										<button type="button" class="btn btn-sm btn-circle btn-outline-danger btn-delete" onclick="">
@@ -232,14 +232,14 @@ foreach ($bon_atk as $rowh) {
 						</tbody>
 						<tfoot>
 							<td></td>
-							<td></td>
+							<!-- <td></td> -->
 							<td></td>
 							<td></td>
 							<td><input class="form-control TOTAL_QTY rightJustified text-primary font-weight-bold" id="TOTAL_QTY" name="TOTAL_QTY" value="<?php echo number_format($rowh->TOTAL_QTY, 2, '.', ','); ?>" readonly></td>
 							<td></td>
 							<td></td>
-							<td></td>
-							<td></td>
+							<!-- <td></td>
+							<td></td> -->
 							<td></td>
 						</tfoot>
 					</table>

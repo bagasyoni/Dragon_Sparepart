@@ -115,7 +115,7 @@
                 "<'row'<'col-md-2'l><'col-md-6 test_btn'><'col-md-4'f>>" + // peletakan entries, search, dan test_btn
                 "<'row'<'col-md-12't>><'row'<'col-md-12'ip>>", // peletakan show dan halaman
             "order": [
-                [3, 'asc']
+                [3, 'desc']
             ],
             // order: [
             //     [8, 'asc']
