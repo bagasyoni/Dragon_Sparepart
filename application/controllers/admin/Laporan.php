@@ -1318,6 +1318,7 @@ class Laporan extends CI_Controller
 			$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
 			$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
 			$query = "SELECT beli.PER AS PER,
+					belid.RAK,
 					belid.TGL AS TGL,
 					belid.NO_BUKTI AS NO_BUKTI,
 					-- CONCAT(belid.KD_BHN,' - ',belid.NA_BHN) AS BARANG,
@@ -1329,15 +1330,16 @@ class Laporan extends CI_Controller
 					belid.NO_PP AS NO_PP,
 					-- belid.NO_BELI AS NO_BUKTI,
 					belid.REC AS REC
-				FROM beli, belid
+				FROM beli, belid_sp belid
 				WHERE beli.NO_BUKTI = belid.NO_BUKTI
 				AND belid.TGL>='$tgl_1'
 				AND belid.TGL<='$tgl_2'
 				AND beli.KD_BAG='$devisi'
+				AND belid.RAK <> ''
 				-- AND beli.VAL <> 0
 				-- AND beli.SUB='$sub'
 				AND beli.FLAG2='NB'
-				ORDER BY belid.TGL";
+				ORDER BY belid.RAK";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)){
 				array_push($PHPJasperXML->arraysqltable, array(
