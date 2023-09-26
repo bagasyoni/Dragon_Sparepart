@@ -603,7 +603,7 @@ class Laporan_model extends CI_Model
 			-- AND pakai.PER = '$per'
 			AND pakai.ATK = 0
 			AND pakai.FLAG = 'PK'
-			AND pakai.FLAG2 = 'SP'
+			-- AND pakai.FLAG2 = 'SP'
 			$katakunci
 			ORDER BY pakaid.TGL";
 		return $this->db->query($q1);

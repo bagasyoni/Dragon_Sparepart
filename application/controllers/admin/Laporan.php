@@ -1244,7 +1244,7 @@ class Laporan extends CI_Controller
 			$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
 			$query = "SELECT pakaid.NO_ID AS ID,
 					pakaid.RAK,
-					'$per' AS PER,
+					concat(substr('$tgl_1',6,2),'/',left('$tgl_1',4)) AS PER,
 					pakaid.NA_BHN,
 					pakaid.KD_BHN,
 					pakaid.SATUAN,
@@ -1273,8 +1273,9 @@ class Laporan extends CI_Controller
 					"NO_BUKTI" => $row1["NO_BUKTI"],
 					"TGL" => $row1["TGL"],
 					"QTY" => $row1["QTY"],
-					"NA_GOL" => $row1["NA_GOL"],
+					"NA_GOL" => $row1["KET2"],
 					"RAK" => $row1["RAK"],
+					"GRUP" => $row1["GRUP"],
 				));
 			}
 			ob_end_clean();
@@ -1319,6 +1320,8 @@ class Laporan extends CI_Controller
 			$tgl_2 = date("Y-m-d", strtotime($this->input->post('TGL_2', TRUE)));
 			$query = "SELECT beli.PER AS PER,
 					belid.RAK,
+					'$tgl_1' AS TGL_1,
+					'$tgl_2' AS TGL_2,
 					belid.TGL AS TGL,
 					belid.NO_BUKTI AS NO_BUKTI,
 					-- CONCAT(belid.KD_BHN,' - ',belid.NA_BHN) AS BARANG,
@@ -1345,7 +1348,7 @@ class Laporan extends CI_Controller
 				array_push($PHPJasperXML->arraysqltable, array(
 					"RAK" => $row1["RAK"],
 					"BARANG" => $row1["BARANG"],
-					"KD_BHN" => $row1["KD_BHN"],
+					"RAK" => $row1["RAK"],
 					"NA_BHN" => $row1["NA_BHN"],
 					"NO_BUKTI" => $row1["NO_BUKTI"],
 					"TGL_1" => $row1["TGL_1"],
@@ -1416,7 +1419,7 @@ class Laporan extends CI_Controller
 					AND pakai.SUB = '$sub'
 					-- AND pakai.PER = '$per'
 					AND pakai.FLAG = 'PK'
-					AND pakai.FLAG2 = 'SP'
+					-- AND pakai.FLAG2 = 'NB'
 					$katakunci
 					ORDER BY pakaid.TGL";
 			$result1 = mysqli_query($conn, $query);
