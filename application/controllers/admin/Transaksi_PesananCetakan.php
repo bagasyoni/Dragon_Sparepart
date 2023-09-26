@@ -36,9 +36,8 @@ class Transaksi_PesananCetakan extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            // 'DR' => $dr,
+            'DR' => 'RD2',
             'SUB' => 'CT',
-            'PBL' => 1,
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_CETAK',
         );
@@ -89,9 +88,8 @@ class Transaksi_PesananCetakan extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            // 'DR' => $dr,
+            'DR' => 'RD2',
             'SUB' => 'CT',
-            'PBL'  => 1,
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_CETAK',
         );
@@ -191,9 +189,8 @@ class Transaksi_PesananCetakan extends CI_Controller
         $dr= $this->session->userdata['dr'];
         $where = array(
             'PER' => $per,
-            // 'DR' => $dr,
+            'DR' => 'RD2',
             'SUB' => 'CT',
-            'PBL' => 1,
             // 'FLAG' => 'PP',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_CETAK',

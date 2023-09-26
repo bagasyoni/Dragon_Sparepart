@@ -37,7 +37,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $where = array(
             // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => '1R&',
+            'SUB' => 'PS',
             'FLAG2' => 'NB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_PISAU',
@@ -45,7 +45,6 @@ class Transaksi_PesananPisau extends CI_Controller
         $this->db->select('*');
         $this->db->from('pp');
         $this->db->where($where);
-        $this->db->like('NO_BUKTI', 'RD2');
         $i = 0;
         foreach ($this->column_search as $item) {
             if (@$_POST['search']['value']) {
@@ -91,14 +90,13 @@ class Transaksi_PesananPisau extends CI_Controller
         $where = array(
             // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => '1R&',
+            'SUB' => 'PS',
             'FLAG2' => 'NB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_PISAU',
         );
         $this->db->from('pp');
         $this->db->where($where);
-        $this->db->like('NO_BUKTI', 'RD2');
         return $this->db->count_all_results();
     }
 
@@ -191,7 +189,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $where = array(
             // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => '1R&',
+            'SUB' => 'PS',
             // 'FLAG2' => 'SP',
             'FLAG2' => 'NB',
             // 'TYP' => 'RND_PISAU',
