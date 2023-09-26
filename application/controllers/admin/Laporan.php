@@ -1405,6 +1405,7 @@ class Laporan extends CI_Controller
 						pakaid.TGL AS TGL,
 						pakaid.NO_BUKTI AS NO_BUKTI,
 						pakaid.KD_BHN AS KD_BHN,
+						pakaid.RAK AS RAK,
 						pakaid.NA_BHN AS NA_BHN,
 						pakaid.QTY AS QTY,
 						pakaid.SATUAN AS SATUAN,
@@ -1421,7 +1422,7 @@ class Laporan extends CI_Controller
 					AND pakai.FLAG = 'PK'
 					-- AND pakai.FLAG2 = 'NB'
 					$katakunci
-					ORDER BY pakaid.TGL";
+					ORDER BY pakaid.RAK";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -1429,6 +1430,7 @@ class Laporan extends CI_Controller
 					"TGL_1" => $row1["TGL_1"],
 					"TGL_2" => $row1["TGL_2"],
 					"KD_BHN" => $row1["KD_BHN"],
+					"RAK" => $row1["RAK"],
 					"NA_BHN" => $row1["NA_BHN"],
 					"NO_BUKTI" => $row1["NO_BUKTI"],
 					"TGL" => $row1["TGL"],
