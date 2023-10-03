@@ -179,7 +179,8 @@ class Laporan extends CI_Controller
 				nama AS NAMA,
 				total_qty AS TOTAL_QTY
 				FROM sp_bagian 
-				WHERE dr = '$dr'";
+				WHERE dr = '$dr'
+				ORDER BY KODE ASC";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -207,6 +208,7 @@ class Laporan extends CI_Controller
 	public function index_Triwulan()
 	{
 		if (isset($_POST["print"])) {
+			$dr = $this->session->userdata['dr'];
 			$CI = &get_instance();
 			$CI->load->database();
 			$servername = $CI->db->hostname;
@@ -220,14 +222,16 @@ class Laporan extends CI_Controller
 			include('phpjasperxml/class/PHPJasperXML.inc.php');
 			include('phpjasperxml/setting.php');
 			$PHPJasperXML = new \PHPJasperXML();
-			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Triwulan_Inventaris.jrxml");
+			// $PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Triwulan_Inventaris.jrxml");
+			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Triwulan.jrxml");
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$query = "SELECT
 					inventaris.NO_BUKTI,
 					inventaris.NA_BAGIAN AS BAGIAN,
-					inventaris.KD_BAGIAN AS KODE,
+					inventaris.KODE AS KODE,
 					inventaris.NAMA,
-					inventaris.TGL,
+					-- inventaris.TGL,
+					DATE_FORMAT(NOW(), '%d-%m-%Y') AS TGL,
 					inventarisd.JENIS,
 					inventarisd.MERK,
 					inventarisd.SATUAN,
@@ -240,13 +244,16 @@ class Laporan extends CI_Controller
 					inventaris.NO_BUKTI = inventarisd.NO_BUKTI
 				AND
 					inventaris.FLAG = 'INV'
+				AND
+					inventaris.DR = '$dr'
 				ORDER BY
-					inventarisd.NO_BUKTI,
-					inventarisd.JENIS";
+					inventaris.KODE ASC,
+					inventarisd.JENIS ASC";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
 					"BAGIAN" => $row1["BAGIAN"],
+					"NO_BUKTI" => $row1["NO_BUKTI"],
 					"KODE" => $row1["KODE"],
 					"NAMA" => $row1["NAMA"],
 					"TGL" => $row1["TGL"],
@@ -272,6 +279,7 @@ class Laporan extends CI_Controller
 	public function index_BarangPerRuangan()
 	{
 		if (isset($_POST["print"])) {
+			$dr = $this->session->userdata['dr'];
 			$CI = &get_instance();
 			$CI->load->database();
 			$servername = $CI->db->hostname;
@@ -289,15 +297,17 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$jenis_1 = $this->input->post('JENIS_1');
 			$query = "SELECT
-				inventaris.KD_BAGIAN,
-				inventaris.NAMA,
-				inventaris.NA_BAGIAN,
-				inventarisd.JENIS,
-				inventarisd.MERK,
-				inventarisd.SATUAN,
-				inventarisd.QTY,
-				inventarisd.KET,
-				DATE(NOW()) as TGL
+				inventaris.NO_BUKTI,
+					inventaris.NA_BAGIAN AS BAGIAN,
+					inventaris.KODE AS KODE,
+					inventaris.NAMA,
+					-- inventaris.TGL,
+					DATE_FORMAT(NOW(), '%d-%m-%Y') AS TGL,
+					inventarisd.JENIS,
+					inventarisd.MERK,
+					inventarisd.SATUAN,
+					inventarisd.QTY,
+					inventarisd.KET
 			FROM
 				inventaris,
 				inventarisd
@@ -306,14 +316,16 @@ class Laporan extends CI_Controller
 			AND
 				inventaris.FLAG = 'INV'
 			AND
-				inventarisd.JENIS <> ' '
+				inventaris.DR = '$dr'
 			ORDER BY
-				inventarisd.NO_BUKTI,
-				inventarisd.JENIS";
+				inventaris.KODE ASC,
+				inventarisd.JENIS ASC";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
-					"KODE" => $row1["KD_BAGIAN"],
+					"KODE" => $row1["KODE"],
+					"BAGIAN" => $row1["BAGIAN"],
+					"NO_BUKTI" => $row1["NO_BUKTI"],
 					"NAMA" => $row1["NAMA"],
 					"TGL" => date("Y-m-d", strtotime($row1["TGL"])),
 					"JENIS" => $row1["JENIS"],
@@ -321,7 +333,7 @@ class Laporan extends CI_Controller
 					"SATUAN" => $row1["SATUAN"],
 					"QTY" => $row1["QTY"],
 					"KET" => $row1["KET"],
-					"BAGIAN" => $row1["NA_BAGIAN"],
+					"NA_BAGIAN" => $row1["NA_BAGIAN"],
 				));
 			}
 			ob_end_clean();
@@ -356,7 +368,11 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$cetak_1 = $this->input->post('CETAK_1');
-			$query = "SELECT * FROM sp_invenc WHERE DR='$dr' AND CETAK='$cetak_1'";
+			$filter_cetak = " ";
+			if ($this->input->post('CETAK_1', TRUE) != '') {
+				$filter_cetak = "AND cetak = '$cetak_1'";
+			}
+			$query = "SELECT * FROM sp_invenc WHERE DR='$dr' $filter_cetak ORDER BY CETAK ASC";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -443,7 +459,11 @@ class Laporan extends CI_Controller
 			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
 			$dr = $this->session->userdata['dr'];
 			$cetak_1 = $this->input->post('CETAK_1');
-			$query = "SELECT * FROM sp_invenc WHERE DR='$dr' AND CETAK='$cetak_1'";
+			$filter_cetak = " ";
+			if ($this->input->post('CETAK_1', TRUE) != '') {
+				$filter_cetak = "AND NAMA = '$cetak_1'";
+			}
+			$query = "SELECT * FROM sp_invenc WHERE DR='$dr' $filter_cetak ORDER BY CETAK ASC";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -1833,7 +1853,7 @@ class Laporan extends CI_Controller
 				inventaris.NA_BAGIAN AS NA_BAGIAN,
 				inventarisd.JENIS AS JENIS,
 				inventarisd.MERK AS MERK,
-				inventarisd.QTY AS QTY,
+				CONCAT(inventarisd.QTY,' ',inventarisd.SATUAN) AS QTY,
 				inventarisd.SATUAN AS SATUAN,
 				inventarisd.KET AS KET
 			FROM inventaris, inventarisd
@@ -1841,7 +1861,7 @@ class Laporan extends CI_Controller
 			AND inventaris.DR='$dr'
 			AND inventaris.FLAG='INV'
 			$filter_jenis
-			ORDER BY inventarisd.JENIS";
+			ORDER BY inventarisd.JENIS ASC,inventarisd.MERK ASC";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(

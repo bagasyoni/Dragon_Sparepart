@@ -23,12 +23,13 @@
                         <label class="label-title">Jenis </label>
                     </div>
                     <div class="col-md-3">
-                        <select class="js-example-responsive form-control JENIS_1" name="JENIS_1" id="JENIS_1" style="width: 100%;">
-                            <?php
+                        <!-- <select class="js-example-responsive form-control JENIS_1" name="JENIS_1" id="JENIS_1" style="width: 100%;">
+                            <?php /*
                             if (isset($_POST["tampilkan"]) &&  $_POST["JENIS_1"] == $JENIS_1) {
                                 echo '<option value="' . $JENIS_1 . '" selected >' . $JENIS_1 . '</option>';
-                            } ?>
-                        </select>
+                            } */?>
+                        </select> -->
+                        <input type="text" value="<?= $JENIS_1 ?>" id="JENIS_1" name="JENIS_1" class="form-control text_input JENIS_1" >
                     </div>
                 </div>
             </div>
@@ -177,34 +178,34 @@
     });
 
     function select_jenis_1() {
-        $('#JENIS_1').select2({
-            ajax: {
-                url: "<?= base_url('admin/laporan/getData_jenis_barang_1') ?>",
-                dataType: "json",
-                type: "post",
-                delay: 250,
-                data: function(params) {
-                    return {
-                        search: params.term,
-                        page: params.page
-                    }
-                },
-                processResults: function(data, params) {
-                    params.page = params.page || 1;
-                    return {
-                        results: data.items,
-                        pagination: {
-                            more: data.total_count
-                        }
-                    };
-                },
-                cache: true
-            },
-            placeholder: 'Semua Jenis ...',
-            minimumInputLength: 0,
-            templateResult: format,
-            templateSelection: formatSelection
-        });
+        // $('#JENIS_1').select2({
+        //     ajax: {
+        //         url: "<?= base_url('admin/laporan/getData_jenis_barang_1') ?>",
+        //         dataType: "json",
+        //         type: "post",
+        //         delay: 250,
+        //         data: function(params) {
+        //             return {
+        //                 search: params.term,
+        //                 page: params.page
+        //             }
+        //         },
+        //         processResults: function(data, params) {
+        //             params.page = params.page || 1;
+        //             return {
+        //                 results: data.items,
+        //                 pagination: {
+        //                     more: data.total_count
+        //                 }
+        //             };
+        //         },
+        //         cache: true
+        //     },
+        //     placeholder: 'Semua Jenis ...',
+        //     minimumInputLength: 0,
+        //     templateResult: format,
+        //     templateSelection: formatSelection
+        // });
     }
 
     function format(repo) {

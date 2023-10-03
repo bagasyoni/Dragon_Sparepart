@@ -39,18 +39,21 @@ class Laporan_model extends CI_Model
 			nama AS NAMA,
 			total_qty AS TOTAL_QTY
 			FROM sp_bagian 
-			WHERE dr = '$dr'";
+			WHERE dr = '$dr'
+			ORDER BY KODE ASC";
 		return $this->db->query($q1);
 	}
 
 	public function tampil_data_triwulan()
 	{
+		$dr = $this->session->userdata['dr'];
 		$q1 = "SELECT
 				inventaris.NO_BUKTI,
 				inventaris.NA_BAGIAN AS BAGIAN,
-				inventaris.KD_BAGIAN AS KODE,
+				inventaris.KODE AS KODE,
 				inventaris.NAMA,
-				inventaris.TGL,
+				-- inventaris.TGL,
+				DATE_FORMAT(NOW(), '%d-%m-%Y') AS TGL,
 				inventarisd.JENIS,
 				inventarisd.MERK,
 				inventarisd.SATUAN,
@@ -63,9 +66,11 @@ class Laporan_model extends CI_Model
 				inventaris.NO_BUKTI = inventarisd.NO_BUKTI
 			AND
 				inventaris.FLAG = 'INV'
+			AND
+					inventaris.DR = '$dr'
 			ORDER BY
-				inventarisd.NO_BUKTI,
-				inventarisd.JENIS";
+				inventaris.KODE ASC,
+				inventarisd.JENIS ASC";
 		return $this->db->query($q1);
 	}
 
@@ -789,7 +794,7 @@ class Laporan_model extends CI_Model
 			AND inventaris.DR='$dr'
 			AND inventaris.FLAG='INV'
 			$filter_jenis
-			ORDER BY inventarisd.JENIS";
+			ORDER BY inventarisd.JENIS ASC, inventarisd.MERK ASC";
 		return $this->db->query($q1);
 	}
 

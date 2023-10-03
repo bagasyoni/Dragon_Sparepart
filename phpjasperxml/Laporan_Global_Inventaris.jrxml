@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan_Global_Inventaris" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="2" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="145"/>
@@ -22,11 +22,32 @@
 		<variableExpression><![CDATA[$F{QTY}]]></variableExpression>
 		<initialValueExpression><![CDATA[$F{QTY}]]></initialValueExpression>
 	</variable>
-	<group name="GroupNaBrg">
+	<group name="GroupNaBrg" isStartNewColumn="true">
 		<groupExpression><![CDATA[$F{JENIS}]]></groupExpression>
+		<groupHeader>
+			<band>
+				<textField>
+					<reportElement x="49" y="1" width="141" height="17" uuid="4d7d41b9-415c-475e-9be2-0bccadd4da86">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box padding="0">
+						<pen lineWidth="0.25" lineStyle="Solid"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="9" isBold="false" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{JENIS}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
 		<groupFooter>
 			<band height="17">
-				<printWhenExpression><![CDATA[$F{NA_BAGIAN}]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$F{JENIS}]]></printWhenExpression>
 				<textField>
 					<reportElement x="19" y="0" width="30" height="17" uuid="28070d88-7890-4e26-9982-e963205e52b1">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -75,7 +96,7 @@
 					</textElement>
 				</textField>
 				<textField>
-					<reportElement x="398" y="0" width="60" height="17" uuid="3c826aa1-1960-4de6-b492-c528c308b6a0">
+					<reportElement x="398" y="0" width="60" height="17" printWhenGroupChanges="GroupNaBrg" uuid="3c826aa1-1960-4de6-b492-c528c308b6a0">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<box padding="0">
@@ -269,24 +290,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="9" isBold="false" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="49" y="0" width="141" height="17" uuid="eea00f6e-6360-4793-9f2c-3536215ab351">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
-				<box padding="0">
-					<pen lineWidth="0.25" lineStyle="Solid"/>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="9" isBold="false" isUnderline="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{JENIS}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{GroupNaBrg_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="190" y="0" width="208" height="17" uuid="6e7747fc-64dd-498e-b0ca-f038f2a84324">
@@ -299,7 +303,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="9" isBold="false" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MERK}]]></textFieldExpression>
@@ -315,7 +319,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="9" isBold="false" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
@@ -331,7 +335,7 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="9" isBold="false" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{KET}]]></textFieldExpression>
