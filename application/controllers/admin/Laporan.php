@@ -1435,6 +1435,7 @@ class Laporan extends CI_Controller
 						'$tgl_2' AS TGL_2
 					FROM pakaid, pakai
 					WHERE pakai.NO_BUKTI = pakaid.NO_BUKTI
+					AND pakai.NO_ID = pakaid.ID
 					AND pakai.TGL BETWEEN '$tgl_1' AND '$tgl_2'
 					AND pakai.DR = '$dr'
 					AND pakai.SUB = '$sub'
