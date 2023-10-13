@@ -841,7 +841,7 @@ class Transaksi_PesananLBBA extends CI_Controller
         $no_id = $id;
         // $query = "SELECT a.GAMBAR1 AS GHEAD, b.GAMBAR1 AS GDETAIL FROM pp a,ppd b WHERE a.NO_ID = '$no_id' AND a.NO_BUKTI = b.NO_BUKTI";
         $query = "SELECT a.ARTICLE,'' BAGIAN, '' PESAN,a.NO_BUKTI,a.TG_SMP TGL,a.TGL_DIMINTA TGL_DIMINTA,a.GAMBAR1 GAMBAR,
-                    a.TTD1_USR,a.TTD2_USR,a.TTD3_USR,a.TTD4_USR,a.TTD5_USR,
+                    a.TTD1_USR,a.TTD2_USR,a.TTD3_USR,a.TTD4_USR,a.TTD5_USR, a.DR,
                     a.TTD1_SMP,a.TTD2_SMP,a.TTD3_SMP,a.TTD4_SMP,a.TTD5_SMP,
                     b.KD_BHN,b.NA_BHN,b.WARNA,b.SERI,b.QTY,b.SATUAN,b.GAMBAR1
                     FROM pp a, ppd b
@@ -853,6 +853,7 @@ class Transaksi_PesananLBBA extends CI_Controller
             array_push($PHPJasperXML->arraysqltable, array(
                 "ARTICLE" => $row1["ARTICLE"],
                 "BAGIAN" => $row1["BAGIAN"],
+                "DR" => $row1["DR"],
                 "PESAN" => $row1["PESAN"],
                 "NO_BUKTI" => $row1["NO_BUKTI"],
                 "TGL" => $row1["TGL"],

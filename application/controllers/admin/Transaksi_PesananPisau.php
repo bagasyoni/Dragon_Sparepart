@@ -37,7 +37,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $where = array(
             // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => 'PS',
+            'SUB' => 'SP',
             'FLAG2' => 'NB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_PISAU',
@@ -90,7 +90,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $where = array(
             // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => 'PS',
+            'SUB' => 'SP',
             'FLAG2' => 'NB',
             // 'FLAG2' => 'SP',
             // 'TYP' => 'RND_PISAU',
@@ -189,7 +189,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $where = array(
             // 'DR' => $dr,
             'PER' => $per,
-            'SUB' => 'PS',
+            'SUB' => 'SP',
             // 'FLAG2' => 'SP',
             'FLAG2' => 'NB',
             // 'TYP' => 'RND_PISAU',
@@ -206,7 +206,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $per = $this->session->userdata['periode'];
         $dr = $this->session->userdata['kd_area'];
         $sub = $this->session->userdata['sub'];
-        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='1R&' AND FLAG='PP' AND FLAG2='NB'")->result();
+        $nomer = $this->db->query("SELECT MAX(NO_BUKTI) as NO_BUKTI FROM pp WHERE PER='$per' AND SUB='SP' AND FLAG2='NB'")->result();
         $nom = array_column($nomer, 'NO_BUKTI');
         if($nom[0]==NULL){
             $value11 = 0;
@@ -333,7 +333,7 @@ class Transaksi_PesananPisau extends CI_Controller
             // 'FLAG2' => 'SP',
             'FLAG2' => 'NB',
             'TYP' => 'RND_PISAU',
-            'SUB' => '1R&',
+            'SUB' => 'SP',
             'DR' => $this->session->userdata['kd_area'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
@@ -390,7 +390,7 @@ class Transaksi_PesananPisau extends CI_Controller
                 'FLAG' => 'PP',
                 'FLAG2' => 'NB',
                 'TYP' => 'RND_PISAU',
-                'SUB' => '1R&',
+                'SUB' => 'SP',
                 'DR' => $this->session->userdata['kd_area'],
                 'PER' => $this->session->userdata['periode'],
                 'USRNM' => $this->session->userdata['username'],
@@ -489,7 +489,7 @@ class Transaksi_PesananPisau extends CI_Controller
             // 'FLAG' => 'PP',
             'FLAG2' => 'NB',
             'TYP' => 'RND_PISAU',
-            'SUB' => '1R&',
+            'SUB' => 'SP',
             'DR' => $this->session->userdata['kd_area'],
             'PER' => $this->session->userdata['periode'],
             'USRNM' => $this->session->userdata['username'],
@@ -580,7 +580,7 @@ class Transaksi_PesananPisau extends CI_Controller
                     'FLAG' => 'PP',
                     'FLAG2' => 'NB',
                     'TYP' => 'RND_PISAU',
-                    'SUB' => '1R&',
+                    'SUB' => 'SP',
                     'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
@@ -709,7 +709,7 @@ class Transaksi_PesananPisau extends CI_Controller
             'FLAG' => '',
             'FLAG2' => 'SP',
             'TYP' => 'RND_PISAU',
-            'SUB' => '1R&',
+            'SUB' => 'SP',
             'VAL' => '1',
             'DR' => $this->session->userdata['kd_area'],
             'PER' => $this->session->userdata['periode'],
@@ -775,9 +775,9 @@ class Transaksi_PesananPisau extends CI_Controller
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$URUT])),
                     'GAMBAR1' => $GAMBAR1[$URUT],
                     'FLAG' => '',
-                    'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'TYP' => 'RND_PISAU',
-                    'SUB' => '1R&',
+                    'SUB' => 'SP',
                     'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],
@@ -811,9 +811,9 @@ class Transaksi_PesananPisau extends CI_Controller
                     'TGL_DIMINTA' => date("Y-m-d", strtotime($TGL_DIMINTA_D[$i])),
                     'GAMBAR1' => $GAMBAR1[$i],
                     'FLAG' => 'PP',
-                    'FLAG2' => 'SP',
+                    'FLAG2' => 'NB',
                     'TYP' => 'RND_PISAU',
-                    'SUB' => '1R&',
+                    'SUB' => 'SP',
                     'DR' => $this->session->userdata['kd_area'],
                     'PER' => $this->session->userdata['periode'],
                     'USRNM' => $this->session->userdata['username'],

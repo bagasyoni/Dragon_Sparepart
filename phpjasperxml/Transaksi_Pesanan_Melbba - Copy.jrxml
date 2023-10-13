@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Transaksi_PP_Bahan" language="groovy" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="5662dcdd-2947-4030-a126-8345a6e9bd94">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="145"/>
@@ -34,7 +34,6 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="DR" class="java.lang.String"/>
 	<field name="NO_BUKTI" class="java.lang.String"/>
 	<field name="TGL" class="java.lang.String"/>
 	<field name="ARTICLE" class="java.lang.String"/>
@@ -175,7 +174,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{DR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="50" y="44" width="131" height="15" uuid="e62a0cc5-510f-4e3e-9668-a99813a069da">
@@ -188,7 +187,17 @@
 				<textFieldExpression><![CDATA[$F{ARTICLE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="220" y="85" width="100" height="15" uuid="5022b96e-0aa0-4fe8-b840-28c2196065dc">
+				<reportElement x="50" y="74" width="131" height="15" uuid="fbf73d7c-1385-439d-9666-d23221dbf0a5">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PESAN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="181" y="89" width="100" height="15" uuid="5022b96e-0aa0-4fe8-b840-28c2196065dc">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -198,7 +207,7 @@
 				<textFieldExpression><![CDATA["Tanggal Datang	:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="220" y="55" width="100" height="15" uuid="4da08fd8-aa13-4216-9bbd-991713b94fe3">
+				<reportElement x="181" y="59" width="100" height="15" uuid="4da08fd8-aa13-4216-9bbd-991713b94fe3">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -208,7 +217,7 @@
 				<textFieldExpression><![CDATA["Tanggal Pesan	:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="320" y="70" width="130" height="15" uuid="1409de2a-a625-4d18-9ef1-d72d64ac4a62">
+				<reportElement x="281" y="74" width="130" height="15" uuid="1409de2a-a625-4d18-9ef1-d72d64ac4a62">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -218,7 +227,7 @@
 				<textFieldExpression><![CDATA[$F{TGL_DIMINTA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="320" y="85" width="130" height="15" uuid="5c3596ea-598f-43fd-b61d-05fc68549f49">
+				<reportElement x="281" y="89" width="130" height="15" uuid="5c3596ea-598f-43fd-b61d-05fc68549f49">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -228,7 +237,7 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="320" y="40" width="130" height="15" uuid="282e7c8c-7b73-40d2-8768-704fc40403ac">
+				<reportElement x="281" y="44" width="130" height="15" uuid="282e7c8c-7b73-40d2-8768-704fc40403ac">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -238,7 +247,7 @@
 				<textFieldExpression><![CDATA[$F{NO_BUKTI}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="220" y="40" width="100" height="15" uuid="a074c7b4-16bf-4cbe-9e41-baca2026d16d">
+				<reportElement x="181" y="44" width="100" height="15" uuid="a074c7b4-16bf-4cbe-9e41-baca2026d16d">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -248,7 +257,7 @@
 				<textFieldExpression><![CDATA["No Bukti	:"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="320" y="55" width="130" height="15" uuid="4d4de9ba-92fe-43b2-ae9b-a5659c982fcc">
+				<reportElement x="281" y="59" width="130" height="15" uuid="4d4de9ba-92fe-43b2-ae9b-a5659c982fcc">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -258,7 +267,7 @@
 				<textFieldExpression><![CDATA[$F{TGL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="220" y="70" width="100" height="15" uuid="368691cd-24ba-45ea-abcb-b38c0a8462ae">
+				<reportElement x="181" y="74" width="100" height="15" uuid="368691cd-24ba-45ea-abcb-b38c0a8462ae">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -271,20 +280,6 @@
 				<reportElement x="456" y="48" width="94" height="70" uuid="c7c873b8-1c96-49ec-b499-695818e8653f"/>
 				<imageExpression><![CDATA["gambar/melbba/" +$F{GAMBAR}]]></imageExpression>
 			</image>
-			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="50" y="74" width="148" height="14" isPrintWhenDetailOverflows="true" uuid="cff055a1-bec5-4348-bee8-97fa2fba3ba3"/>
-				<box padding="0">
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Matras/Emboss/Lasting/Bahan/Bordir/Accessories"]]></textFieldExpression>
-			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -423,7 +418,7 @@
 	<detail>
 		<band height="51" splitType="Stretch">
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="95" y="0" width="130" height="40" isPrintWhenDetailOverflows="true" uuid="0cce33b5-fac7-4c02-8dea-d0ac4ea23a08"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="95" y="0" width="130" height="46" isPrintWhenDetailOverflows="true" uuid="0cce33b5-fac7-4c02-8dea-d0ac4ea23a08"/>
 				<box padding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -436,7 +431,7 @@
 				<textFieldExpression><![CDATA[$F{NA_BHN}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="40" isPrintWhenDetailOverflows="true" uuid="94f737d5-64ca-4de1-a14b-d63a5f38a158">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="46" isPrintWhenDetailOverflows="true" uuid="94f737d5-64ca-4de1-a14b-d63a5f38a158">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -452,7 +447,7 @@
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="284" y="0" width="59" height="40" isPrintWhenDetailOverflows="true" uuid="03f602d3-71d0-4ec2-8948-a4d6573e655f">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="284" y="0" width="59" height="46" isPrintWhenDetailOverflows="true" uuid="03f602d3-71d0-4ec2-8948-a4d6573e655f">
 					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
 				</reportElement>
 				<box padding="0">
@@ -470,7 +465,7 @@
 				<textFieldExpression><![CDATA[$F{SERI}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="343" y="0" width="43" height="40" isPrintWhenDetailOverflows="true" uuid="a44da78e-c84e-42e6-8f42-0b29123ecf51">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="343" y="0" width="43" height="46" isPrintWhenDetailOverflows="true" uuid="a44da78e-c84e-42e6-8f42-0b29123ecf51">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box padding="0">
@@ -485,7 +480,7 @@
 				<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="386" y="0" width="51" height="40" isPrintWhenDetailOverflows="true" uuid="fca84ea3-fdb1-4900-96ce-42c3c7ec4607">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="386" y="0" width="51" height="46" isPrintWhenDetailOverflows="true" uuid="fca84ea3-fdb1-4900-96ce-42c3c7ec4607">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box padding="0">
@@ -500,7 +495,7 @@
 				<textFieldExpression><![CDATA[$F{SATUAN}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="436" y="0" width="133" height="40" isPrintWhenDetailOverflows="true" uuid="733cc3db-3ebf-41a7-961d-e9aa5eab3efb">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="436" y="0" width="133" height="46" isPrintWhenDetailOverflows="true" uuid="733cc3db-3ebf-41a7-961d-e9aa5eab3efb">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box padding="0">
@@ -515,11 +510,11 @@
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="470" y="5" width="75" height="30" uuid="948c36d7-1098-4db0-803e-a51a947a79f1"/>
+				<reportElement x="482" y="5" width="39" height="36" uuid="948c36d7-1098-4db0-803e-a51a947a79f1"/>
 				<imageExpression><![CDATA["gambar/melbba/" +$F{GAMBAR1}]]></imageExpression>
 			</image>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="225" y="0" width="59" height="40" isPrintWhenDetailOverflows="true" uuid="c5a5675c-2718-4035-a021-79e3c21bd8ca">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="225" y="0" width="59" height="46" isPrintWhenDetailOverflows="true" uuid="c5a5675c-2718-4035-a021-79e3c21bd8ca">
 					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
 				</reportElement>
 				<box padding="0">
@@ -537,7 +532,7 @@
 				<textFieldExpression><![CDATA[$F{WARNA}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="30" y="0" width="65" height="40" isPrintWhenDetailOverflows="true" uuid="e094dac0-cd2c-40a9-b7c7-8956d3c19dbe"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="30" y="0" width="65" height="46" isPrintWhenDetailOverflows="true" uuid="e094dac0-cd2c-40a9-b7c7-8956d3c19dbe"/>
 				<box padding="0">
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
