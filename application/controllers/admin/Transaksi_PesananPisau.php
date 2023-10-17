@@ -939,7 +939,7 @@ class Transaksi_PesananPisau extends CI_Controller
         $PHPJasperXML = new \PHPJasperXML();
         $PHPJasperXML->load_xml_file("phpjasperxml/Transaksi_Pesanan_Pisau.jrxml");
         $no_id = $id;
-        $query = "SELECT a.NO_ID, a.ARTICLE, a.NO_BUKTI, a.TGL, a.PESAN, a.TS, a.GAMBAR, 
+        $query = "SELECT a.NO_ID, a.ARTICLE, a.NO_BUKTI, a.TGL, a.PESAN, a.DR, a.TS, a.GAMBAR, 
                     a.TTD1_USR,a.TTD2_USR,a.TTD3_USR,a.TTD4_USR,a.TTD5_USR,a.TTD6_USR,a.TTD7_USR,
                     a.TTD1_SMP,a.TTD2_SMP,a.TTD3_SMP,a.TTD4_SMP,a.TTD5_SMP,a.TTD6_SMP,a.TTD7_SMP,
                     b.NA_BHN, b.SIZE, b.QTY, b.SATUAN, b.TGL_DIMINTA, b.GAMBAR1
@@ -956,6 +956,8 @@ class Transaksi_PesananPisau extends CI_Controller
                 "NO_BUKTI" => $row1["NO_BUKTI"],
                 "TGL" => $row1["TGL"],
                 "PESAN" => $row1["PESAN"],
+                "DR" => $row1["DR"],
+                
                 "TS" => $row1["TS"],
                 "GAMBAR" => $row1["GAMBAR"],
                 "SATUAN" => $row1["SATUAN"],

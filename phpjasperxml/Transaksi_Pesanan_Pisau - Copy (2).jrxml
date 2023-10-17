@@ -70,7 +70,6 @@
 	<field name="TTD5" class="java.lang.Integer"/>
 	<field name="TANDA" class="java.lang.String"/>
 	<field name="TGL_DIMINTA_D" class="java.lang.String"/>
-	<field name="DR" class="java.lang.String"/>
 	<field name="GAMBAR" class="java.lang.String"/>
 	<field name="GAMBAR1" class="java.lang.String"/>
 	<field name="SIZE" class="java.lang.String"/>
@@ -296,19 +295,9 @@
 				<textFieldExpression><![CDATA["Tanggal Diminta	:"]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="462" y="59" width="96" height="57" uuid="b4148e7d-6986-4b75-a82a-eac8866455b2"/>
+				<reportElement x="462" y="46" width="71" height="70" uuid="b4148e7d-6986-4b75-a82a-eac8866455b2"/>
 				<imageExpression><![CDATA[($F{GAMBAR}=="") ? "assets/ttd/KOSONG.png" : "GAMBAR/pesananpisau/"+ $F{GAMBAR}]]></imageExpression>
 			</image>
-			<textField>
-				<reportElement x="50" y="60" width="131" height="15" uuid="c11b89d0-3315-47c2-be7b-a1e23fedd011">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{DR}]]></textFieldExpression>
-			</textField>
 		</band>
 	</title>
 	<pageHeader>
