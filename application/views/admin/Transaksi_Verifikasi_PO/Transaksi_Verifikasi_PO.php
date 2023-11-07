@@ -69,7 +69,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "<?php echo site_url('admin/Transaksi_Verifikasi_PO/get_ajax_bl_po') ?>",
+                "url": "<?php echo site_url('admin/Transaksi_Verifikasi_PO/get_ajax_po') ?>",
                 "type": "POST"
             },
             "columnDefs": [{

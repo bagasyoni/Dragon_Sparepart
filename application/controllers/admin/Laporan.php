@@ -693,6 +693,75 @@ class Laporan extends CI_Controller
 		}
 	}
 
+	public function index_Laporan_Perarticle()
+	{
+		if (isset($_POST["print"])) {
+			$CI = &get_instance();
+			$CI->load->database();
+			$servername = $CI->db->hostname;
+			$username = $CI->db->username;
+			$password = $CI->db->password;
+			$database = $CI->db->database;
+			$conn = mysqli_connect($servername, $username, $password, $database);
+			error_reporting(E_ALL);
+			ob_start();
+			include('phpjasperxml/class/tcpdf/tcpdf.php');
+			include('phpjasperxml/class/PHPJasperXML.inc.php');
+			include('phpjasperxml/setting.php');
+			$PHPJasperXML = new \PHPJasperXML();
+			$PHPJasperXML->load_xml_file("phpjasperxml/Laporan_Kartu_Stok.jrxml");
+			$PHPJasperXML->transferDBtoArray($servername, $username, $password, $database);
+			$dr = $this->session->userdata['dr'];
+			$sub = $this->session->userdata['sub'];
+			$article_1 = $this->input->post('ARTICLE_1');
+			$per_1 = $this->input->post('PER_1');
+			if ($per_1 == '') {
+				$per_1 = $this->session->userdata['periode'];
+			} else {
+				$per_1 = $this->input->post('PER_1');
+			}
+			// $query = "CALL spp_kartustok('$rak_1', '$dr', '$sub', '$per_1')";
+			$bulan = substr($per_1,0,2);
+			$tahun = substr($per_1,3,4);
+			$this->db->query('TRUNCATE TABLE l_kartustok_bahan');
+			$this->db->query("INSERT INTO l_kartustok_bahan(TGL,NO_BUKTI,AWAL,MASUK,KELUAR,NA_BHN,URUT)
+								SELECT x.* FROM (
+								SELECT '' as TGL, 'Saldo Awal' as NO_BUKTI, AW$bulan as awal,0 as masuk,0 as keluar,NA_BHN, 1 as urut  FROM bhnd WHERE NA_BHN='$article_1' and YER='$tahun' AND DR='$dr'
+								UNION ALL
+								SELECT DATE(TG_SMP) as TGL, NO_BUKTI,0 as AWAL,0 as MASUK, QTY as KELUAR,NA_BHN, 2 as urut FROM pakaid WHERE NA_BHN='$article_1' AND MONTH(TG_SMP) = '$bulan' AND YEAR(TG_SMP) ='$tahun' 
+								UNION ALL
+								SELECT belid_sp.TGL as TGL, belid_sp.NO_BUKTI,0 as AWAL,belid_sp.QTY as MASUK, 0 as KELUAR,NA_BHN, 2 as urut FROM belid_sp WHERE belid_sp.NA_BHN='$article_1' AND MONTH(belid_sp.TGL) = '$bulan' 
+								AND YEAR(belid_sp.TGL) ='$tahun') as x ORDER BY urut asc, x.TGL asc");
+			$query = "SELECT *,if(TGL='',@AK:=0+AWAL,@AK:=@AK+AWAL+MASUK-KELUAR) AS AK,'$article_1' AS RAK, NA_BHN FROM l_kartustok_bahan ORDER BY urut asc, TGL asc";
+			$result1 = mysqli_query($conn, $query);
+			while ($row1 = mysqli_fetch_assoc($result1)) {
+				array_push($PHPJasperXML->arraysqltable, array(
+					"RAK" => $row1["RAK"],
+					"NA_BHN" => $row1["NA_BHN"],
+					"TGL" => $row1["TGL"],
+					"NO_BUKTI" => $row1["NO_BUKTI"],
+					"AW" => $row1["AWAL"],
+					"MA" => $row1["MASUK"],
+					"KE" => $row1["KELUAR"],
+					"AK" => $row1["AK"],
+				));
+			}
+			ob_end_clean();
+			$PHPJasperXML->outpage("I");
+		} else {
+			$data = array(
+				'ARTICLE_1' => set_value('ARTICLE_1'),
+				'PER_1' => set_value('PER_1'),
+			);
+			$data['laporan_perarticle'] = $this->laporan_model->tampil_data_Laporan_Perarticle()->result();
+			mysqli_next_result($this->db->conn_id);
+			$this->load->view('templates_admin/header');
+			$this->load->view('templates_admin/navbar');
+			$this->load->view('admin/laporan/Laporan_Perarticle', $data);
+			$this->load->view('templates_admin/footer_report');
+		}
+	}
+
 	public function index_KartuStokAtk()
 	{
 		if (isset($_POST["print"])) {
@@ -862,7 +931,7 @@ class Laporan extends CI_Controller
 									UNION ALL
 											SELECT TGL as TGL,RAK,NA_BHN,SATUAN,0 STOK_AWAL,'' NOLPB,0 as MASUK, 0 as JML_LPB,
 												NO_BUKTI NOBB,QTY as KELUAR,QTY AS JML_BB,0 STOK_AKHIR, 2 as urut 
-											FROM pakaid WHERE TGL='$tgl_1' AND SUB = 'SP' AND DR = '$dr'
+											FROM pakaid WHERE TGL='$tgl_1' AND SUB = '$sub' AND DR = '$dr'
 								) as x LEFT JOIN bhnd ON X.RAK = bhnd.RAK AND bhnd.DR='$dr' AND bhnd.YER='$tahun'
 								GROUP BY RAK ORDER BY x.RAK asc
 						) as hasil1 
@@ -872,7 +941,7 @@ class Laporan extends CI_Controller
 								AND belid_sp.DR='$dr' AND beli.KD_BAG='$kd_bag' GROUP BY RAK) as masuk
 						ON hasil1.RAK = masuk.RAK
 						LEFT JOIN (SELECT RAK,SUM(QTY) as KELUAR 
-								FROM pakaid WHERE TGL<'$tgl_1' AND MONTH(TGL)='$bulan' AND YEAR(TGL)='$tahun' AND SUB = 'SP' AND DR = '$dr' GROUP BY RAK) as keluar
+								FROM pakaid WHERE TGL<'$tgl_1' AND MONTH(TGL)='$bulan' AND YEAR(TGL)='$tahun' AND SUB = '$sub' AND DR = '$dr' GROUP BY RAK) as keluar
 						ON hasil1.RAK = keluar.RAK";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
@@ -1132,11 +1201,11 @@ class Laporan extends CI_Controller
 								) AS X ON X.RAK=b.RAK
 							LEFT JOIN
 								(SELECT RAK,SUM(QTY) as KELUAR 
-									FROM pakaid WHERE TGL>='$tahun-$bulan-01' AND TGL<='$tgl_1' AND SUB = 'SP' AND DR = '$dr'
+									FROM pakaid WHERE TGL>='$tahun-$bulan-01' AND TGL<='$tgl_1' AND SUB = '$sub' AND DR = '$dr'
 									GROUP BY RAK
 								) AS Z ON Z.RAK=b.RAK
-							WHERE a.KD_BHN=b.KD_BHN AND b.DR='$dr' and b.YER='$tahun' AND b.RAK<>'' AND b.SUB='SP' ORDER BY b.RAK
-						) AS HASIL";
+							WHERE a.KD_BHN=b.KD_BHN AND b.DR='$dr' and b.YER='$tahun' AND b.RAK<>'' AND b.SUB='$sub' ORDER BY b.RAK
+						) AS HASIL WHERE hasil.awal<>0 OR hasil.masuk<>0 OR hasil.keluar<>0 ORDER BY RAK asc ";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(

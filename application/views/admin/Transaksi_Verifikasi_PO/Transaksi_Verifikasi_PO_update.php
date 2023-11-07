@@ -81,7 +81,7 @@
 						<div class="col-md-1"></div>
 						<div class="col-md-2">
 							<?php
-								if ($rowh->VERIFIKASI_PO_SP == 0) 
+								if ($rowh->OK == 0) 
 									echo '<a 
 										type="button" 
 										class="btn btn-warning"
@@ -168,7 +168,7 @@
 							<label class="label">Note Bayar </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NOTES_BYR" id="NOTES_BYR" name="NOTES_BYR" type="text" value="<?php echo $rowh->NOTES_BYR ?>" readonly>
+							<input class="form-control text_input NOTESBL" id="NOTESBL" name="NOTESBL" type="text" value="<?php echo $rowh->NOTESBL ?>" readonly>
 						</div>
 						<div class="col-md-1">
 							<label class="label"></label>
@@ -189,7 +189,7 @@
 							<label class="label">Note Kirim </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NOTES_KRM" id="NOTES_KRM" name="NOTES_KRM" type="text" value="<?php echo $rowh->NOTES_KRM ?>" readonly>
+							<input class="form-control text_input NOTESKRM" id="NOTESKRM" name="NOTESKRM" type="text" value="<?php echo $rowh->NOTESKRM ?>" readonly>
 						</div>
 					</div>
 				</div>
@@ -199,7 +199,7 @@
 							<label class="label">Keterangan </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NOTE_KURS" id="NOTE_KURS" name="NOTE_KURS" type="text" value="<?php echo $rowh->NOTE_KURS ?>" readonly>
+							<input class="form-control text_input NOTESKURS" id="NOTESKURS" name="NOTESKURS" type="text" value="<?php echo $rowh->NOTESKURS ?>" readonly>
 						</div>
 					</div>
 				</div>
@@ -243,6 +243,7 @@
 						<?php endforeach; ?>
 						</tbody>
 						<tfoot>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>

@@ -3,6 +3,7 @@
         color: black;
         font-weight: bold;
     }
+
     .detail {
         color: black;
         text-align: center;
@@ -12,24 +13,23 @@
 <section>
     <div class="container-fluid">
         <div class="alert alert-success" role="alert">
-            <i class="fas fa-money"></i> Laporan Harian
+            <i class="fas fa-money"></i> Laporan Per Article
         </div>
         <?php echo $this->session->flashdata('pesan') ?>
-        <form id="harian" method="post" action="<?php echo base_url('admin/laporan/index_Harian') ?>">
+        <form id="laporan_perarticle" method="post" action="<?php echo base_url('admin/laporan/index_Laporan_Perarticle') ?>">
             <div class="col-md-12">
                 <div class="form-group row">
                     <div class="col-md-1">
-                        <label class="label-title">Tanggal</label>
+                        <label class="label-title">Article </label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" value="<?= $ARTICLE_1 ?>" id="ARTICLE_1" name="ARTICLE_1" class="form-control ARTICLE_1" placeholder="Kode ARTICLE">
+                    </div>
+                    <div class="col-md-1">
+                        <label class="label-title">Periode </label>
                     </div>
                     <div class="col-md-3 nopadding">
-                        <input 
-                            type="text" 
-                            class="date form-control text_input" 
-                            id="TGL_1" 
-                            name="TGL_1" 
-                            data-date-format="dd-mm-yyyy" 
-                            value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["TGL_1"]; } else echo date('d-m-Y'); ?>" 
-                        >
+                        <input type="text" value="<?= $PER_1 ?>" id="PER_1" name="PER_1" class="form-control PER_1" placeholder="mm/yyyy">
                     </div>
                 </div>
             </div>
@@ -66,90 +66,63 @@
             <!-- PASTE DIBAWAH INI -->
             <!-- DISINI BATAS AWAL KOOLREPORT-->
             <?php
-                use \koolreport\widgets\koolphp\Table;
-                use \koolreport\widgets\google\BarChart;
-                use \koolreport\datagrid\DataTables;
-                use \koolreport\processes\Sort;
+
+            use \koolreport\datagrid\DataTables;
             ?>
             <div class="report-content">
                 <?php
                 DataTables::create(array(
-                    "dataStore" => $harian,
+                    "dataStore" => $laporan_perarticle,
                     "name" => "example",
-                    // "complexHeaders" => true,
-                    // "headerSeparator" => "-",
-                    // "themeBase"=>"bs4", // Optional option to work with Bootsrap 4
-                    "showFooter"=>true,
-                    "showFooter"=>"bottom",
+                    "showFooter" => true,
+                    "showFooter" => "bottom",
                     "columns" => array(
                         "TGL" => array(
                             "label" => "Tanggal",
                         ),
-                        "RAK" => array(
-                            "label" => "Rak",
+                        "NO_BUKTI" => array(
+                            "label" => "No Bukti",
                         ),
-                        "NA_BHN" => array(
-                            "label" => "Barang",
-                        ),
-                        "TAW" => array(
-                            "label" => "Stok Awal",
-                            // "type"=>"number",
-                            "decimals"=>2,
-                            "decimalPoint"=>".",
-                            "thousandSeparator"=>",",
-							"footer"=>"sum",
-                        ),
-                        "NO_BUKTI_MA" => array(
-                            "label" => "No LPB",
+                        "AWAL" => array(
+                            "label" => "Awal",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
                         ),
                         "MASUK" => array(
                             "label" => "Masuk",
-                            // "type"=>"number",
-                            "decimals"=>2,
-                            "decimalPoint"=>".",
-                            "thousandSeparator"=>",",
-							// "footer"=>"sum",
-                        ),
-                        "NO_BUKTI_KE" => array(
-                            "label" => "No Keluar",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
+                            "footer" => "sum",
                         ),
                         "KELUAR" => array(
-                            "label" => "Keluar",
-                            // "type"=>"number",
-                            "decimals"=>2,
-                            "decimalPoint"=>".",
-                            "thousandSeparator"=>",",
-							// "footer"=>"sum",
+                            "label" => "Pakai",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
+                            "footer" => "sum",
                         ),
-                        "NO_BUKTI_RKE" => array(
-                            "label" => "No Retur Keluar",
-                        ),
-                        // "RKE" => array(
-                        //     "label" => "Retur Keluar",
-                        //     // "type"=>"number",
-                        //     "decimals"=>2,
-                        //     "decimalPoint"=>".",
-                        //     "thousandSeparator"=>",",
-						// 	"footer"=>"sum",
-                        // ),
-                        "STOK_AKHIR" => array(
+                        "AK" => array(
                             "label" => "Akhir",
-                            // "type"=>"number",
-                            "decimals"=>2,
-                            "decimalPoint"=>".",
-                            "thousandSeparator"=>",",
-							"footer"=>"sum",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
                         ),
                     ),
                     "cssClass" => array(
                         "table" => "table table-hover table-bordered",
                         "th" => "label-title",
-                        "td" => "detail", 
-                            function ($row, $colName) {
-                                if ($colName == "total") {
-                                    return "text-right";
-                                }
+                        "td" => "detail",
+                        function ($row, $colName) {
+                            if ($colName == "total") {
+                                return "text-right";
                             }
+                        },
                     ),
                     "options" => array(
                         // "columnDefs"=>array(
@@ -215,34 +188,8 @@
         });
         $('.date').mask('00-00-0000');
     });
+</script>
 
-    // day-month-year
-	function formatDate(date) {
-		var d = new Date(date),
-			month = '' + (d.getMonth() + 1),
-			day = '' + d.getDate(),
-			year = d.getFullYear();
-		if (month.length < 2) 
-			month = '0' + month;
-		if (day.length < 2) 
-			day = '0' + day;
-		return [day, month, year].join('-');
-	}
-
-	function cekkirim() {
-		var tgl_kirim = $('#TGL_KIRIM').val();
-		var jtemp = $('#JTEMPO').val();
-		var harikrm = tgl_kirim.substr(0,2);
-		var bulankrm = tgl_kirim.substr(3,2);
-		var tahunkrm = tgl_kirim.substr(6,4);
-		krmdate = new Date(tahunkrm+'-'+bulankrm+'-'+harikrm);
-		var harijt = jtemp.substr(0,2);
-		var bulanjt = jtemp.substr(3,2);
-		var tahunjt = jtemp.substr(6,4);
-		jtdate = new Date(tahunjt+'-'+bulanjt+'-'+harijt);
-		if(krmdate>jtdate) {
-			$('#TGL_KIRIM').val(jtemp);
-			alert("LEBIH");
-		}
-	}
+<script>
+    $(document).ready(function() {});
 </script>

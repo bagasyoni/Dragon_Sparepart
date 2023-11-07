@@ -168,6 +168,39 @@ class Laporan_model extends CI_Model
 		return $this->db->query($q1);
 	}
 
+	public function tampil_data_Laporan_Perarticle()
+	{
+		$dr = $this->session->userdata['dr'];
+		$sub = $this->session->userdata['sub'];
+		$rak_1 = $this->input->post('RAK_1');
+		$per_1 = $this->input->post('PER_1');
+		if ($rak_1 == '') {
+			$rak_1 = 'RM7'; 
+		} else {
+			$rak_1 = $this->input->post('RAK_1');
+		}
+
+		if ($per_1 == '') {
+			$per_1 = $this->session->userdata['periode']; 
+		} else {
+			$per_1 = $this->input->post('PER_1');
+		}
+		// $q1 = "CALL spp_kartustok('$rak_1', '$dr', '$sub', '$per_1')";
+		$bulan = substr($per_1,0,2);
+		$tahun = substr($per_1,3,4);
+		$this->db->query('TRUNCATE TABLE l_kartustok_bahan');
+		$this->db->query("INSERT INTO l_kartustok_bahan(TGL,NO_BUKTI,AWAL,MASUK,KELUAR,NA_BHN,URUT)
+							SELECT x.* FROM (
+							SELECT '' as TGL, 'Saldo Awal' as NO_BUKTI, AW$bulan as awal,0 as masuk,0 as keluar,NA_BHN, 1 as urut  FROM bhnd WHERE RAK='$rak_1' and YER='$tahun'
+							UNION ALL
+							SELECT DATE(TG_SMP) as TGL, NO_BUKTI,0 as AWAL,0 as MASUK, QTY as KELUAR,NA_BHN, 2 as urut FROM pakaid WHERE RAK='$rak_1' AND MONTH(TG_SMP) = '$bulan' AND YEAR(TG_SMP) ='$tahun' 
+							UNION ALL
+							SELECT belid_sp.TGL as TGL, belid_sp.NO_BUKTI,0 as AWAL,belid_sp.QTY as MASUK, 0 as KELUAR,NA_BHN, 2 as urut FROM belid_sp WHERE belid_sp.RAK='$rak_1' AND MONTH(belid_sp.TGL) = '$bulan' 
+							AND YEAR(belid_sp.TGL) ='$tahun') as x ORDER BY urut asc, x.TGL asc");
+		$q1 = "SELECT *,if(TGL='',@AK:=0+AWAL,@AK:=@AK+AWAL+MASUK-KELUAR) AS AK,'$rak_1' AS RAK, NA_BHN FROM l_kartustok_bahan ORDER BY urut asc, TGL asc";$q1 = "SELECT NO_BUKTI,TGL,AWAL,MASUK,KELUAR,if(TGL='',@AK:=0+AWAL,@AK:=@AK+AWAL+MASUK-KELUAR) AS AK,'$rak_1' AS RAK, NA_BHN FROM l_kartustok_bahan ORDER BY urut asc, TGL asc";
+		return $this->db->query($q1);
+	}
+
 	public function tampil_data_kartustok_atk()
 	{
 		$dr = $this->session->userdata['dr'];
@@ -210,111 +243,46 @@ class Laporan_model extends CI_Model
 	{
 		// $periode = $tahun.$bulan;
 		$dr = $this->session->userdata['dr'];
-		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
+		$tgl_1 = $this->input->post('TGL_1');
 		$sub = $this->session->userdata['sub'];
+		$kd_bag = $this->session->userdata['kd_bag'];
 		$per = $this->session->userdata['periode'];
 		if ($tgl_1 == '') {
-			$bulan = Date('m');
+			$bulan = str_pad(Date('m'), 2, "0", STR_PAD_LEFT);
 		} else {
-			$bulan = date("m", strtotime($tgl_1));
+			$bulan = str_pad(date("m", strtotime($tgl_1)), 2, "0", STR_PAD_LEFT);
 		}
 		$tahun = substr($this->input->post('TGL_1'), -4);
 		$tgl_1 = date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE)));
-		$q1 = "SELECT TGL, RAK, NA_BHN, SATUAN, AW, NO_BUKTI_MA, MA, NO_BUKTI_KE, KE, NO_BUKTI_RKE, RKE, AK,(AW+MA) T_MA,(AW-KE) T_KE, (MA+RKE) T_RKE
-				FROM (
-					SELECT '$tgl_1' AS TGL,
-						bhnd.RAK AS RAK,
-						bhnd.NA_BHN AS NA_BHN,
-						bhn.SATUAN AS SATUAN,
-						bhnd.AW$bulan+(belid.QTY-pakaid.QTY) AS AW,
-						'' AS NO_BUKTI_MA,
-						0 AS MA,
-						'' AS NO_BUKTI_KE,
-						0 AS KE,
-						'' AS NO_BUKTI_RKE,
-						0 AS RKE,
-						0 AS AK
-					FROM bhn, bhnd, belid, pakaid
-					WHERE bhn.KD_BHN = bhnd.KD_BHN
-					AND bhn.KD_BHN = belid.KD_BHN
-					AND bhn.KD_BHN = pakaid.KD_BHN
-					AND bhnd.YER = '$tahun'
-					AND bhn.FLAG2 = '$sub'
-					AND bhn.DR = '$dr'
-					-- AND belid.PER = '$per'
-					AND belid.TGL < '$tgl_1'
-					AND pakaid.PER = '$per'
-					AND pakaid.TGL < '$tgl_1'
-					GROUP BY bhnd.NA_BHN
-					UNION ALL
-					SELECT belid.TGL AS TGL, 
-						belid.RAK AS RAK,
-						belid.NA_BHN AS NA_BHN,
-						belid.SATUAN AS SATUAN,
-						0 AS AW,
-						belid.NO_BUKTI AS NO_BUKTI_MA,
-						belid.QTY AS MA,
-						'' AS NO_BUKTI_KE,
-						0 AS KE,
-						'' AS NO_BUKTI_RKE,
-						0 AS RKE,
-						0 AS AK
-					FROM belid, bhnd
-					WHERE bhnd.kd_bhn = belid.kd_bhn
-					-- AND belid.PER = '$per'
-					AND belid.DR = '$dr'
-					AND bhnd.DR = '$dr'
-					AND belid.SP = '$sub'
-					AND belid.TGL = '$tgl_1'
-					-- GROUP BY belid.NO_BUKTI
-					UNION ALL
-					SELECT pakaid.TGL AS TGL, 
-						pakaid.RAK AS RAK,
-						pakaid.NA_BHN AS NA_BHN,
-						pakaid.SATUAN AS SATUAN,
-						0 AS AW,
-						'' AS NO_BUKTI_MA,
-						0 AS MA,
-						pakaid.NO_BUKTI AS NO_BUKTI_KE,
-						pakaid.QTY AS KE,
-						'' AS NO_BUKTI_RKE,
-						0 AS RKE,
-						0 AS AK
-					FROM pakaid, bhnd
-					WHERE bhnd.kd_bhn = pakaid.KD_BHN
-					-- AND pakaid.PER = '$per'
-					AND pakaid.DR = '$dr'
-					AND bhnd.DR = '$dr'
-					AND pakaid.SUB = '$sub'
-					AND pakaid.TGL = '$tgl_1'
-					AND pakaid.FLAG = 'PK'
-					AND pakaid.FLAG2 = 'SP'
-					-- GROUP BY pakaid.NO_BUKTI
-					UNION ALL
-					SELECT pakaid.TGL AS TGL, 
-						pakaid.RAK AS RAK,
-						pakaid.NA_BHN AS NA_BHN,
-						pakaid.SATUAN AS SATUAN,
-						0 AS AW,
-						'' AS NO_BUKTI,
-						0 AS MA,
-						'' AS NO_BUKTI_KE,
-						0 AS KE,
-						pakaid.NO_BUKTI AS NO_BUKTI_RKE,
-						pakaid.QTY AS RKE,
-						0 AS AK
-					FROM pakaid, bhnd
-					WHERE bhnd.kd_bhn = pakaid.KD_BHN
-					-- AND pakaid.PER = '$per'
-					AND pakaid.DR = '$dr'
-					AND bhnd.DR = '$dr'
-					AND pakaid.SUB = '$sub'
-					AND pakaid.TGL = '$tgl_1'
-					AND pakaid.FLAG = 'KP'
-					AND pakaid.FLAG2 = 'SP'
-					-- GROUP BY pakaid.NO_BUKTI
-				) AS AAA
-				ORDER BY NA_BHN";
+		$q1 = "SELECT hasil1.*,(hasil1.STOK_AWAL+IFNULL(masuk.MASUK,0)-IFNULL(keluar.KELUAR,0)) AS TAW, 
+					((hasil1.STOK_AWAL+IFNULL(masuk.MASUK,0)-IFNULL(keluar.KELUAR,0))+hasil1.JML_LPB-hasil1.JML_BB) AS TAK,
+					'$per' AS PER
+				FROM(		
+						SELECT x.TGL ,x.RAK,x.NA_BHN,x.SATUAN,bhnd.AW$bulan STOK_AWAL,
+							GROUP_CONCAT(x.NOLPB) NO_LPB,GROUP_CONCAT(x.MASUK) MASUK,SUM(x.JML_LPB) JML_LPB,
+							GROUP_CONCAT(x.NO_BB SEPARATOR ',  ') NO_BB,GROUP_CONCAT(x.KELUAR) KELUAR,
+							SUM(x.JML_BB) JML_BB,x.STOK_AKHIR,x.urut 
+						FROM ( 
+									SELECT belid_sp.TGL as TGL,belid_sp.RAK,belid_sp.NA_BHN,belid_sp.SATUAN,0 STOK_AWAL,
+										belid_sp.NO_BUKTI NOLPB,belid_sp.QTY as MASUK, belid_sp.QTY as JML_LPB,'' NO_BB,
+										0 KELUAR,0 JML_BB,0 STOK_AKHIR, 3 as urut 
+									FROM belid_sp,beli WHERE beli.NO_BUKTI=belid_sp.NO_BUKTI AND  beli.OK = '1' AND 
+										belid_sp.TGL = '$tgl_1' AND belid_sp.FLAG2='NB' AND belid_sp.DR='$dr' AND beli.KD_BAG='$kd_bag'
+							UNION ALL
+									SELECT TGL as TGL,RAK,NA_BHN,SATUAN,0 STOK_AWAL,'' NOLPB,0 as MASUK, 0 as JML_LPB,
+										NO_BUKTI NOBB,QTY as KELUAR,QTY AS JML_BB,0 STOK_AKHIR, 2 as urut 
+									FROM pakaid WHERE TGL='$tgl_1' AND SUB = '$sub' AND DR = '$dr'
+						) as x LEFT JOIN bhnd ON X.RAK = bhnd.RAK AND bhnd.DR='$dr' AND bhnd.YER='$tahun'
+						GROUP BY RAK ORDER BY x.RAK asc
+				) as hasil1 
+				LEFT JOIN (SELECT belid_sp.RAK,SUM(belid_sp.QTY) as MASUK 
+						FROM belid_sp,beli WHERE beli.NO_BUKTI=belid_sp.NO_BUKTI AND  beli.OK = '1' AND 
+						belid_sp.TGL < '$tgl_1' AND MONTH(belid_sp.TGL)='$bulan' AND YEAR(belid_sp.TGL)='$tahun' AND belid_sp.FLAG2='NB' 
+						AND belid_sp.DR='$dr' AND beli.KD_BAG='$kd_bag' GROUP BY RAK) as masuk
+				ON hasil1.RAK = masuk.RAK
+				LEFT JOIN (SELECT RAK,SUM(QTY) as KELUAR 
+						FROM pakaid WHERE TGL<'$tgl_1' AND MONTH(TGL)='$bulan' AND YEAR(TGL)='$tahun' AND SUB = '$sub' AND DR = '$dr' GROUP BY RAK) as keluar
+				ON hasil1.RAK = keluar.RAK";
 		return $this->db->query($q1);
 	}
 
