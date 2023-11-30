@@ -26,10 +26,17 @@
                         <input type="text" value="<?= $ARTICLE_1 ?>" id="ARTICLE_1" name="ARTICLE_1" class="form-control ARTICLE_1" placeholder="Kode ARTICLE">
                     </div>
                     <div class="col-md-1">
-                        <label class="label-title">Periode </label>
+                        <label class="label-title">Tanggal</label>
                     </div>
                     <div class="col-md-3 nopadding">
-                        <input type="text" value="<?= $PER_1 ?>" id="PER_1" name="PER_1" class="form-control PER_1" placeholder="mm/yyyy">
+                        <input 
+                            type="text" 
+                            class="date form-control text_input" 
+                            id="TGL_1" 
+                            name="TGL_1" 
+                            data-date-format="dd-mm-yyyy" 
+                            value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["TGL_1"]; } else echo date('d-m-Y'); ?>" 
+                        >
                     </div>
                 </div>
             </div>
@@ -77,20 +84,19 @@
                     "showFooter" => true,
                     "showFooter" => "bottom",
                     "columns" => array(
-                        "TGL" => array(
-                            "label" => "Tanggal",
+                        "KD_BHN" => array(
+                            "label" => "Kode Barang",
                         ),
-                        "NO_BUKTI" => array(
-                            "label" => "No Bukti",
+                        "NA_BHN" => array(
+                            "label" => "Barang",
                         ),
-                        "AWAL" => array(
-                            "label" => "Awal",
-                            "type" => "number",
-                            "decimals" => 2,
-                            "decimalPoint" => ".",
-                            "thousandSeparator" => ",",
+                        "SATUAN" => array(
+                            "label" => "Satuan",
                         ),
-                        "MASUK" => array(
+                        "PER" => array(
+                            "label" => "Periode",
+                        ),
+                        "MA" => array(
                             "label" => "Masuk",
                             "type" => "number",
                             "decimals" => 2,
@@ -98,8 +104,16 @@
                             "thousandSeparator" => ",",
                             "footer" => "sum",
                         ),
-                        "KELUAR" => array(
+                        "KE" => array(
                             "label" => "Pakai",
+                            "type" => "number",
+                            "decimals" => 2,
+                            "decimalPoint" => ".",
+                            "thousandSeparator" => ",",
+                            "footer" => "sum",
+                        ),
+                        "LN" => array(
+                            "label" => "Koreksi Stok",
                             "type" => "number",
                             "decimals" => 2,
                             "decimalPoint" => ".",
@@ -112,6 +126,7 @@
                             "decimals" => 2,
                             "decimalPoint" => ".",
                             "thousandSeparator" => ",",
+                            "footer" => "sum",
                         ),
                     ),
                     "cssClass" => array(
