@@ -659,7 +659,7 @@ class Laporan extends CI_Controller
 								SELECT x.* FROM (
 								SELECT '' as TGL, 'Saldo Awal' as NO_BUKTI, AW$bulan as awal,0 as masuk,0 as keluar,NA_BHN, 1 as urut  FROM bhnd WHERE RAK='$rak_1' and YER='$tahun'
 								UNION ALL
-								SELECT DATE(TGL) as TGL, NO_BUKTI,0 as AWAL,0 as MASUK, QTY as KELUAR,NA_BHN, 2 as urut FROM pakaid WHERE RAK='$rak_1' AND MONTH(TG_SMP) = '$bulan' AND YEAR(TG_SMP) ='$tahun' 
+								SELECT DATE(TG_SMP) as TGL, NO_BUKTI,0 as AWAL,0 as MASUK, QTY as KELUAR,NA_BHN, 2 as urut FROM pakaid WHERE RAK='$rak_1' AND MONTH(TG_SMP) = '$bulan' AND YEAR(TG_SMP) ='$tahun' 
 								UNION ALL
 								SELECT belid_sp.TGL as TGL, belid_sp.NO_BUKTI,0 as AWAL,belid_sp.QTY as MASUK, 0 as KELUAR,NA_BHN, 2 as urut FROM belid_sp WHERE belid_sp.RAK='$rak_1' AND MONTH(belid_sp.TGL) = '$bulan' 
 								AND YEAR(belid_sp.TGL) ='$tahun') as x ORDER BY urut asc, x.TGL asc");
@@ -927,11 +927,11 @@ class Laporan extends CI_Controller
 												belid_sp.NO_BUKTI NOLPB,belid_sp.QTY as MASUK, belid_sp.QTY as JML_LPB,'' NO_BB,
 												0 KELUAR,0 JML_BB,0 STOK_AKHIR, 3 as urut 
 											FROM belid_sp,beli WHERE beli.NO_BUKTI=belid_sp.NO_BUKTI AND  beli.OK = '1' AND 
-												belid_sp.TGL = '$tgl_1' AND belid_sp.FLAG2='NB' AND belid_sp.DR='$dr' AND beli.KD_BAG='$kd_bag'
+												belid_sp.TGL = '$tgl_1' AND belid_sp.FLAG2='NB' AND belid_sp.DR='$dr' AND belid_sp.RAK<>'' AND beli.KD_BAG='$kd_bag'
 									UNION ALL
 											SELECT TGL as TGL,RAK,NA_BHN,SATUAN,0 STOK_AWAL,'' NOLPB,0 as MASUK, 0 as JML_LPB,
 												NO_BUKTI NOBB,QTY as KELUAR,QTY AS JML_BB,0 STOK_AKHIR, 2 as urut 
-											FROM pakaid WHERE TGL='$tgl_1' AND SUB = '$sub' AND DR = '$dr'
+											FROM pakaid WHERE TGL='$tgl_1' AND SUB = '$sub' AND DR = '$dr' AND RAK<>''
 								) as x LEFT JOIN bhnd ON X.RAK = bhnd.RAK AND bhnd.DR='$dr' AND bhnd.YER='$tahun'
 								GROUP BY RAK ORDER BY x.RAK asc
 						) as hasil1 
@@ -943,7 +943,6 @@ class Laporan extends CI_Controller
 						LEFT JOIN (SELECT RAK,SUM(QTY) as KELUAR 
 								FROM pakaid WHERE TGL<'$tgl_1' AND MONTH(TGL)='$bulan' AND YEAR(TGL)='$tahun' AND SUB = '$sub' AND DR = '$dr' GROUP BY RAK) as keluar
 						ON hasil1.RAK = keluar.RAK";
-
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
@@ -1352,7 +1351,7 @@ class Laporan extends CI_Controller
 				AND pakaid.FLAG ='PK'
 				-- AND pakaid.FLAG2 ='SP'
 				AND pakaid.GRUP ='$na_gol'
-				ORDER BY pakaid.KD_BHN ASC";
+				ORDER BY pakaid.TGL";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {
 				array_push($PHPJasperXML->arraysqltable, array(
