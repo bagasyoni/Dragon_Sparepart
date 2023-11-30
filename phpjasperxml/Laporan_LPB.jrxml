@@ -21,7 +21,7 @@
 	<field name="SATUAN" class="java.lang.String"/>
 	<field name="QTY" class="java.lang.String"/>
 	<field name="RAK" class="java.lang.String"/>
-	<variable name="T_QTY" class="java.lang.String" calculation="Sum">
+	<variable name="T_QTY" class="java.lang.String" resetType="Group" resetGroup="Group_RAK" calculation="Sum">
 		<variableExpression><![CDATA[$F{QTY}]]></variableExpression>
 		<initialValueExpression><![CDATA[$F{QTY}]]></initialValueExpression>
 	</variable>
