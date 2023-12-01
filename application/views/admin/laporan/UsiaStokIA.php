@@ -72,16 +72,16 @@
                         "RAK" => array(
                             "label" => "Rak"
                         ),
-                        "KD_BHN" => array(
-                            "label" => "Kode Bahan"
-                        ),
+                        // "KD_BHN" => array(
+                        //     "label" => "Barang"
+                        // ),
                         "NA_BHN" => array(
                             "label" => "Nama Barang"
                         ),
                         "SATUAN" => array(
                             "label" => "Satuan"
                         ),
-                        "AK" => array(
+                        "AKHIR" => array(
                             "label" => "Akhir",
                             "type"=>"number",
                             "decimals"=>2,
@@ -89,7 +89,7 @@
                             "thousandSeparator"=>",",
 							"footer"=>"sum",
                         ),
-                        "HARI" => array(
+                        "HRATA" => array(
                             "label" => "Hari"
                         ),
                         "KET" => array(

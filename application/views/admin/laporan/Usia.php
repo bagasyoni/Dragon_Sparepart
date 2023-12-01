@@ -95,7 +95,7 @@
                         "SATUAN" => array(
                             "label" => "Satuan"
                         ),
-                        "AK" => array(
+                        "AKHIR" => array(
                             "label" => "Akhir",
                             "type"=>"number",
                             "decimals"=>2,
@@ -103,7 +103,7 @@
                             "thousandSeparator"=>",",
 							"footer"=>"sum",
                         ),
-                        "HARI" => array(
+                        "HARATA" => array(
                             "label" => "Hari"
                         ),
                         "KET" => array(

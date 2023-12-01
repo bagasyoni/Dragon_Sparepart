@@ -585,53 +585,117 @@ class Laporan_model extends CI_Model
 		$hari_1 = substr($this->input->post('TGL_1'), 0.2);
 		$bulan = substr(date("Y-m-d", strtotime($this->input->post('TGL_1', TRUE))), 5, 2);
 		$tahun = substr($this->input->post('TGL_1'), 6, 4);
-		$q1 = "SELECT bhnd.RAK, 
-			bhnd.KD_BHN,
-			bhnd.NA_BHN, 
-			bhn.SATUAN,
-			bhnd.AK$bulan AS AK, 
-			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) as HARI,
-			CASE 
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 720 
-				THEN '> 24 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 630 
-				THEN '> 21 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 540 
-				THEN '> 18 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 450 
-				THEN '> 15 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 360
-				THEN '> 12 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 270
-				THEN '> 9 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 180 
-				THEN '> 6 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 90 
-				THEN '> 3 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 30 
-					THEN '> 1 Bulan'
-				WHEN 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) < 30 
-				THEN '< 1 Bulan'
-			END AS KET
-		FROM bhn, bhnd
-		WHERE bhn.KD_BHN = bhnd.KD_BHN
-		AND bhnd.DR='$dr'
-		AND bhnd.FLAG='SP'
-		AND bhnd.TG_BL < '$tgl_1'
-		AND bhnd.TG_PK < '$tgl_1'
-		AND bhnd.YER = '$tahun'
-		GROUP BY bhnd.KD_BHN
-		ORDER BY bhnd.KD_BHN";
+		$rak='';
+		if($dr=='I'){
+			$rak='RAK_DR1';
+		}elseif($dr=='II'){
+			$rak='RAK_DR2';
+		}elseif($dr=='III'){
+			$rak='RAK_DR3';
+		}else{
+			$rak='';
+		}
+		// $q1 = "SELECT bhnd.RAK, 
+		// 	bhnd.KD_BHN,
+		// 	bhnd.NA_BHN, 
+		// 	bhn.SATUAN,
+		// 	bhnd.AK$bulan AS AK, 
+		// 	DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) as HARI,
+		// 	CASE 
+		// 		WHEN 
+		// 			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 720 
+		// 		THEN '> 24 Bulan'
+		// 		WHEN 
+		// 			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 630 
+		// 		THEN '> 21 Bulan'
+		// 		WHEN 
+		// 			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 540 
+		// 		THEN '> 18 Bulan'
+		// 		WHEN 
+		// 			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 450 
+		// 		THEN '> 15 Bulan'
+		// 		WHEN 
+		// 			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 360
+		// 		THEN '> 12 Bulan'
+		// 		WHEN 
+		// 			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 270
+		// 		THEN '> 9 Bulan'
+		// 		WHEN 
+		// 			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 180 
+		// 		THEN '> 6 Bulan'
+		// 		WHEN 
+		// 			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 90 
+		// 		THEN '> 3 Bulan'
+		// 		WHEN 
+		// 			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 30 
+		// 			THEN '> 1 Bulan'
+		// 		WHEN 
+		// 			DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) < 30 
+		// 		THEN '< 1 Bulan'
+		// 	END AS KET
+		// FROM bhn, bhnd
+		// WHERE bhn.KD_BHN = bhnd.KD_BHN
+		// AND bhnd.DR='$dr'
+		// AND bhnd.FLAG='SP'
+		// AND bhnd.TG_BL < '$tgl_1'
+		// AND bhnd.TG_PK < '$tgl_1'
+		// AND bhnd.YER = '$tahun'
+		// GROUP BY bhnd.KD_BHN
+		// ORDER BY bhnd.KD_BHN";
+
+		$q1 = "SELECT *,
+				CASE
+				WHEN  hrata >= 1080 THEN '> 36 Bulan'
+					
+					WHEN hrata >= 720 THEN '> 24 Bulan'
+					
+					WHEN hrata >= 540 THEN '> 18 Bulan'
+					
+					WHEN hrata >= 360 THEN '> 12 Bulan'
+					
+					WHEN hrata >= 270 THEN '> 9 Bulan'
+					
+					WHEN hrata >= 120 THEN '> 6 Bulan'
+					
+					WHEN hrata >= 90 THEN '> 3 Bulan'
+					
+					WHEN hrata > 30 THEN '> 2 Bulan'
+					
+					WHEN hrata < 30 THEN '< 1 Bulan'
+				
+				END AS KET   
+				FROM 
+				(
+				SELECT *, ( MASUK -KELUAR) AS AKHIR, IF ( TGL_M > TGL_K OR TGL_M = TGL_K ,  DATEDIFF(DATE(NOW()), TGL_M), 
+				DATEDIFF(DATE(now()), TGL_K )) AS HRATA
+				
+					FROM(
+				SELECT KD_BHN,NA_BHN,SATUAN,$rak AS RAK, 0 as awal, FLAG,
+				
+				(select coalesce (sum(QTY), 0)   FROM BELID_SP WHERE TGL<='$tgl_1' AND DR='$dr' AND 
+				ATK=0 and KD_BHN = BHN.KD_BHN
+				) as MASUK,
+				
+				(select IF ( ISNULL(max(tgl)),'2001-01-01', MAX(TGL) )  as tgl FROM BELID_SP WHERE TGL<='$tgl_1' AND DR='$dr'
+				AND ATK=0 AND BELID_SP.KD_BRG = BHN.KD_BHN ORDER BY NO_ID 
+				) as TGL_M,
+				
+				(SELECT IF ( ISNULL(MAX(PAKAID.TGL)),'2001-01-01', MAX(PAKAID.TGL) )  from PAKAID 
+				WHERE TGL<='$tgl_1' AND ( PAKAID.FLAG='PK' or PAKAID.FLAG ='KP' ) AND PAKAID.DR='$dr'
+				AND PAKAID.ATK=0 AND PAKAID.KD_BHN = BHN.KD_BHN 
+				)  AS TGL_K,
+				
+				(SELECT COALESCE(sum(PAKAID.QTY),0) FROM PAKAID
+				WHERE PAKAID.TGL<='$tgl_1' AND (PAKAID.FLAG='PK' or PAKAID.FLAG='KP') AND PAKAID.DR='$dr' 
+				AND PAKAID.ATK=0 AND PAKAID.KD_BHN = BHN.KD_BHN 
+				) AS KELUAR
+				
+				FROM BHN where flag ='$sub'
+				
+				
+				) AS AAA 
+				
+				) AS CCC WHERE RAK<>'' AND (MASUK-KELUAR)<>0  ORDER BY RAK ASC";
 		return $this->db->query($q1);
 	}
 
@@ -647,70 +711,81 @@ class Laporan_model extends CI_Model
 		$masa = $this->input->post('MASA');
 		$KD = $this->input->post('KD');
 		$LD = $this->input->post('LD');
+		$kondisi1 = "";
+		$kondisi2 = "";
 
-		$kondisi = "";
-		if($KD != "" && $LD == ""){
-			$kondisi = "WHERE X.TG_USIA < ('$tgl_1' + INTERVAL '$KD' MONTH) AND X.TG_USIA > '$tgl_1'";
-		}elseif($KD == "" && $LD != ""){
-			$kondisi = "WHERE X.TG_USIA > ('$tgl_1' - INTERVAL '$LD' MONTH) AND X.TG_USIA < '$tgl_1'";
-		}elseif($KD != "" && $LD != ""){
-			$kondisi = "WHERE X.TG_USIA > ('$tgl_1' - INTERVAL '$LD' MONTH) AND X.TG_USIA < ('$tgl_1' + INTERVAL '$KD' MONTH)";
-		}else{
-			$kondisi = "";
+		if($KD != ''){
+			$kondisi1 = "AND hrata <= ($KD*30)";
+		}
+		if($LD != ''){
+			$kondisi2 = "AND hrata >= ($LD*30)";
 		}
 
-		$q1 = "SELECT X.* FROM (
-				SELECT bhnd.RAK, 
-					'2022-05-31' AS TGL_PILIH,
-					bhnd.TG_USIA,
-					bhnd.KD_BHN,
-					bhnd.NA_BHN, 
-					bhn.SATUAN,
-					bhnd.AK$bulan AS AK, 
-					DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) as HARI,
-					CASE 
-						WHEN 
-							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 720 
-						THEN '> 24 Bulan'
-						WHEN 
-							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 630 
-						THEN '> 21 Bulan'
-						WHEN 
-							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 540 
-						THEN '> 18 Bulan'
-						WHEN 
-							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 450 
-						THEN '> 15 Bulan'
-						WHEN 
-							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 360
-						THEN '> 12 Bulan'
-						WHEN 
-							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 270
-						THEN '> 9 Bulan'
-						WHEN 
-							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 180 
-						THEN '> 6 Bulan'
-						WHEN 
-							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 90 
-						THEN '> 3 Bulan'
-						WHEN 
-							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) >= 30 
-							THEN '> 1 Bulan'
-						WHEN 
-							DATEDIFF(DATE('$tgl_1'),bhnd.TG_USIA) < 30 
-						THEN '< 1 Bulan'
-					END AS KET
-				FROM bhn, bhnd
-				WHERE bhn.KD_BHN = bhnd.KD_BHN
-				AND bhnd.DR='$dr'
-				AND bhnd.FLAG='SP'
-				-- AND bhn.SUB='$sub'
-				AND bhnd.TG_BL < '$tgl_1'
-				AND bhnd.TG_PK < '$tgl_1'
-				AND bhnd.YER = '$tahun'
-				-- AND TIMESTAMPDIFF(MONTH,bhn.TG_BL, bhn.TG_PK) = '$masa'
-				GROUP BY bhnd.KD_BHN
-				ORDER BY bhnd.KD_BHN) X $kondisi";
+		$rak='';
+		if($dr=='I'){
+			$rak='RAK_DR1';
+		}elseif($dr=='II'){
+			$rak='RAK_DR2';
+		}elseif($dr=='III'){
+			$rak='RAK_DR3';
+		}else{
+			$rak='';
+		}
+
+		$q1 = "SELECT *,
+				CASE
+				WHEN  hrata >= 1080 THEN '> 36 Bulan'
+					
+					WHEN hrata >= 720 THEN '> 24 Bulan'
+					
+					WHEN hrata >= 540 THEN '> 18 Bulan'
+					
+					WHEN hrata >= 360 THEN '> 12 Bulan'
+					
+					WHEN hrata >= 270 THEN '> 9 Bulan'
+					
+					WHEN hrata >= 120 THEN '> 6 Bulan'
+					
+					WHEN hrata >= 90 THEN '> 3 Bulan'
+					
+					WHEN hrata > 30 THEN '> 2 Bulan'
+					
+					WHEN hrata < 30 THEN '< 1 Bulan'
+				
+				END AS KET   
+				FROM 
+				(
+				SELECT *, ( MASUK -KELUAR) AS AKHIR, IF ( TGL_M > TGL_K OR TGL_M = TGL_K ,  DATEDIFF(DATE(NOW()), TGL_M), 
+				DATEDIFF(DATE(now()), TGL_K )) AS HRATA
+				
+					FROM(
+				SELECT KD_BHN,NA_BHN,SATUAN,$rak AS RAK, 0 as awal, FLAG,
+				
+				(select coalesce (sum(QTY), 0)   FROM BELID_SP WHERE TGL<='$tgl_1' AND DR='$dr' AND 
+				ATK=0 and KD_BHN = BHN.KD_BHN
+				) as MASUK,
+				
+				(select IF ( ISNULL(max(tgl)),'2001-01-01', MAX(TGL) )  as tgl FROM BELID_SP WHERE TGL<='$tgl_1' AND DR='$dr'
+				AND ATK=0 AND BELID_SP.KD_BRG = BHN.KD_BHN ORDER BY NO_ID 
+				) as TGL_M,
+				
+				(SELECT IF ( ISNULL(MAX(PAKAID.TGL)),'2001-01-01', MAX(PAKAID.TGL) )  from PAKAID 
+				WHERE TGL<='$tgl_1' AND ( PAKAID.FLAG='PK' or PAKAID.FLAG ='KP' ) AND PAKAID.DR='$dr'
+				AND PAKAID.ATK=0 AND PAKAID.KD_BHN = BHN.KD_BHN 
+				)  AS TGL_K,
+				
+				(SELECT COALESCE(sum(PAKAID.QTY),0) FROM PAKAID
+				WHERE PAKAID.TGL<='$tgl_1' AND (PAKAID.FLAG='PK' or PAKAID.FLAG='KP') AND PAKAID.DR='$dr' 
+				AND PAKAID.ATK=0 AND PAKAID.KD_BHN = BHN.KD_BHN 
+				) AS KELUAR
+				
+				FROM BHN where flag ='$sub'
+				
+				) AS AAA 
+				
+				) AS CCC WHERE RAK<>'' AND (MASUK-KELUAR)<>0 $kondisi1 $kondisi2  ORDER BY RAK ASC";
+		// var_dump($q1);
+		// die;
 		return $this->db->query($q1);
 	}
 
