@@ -732,6 +732,59 @@ class Laporan_model extends CI_Model
 			$rak='';
 		}
 
+		// $q1 = "SELECT *,
+		// 		CASE
+		// 		WHEN  hrata >= 1080 THEN '> 36 Bulan'
+					
+		// 			WHEN hrata >= 720 THEN '> 24 Bulan'
+					
+		// 			WHEN hrata >= 540 THEN '> 18 Bulan'
+					
+		// 			WHEN hrata >= 360 THEN '> 12 Bulan'
+					
+		// 			WHEN hrata >= 270 THEN '> 9 Bulan'
+					
+		// 			WHEN hrata >= 120 THEN '> 6 Bulan'
+					
+		// 			WHEN hrata >= 90 THEN '> 3 Bulan'
+					
+		// 			WHEN hrata > 30 THEN '> 2 Bulan'
+					
+		// 			WHEN hrata < 30 THEN '< 1 Bulan'
+				
+		// 		END AS KET   
+		// 		FROM 
+		// 		(
+		// 		SELECT *, ( MASUK -KELUAR) AS AKHIR, IF ( TGL_M > TGL_K OR TGL_M = TGL_K ,  DATEDIFF(DATE(NOW()), TGL_M), 
+		// 		DATEDIFF(DATE(now()), TGL_K )) AS HRATA
+				
+		// 			FROM(
+		// 		SELECT KD_BHN,NA_BHN,SATUAN,$rak AS RAK, 0 as awal, FLAG,
+				
+		// 		(select coalesce (sum(QTY), 0)   FROM BELID_SP WHERE TGL<='$tgl_1' AND DR='$dr' AND 
+		// 		ATK=0 and KD_BHN = BHN.KD_BHN
+		// 		) as MASUK,
+				
+		// 		(select IF ( ISNULL(max(tgl)),'2001-01-01', MAX(TGL) )  as tgl FROM BELID_SP WHERE TGL<='$tgl_1' AND DR='$dr'
+		// 		AND ATK=0 AND BELID_SP.KD_BRG = BHN.KD_BHN ORDER BY NO_ID 
+		// 		) as TGL_M,
+				
+		// 		(SELECT IF ( ISNULL(MAX(PAKAID.TGL)),'2001-01-01', MAX(PAKAID.TGL) )  from PAKAID 
+		// 		WHERE TGL<='$tgl_1' AND ( PAKAID.FLAG='PK' or PAKAID.FLAG ='KP' ) AND PAKAID.DR='$dr'
+		// 		AND PAKAID.ATK=0 AND PAKAID.KD_BHN = BHN.KD_BHN 
+		// 		)  AS TGL_K,
+				
+		// 		(SELECT COALESCE(sum(PAKAID.QTY),0) FROM PAKAID
+		// 		WHERE PAKAID.TGL<='$tgl_1' AND (PAKAID.FLAG='PK' or PAKAID.FLAG='KP') AND PAKAID.DR='$dr' 
+		// 		AND PAKAID.ATK=0 AND PAKAID.KD_BHN = BHN.KD_BHN 
+		// 		) AS KELUAR
+				
+		// 		FROM BHN where flag ='$sub'
+				
+		// 		) AS AAA 
+				
+		// 		) AS CCC WHERE RAK<>'' AND (MASUK-KELUAR)<>0 $kondisi1 $kondisi2  ORDER BY RAK ASC";
+
 		$q1 = "SELECT *,
 				CASE
 				WHEN  hrata >= 1080 THEN '> 36 Bulan'
@@ -751,38 +804,39 @@ class Laporan_model extends CI_Model
 					WHEN hrata > 30 THEN '> 2 Bulan'
 					
 					WHEN hrata < 30 THEN '< 1 Bulan'
-				
+
 				END AS KET   
 				FROM 
 				(
 				SELECT *, ( MASUK -KELUAR) AS AKHIR, IF ( TGL_M > TGL_K OR TGL_M = TGL_K ,  DATEDIFF(DATE(NOW()), TGL_M), 
 				DATEDIFF(DATE(now()), TGL_K )) AS HRATA
-				
+
 					FROM(
 				SELECT KD_BHN,NA_BHN,SATUAN,$rak AS RAK, 0 as awal, FLAG,
-				
+
 				(select coalesce (sum(QTY), 0)   FROM BELID_SP WHERE TGL<='$tgl_1' AND DR='$dr' AND 
 				ATK=0 and KD_BHN = BHN.KD_BHN
 				) as MASUK,
-				
+
 				(select IF ( ISNULL(max(tgl)),'2001-01-01', MAX(TGL) )  as tgl FROM BELID_SP WHERE TGL<='$tgl_1' AND DR='$dr'
 				AND ATK=0 AND BELID_SP.KD_BRG = BHN.KD_BHN ORDER BY NO_ID 
 				) as TGL_M,
-				
+
 				(SELECT IF ( ISNULL(MAX(PAKAID.TGL)),'2001-01-01', MAX(PAKAID.TGL) )  from PAKAID 
 				WHERE TGL<='$tgl_1' AND ( PAKAID.FLAG='PK' or PAKAID.FLAG ='KP' ) AND PAKAID.DR='$dr'
 				AND PAKAID.ATK=0 AND PAKAID.KD_BHN = BHN.KD_BHN 
 				)  AS TGL_K,
-				
+
 				(SELECT COALESCE(sum(PAKAID.QTY),0) FROM PAKAID
 				WHERE PAKAID.TGL<='$tgl_1' AND (PAKAID.FLAG='PK' or PAKAID.FLAG='KP') AND PAKAID.DR='$dr' 
 				AND PAKAID.ATK=0 AND PAKAID.KD_BHN = BHN.KD_BHN 
 				) AS KELUAR
-				
+
 				FROM BHN where flag ='$sub'
-				
+
+
 				) AS AAA 
-				
+
 				) AS CCC WHERE RAK<>'' AND (MASUK-KELUAR)<>0 $kondisi1 $kondisi2  ORDER BY RAK ASC";
 		// var_dump($q1);
 		// die;

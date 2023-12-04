@@ -26,16 +26,16 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-md-1">
-                        <label class="label">Kurang Dari (<) </label>
-                    </div>
-                    <div class="col-md-1">
-                        <input type="text" class="form-control text_input" id="KD" name="KD" value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["KD"]; } else echo ""; ?>">
-                    </div>
-                    <div class="col-md-1">
                         <label class="label">Lebih Dari (>) </label>
                     </div>
                     <div class="col-md-1">
                         <input type="text" class="form-control text_input" id="LD" name="LD" value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["LD"]; } else echo ""; ?>">
+                    </div>
+                    <div class="col-md-1">
+                        <label class="label">Kurang Dari (<) </label>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control text_input" id="KD" name="KD" value="<?php if (isset($_POST["tampilkan"])) { echo $_POST["KD"]; } else echo ""; ?>">
                     </div>
                 </div>
             </div>
