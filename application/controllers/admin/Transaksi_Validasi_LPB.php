@@ -220,6 +220,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
 
     public function update($id)
     {
+        //belid diganti belid_sp (untuk menghindari merubah punya pembelian)
         $q1 = "SELECT beli.NO_ID as ID,
                 beli.NO_BUKTI,
                 beli.NAMAS,
@@ -235,22 +236,22 @@ class Transaksi_Validasi_LPB extends CI_Controller
                 beli.TTD6,
                 beli.OK,
 
-                belid.NO_ID,
-                belid.REC,
-                belid.OK,
-                belid.KD_BHN,
-                belid.NA_BHN,
-                belid.RAK,
-                belid.SISA AS QTY,
-                belid.SATUAN,
-                belid.SAT_BL,
-                belid.QTY,
-                belid.QTY_BL
-                -- belid.VAL
-            FROM beli, belid 
+                belid_sp.NO_ID,
+                belid_sp.REC,
+                belid_sp.OK,
+                belid_sp.KD_BHN,
+                belid_sp.NA_BHN,
+                belid_sp.RAK,
+                belid_sp.SISA AS QTY,
+                belid_sp.SATUAN,
+                belid_sp.SAT_BL,
+                belid_sp.QTY,
+                belid_sp.QTY_BL
+                -- belid_sp.VAL
+            FROM beli, belid_sp 
             WHERE beli.NO_ID = $id 
-            AND beli.NO_ID = belid.ID 
-            ORDER BY belid.REC";
+            AND beli.NO_ID = belid_sp.ID 
+            ORDER BY belid_sp.REC";
         $data['Validasi_LPB'] = $this->transaksi_model->edit_data($q1)->result();
         $this->load->view('templates_admin/header');
         $this->load->view('templates_admin/navbar');
@@ -260,6 +261,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
 
     public function update_aksi()
     {
+        //belid diganti belid_sp (untuk menghindari merubah punya pembelian)
         $datah = array(
             'NO_BUKTI' => $this->input->post('NO_BUKTI', TRUE),
             'NAMAS' => $this->input->post('NAMAS', TRUE),
@@ -289,22 +291,22 @@ class Transaksi_Validasi_LPB extends CI_Controller
                 beli.TTD6,
                 beli.OK,
 
-                belid.NO_ID,
-                belid.REC,
-                belid.OK,
-                belid.KD_BHN,
-                belid.NA_BHN,
-                belid.RAK,
-                belid.SISA AS QTY,
-                belid.SATUAN,
-                belid.SAT_BL,
-                belid.QTY,
-                belid.QTY_BL,
-                belid.VAL
-            FROM beli, belid 
+                belid_sp.NO_ID,
+                belid_sp.REC,
+                belid_sp.OK,
+                belid_sp.KD_BHN,
+                belid_sp.NA_BHN,
+                belid_sp.RAK,
+                belid_sp.SISA AS QTY,
+                belid_sp.SATUAN,
+                belid_sp.SAT_BL,
+                belid_sp.QTY,
+                belid_sp.QTY_BL,
+                belid_sp.VAL
+            FROM beli, belid_sp 
             WHERE beli.NO_ID = $id
-            AND beli.NO_ID = belid.ID 
-            ORDER BY belid.REC";
+            AND beli.NO_ID = belid_sp.ID 
+            ORDER BY belid_sp.REC";
         $data = $this->transaksi_model->edit_data($q1)->result();
         $NO_ID = $this->input->post('NO_ID');
         $REC = $this->input->post('REC');
@@ -341,12 +343,12 @@ class Transaksi_Validasi_LPB extends CI_Controller
                 $where = array(
                     'NO_ID' => $NO_ID[$URUT]
                 );
-                $this->transaksi_model->update_data($where, $datad, 'belid');
+                $this->transaksi_model->update_data($where, $datad, 'belid_sp');
             } else {
                 $where = array(
                     'NO_ID' => $ID[$i]
                 );
-                $this->transaksi_model->hapus_data($where, 'belid');
+                $this->transaksi_model->hapus_data($where, 'belid_sp');
             }
             $i++;
         }
@@ -370,7 +372,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
                     'FLAG' => 'BL',
                     'FLAG2' => 'SP',
                 );
-                $this->transaksi_model->input_datad('belid', $datad);
+                $this->transaksi_model->input_datad('belid_sp', $datad);
             }
             $i++;
         }
@@ -414,7 +416,7 @@ class Transaksi_Validasi_LPB extends CI_Controller
         $whered = array(
             'ID' => "$ID"
         );
-        $this->transaksi_model->update_data($whered, $datahd, 'belid');
+        $this->transaksi_model->update_data($whered, $datahd, 'belid_sp');
 
         // $bukti = $this->db->query("SELECT NO_BUKTI AS BUKTIX FROM beli WHERE NO_ID='$ID'")->result();
         // $no_bukti = $bukti[0]->BUKTIX;
