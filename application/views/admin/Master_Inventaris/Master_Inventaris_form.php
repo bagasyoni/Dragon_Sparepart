@@ -129,7 +129,8 @@
 							<label class="label">No Bukti </label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control text_input NO_BUKTI text_input" id="NO_BUKTI" name="NO_BUKTI" type="text" placeholder="<?php echo $this->session->userdata['bukti']; ?>" hidden>
+							<!-- <input class="form-control text_input NO_BUKTI text_input" id="NO_BUKTI" name="NO_BUKTI" type="text" placeholder="<?php /*echo $this->session->userdata['bukti']; */?>" hidden> -->
+							<input class="form-control text_input NO_BUKTI text_input" id="NO_BUKTI" name="NO_BUKTI" type="text" placeholder="" hidden>
 							<input class="form-control text_input NO_BUKTIX text_input" id="NO_BUKTIX" name="NO_BUKTIX" type="text" >
 						</div>
 						<div class="col-md-1" hidden>
