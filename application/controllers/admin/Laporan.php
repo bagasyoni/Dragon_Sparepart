@@ -228,7 +228,7 @@ class Laporan extends CI_Controller
 			$query = "SELECT
 					inventaris.NO_BUKTI,
 					inventaris.NA_BAGIAN AS BAGIAN,
-					inventaris.KODE AS KODE,
+					inventaris.KD_BAGIAN AS KODE,
 					inventaris.NAMA,
 					-- inventaris.TGL,
 					DATE_FORMAT(NOW(), '%d-%m-%Y') AS TGL,
@@ -247,7 +247,7 @@ class Laporan extends CI_Controller
 				AND
 					inventaris.DR = '$dr'
 				ORDER BY
-					inventaris.KODE ASC,
+					inventaris.KD_BAGIAN ASC,
 					inventarisd.JENIS ASC";
 			$result1 = mysqli_query($conn, $query);
 			while ($row1 = mysqli_fetch_assoc($result1)) {

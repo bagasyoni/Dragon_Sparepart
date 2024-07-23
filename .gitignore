@@ -41,3 +41,4 @@ application/config/config.php
 application/config/database.php
 application/config/config.php
 application/config/database.php
+application/models/Laporan_model.php

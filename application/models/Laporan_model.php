@@ -50,7 +50,7 @@ class Laporan_model extends CI_Model
 		$q1 = "SELECT
 				inventaris.NO_BUKTI,
 				inventaris.NA_BAGIAN AS BAGIAN,
-				inventaris.KODE AS KODE,
+				inventaris.KD_BAGIAN AS KODE,
 				inventaris.NAMA,
 				-- inventaris.TGL,
 				DATE_FORMAT(NOW(), '%d-%m-%Y') AS TGL,
@@ -69,7 +69,7 @@ class Laporan_model extends CI_Model
 			AND
 					inventaris.DR = '$dr'
 			ORDER BY
-				inventaris.KODE ASC,
+				inventaris.KD_BAGIAN ASC,
 				inventarisd.JENIS ASC";
 		return $this->db->query($q1);
 	}
@@ -78,7 +78,7 @@ class Laporan_model extends CI_Model
 	{
 		$jenis_1 = $this->input->post('JENIS_1');
 		$q1 = "SELECT
-				'-' AS KODE,
+				inventaris.KD_BAGIAN AS KODE,
 				inventaris.NAMA,
 				inventaris.NA_BAGIAN,
 			
@@ -116,7 +116,7 @@ class Laporan_model extends CI_Model
 	{
 		$dr = $this->session->userdata['dr'];
 		$cetak_1 = $this->input->post('CETAK_1');
-		$q1 = "SELECT * FROM sp_invenc WHERE DR='$dr' AND CETAK='$cetak_1'";
+		$q1 = "SELECT * FROM sp_invenc WHERE DR='$dr' AND NAMA='$cetak_1'";
 		return $this->db->query($q1);
 	}
 
